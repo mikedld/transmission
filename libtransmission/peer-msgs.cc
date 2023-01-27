@@ -241,23 +241,17 @@ void updateDesiredRequestCount(tr_peerMsgsImpl* msgs);
 class tr_peerMsgsImpl final : public tr_peerMsgs
 {
 public:
-    tr_peerMsgsImpl(
-        tr_torrent* torrent_in,
-        peer_atom* atom_in,
-        std::shared_ptr<tr_peerIo> io_in,
-        tr_peer_callback callback,
-        void* callback_data)
+    tr_peerMsgsImpl(tr_torrent* torrent_in, peer_atom* atom_in, std::shared_ptr<tr_peerIo> io_in, tr_peer_callback callback)
         : tr_peerMsgs{ torrent_in, atom_in }
         , outMessagesBatchPeriod{ LowPriorityIntervalSecs }
         , torrent{ torrent_in }
         , io{ std::move(io_in) }
         , have_{ torrent_in->pieceCount() }
         , callback_{ callback }
-        , callback_data_{ callback_data }
     {
         if (torrent->allowsPex())
         {
-            pex_timer_ = session->timerMaker().create([this]() { sendPex(); });
+            pex_timer_ = getSession()->timerMaker().create([this]() { sendPex(); });
             pex_timer_->startRepeating(SendPexInterval);
         }
 
@@ -274,12 +268,12 @@ public:
 
         tellPeerWhatWeHave(this);
 
-        if (session->allowsDHT() && io->supports_dht())
+        if (getSession()->allowsDHT() && io->supports_dht())
         {
             // only send PORT over IPv6 iff IPv6 DHT is running (BEP-32).
-            if (auto const [addr, is_any] = session->publicAddress(TR_AF_INET6); !is_any)
+            if (auto const [addr, is_any] = getSession()->publicAddress(TR_AF_INET6); !is_any)
             {
-                protocolSendPort(this, session->udpPort());
+                protocolSendPort(this, getSession()->udpPort());
             }
         }
 
@@ -534,7 +528,7 @@ public:
     {
         if (callback_ != nullptr)
         {
-            (*callback_)(this, peer_event, callback_data_);
+            callback_(*this, peer_event);
         }
     }
 
@@ -700,7 +694,6 @@ private:
     std::array<bool, 2> is_active_ = { false, false };
 
     tr_peer_callback const callback_;
-    void* const callback_data_;
 
     // seconds between periodic sendPex() calls
     static auto constexpr SendPexInterval = 90s;
@@ -884,9 +877,9 @@ void sendLtepHandshake(tr_peerMsgsImpl* msgs)
 
     auto val = tr_variant{};
     tr_variantInitDict(&val, 8);
-    tr_variantDictAddBool(&val, TR_KEY_e, msgs->session->encryptionMode() != TR_CLEAR_PREFERRED);
+    tr_variantDictAddBool(&val, TR_KEY_e, msgs->getSession()->encryptionMode() != TR_CLEAR_PREFERRED);
 
-    if (auto const [addr, is_any] = msgs->session->publicAddress(TR_AF_INET6); !is_any)
+    if (auto const [addr, is_any] = msgs->getSession()->publicAddress(TR_AF_INET6); !is_any)
     {
         TR_ASSERT(addr.is_ipv6());
         tr_variantDictAddRaw(&val, TR_KEY_ipv6, &addr.addr.addr6, sizeof(addr.addr.addr6));
@@ -907,7 +900,7 @@ void sendLtepHandshake(tr_peerMsgsImpl* msgs)
     // port number of the other side. Note that there is no need for the
     // receiving side of the connection to send this extension message,
     // since its port number is already known.
-    tr_variantDictAddInt(&val, TR_KEY_p, msgs->session->advertisedPeerPort().host());
+    tr_variantDictAddInt(&val, TR_KEY_p, msgs->getSession()->advertisedPeerPort().host());
 
     // http://bittorrent.org/beps/bep_0010.html
     // An integer, the number of outstanding request messages this
@@ -1287,7 +1280,7 @@ ReadState readBtId(tr_peerMsgsImpl* msgs, size_t inlen)
 
 void prefetchPieces(tr_peerMsgsImpl* msgs)
 {
-    if (!msgs->session->allowsPrefetch())
+    if (!msgs->getSession()->allowsPrefetch())
     {
         return;
     }
@@ -1298,7 +1291,7 @@ void prefetchPieces(tr_peerMsgsImpl* msgs)
     {
         if (auto& req = requests[i]; !req.prefetched)
         {
-            msgs->session->cache->prefetchBlock(msgs->torrent, msgs->torrent->pieceLoc(req.index, req.offset), req.length);
+            msgs->getSession()->cache->prefetchBlock(msgs->torrent, msgs->torrent->pieceLoc(req.index, req.offset), req.length);
             req.prefetched = true;
         }
     }
@@ -1632,7 +1625,7 @@ ReadState readBtMessage(tr_peerMsgsImpl* msgs, size_t inlen)
             if (auto const dht_port = tr_port::fromHost(hport); !std::empty(dht_port))
             {
                 msgs->dht_port = dht_port;
-                msgs->session->addDhtNode(msgs->io->address(), msgs->dht_port);
+                msgs->getSession()->addDhtNode(msgs->io->address(), msgs->dht_port);
             }
         }
         break;
@@ -1783,7 +1776,7 @@ int clientGotBlock(tr_peerMsgsImpl* msgs, std::unique_ptr<std::vector<uint8_t>>&
 
     // NB: if writeBlock() fails the torrent may be paused.
     // If this happens, `msgs` will be a dangling pointer and must no longer be used.
-    if (auto const err = msgs->session->cache->writeBlock(tor->id(), block, block_data); err != 0)
+    if (auto const err = msgs->getSession()->cache->writeBlock(tor->id(), block, block_data); err != 0)
     {
         return err;
     }
@@ -2025,7 +2018,7 @@ size_t fillOutputBuffer(tr_peerMsgsImpl* msgs, time_t now)
             out.addUint32(req.index);
             out.addUint32(req.offset);
             auto buf = std::array<uint8_t, tr_block_info::BlockSize>{};
-            bool err = msgs->session->cache->readBlock(
+            bool err = msgs->getSession()->cache->readBlock(
                            msgs->torrent,
                            msgs->torrent->pieceLoc(req.index, req.offset),
                            req.length,
@@ -2295,12 +2288,7 @@ tr_peerMsgs::~tr_peerMsgs()
     TR_ASSERT(n_prev > 0U);
 }
 
-tr_peerMsgs* tr_peerMsgsNew(
-    tr_torrent* torrent,
-    peer_atom* atom,
-    std::shared_ptr<tr_peerIo> io,
-    tr_peer_callback callback,
-    void* callback_data)
+tr_peerMsgs* tr_peerMsgsNew(tr_torrent* torrent, peer_atom* atom, std::shared_ptr<tr_peerIo> io, tr_peer_callback callback)
 {
-    return new tr_peerMsgsImpl(torrent, atom, std::move(io), callback, callback_data);
+    return new tr_peerMsgsImpl(torrent, atom, std::move(io), callback);
 }

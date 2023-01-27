@@ -11,9 +11,12 @@
 
 #include <array>
 #include <cstdint> // uint8_t, uint32_t, uint64_t
+#include <functional>
 
 #include "transmission.h"
 
+#include "torrent.h"
+#include "tr-assert.h"
 #include "bitfield.h"
 #include "block-info.h"
 #include "history.h"
@@ -169,7 +172,7 @@ public:
     }
 };
 
-using tr_peer_callback = void (*)(tr_peer* peer, tr_peer_event const& event, void* client_data);
+using tr_peer_callback = std::function<void(tr_peer&, tr_peer_event const&)>;
 
 /**
  * State information about a connected peer.
@@ -180,7 +183,7 @@ using tr_peer_callback = void (*)(tr_peer* peer, tr_peer_event const& event, voi
 class tr_peer
 {
 public:
-    tr_peer(tr_torrent const* tor, peer_atom* atom = nullptr);
+    tr_peer(tr_torrent* tor, peer_atom* atom = nullptr);
     virtual ~tr_peer();
 
     virtual bool isTransferringPieces(uint64_t now, tr_direction dir, tr_bytes_per_second_t* setme_bytes_per_second) const = 0;
@@ -216,6 +219,20 @@ public:
         return bytes_per_second;
     }
 
+    [[nodiscard]] tr_session* getSession() const noexcept
+    {
+        TR_ASSERT(torrent != nullptr);
+        return torrent->session;
+    }
+
+    [[nodiscard]] tr_swarm* getSwarm() const noexcept
+    {
+        TR_ASSERT(torrent != nullptr);
+        return torrent->swarm;
+    }
+
+    void clientCallback(tr_peer_event const& event);
+
     virtual void requestBlocks(tr_block_span_t const* block_spans, size_t n_spans) = 0;
 
     struct RequestLimit
@@ -231,9 +248,7 @@ public:
     // how many blocks could we request from this peer right now?
     [[nodiscard]] virtual RequestLimit canRequest() const noexcept = 0;
 
-    tr_session* const session;
-
-    tr_swarm* const swarm;
+    tr_torrent* const torrent;
 
     tr_recentHistory<uint16_t> blocks_sent_to_peer;
 

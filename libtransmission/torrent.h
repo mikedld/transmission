@@ -170,9 +170,9 @@ public:
     {
         return metainfo_.blockCount();
     }
-    [[nodiscard]] constexpr auto byteLoc(uint64_t byte) const noexcept
+    [[nodiscard]] constexpr auto byteLoc(uint64_t bytepos) const noexcept
     {
-        return metainfo_.byteLoc(byte);
+        return metainfo_.byteLoc(bytepos);
     }
     [[nodiscard]] constexpr auto blockLoc(tr_block_index_t block) const noexcept
     {

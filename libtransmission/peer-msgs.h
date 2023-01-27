@@ -32,7 +32,7 @@ struct tr_address;
 class tr_peerMsgs : public tr_peer
 {
 public:
-    tr_peerMsgs(tr_torrent const* tor, peer_atom* atom_in)
+    tr_peerMsgs(tr_torrent* tor, peer_atom* atom_in)
         : tr_peer{ tor, atom_in }
         , have_{ tor->pieceCount() }
     {
@@ -81,11 +81,6 @@ private:
     static inline auto n_peers_ = std::atomic<size_t>{};
 };
 
-tr_peerMsgs* tr_peerMsgsNew(
-    tr_torrent* torrent,
-    peer_atom* atom,
-    std::shared_ptr<tr_peerIo> io,
-    tr_peer_callback callback,
-    void* callback_data);
+tr_peerMsgs* tr_peerMsgsNew(tr_torrent* torrent, peer_atom* atom, std::shared_ptr<tr_peerIo> io, tr_peer_callback callback);
 
 /* @} */

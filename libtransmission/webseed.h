@@ -13,6 +13,6 @@
 
 #include "peer-common.h"
 
-tr_peer* tr_webseedNew(struct tr_torrent* torrent, std::string_view, tr_peer_callback callback, void* callback_data);
+tr_peer* tr_webseedNew(struct tr_torrent* torrent, std::string_view, tr_peer_callback callback);
 
 tr_webseed_view tr_webseedView(tr_peer const* peer);

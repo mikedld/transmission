@@ -157,13 +157,12 @@ void onBufferGotData(evbuffer* /*buf*/, evbuffer_cb_info const* info, void* vtas
 class tr_webseed final : public tr_peer
 {
 public:
-    tr_webseed(struct tr_torrent* tor, std::string_view url, tr_peer_callback callback_in, void* callback_data_in)
+    tr_webseed(struct tr_torrent* tor, std::string_view url, tr_peer_callback callback_in)
         : tr_peer{ tor }
         , torrent_id{ tr_torrentId(tor) }
         , base_url{ url }
         , callback{ callback_in }
-        , callback_data{ callback_data_in }
-        , idle_timer_{ session->timerMaker().create([this]() { on_idle(this); }) }
+        , idle_timer_{ getSession()->timerMaker().create([this]() { on_idle(this); }) }
         , have_{ tor->pieceCount() }
         , bandwidth_{ &tor->bandwidth_ }
     {
@@ -185,7 +184,7 @@ public:
 
     [[nodiscard]] tr_torrent* getTorrent() const
     {
-        return tr_torrentFindFromId(session, torrent_id);
+        return tr_torrentFindFromId(getSession(), torrent_id);
     }
 
     [[nodiscard]] bool isTransferringPieces( //
@@ -304,14 +303,16 @@ public:
     {
         if (callback != nullptr)
         {
-            (*callback)(this, peer_event, callback_data);
+            if (auto const* const tor = getTorrent(); tor != nullptr)
+            {
+                callback(*this, peer_event);
+            }
         }
     }
 
     tr_torrent_id_t const torrent_id;
     std::string const base_url;
     tr_peer_callback const callback;
-    void* const callback_data;
 
     ConnectionLimiter connection_limiter;
     std::set<tr_webseed_task*> tasks;
@@ -535,9 +536,9 @@ void task_request_next_chunk(tr_webseed_task* task)
 
 // ---
 
-tr_peer* tr_webseedNew(tr_torrent* torrent, std::string_view url, tr_peer_callback callback, void* callback_data)
+tr_peer* tr_webseedNew(tr_torrent* torrent, std::string_view url, tr_peer_callback callback)
 {
-    return new tr_webseed(torrent, url, callback, callback_data);
+    return new tr_webseed(torrent, url, callback);
 }
 
 tr_webseed_view tr_webseedView(tr_peer const* peer)
