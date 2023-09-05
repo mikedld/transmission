@@ -937,8 +937,7 @@ void sendLtepHandshake(tr_peerMsgsImpl* msgs)
     /* decide if we want to advertise pex support */
     bool const allow_pex = msgs->torrent->allows_pex();
 
-    auto val = tr_variant{};
-    tr_variantInitDict(&val, 8);
+    auto val = tr_variant::make_map(8U);
     tr_variantDictAddBool(&val, TR_KEY_e, msgs->session->encryptionMode() != TR_CLEAR_PREFERRED);
 
     // If connecting to global peer, then use global address
@@ -1178,8 +1177,7 @@ void parseUtMetadata(tr_peerMsgsImpl* msgs, MessageReader& payload_in)
         else
         {
             /* send a rejection message */
-            auto v = tr_variant{};
-            tr_variantInitDict(&v, 2);
+            auto v = tr_variant::make_map(2U);
             tr_variantDictAddInt(&v, TR_KEY_msg_type, MetadataMsgType::Reject);
             tr_variantDictAddInt(&v, TR_KEY_piece, piece);
             protocol_send_message(msgs, BtPeerMsgs::Ltep, msgs->ut_metadata_id, serde.to_string(v));
@@ -1798,8 +1796,7 @@ void updateMetadataRequests(tr_peerMsgsImpl* msgs, time_t now)
 
     if (auto const piece = tr_torrentGetNextMetadataRequest(msgs->torrent, now); piece)
     {
-        auto tmp = tr_variant{};
-        tr_variantInitDict(&tmp, 3);
+        auto tmp = tr_variant::make_map(3U);
         tr_variantDictAddInt(&tmp, TR_KEY_msg_type, MetadataMsgType::Request);
         tr_variantDictAddInt(&tmp, TR_KEY_piece, *piece);
         protocol_send_message(msgs, BtPeerMsgs::Ltep, msgs->ut_metadata_id, tr_variant_serde::benc().to_string(tmp));
@@ -1851,16 +1848,14 @@ namespace peer_pulse_helpers
     if (!tr_torrentGetMetadataPiece(msgs->torrent, *piece, data))
     {
         // send a reject
-        auto tmp = tr_variant{};
-        tr_variantInitDict(&tmp, 2);
+        auto tmp = tr_variant::make_map(2U);
         tr_variantDictAddInt(&tmp, TR_KEY_msg_type, MetadataMsgType::Reject);
         tr_variantDictAddInt(&tmp, TR_KEY_piece, *piece);
         return protocol_send_message(msgs, BtPeerMsgs::Ltep, msgs->ut_metadata_id, tr_variant_serde::benc().to_string(tmp));
     }
 
     // send the metadata
-    auto tmp = tr_variant{};
-    tr_variantInitDict(&tmp, 3);
+    auto tmp = tr_variant::make_map(3U);
     tr_variantDictAddInt(&tmp, TR_KEY_msg_type, MetadataMsgType::Data);
     tr_variantDictAddInt(&tmp, TR_KEY_piece, *piece);
     tr_variantDictAddInt(&tmp, TR_KEY_total_size, msgs->torrent->info_dict_size());
@@ -2000,8 +1995,7 @@ void tr_peerMsgsImpl::sendPex()
     static auto constexpr MaxPexAdded = size_t{ 50 };
     static auto constexpr MaxPexDropped = size_t{ 50 };
 
-    auto val = tr_variant{};
-    tr_variantInitDict(&val, 3); /* ipv6 support: left as 3: speed vs. likelihood? */
+    auto val = tr_variant::make_map(3U); /* ipv6 support: left as 3: speed vs. likelihood? */
 
     auto tmpbuf = std::vector<std::byte>{};
 

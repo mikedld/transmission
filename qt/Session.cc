@@ -49,8 +49,7 @@ using ::trqt::variant_helpers::getValue;
 
 void Session::sessionSet(tr_quark const key, QVariant const& value)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 1);
+    auto args = tr_variant::make_map(1U);
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
     switch (value.typeId())
@@ -112,8 +111,7 @@ void Session::copyMagnetLinkToClipboard(int torrent_id)
     auto constexpr MagnetLinkKey = std::string_view{ "magnetLink" };
     auto constexpr Fields = std::array<std::string_view, 1>{ MagnetLinkKey };
 
-    tr_variant args;
-    tr_variantInitDict(&args, 2);
+    auto args = tr_variant::make_map(2U);
     dictAdd(&args, TR_KEY_ids, std::array<int, 1>{ torrent_id });
     dictAdd(&args, TR_KEY_fields, Fields);
 
@@ -356,8 +354,7 @@ void Session::start()
     }
     else
     {
-        tr_variant settings;
-        tr_variantInitDict(&settings, 0);
+        auto settings = tr_variant::make_map();
         tr_sessionLoadSettings(&settings, config_dir_.toUtf8().constData(), "qt");
         session_ = tr_sessionInit(config_dir_.toUtf8().constData(), true, &settings);
 
@@ -419,8 +416,7 @@ Session::Tag Session::torrentSetImpl(tr_variant* args)
 
 Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark const key, double value)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 2);
+    auto args = tr_variant::make_map(2U);
     addOptionalIds(&args, torrent_ids);
     dictAdd(&args, key, value);
     return torrentSetImpl(&args);
@@ -428,8 +424,7 @@ Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark cons
 
 Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark const key, int value)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 2);
+    auto args = tr_variant::make_map(2U);
     addOptionalIds(&args, torrent_ids);
     dictAdd(&args, key, value);
     return torrentSetImpl(&args);
@@ -437,8 +432,7 @@ Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark cons
 
 Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark const key, bool value)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 2);
+    auto args = tr_variant::make_map(2U);
     addOptionalIds(&args, torrent_ids);
     dictAdd(&args, key, value);
     return torrentSetImpl(&args);
@@ -446,8 +440,7 @@ Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark cons
 
 Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark const key, QString const& value)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 2);
+    auto args = tr_variant::make_map(2U);
     addOptionalIds(&args, torrent_ids);
     dictAdd(&args, key, value);
     return torrentSetImpl(&args);
@@ -455,8 +448,7 @@ Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark cons
 
 Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark const key, QStringList const& value)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 2);
+    auto args = tr_variant::make_map(2U);
     addOptionalIds(&args, torrent_ids);
     dictAdd(&args, key, value);
     return torrentSetImpl(&args);
@@ -464,8 +456,7 @@ Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark cons
 
 Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark const key, QList<int> const& value)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 2);
+    auto args = tr_variant::make_map(2U);
     addOptionalIds(&args, torrent_ids);
     dictAdd(&args, key, value);
     return torrentSetImpl(&args);
@@ -473,8 +464,7 @@ Session::Tag Session::torrentSet(torrent_ids_t const& torrent_ids, tr_quark cons
 
 void Session::torrentSetLocation(torrent_ids_t const& torrent_ids, QString const& path, bool do_move)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 3);
+    auto args = tr_variant::make_map(3U);
     addOptionalIds(&args, torrent_ids);
     dictAdd(&args, TR_KEY_location, path);
     dictAdd(&args, TR_KEY_move, do_move);
@@ -484,8 +474,7 @@ void Session::torrentSetLocation(torrent_ids_t const& torrent_ids, QString const
 
 void Session::torrentRenamePath(torrent_ids_t const& torrent_ids, QString const& oldpath, QString const& newname)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 2);
+    auto args = tr_variant::make_map(2U);
     addOptionalIds(&args, torrent_ids);
     dictAdd(&args, TR_KEY_path, oldpath);
     dictAdd(&args, TR_KEY_name, newname);
@@ -655,8 +644,7 @@ void Session::refreshTorrents(torrent_ids_t const& torrent_ids, TorrentPropertie
 {
     auto constexpr Table = std::string_view{ "table" };
 
-    tr_variant args;
-    tr_variantInitDict(&args, 3);
+    auto args = tr_variant::make_map(3U);
     dictAdd(&args, TR_KEY_format, Table);
     dictAdd(&args, TR_KEY_fields, getKeyNames(props));
     addOptionalIds(&args, torrent_ids);
@@ -698,8 +686,7 @@ void Session::refreshExtraStats(torrent_ids_t const& ids)
 
 void Session::sendTorrentRequest(std::string_view request, torrent_ids_t const& torrent_ids)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 1);
+    auto args = tr_variant::make_map(1U);
     addOptionalIds(&args, torrent_ids);
 
     auto* q = new RpcQueue{};
@@ -1112,8 +1099,7 @@ void Session::onDuplicatesTimer()
 
 void Session::addTorrent(AddData add_me)
 {
-    tr_variant args;
-    tr_variantInitDict(&args, 3);
+    auto args = tr_variant::make_map(3U);
 
     addTorrent(std::move(add_me), &args, prefs_.getBool(Prefs::TRASH_ORIGINAL));
 }
@@ -1122,8 +1108,7 @@ void Session::addNewlyCreatedTorrent(QString const& filename, QString const& loc
 {
     QByteArray const b64 = AddData(filename).toBase64();
 
-    tr_variant args;
-    tr_variantInitDict(&args, 3);
+    auto args = tr_variant::make_map(3U);
     dictAdd(&args, TR_KEY_download_dir, local_path);
     dictAdd(&args, TR_KEY_paused, !prefs_.getBool(Prefs::START));
     dictAdd(&args, TR_KEY_metainfo, b64);
@@ -1135,8 +1120,7 @@ void Session::removeTorrents(torrent_ids_t const& ids, bool delete_files)
 {
     if (!ids.empty())
     {
-        tr_variant args;
-        tr_variantInitDict(&args, 2);
+        auto args = tr_variant::make_map(2U);
         addOptionalIds(&args, ids);
         dictAdd(&args, TR_KEY_delete_local_data, delete_files);
 
@@ -1148,8 +1132,7 @@ void Session::verifyTorrents(torrent_ids_t const& ids)
 {
     if (!ids.empty())
     {
-        tr_variant args;
-        tr_variantInitDict(&args, 1);
+        auto args = tr_variant::make_map(1U);
         addOptionalIds(&args, ids);
 
         exec("torrent-verify", &args);
@@ -1160,8 +1143,7 @@ void Session::reannounceTorrents(torrent_ids_t const& ids)
 {
     if (!ids.empty())
     {
-        tr_variant args;
-        tr_variantInitDict(&args, 1);
+        auto args = tr_variant::make_map(1U);
         addOptionalIds(&args, ids);
 
         exec("torrent-reannounce", &args);

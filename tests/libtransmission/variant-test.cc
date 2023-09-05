@@ -379,18 +379,16 @@ TEST_F(VariantTest, merge)
     auto const s8 = tr_quark_new("s8"sv);
 
     /* initial dictionary (default values) */
-    tr_variant dest;
-    tr_variantInitDict(&dest, 10);
-    tr_variantDictAddInt(&dest, i1, 1);
-    tr_variantDictAddInt(&dest, i2, 2);
-    tr_variantDictAddInt(&dest, i4, -35); /* remains untouched */
-    tr_variantDictAddStrView(&dest, s5, "abc");
-    tr_variantDictAddStrView(&dest, s6, "def");
-    tr_variantDictAddStrView(&dest, s7, "127.0.0.1"); /* remains untouched */
+    auto tgt = tr_variant::make_map(10U);
+    tr_variantDictAddInt(&tgt, i1, 1);
+    tr_variantDictAddInt(&tgt, i2, 2);
+    tr_variantDictAddInt(&tgt, i4, -35); /* remains untouched */
+    tr_variantDictAddStrView(&tgt, s5, "abc");
+    tr_variantDictAddStrView(&tgt, s6, "def");
+    tr_variantDictAddStrView(&tgt, s7, "127.0.0.1"); /* remains untouched */
 
-    /* new dictionary, will overwrite items in dest */
-    tr_variant src;
-    tr_variantInitDict(&src, 10);
+    /* new dictionary, will overwrite items in tgt */
+    auto src = tr_variant::make_map(10U);
     tr_variantDictAddInt(&src, i1, 1); /* same value */
     tr_variantDictAddInt(&src, i2, 4); /* new value */
     tr_variantDictAddInt(&src, i3, 3); /* new key:value */
@@ -398,25 +396,25 @@ TEST_F(VariantTest, merge)
     tr_variantDictAddStrView(&src, s6, "xyz"); /* new value */
     tr_variantDictAddStrView(&src, s8, "ghi"); /* new key:value */
 
-    tr_variantMergeDicts(&dest, /*const*/ &src);
+    tr_variantMergeDicts(&tgt, /*const*/ &src);
 
     auto i = int64_t{};
-    EXPECT_TRUE(tr_variantDictFindInt(&dest, i1, &i));
+    EXPECT_TRUE(tr_variantDictFindInt(&tgt, i1, &i));
     EXPECT_EQ(1, i);
-    EXPECT_TRUE(tr_variantDictFindInt(&dest, i2, &i));
+    EXPECT_TRUE(tr_variantDictFindInt(&tgt, i2, &i));
     EXPECT_EQ(4, i);
-    EXPECT_TRUE(tr_variantDictFindInt(&dest, i3, &i));
+    EXPECT_TRUE(tr_variantDictFindInt(&tgt, i3, &i));
     EXPECT_EQ(3, i);
-    EXPECT_TRUE(tr_variantDictFindInt(&dest, i4, &i));
+    EXPECT_TRUE(tr_variantDictFindInt(&tgt, i4, &i));
     EXPECT_EQ(-35, i);
     auto sv = std::string_view{};
-    EXPECT_TRUE(tr_variantDictFindStrView(&dest, s5, &sv));
+    EXPECT_TRUE(tr_variantDictFindStrView(&tgt, s5, &sv));
     EXPECT_EQ("abc"sv, sv);
-    EXPECT_TRUE(tr_variantDictFindStrView(&dest, s6, &sv));
+    EXPECT_TRUE(tr_variantDictFindStrView(&tgt, s6, &sv));
     EXPECT_EQ("xyz"sv, sv);
-    EXPECT_TRUE(tr_variantDictFindStrView(&dest, s7, &sv));
+    EXPECT_TRUE(tr_variantDictFindStrView(&tgt, s7, &sv));
     EXPECT_EQ("127.0.0.1"sv, sv);
-    EXPECT_TRUE(tr_variantDictFindStrView(&dest, s8, &sv));
+    EXPECT_TRUE(tr_variantDictFindStrView(&tgt, s8, &sv));
     EXPECT_EQ("ghi"sv, sv);
 }
 
@@ -441,8 +439,7 @@ TEST_F(VariantTest, boolAndIntRecast)
     auto const key3 = tr_quark_new("key3"sv);
     auto const key4 = tr_quark_new("key4"sv);
 
-    auto top = tr_variant{};
-    tr_variantInitDict(&top, 10);
+    auto top = tr_variant::make_map(10U);
     tr_variantDictAddBool(&top, key1, false);
     tr_variantDictAddBool(&top, key2, 0); // NOLINT modernize-use-bool-literals
     tr_variantDictAddInt(&top, key3, true); // NOLINT readability-implicit-bool-conversion
@@ -485,8 +482,7 @@ TEST_F(VariantTest, dictFindType)
     auto const key_unknown = tr_quark_new("this-is-a-missing-entry"sv);
 
     // populate a dict
-    tr_variant top;
-    tr_variantInitDict(&top, 0);
+    auto top = tr_variant::make_map();
     tr_variantDictAddBool(&top, key_bool, ExpectedBool);
     tr_variantDictAddInt(&top, key_int, ExpectedInt);
     tr_variantDictAddReal(&top, key_real, ExpectedReal);

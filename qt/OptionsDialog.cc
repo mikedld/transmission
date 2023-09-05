@@ -225,8 +225,7 @@ void OptionsDialog::onAccepted()
 {
     // rpc spec section 3.4 "adding a torrent"
 
-    tr_variant args;
-    tr_variantInitDict(&args, 10);
+    auto args = tr_variant::make_map(10U);
     QString download_dir;
 
     // "download-dir"

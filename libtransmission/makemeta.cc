@@ -268,8 +268,7 @@ std::string tr_metainfo_builder::benc(tr_error** error) const
         return {};
     }
 
-    auto top = tr_variant{};
-    tr_variantInitDict(&top, 8);
+    auto top = tr_variant::make_map(8U);
 
     // add the announce URLs
     if (!std::empty(announce_list()))

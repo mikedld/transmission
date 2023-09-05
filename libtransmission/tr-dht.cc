@@ -425,8 +425,7 @@ private:
         auto const n = mediator_.api().get_nodes(std::data(sins4), &num4, std::data(sins6), &num6);
         tr_logAddTrace(fmt::format("Saving {} ({} + {}) nodes", n, num4, num6));
 
-        tr_variant benc;
-        tr_variantInitDict(&benc, 3);
+        auto benc = tr_variant::make_map(3U);
         tr_variantDictAddRaw(&benc, TR_KEY_id, std::data(id_), std::size(id_));
 
         if (num4 > 0)

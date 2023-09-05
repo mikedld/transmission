@@ -148,11 +148,9 @@ size_t tr_getDefaultDownloadDirToBuf(char* buf, size_t buflen);
  *
  * Example:
  * @code
- *     tr_variant settings;
- *     int64_t i;
- *
- *     tr_variantInitDict(&settings, 0);
+ *     auto settings = tr_variant::make_map();
  *     tr_sessionGetDefaultSettings(&settings);
+ *     int64_t i;
  *     if (tr_variantDictFindInt(&settings, TR_PREFS_KEY_PEER_PORT, &i))
  *         fprintf(stderr, "the default peer port is %d\n", (int)i);
  * @endcode
@@ -209,14 +207,10 @@ void tr_sessionSaveSettings(tr_session* session, char const* config_dir, struct 
  *
  * For example, this will instantiate a session with all the default values:
  * @code
- *     tr_variant settings;
- *     tr_session* session;
- *     char const* configDir;
- *
- *     tr_variantInitDict(&settings, 0);
+ *     auto settings = tr_variant::make_map();
  *     tr_sessionGetDefaultSettings(&settings);
- *     configDir = tr_getDefaultConfigDir("Transmission");
- *     session = tr_sessionInit(configDir, true, &settings);
+ *     char const* const configDir = tr_getDefaultConfigDir("Transmission");
+ *     tr_session* const session = tr_sessionInit(configDir, true, &settings);
  * @endcode
  *
  * @param config_dir where Transmission will look for resume files, blocklists, etc.

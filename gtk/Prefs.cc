@@ -102,16 +102,14 @@ static void ensure_sound_cmd_is_a_list(tr_variant* dict)
 
 static tr_variant* getPrefs()
 {
-    static tr_variant settings;
-    static bool loaded = false;
+    static auto settings = tr_variant{};
 
-    if (!loaded)
+    if (!settings.has_value())
     {
-        tr_variantInitDict(&settings, 0);
+        settings = tr_variant::make_map();
         tr_prefs_init_defaults(&settings);
         tr_sessionLoadSettings(&settings, gl_confdir.c_str(), nullptr);
         ensure_sound_cmd_is_a_list(&settings);
-        loaded = true;
     }
 
     return &settings;

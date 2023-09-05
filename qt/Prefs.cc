@@ -227,8 +227,7 @@ Prefs::Prefs(QString config_dir)
     // when the application exits.
     temporary_prefs_ << FILTER_TEXT;
 
-    tr_variant top;
-    tr_variantInitDict(&top, 0);
+    auto top = tr_variant::make_map();
     initDefaults(&top);
     tr_sessionLoadSettings(&top, config_dir_.toUtf8().constData(), nullptr);
     ensureSoundCommandIsAList(&top);
@@ -323,8 +322,7 @@ Prefs::Prefs(QString config_dir)
 Prefs::~Prefs()
 {
     // make a dict from settings.json
-    tr_variant current_settings;
-    tr_variantInitDict(&current_settings, PREFS_COUNT);
+    auto current_settings = tr_variant::make_map(PREFS_COUNT);
 
     for (int i = 0; i < PREFS_COUNT; ++i)
     {
@@ -407,9 +405,7 @@ Prefs::~Prefs()
     auto settings = serde.parse_file(filename);
     if (!settings)
     {
-        auto empty_dict = tr_variant{};
-        tr_variantInitDict(&empty_dict, PREFS_COUNT);
-        settings = std::move(empty_dict);
+        settings = tr_variant::make_map(PREFS_COUNT);
     }
 
     tr_variantMergeDicts(&*settings, &current_settings);

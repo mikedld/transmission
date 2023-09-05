@@ -63,8 +63,7 @@ tr_session_stats tr_stats::load_old_stats(std::string_view config_dir)
 void tr_stats::save() const
 {
     auto const saveme = cumulative();
-    auto top = tr_variant{};
-    tr_variantInitDict(&top, 5);
+    auto top = tr_variant::make_map(5U);
     tr_variantDictAddInt(&top, TR_KEY_downloaded_bytes, saveme.downloadedBytes);
     tr_variantDictAddInt(&top, TR_KEY_files_added, saveme.filesAdded);
     tr_variantDictAddInt(&top, TR_KEY_seconds_active, saveme.secondsActive);

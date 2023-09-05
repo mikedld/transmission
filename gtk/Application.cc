@@ -473,13 +473,12 @@ bool Application::Impl::on_rpc_changed_idle(tr_rpc_callback_type type, tr_torren
 
     case TR_RPC_SESSION_CHANGED:
         {
-            tr_variant tmp;
             tr_variant* newval = nullptr;
             tr_variant* oldvals = gtr_pref_get_all();
             tr_quark key = TR_KEY_NONE;
             std::vector<tr_quark> changed_keys;
             auto const* const session = core_->get_session();
-            tr_variantInitDict(&tmp, 100);
+            auto tmp = tr_variant::make_map(100U);
             tr_sessionGetSettings(session, &tmp);
 
             auto const serde = tr_variant_serde::benc();
@@ -1435,11 +1434,10 @@ void Application::Impl::show_about_dialog()
 
 bool Application::Impl::call_rpc_for_selected_torrents(std::string const& method)
 {
-    tr_variant top;
     bool invoked = false;
     auto* session = core_->get_session();
 
-    tr_variantInitDict(&top, 2);
+    auto top = tr_variant::make_map(2U);
     tr_variantDictAddStrView(&top, TR_KEY_method, method);
     auto* const args = tr_variantDictAddDict(&top, TR_KEY_arguments, 1);
     auto* const ids = tr_variantDictAddList(args, TR_KEY_ids, 0);
@@ -1465,9 +1463,7 @@ void Application::Impl::remove_selected(bool delete_files)
 void Application::Impl::start_all_torrents()
 {
     auto* session = core_->get_session();
-    tr_variant request;
-
-    tr_variantInitDict(&request, 1);
+    auto request = tr_variant::make_map(1U);
     tr_variantDictAddStrView(&request, TR_KEY_method, "torrent-start"sv);
     tr_rpc_request_exec_json(session, &request, nullptr, nullptr);
 }
@@ -1475,9 +1471,7 @@ void Application::Impl::start_all_torrents()
 void Application::Impl::pause_all_torrents()
 {
     auto* session = core_->get_session();
-    tr_variant request;
-
-    tr_variantInitDict(&request, 1);
+    auto request = tr_variant::make_map(1U);
     tr_variantDictAddStrView(&request, TR_KEY_method, "torrent-stop"sv);
     tr_rpc_request_exec_json(session, &request, nullptr, nullptr);
 }

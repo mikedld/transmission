@@ -51,3 +51,5 @@ CheckOptions:
   - { key: readability-identifier-naming.StructCase,               value: CamelCase  }
   - { key: readability-identifier-naming.TemplateParameterCase,    value: CamelCase  }
   - { key: readability-identifier-naming.VariableCase,             value: lower_case }
+  - { key: bugprone-exception-escape.IgnoredExceptions,            value: Prefs      }
+

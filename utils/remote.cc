@@ -2408,7 +2408,7 @@ static tr_variant* ensure_sset(tr_variant& sset)
         return tr_variantDictFind(&sset, Arguments);
     }
 
-    tr_variantInitDict(&sset, 3);
+    sset = tr_variant::make_map(3U);
     tr_variantDictAddStrView(&sset, TR_KEY_method, "session-set"sv);
     return tr_variantDictAddDict(&sset, Arguments, 0);
 }
@@ -2420,7 +2420,7 @@ static tr_variant* ensure_tset(tr_variant& tset)
         return tr_variantDictFind(&tset, Arguments);
     }
 
-    tr_variantInitDict(&tset, 3);
+    tset = tr_variant::make_map(3U);
     tr_variantDictAddStrView(&tset, TR_KEY_method, "torrent-set"sv);
     return tr_variantDictAddDict(&tset, Arguments, 1);
 }
@@ -2464,7 +2464,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
                     status |= flush(rpcurl, &tset, config);
                 }
 
-                tr_variantInitDict(&tadd, 3);
+                tadd = tr_variant::make_map(3U);
                 tr_variantDictAddStrView(&tadd, TR_KEY_method, "torrent-add"sv);
                 tr_variantDictAddInt(&tadd, TR_KEY_tag, TAG_TORRENT_ADD);
                 tr_variantDictAddDict(&tadd, Arguments, 0);
@@ -2562,13 +2562,10 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
         }
         else if (stepMode == MODE_TORRENT_GET)
         {
-            auto top = tr_variant{};
-            tr_variant* args;
-            tr_variant* fields;
-            tr_variantInitDict(&top, 3);
+            auto top = tr_variant::make_map(3U);
             tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-get"sv);
-            args = tr_variantDictAddDict(&top, Arguments, 0);
-            fields = tr_variantDictAddList(args, TR_KEY_fields, 0);
+            tr_variant* args = tr_variantDictAddDict(&top, Arguments, 0);
+            tr_variant* fields = tr_variantDictAddList(args, TR_KEY_fields, 0);
 
             if (tset.has_value())
             {
@@ -3022,8 +3019,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
             }
             else
             {
-                auto top = tr_variant{};
-                tr_variantInitDict(&top, 2);
+                auto top = tr_variant::make_map(2U);
                 tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-set-location"sv);
                 tr_variant* args = tr_variantDictAddDict(&top, Arguments, 3);
                 tr_variantDictAddStr(args, TR_KEY_location, optarg);
@@ -3039,8 +3035,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
             {
             case 920: /* session-info */
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "session-get"sv);
                     tr_variantDictAddInt(&top, TR_KEY_tag, TAG_SESSION);
                     status |= flush(rpcurl, &top, config);
@@ -3054,8 +3049,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
                 }
                 else
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-start"sv);
                     addIdArg(tr_variantDictAddDict(&top, Arguments, 1), config);
                     status |= flush(rpcurl, &top, config);
@@ -3069,8 +3063,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
                 }
                 else
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-stop"sv);
                     addIdArg(tr_variantDictAddDict(&top, Arguments, 1), config);
                     status |= flush(rpcurl, &top, config);
@@ -3087,8 +3080,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
 
             case 850:
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 1);
+                    auto top = tr_variant::make_map(1U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "session-close"sv);
                     status |= flush(rpcurl, &top, config);
                     break;
@@ -3096,8 +3088,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
 
             case 963:
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 1);
+                    auto top = tr_variant::make_map(1U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "blocklist-update"sv);
                     status |= flush(rpcurl, &top, config);
                     break;
@@ -3105,8 +3096,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
 
             case 921:
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "session-stats"sv);
                     tr_variantDictAddInt(&top, TR_KEY_tag, TAG_STATS);
                     status |= flush(rpcurl, &top, config);
@@ -3115,8 +3105,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
 
             case 962:
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "port-test"sv);
                     tr_variantDictAddInt(&top, TR_KEY_tag, TAG_PORTTEST);
                     status |= flush(rpcurl, &top, config);
@@ -3131,8 +3120,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
                         status |= flush(rpcurl, &tset, config);
                     }
 
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-reannounce"sv);
                     addIdArg(tr_variantDictAddDict(&top, Arguments, 1), config);
                     status |= flush(rpcurl, &top, config);
@@ -3147,8 +3135,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
                         status |= flush(rpcurl, &tset, config);
                     }
 
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-verify"sv);
                     addIdArg(tr_variantDictAddDict(&top, Arguments, 1), config);
                     status |= flush(rpcurl, &top, config);
@@ -3158,8 +3145,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
             case 'r':
             case 840:
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-remove"sv);
                     auto* args = tr_variantDictAddDict(&top, Arguments, 2);
                     tr_variantDictAddBool(args, TR_KEY_delete_local_data, c == 840);
@@ -3170,8 +3156,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
 
             case 960:
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-set-location"sv);
                     auto* args = tr_variantDictAddDict(&top, Arguments, 3);
                     tr_variantDictAddStr(args, TR_KEY_location, optarg);
@@ -3183,8 +3168,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
 
             case 964:
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStr(&top, TR_KEY_method, "torrent-rename-path"sv);
                     auto* args = tr_variantDictAddDict(&top, Arguments, 3);
                     tr_variantDictAddStr(args, TR_KEY_path, rename_from);
@@ -3203,8 +3187,7 @@ static int processArgs(char const* rpcurl, int argc, char const* const* argv, Co
 
             case 732:
                 {
-                    auto top = tr_variant{};
-                    tr_variantInitDict(&top, 2);
+                    auto top = tr_variant::make_map(2U);
                     tr_variantDictAddStrView(&top, TR_KEY_method, "group-get"sv);
                     tr_variantDictAddInt(&top, TR_KEY_tag, TAG_GROUPS);
                     status |= flush(rpcurl, &top, config);

@@ -345,7 +345,7 @@ inline void ensureFormattersInited()
 class SessionTest : public SandboxedTest
 {
 private:
-    std::shared_ptr<tr_variant> settings_;
+    tr_variant settings_;
 
     tr_session* sessionInit(tr_variant* settings)
     {
@@ -511,14 +511,12 @@ protected:
 
     tr_variant* settings()
     {
-        if (!settings_)
+        if (!settings_.has_value())
         {
-            auto* settings = new tr_variant{};
-            tr_variantInitDict(settings, 10);
-            settings_.reset(settings);
+            settings_ = tr_variant::make_map(10U);
         }
 
-        return settings_.get();
+        return &settings_;
     }
 
     virtual void SetUp() override
@@ -542,7 +540,7 @@ protected:
     {
         sessionClose(session_);
         session_ = nullptr;
-        settings_.reset();
+        settings_ = tr_variant{};
 
         SandboxedTest::TearDown();
     }

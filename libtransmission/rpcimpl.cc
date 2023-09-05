@@ -300,7 +300,7 @@ char const* torrentVerify(tr_session* session, tr_variant* args_in, tr_variant* 
 
 void addLabels(tr_torrent const* tor, tr_variant* list)
 {
-    tr_variantInitList(list, std::size(tor->labels));
+    *list = tr_variant::make_vector(std::size(tor->labels));
     for (auto const& label : tor->labels)
     {
         tr_variantListAddQuark(list, label);
@@ -391,7 +391,7 @@ void addPeers(tr_torrent const* tor, tr_variant* list)
     auto peer_count = size_t{};
     tr_peer_stat* peers = tr_torrentPeers(tor, &peer_count);
 
-    tr_variantInitList(list, peer_count);
+    *list = tr_variant::make_vector(peer_count);
 
     for (size_t i = 0; i < peer_count; ++i)
     {
@@ -521,7 +521,7 @@ void initField(tr_torrent const* const tor, tr_stat const* const st, tr_variant*
         break;
 
     case TR_KEY_availability:
-        tr_variantInitList(initme, tor->piece_count());
+        *initme = tr_variant::make_vector(tor->piece_count());
         for (tr_piece_index_t piece = 0, n = tor->piece_count(); piece < n; ++piece)
         {
             tr_variantListAddInt(initme, tr_peerMgrPieceAvailability(tor, piece));
@@ -589,12 +589,12 @@ void initField(tr_torrent const* const tor, tr_stat const* const st, tr_variant*
         break;
 
     case TR_KEY_files:
-        tr_variantInitList(initme, tor->file_count());
+        *initme = tr_variant::make_vector(tor->file_count());
         addFiles(tor, initme);
         break;
 
     case TR_KEY_fileStats:
-        tr_variantInitList(initme, tor->file_count());
+        *initme = tr_variant::make_vector(tor->file_count());
         addFileStats(tor, initme);
         break;
 
@@ -689,7 +689,7 @@ void initField(tr_torrent const* const tor, tr_stat const* const st, tr_variant*
 
     case TR_KEY_peersFrom:
         {
-            tr_variantInitDict(initme, 7);
+            *initme = tr_variant::make_map(7U);
             auto const* f = st->peersFrom;
             tr_variantDictAddInt(initme, TR_KEY_fromCache, f[TR_PEER_FROM_RESUME]);
             tr_variantDictAddInt(initme, TR_KEY_fromDht, f[TR_PEER_FROM_DHT]);
@@ -738,7 +738,7 @@ void initField(tr_torrent const* const tor, tr_stat const* const st, tr_variant*
     case TR_KEY_priorities:
         {
             auto const n = tor->file_count();
-            tr_variantInitList(initme, n);
+            *initme = tr_variant::make_vector(n);
             for (tr_file_index_t i = 0; i < n; ++i)
             {
                 tr_variantListAddInt(initme, tr_torrentFile(tor, i).priority);
@@ -807,7 +807,7 @@ void initField(tr_torrent const* const tor, tr_stat const* const st, tr_variant*
         break;
 
     case TR_KEY_trackers:
-        tr_variantInitList(initme, tor->tracker_count());
+        *initme = tr_variant::make_vector(tor->tracker_count());
         addTrackers(tor, initme);
         break;
 
@@ -818,7 +818,7 @@ void initField(tr_torrent const* const tor, tr_stat const* const st, tr_variant*
     case TR_KEY_trackerStats:
         {
             auto const n = tr_torrentTrackerCount(tor);
-            tr_variantInitList(initme, n);
+            *initme = tr_variant::make_vector(n);
             for (size_t i = 0; i < n; ++i)
             {
                 auto const& tracker = tr_torrentTracker(tor, i);
@@ -854,7 +854,7 @@ void initField(tr_torrent const* const tor, tr_stat const* const st, tr_variant*
     case TR_KEY_wanted:
         {
             auto const n = tor->file_count();
-            tr_variantInitList(initme, n);
+            *initme = tr_variant::make_vector(n);
             for (tr_file_index_t i = 0; i < n; ++i)
             {
                 tr_variantListAddInt(initme, tr_torrentFile(tor, i).wanted ? 1 : 0);
@@ -863,7 +863,7 @@ void initField(tr_torrent const* const tor, tr_stat const* const st, tr_variant*
         break;
 
     case TR_KEY_webseeds:
-        tr_variantInitList(initme, tor->webseed_count());
+        *initme = tr_variant::make_vector(tor->webseed_count());
         addWebseeds(tor, initme);
         break;
 
@@ -880,11 +880,11 @@ void addTorrentInfo(tr_torrent* tor, TrFormat format, tr_variant* entry, tr_quar
 {
     if (format == TrFormat::Table)
     {
-        tr_variantInitList(entry, field_count);
+        *entry = tr_variant::make_vector(field_count);
     }
     else
     {
-        tr_variantInitDict(entry, field_count);
+        *entry = tr_variant::make_map(field_count);
     }
 
     if (field_count > 0)
@@ -2523,8 +2523,7 @@ void tr_rpc_request_exec_json(
     /* if we couldn't figure out which method to use, return an error */
     if (result != nullptr)
     {
-        auto response = tr_variant{};
-        tr_variantInitDict(&response, 3);
+        auto response = tr_variant::make_map(3U);
         tr_variantDictAddDict(&response, TR_KEY_arguments, 0);
         tr_variantDictAddStr(&response, TR_KEY_result, result);
 
@@ -2537,8 +2536,7 @@ void tr_rpc_request_exec_json(
     }
     else if (method->immediate)
     {
-        auto response = tr_variant{};
-        tr_variantInitDict(&response, 3);
+        auto response = tr_variant::make_map(3U);
         tr_variant* const args_out = tr_variantDictAddDict(&response, TR_KEY_arguments, 0);
         result = (*method->func)(session, args_in, args_out, nullptr);
 
@@ -2560,7 +2558,7 @@ void tr_rpc_request_exec_json(
     {
         auto* const data = new tr_rpc_idle_data{};
         data->session = session;
-        tr_variantInitDict(&data->response, 3);
+        data->response = tr_variant::make_map(3U);
 
         if (auto tag = int64_t{}; tr_variantDictFindInt(mutable_request, TR_KEY_tag, &tag))
         {
@@ -2604,7 +2602,7 @@ void tr_rpc_parse_list_str(tr_variant* setme, std::string_view str)
     }
     else
     {
-        tr_variantInitList(setme, value_count);
+        *setme = tr_variant::make_vector(value_count);
 
         for (auto const& value : values)
         {

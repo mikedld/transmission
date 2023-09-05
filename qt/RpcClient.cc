@@ -98,7 +98,7 @@ RpcResponseFuture RpcClient::exec(tr_quark method, tr_variant* args)
 RpcResponseFuture RpcClient::exec(std::string_view method, tr_variant* args)
 {
     TrVariantPtr const json = createVariant();
-    tr_variantInitDict(json.get(), 3);
+    *json = tr_variant::make_map(3U);
     dictAdd(json.get(), TR_KEY_method, method);
 
     if (args != nullptr) // if args were passed in, use them

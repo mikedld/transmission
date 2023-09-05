@@ -669,8 +669,6 @@ void tr_daemon::reconfigure(void)
     }
     else
     {
-        tr_variant newsettings;
-        char const* configDir;
 
         /* reopen the logfile to allow for log rotation */
         if (log_file_name_ != nullptr)
@@ -678,9 +676,10 @@ void tr_daemon::reconfigure(void)
             reopen_log_file(log_file_name_);
         }
 
-        configDir = tr_sessionGetConfigDir(my_session_);
+        char const* const configDir = tr_sessionGetConfigDir(my_session_);
         tr_logAddInfo(fmt::format(_("Reloading settings from '{path}'"), fmt::arg("path", configDir)));
-        tr_variantInitDict(&newsettings, 0);
+
+        auto newsettings = tr_variant::make_map();
         tr_variantDictAddBool(&newsettings, TR_KEY_rpc_enabled, true);
         tr_sessionLoadSettings(&newsettings, configDir, MyName);
         tr_sessionSet(my_session_, &newsettings);
@@ -905,7 +904,7 @@ bool tr_daemon::init(int argc, char const* const argv[], bool* foreground, int* 
     config_dir_ = getConfigDir(argc, argv);
 
     /* load settings from defaults + config file */
-    tr_variantInitDict(&settings_, 0);
+    settings_ = tr_variant::make_map();
     tr_variantDictAddBool(&settings_, TR_KEY_rpc_enabled, true);
     bool const loaded = tr_sessionLoadSettings(&settings_, config_dir_.c_str(), MyName);
 

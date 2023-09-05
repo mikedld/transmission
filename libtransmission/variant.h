@@ -42,8 +42,29 @@ public:
         MapIndex = 6
     };
 
+    class Map : public std::map<tr_quark, tr_variant>
+    {
+    public:
+        template<typename Val>
+        [[nodiscard]] Val const* find_if(tr_quark key) const noexcept
+        {
+            auto const iter = find(key);
+            return iter != end() ? iter->second.get_if<Val>() : nullptr;
+        }
+
+        template<typename Val>
+        [[nodiscard]] std::optional<Val> get_if(tr_quark key) const noexcept
+        {
+            if (auto const* const val = find_if<Val>(key); val != nullptr)
+            {
+                return *val;
+            }
+
+            return std::nullopt;
+        }
+    };
+
     using Vector = std::vector<tr_variant>;
-    using Map = std::map<tr_quark, tr_variant>;
 
     constexpr tr_variant() noexcept = default;
     tr_variant(tr_variant const&) = delete;
@@ -55,6 +76,20 @@ public:
     explicit tr_variant(Val value)
     {
         *this = std::move(value);
+    }
+
+    [[nodiscard]] static auto make_map(size_t /*n_reserve*/ = 0U)
+    {
+        auto ret = tr_variant{};
+        ret.val_.emplace<Map>();
+        return ret;
+    }
+
+    [[nodiscard]] static auto make_vector(size_t n_reserve = 0U)
+    {
+        auto ret = tr_variant{};
+        ret.val_.emplace<Vector>().reserve(n_reserve);
+        return ret;
     }
 
     template<typename Val>
@@ -231,7 +266,6 @@ void tr_variantInitInt(tr_variant* initme, int64_t value);
 
 // --- Lists
 
-void tr_variantInitList(tr_variant* initme, size_t reserve_count);
 void tr_variantListReserve(tr_variant* var, size_t reserve_count);
 
 tr_variant* tr_variantListAdd(tr_variant* var);
@@ -263,7 +297,6 @@ bool tr_variantListRemove(tr_variant* var, size_t pos);
 
 // --- Dictionaries
 
-void tr_variantInitDict(tr_variant* initme, size_t reserve_count);
 void tr_variantDictReserve(tr_variant* var, size_t reserve_count);
 bool tr_variantDictRemove(tr_variant* var, tr_quark key);
 

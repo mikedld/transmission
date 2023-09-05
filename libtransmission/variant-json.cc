@@ -137,11 +137,11 @@ void action_callback_PUSH(jsonsl_t jsn, jsonsl_action_t /*action*/, struct jsons
         size_t const n = depth < MaxDepth ? data->preallocGuess[depth] : 0;
         if (state->type == JSONSL_T_LIST)
         {
-            tr_variantInitList(node, n);
+            *node = tr_variant::make_vector(n);
         }
         else
         {
-            tr_variantInitDict(node, n);
+            *node = tr_variant::make_map(n);
         }
     }
 }

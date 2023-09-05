@@ -82,8 +82,7 @@ TEST_F(RpcTest, sessionGet)
     auto* tor = zeroTorrentInit(ZeroTorrentState::NoFiles);
     EXPECT_NE(nullptr, tor);
 
-    tr_variant request;
-    tr_variantInitDict(&request, 1);
+    auto request = tr_variant::make_map(1U);
     tr_variantDictAddStrView(&request, TR_KEY_method, "session-get");
     tr_variant response;
     tr_rpc_request_exec_json(session_, &request, rpc_response_func, &response);

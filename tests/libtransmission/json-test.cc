@@ -138,8 +138,7 @@ TEST_P(JSONTest, testUtf8)
 TEST_P(JSONTest, testUtf16Surrogates)
 {
     static auto constexpr ThinkingFaceEmojiUtf8 = "\xf0\x9f\xa4\x94"sv;
-    auto var = tr_variant{};
-    tr_variantInitDict(&var, 1);
+    auto var = tr_variant::make_map(1U);
     auto const key = tr_quark_new("key"sv);
     tr_variantDictAddStr(&var, key, ThinkingFaceEmojiUtf8);
 

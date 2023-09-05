@@ -872,9 +872,8 @@ void save(tr_torrent* tor)
         return;
     }
 
-    auto top = tr_variant{};
     auto const now = tr_time();
-    tr_variantInitDict(&top, 50); /* arbitrary "big enough" number */
+    auto top = tr_variant::make_map(50U); // arbitrary "big enough" number
     tr_variantDictAddInt(&top, TR_KEY_seeding_time_seconds, tor->seconds_seeding(now));
     tr_variantDictAddInt(&top, TR_KEY_downloading_time_seconds, tor->seconds_downloading(now));
     tr_variantDictAddInt(&top, TR_KEY_activity_date, tor->activityDate);

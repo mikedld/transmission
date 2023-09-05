@@ -128,8 +128,7 @@ void bandwidthGroupWrite(tr_session const* session, std::string_view config_dir)
 {
     auto const& groups = session->bandwidthGroups();
 
-    auto groups_dict = tr_variant{};
-    tr_variantInitDict(&groups_dict, std::size(groups));
+    auto groups_dict = tr_variant::make_map(std::size(groups));
 
     for (auto const& [name, group] : groups)
     {
@@ -497,8 +496,7 @@ bool tr_sessionLoadSettings(tr_variant* settings_in, char const* config_dir, cha
     TR_ASSERT(settings_in->holds_alternative<tr_variant::Map>());
 
     // first, start with the libtransmission default settings
-    auto settings = tr_variant{};
-    tr_variantInitDict(&settings, 0);
+    auto settings = tr_variant::make_map();
     tr_sessionGetDefaultSettings(&settings);
 
     // now use the app default settings passed in
@@ -537,10 +535,9 @@ void tr_sessionSaveSettings(tr_session* session, char const* config_dir, tr_vari
     TR_ASSERT(client_settings != nullptr);
     TR_ASSERT(client_settings->holds_alternative<tr_variant::Map>());
 
-    tr_variant settings;
     auto const filename = tr_pathbuf{ config_dir, "/settings.json"sv };
 
-    tr_variantInitDict(&settings, 0);
+    auto settings = tr_variant::make_map();
 
     /* the existing file settings are the fallback values */
     if (auto const file_settings = tr_variant_serde::json().parse_file(filename); file_settings)
@@ -553,8 +550,7 @@ void tr_sessionSaveSettings(tr_session* session, char const* config_dir, tr_vari
 
     /* the session's true values override the file & client settings */
     {
-        auto session_settings = tr_variant{};
-        tr_variantInitDict(&session_settings, 0);
+        auto session_settings = tr_variant::make_map();
         tr_sessionGetSettings(session, &session_settings);
         tr_variantMergeDicts(&settings, &session_settings);
     }
@@ -638,8 +634,7 @@ void tr_session::initImpl(init_data& data)
 
     tr_logAddTrace(fmt::format("tr_sessionInit: the session's top-level bandwidth object is {}", fmt::ptr(&top_bandwidth_)));
 
-    auto settings = tr_variant{};
-    tr_variantInitDict(&settings, 0);
+    auto settings = tr_variant::make_map();
     tr_sessionGetDefaultSettings(&settings);
     tr_variantMergeDicts(&settings, client_settings);
 

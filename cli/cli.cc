@@ -204,8 +204,6 @@ int tr_main(int argc, char* argv[])
 
     tr_locale_set_global("");
 
-    tr_variant settings;
-
     tr_formatter_mem_init(MemK, MemKStr, MemMStr, MemGStr, MemTStr);
     tr_formatter_size_init(DiskK, DiskKStr, DiskMStr, DiskGStr, DiskTStr);
     tr_formatter_speed_init(SpeedK, SpeedKStr, SpeedMStr, SpeedGStr, SpeedTStr);
@@ -220,8 +218,8 @@ int tr_main(int argc, char* argv[])
     }
 
     /* load the defaults from config file + libtransmission defaults */
-    tr_variantInitDict(&settings, 0);
     auto const config_dir = getConfigDir(argc, (char const**)argv);
+    auto settings = tr_variant::make_map();
     tr_sessionLoadSettings(&settings, config_dir.c_str(), MyConfigName);
 
     /* the command line overrides defaults */

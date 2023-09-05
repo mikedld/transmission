@@ -201,7 +201,8 @@ void variantInit(tr_variant* init_me, char const* value) = delete; // use string
 template<typename C, typename T = typename C::value_type>
 void variantInit(tr_variant* init_me, C const& value)
 {
-    tr_variantInitList(init_me, std::size(value));
+    *init_me = tr_variant::make_vector(std::size(value));
+
     for (auto const& item : value)
     {
         variantInit(tr_variantListAdd(init_me), item);

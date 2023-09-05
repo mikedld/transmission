@@ -282,8 +282,7 @@ TEST_F(SessionTest, sessionId)
 
 TEST_F(SessionTest, getDefaultSettingsIncludesSubmodules)
 {
-    auto settings = tr_variant{};
-    tr_variantInitDict(&settings, 0);
+    auto settings = tr_variant::make_map();
     tr_sessionGetDefaultSettings(&settings);
 
     // Choose a setting from each of [tr_session, tr_session_alt_speeds, tr_rpc_server] to test all of them.
@@ -305,8 +304,7 @@ TEST_F(SessionTest, honorsSettings)
 
     // Choose a setting from each of [tr_session, tr_session_alt_speeds, tr_rpc_server] to test all of them.
     // These are all `false` by default
-    auto settings = tr_variant{};
-    tr_variantInitDict(&settings, 0);
+    auto settings = tr_variant::make_map();
     tr_sessionGetDefaultSettings(&settings);
     for (auto const& key : { TR_KEY_peer_port_random_on_start, TR_KEY_alt_speed_time_enabled, TR_KEY_rpc_enabled })
     {
@@ -335,8 +333,7 @@ TEST_F(SessionTest, savesSettings)
     tr_sessionSetRPCEnabled(session_, true);
 
     // Choose a setting from each of [tr_session, tr_session_alt_speeds, tr_rpc_server] to test all of them.
-    auto settings = tr_variant{};
-    tr_variantInitDict(&settings, 0);
+    auto settings = tr_variant::make_map();
     tr_sessionGetSettings(session_, &settings);
     for (auto const& key : { TR_KEY_peer_port_random_on_start, TR_KEY_alt_speed_time_enabled, TR_KEY_rpc_enabled })
     {

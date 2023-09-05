@@ -123,8 +123,7 @@ protected:
         {
             auto const dat_file = MockStateFile::filename(path);
 
-            auto dict = tr_variant{};
-            tr_variantInitDict(&dict, 3U);
+            auto dict = tr_variant::make_map(3U);
             tr_variantDictAddRaw(&dict, TR_KEY_id, std::data(id_), std::size(id_));
             auto compact = std::vector<std::byte>{};
             for (auto const& socket_address : ipv4_nodes_)
