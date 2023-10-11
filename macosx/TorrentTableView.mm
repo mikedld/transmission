@@ -8,18 +8,16 @@
 #import "Controller.h"
 #import "FileListNode.h"
 #import "InfoOptionsViewController.h"
-#import "NSKeyedUnarchiverAdditions.h"
-#import "NSStringAdditions.h"
 #import "Torrent.h"
 #import "TorrentCell.h"
 #import "SmallTorrentCell.h"
 #import "GroupCell.h"
 #import "TorrentGroup.h"
 #import "GroupsController.h"
-#import "NSImageAdditions.h"
 #import "TorrentCellActionButton.h"
 #import "TorrentCellControlButton.h"
 #import "TorrentCellRevealButton.h"
+#import <Transmission-Swift.h>
 
 CGFloat const kGroupSeparatorHeight = 18.0;
 

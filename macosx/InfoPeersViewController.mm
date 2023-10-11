@@ -6,11 +6,8 @@
 #include <libtransmission/utils.h>
 
 #import "InfoPeersViewController.h"
-#import "NSStringAdditions.h"
-#import "PeerProgressIndicatorCell.h"
 #import "Torrent.h"
-#import "WebSeedTableView.h"
-#import "NSImageAdditions.h"
+#import <Transmission-Swift.h>
 
 static NSString* const kAnimationIdKey = @"animationId";
 static NSString* const kWebSeedAnimationId = @"webSeed";
@@ -22,7 +19,7 @@ static NSString* const kWebSeedAnimationId = @"webSeed";
 @property(nonatomic) BOOL fSet;
 
 @property(nonatomic) NSMutableArray<NSDictionary*>* fPeers;
-@property(nonatomic) NSMutableArray<NSDictionary*>* fWebSeeds;
+@property(nonatomic) WebSeeds* fWebSeeds;
 
 @property(nonatomic) IBOutlet NSTableView* fPeerTable;
 @property(nonatomic) IBOutlet WebSeedTableView* fWebSeedTable;
@@ -123,7 +120,7 @@ static NSString* const kWebSeedAnimationId = @"webSeed";
 
     if (!self.fWebSeeds)
     {
-        self.fWebSeeds = [[NSMutableArray alloc] init];
+        self.fWebSeeds = [[WebSeeds alloc] init];
     }
     else
     {
@@ -282,7 +279,7 @@ static NSString* const kWebSeedAnimationId = @"webSeed";
 {
     if (tableView == self.fWebSeedTable)
     {
-        return self.fWebSeeds ? self.fWebSeeds.count : 0;
+        return self.fWebSeeds ? self.fWebSeeds.webSeeds.count : 0;
     }
     else
     {
@@ -295,16 +292,15 @@ static NSString* const kWebSeedAnimationId = @"webSeed";
     if (tableView == self.fWebSeedTable)
     {
         NSString* ident = column.identifier;
-        NSDictionary* webSeed = self.fWebSeeds[row];
+        WebSeed* webSeed = self.fWebSeeds.webSeeds[row];
 
         if ([ident isEqualToString:@"DL From"])
         {
-            NSNumber* rate;
-            return (rate = webSeed[@"DL From Rate"]) ? [NSString stringForSpeedAbbrev:rate.doubleValue] : @"";
+            return webSeed.isDownloading ? [NSString stringForSpeedAbbrev:webSeed.dlFromRate] : @"";
         }
         else
         {
-            return webSeed[@"Address"];
+            return webSeed.address;
         }
     }
     else
@@ -502,7 +498,7 @@ static NSString* const kWebSeedAnimationId = @"webSeed";
     {
         if (self.fTorrents.count > 1)
         {
-            return self.fWebSeeds[row][@"Name"];
+            return self.fWebSeeds.webSeeds[row].name;
         }
     }
 

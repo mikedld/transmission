@@ -3,7 +3,7 @@
 // License text can be found in the licenses/ folder.
 
 #import "TrackerNode.h"
-#import "NSStringAdditions.h"
+#import <Transmission-Swift.h>
 
 @interface TrackerNode ()
 

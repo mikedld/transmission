@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="BlocklistDownloaderViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="BlocklistDownloaderViewController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="fButton" destination="7" id="11"/>
                 <outlet property="fProgressBar" destination="4" id="10"/>

@@ -4,10 +4,15 @@ add_library(${TR_NAME}-mac-ql MODULE)
 
 target_sources(${TR_NAME}-mac-ql
     PRIVATE
-        ../NSDataAdditions.mm
-        ../NSStringAdditions.mm
+        ../NSString+Additions.swift
+        ../objc.h
+        ../objc_transmission.h
+        ../objc_transmission.mm
+        ../objc_torrent-metainfo.h
+        ../objc_torrent-metainfo.mm
         GeneratePreviewForURL.mm
         GenerateThumbnailForURL.mm
+        QuickLookPlugin-Bridging-Header.h
         main.cc)
 
 set(LINGUAS
@@ -71,7 +76,11 @@ set_target_properties(
         INSTALL_RPATH "@loader_path/../../../../../MacOS;@loader_path/../../../../../Frameworks"
         MACOSX_BUNDLE ON
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in"
-        OUTPUT_NAME ${MAC_QL_BUNDLE_NAME})
+        OUTPUT_NAME ${MAC_QL_BUNDLE_NAME}
+        XCODE_ATTRIBUTE_CLANG_ENABLE_MODULES YES
+        XCODE_ATTRIBUTE_OTHER_SWIFT_FLAGS ""
+        XCODE_ATTRIBUTE_SWIFT_OBJC_BRIDGING_HEADER "macosx/QuickLookPlugin-Bridging-Header.h"
+        XCODE_ATTRIBUTE_SWIFT_VERSION "5.0")
 
 target_include_directories(${TR_NAME}-mac-ql
     PRIVATE

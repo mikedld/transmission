@@ -6,9 +6,9 @@
 #include <libtransmission/utils.h> //tr_getRatio()
 
 #import "InfoActivityViewController.h"
-#import "NSStringAdditions.h"
 #import "PiecesView.h"
 #import "Torrent.h"
+#import <Transmission-Swift.h>
 
 typedef NS_ENUM(NSUInteger, PiecesControlSegment) {
     PiecesControlSegmentProgress = 0,

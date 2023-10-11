@@ -96,7 +96,7 @@ Gw
                             <subviews>
                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="33">
                                     <rect key="frame" x="64" y="30" width="99" height="25"/>
-                                    <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="2zq-5y-smI" id="34" customClass="GroupPopUpButtonCell">
+                                    <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="2zq-5y-smI" id="34" customClass="GroupPopUpButtonCell" customModule="Transmission" customModuleProvider="target">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="35">
@@ -126,7 +126,7 @@ Gw
                                 </textField>
                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="85">
                                     <rect key="frame" x="64" y="4" width="99" height="25"/>
-                                    <popUpButtonCell key="cell" type="push" title="High" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="90" id="86" customClass="PriorityPopUpButtonCell">
+                                    <popUpButtonCell key="cell" type="push" title="High" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="90" id="86" customClass="PriorityPopUpButtonCell" customModule="Transmission" customModuleProvider="target">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="87">

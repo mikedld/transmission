@@ -4,10 +4,11 @@
 
 #import "AddMagnetWindowController.h"
 #import "Controller.h"
-#import "ExpandedPathToIconTransformer.h"
 #import "GroupsController.h"
-#import "NSStringAdditions.h"
 #import "Torrent.h"
+#import <Transmission-Swift.h>
+
+#include <libtransmission/transmission.h>
 
 typedef NS_ENUM(NSUInteger, PopupPriority) {
     PopupPriorityHigh = 0,

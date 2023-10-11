@@ -7,8 +7,6 @@
 
 #import <Sparkle/SUUpdaterDelegate.h>
 
-#include <libtransmission/transmission.h>
-
 #import "VDKQueue.h"
 
 @class AddMagnetWindowController;
@@ -45,8 +43,6 @@ typedef NS_ENUM(NSUInteger, AddType) { //
 
 - (void)openURL:(NSString*)urlString;
 - (IBAction)openURLShowSheet:(id)sender;
-
-@property(nonatomic, readonly) tr_session* sessionHandle;
 
 - (IBAction)createFile:(id)sender;
 
@@ -181,13 +177,5 @@ typedef NS_ENUM(NSUInteger, AddType) { //
 - (IBAction)linkForums:(id)sender;
 - (IBAction)linkGitHub:(id)sender;
 - (IBAction)linkDonate:(id)sender;
-
-- (void)rpcCallback:(tr_rpc_callback_type)type forTorrentStruct:(struct tr_torrent*)torrentStruct;
-- (void)rpcAddTorrentStruct:(struct tr_torrent*)torrentStruct;
-- (void)rpcRemoveTorrent:(Torrent*)torrent deleteData:(BOOL)deleteData;
-- (void)rpcStartedStoppedTorrent:(Torrent*)torrent;
-- (void)rpcChangedTorrent:(Torrent*)torrent;
-- (void)rpcMovedTorrent:(Torrent*)torrent;
-- (void)rpcUpdateQueue;
 
 @end

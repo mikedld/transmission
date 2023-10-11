@@ -4,9 +4,8 @@
 
 #import "TorrentCell.h"
 #import "ProgressBarView.h"
-#import "ProgressGradients.h"
 #import "Torrent.h"
-#import "NSImageAdditions.h"
+#import <Transmission-Swift.h>
 
 static CGFloat const kPriorityIconWidth = 12.0;
 

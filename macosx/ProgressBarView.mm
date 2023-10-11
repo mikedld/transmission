@@ -3,9 +3,9 @@
 // License text can be found in the licenses/ folder.
 
 #import "ProgressBarView.h"
-#import "ProgressGradients.h"
 #import "TorrentTableView.h"
 #import "Torrent.h"
+#import <Transmission-Swift.h>
 
 static CGFloat const kPiecesTotalPercent = 0.6;
 static NSInteger const kMaxPieces = 18 * 18;

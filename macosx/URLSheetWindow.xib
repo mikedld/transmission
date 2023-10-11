@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="URLSheetWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="URLSheetWindowController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="fCancelButton" destination="6" id="22"/>
                 <outlet property="fLabelField" destination="5" id="16"/>

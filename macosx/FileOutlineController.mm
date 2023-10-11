@@ -8,8 +8,7 @@
 #import "FileOutlineView.h"
 #import "FilePriorityCell.h"
 #import "FileRenameSheetController.h"
-#import "NSMutableArrayAdditions.h"
-#import "NSStringAdditions.h"
+#import <Transmission-Swift.h>
 
 static CGFloat const kRowSmallHeight = 18.0;
 

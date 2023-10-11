@@ -10,9 +10,8 @@
 #import "InfoPeersViewController.h"
 #import "InfoFileViewController.h"
 #import "InfoOptionsViewController.h"
-#import "NSImageAdditions.h"
-#import "NSStringAdditions.h"
 #import "Torrent.h"
+#import <Transmission-Swift.h>
 
 typedef NSString* TabIdentifier NS_TYPED_EXTENSIBLE_ENUM;
 

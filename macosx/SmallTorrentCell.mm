@@ -3,10 +3,9 @@
 // License text can be found in the licenses/ folder.
 
 #import "SmallTorrentCell.h"
-#import "ProgressBarView.h"
-#import "ProgressGradients.h"
 #import "TorrentTableView.h"
 #import "Torrent.h"
+#import <Transmission-Swift.h>
 
 @interface SmallTorrentCell ()
 @property(nonatomic) NSTrackingArea* fTrackingArea;

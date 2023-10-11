@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="GroupsPrefsController">
+        <customObject id="-2" userLabel="File's Owner" customClass="GroupsPrefsController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="groupRulesSheetWindow" destination="1" id="17"/>
                 <outlet property="ruleEditor" destination="34" id="56"/>
@@ -132,7 +132,7 @@ Gw
                                                 </menu>
                                             </popUpMenus>
                                         </predicateEditorRowTemplate>
-                                        <predicateEditorRowTemplate rowType="simple" id="147" customClass="PredicateEditorRowTemplateAny">
+                                        <predicateEditorRowTemplate rowType="simple" id="147" customClass="PredicateEditorRowTemplateAny" customModule="Transmission" customModuleProvider="target">
                                             <array key="leftExpressionObject">
                                                 <expression type="keyPath">
                                                     <string key="keyPath">flatFileList.name</string>

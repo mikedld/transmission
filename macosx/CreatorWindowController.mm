@@ -17,7 +17,8 @@
 
 #import "CreatorWindowController.h"
 #import "Controller.h"
-#import "NSStringAdditions.h"
+#import "Transmission+CXX.h"
+#import <Transmission-Swift.h>
 
 typedef NS_ENUM(NSUInteger, TrackerSegmentTag) {
     TrackerSegmentTagAdd = 0,
@@ -60,7 +61,7 @@ NSMutableSet* creatorWindowControllerSet = nil;
 
 @implementation CreatorWindowController
 
-+ (CreatorWindowController*)createTorrentFile:(tr_session*)handle
++ (CreatorWindowController*)createTorrentFile
 {
     //get file/folder for torrent
     NSURL* path;
@@ -69,19 +70,17 @@ NSMutableSet* creatorWindowControllerSet = nil;
         return nil;
     }
 
-    CreatorWindowController* creator = [[self alloc] initWithHandle:handle path:path];
-    [creator showWindow:nil];
-    return creator;
+    return [self createTorrentFileForFile:path];
 }
 
-+ (CreatorWindowController*)createTorrentFile:(tr_session*)handle forFile:(NSURL*)file
++ (CreatorWindowController*)createTorrentFileForFile:(NSURL*)file
 {
-    CreatorWindowController* creator = [[self alloc] initWithHandle:handle path:file];
+    CreatorWindowController* creator = [[self alloc] initWithPath:file];
     [creator showWindow:nil];
     return creator;
 }
 
-- (instancetype)initWithHandle:(tr_session*)handle path:(NSURL*)path
+- (instancetype)initWithPath:(NSURL*)path
 {
     if ((self = [super initWithWindowNibName:@"Creator"]))
     {
@@ -239,7 +238,7 @@ NSMutableSet* creatorWindowControllerSet = nil;
         return;
     }
 
-    NSWindow* window = [self createTorrentFile:((Controller*)NSApp.delegate).sessionHandle forFile:path].window;
+    NSWindow* window = [self createTorrentFileForFile:path].window;
     completionHandler(window, nil);
 }
 

@@ -8,6 +8,7 @@
 #include <libtransmission/transmission.h>
 
 @class FileListNode;
+@class WebSeed;
 
 typedef NS_ENUM(NSUInteger, TorrentDeterminationType) { TorrentDeterminationAutomatic = 0, TorrentDeterminationUserSpecified };
 
@@ -15,12 +16,9 @@ extern NSString* const kTorrentDidChangeGroupNotification;
 
 @interface Torrent : NSObject<NSCopying, QLPreviewItem>
 
-- (instancetype)initWithPath:(NSString*)path
-                    location:(NSString*)location
-           deleteTorrentFile:(BOOL)torrentDelete
-                         lib:(tr_session*)lib;
-- (instancetype)initWithTorrentStruct:(tr_torrent*)torrentStruct location:(NSString*)location lib:(tr_session*)lib;
-- (instancetype)initWithMagnetAddress:(NSString*)address location:(NSString*)location lib:(tr_session*)lib;
+- (instancetype)initWithPath:(NSString*)path location:(NSString*)location deleteTorrentFile:(BOOL)torrentDelete;
+- (instancetype)initWithTorrentStruct:(tr_torrent*)torrentStruct location:(NSString*)location;
+- (instancetype)initWithMagnetAddress:(NSString*)address location:(NSString*)location;
 - (void)setResumeStatusForTorrent:(Torrent*)torrent withHistory:(NSDictionary*)history forcePause:(BOOL)pause;
 
 @property(nonatomic, readonly) NSDictionary* history;
@@ -143,7 +141,7 @@ extern NSString* const kTorrentDidChangeGroupNotification;
 @property(nonatomic, readonly) NSArray<NSDictionary*>* peers;
 
 @property(nonatomic, readonly) NSUInteger webSeedCount;
-@property(nonatomic, readonly) NSArray<NSDictionary*>* webSeeds;
+@property(nonatomic, readonly) NSArray<WebSeed*>* webSeeds;
 
 @property(nonatomic, readonly) NSString* progressString;
 @property(nonatomic, readonly) NSString* statusString;

@@ -27,33 +27,15 @@
 #import "TorrentGroup.h"
 #import "TorrentTableView.h"
 #import "CreatorWindowController.h"
-#import "StatsWindowController.h"
 #import "InfoWindowController.h"
-#import "PrefsController.h"
 #import "GroupsController.h"
-#import "AboutWindowController.h"
-#import "URLSheetWindowController.h"
 #import "AddWindowController.h"
 #import "AddMagnetWindowController.h"
-#import "MessageWindowController.h"
-#import "GlobalOptionsPopoverViewController.h"
-#import "ButtonToolbarItem.h"
-#import "GroupToolbarItem.h"
-#import "ShareToolbarItem.h"
 #import "ShareTorrentFileHelper.h"
-#import "Toolbar.h"
-#import "BlocklistDownloader.h"
-#import "StatusBarController.h"
-#import "FilterBarController.h"
 #import "FileRenameSheetController.h"
-#import "BonjourController.h"
 #import "Badger.h"
-#import "DragOverlayWindow.h"
-#import "NSImageAdditions.h"
-#import "NSMutableArrayAdditions.h"
-#import "NSStringAdditions.h"
-#import "ExpandedPathToPathTransformer.h"
-#import "ExpandedPathToIconTransformer.h"
+#import "Transmission+CXX.h"
+#import <Transmission-Swift.h>
 
 typedef NSString* ToolbarItemIdentifier NS_TYPED_EXTENSIBLE_ENUM;
 
@@ -125,24 +107,6 @@ static NSString* const kGithubURL = @"https://github.com/transmission/transmissi
 static NSString* const kDonateURL = @"https://transmissionbt.com/donate/";
 
 static NSTimeInterval const kDonateNagTime = 60 * 60 * 24 * 7;
-
-static void altSpeedToggledCallback([[maybe_unused]] tr_session* handle, bool active, bool byUser, void* controller)
-{
-    NSDictionary* dict = @{@"Active" : @(active), @"ByUser" : @(byUser)};
-    [(__bridge Controller*)controller performSelectorOnMainThread:@selector(altSpeedToggledCallbackIsLimited:) withObject:dict
-                                                    waitUntilDone:NO];
-}
-
-static tr_rpc_callback_status rpcCallback([[maybe_unused]] tr_session* handle, tr_rpc_callback_type type, struct tr_torrent* torrentStruct, void* controller)
-{
-    [(__bridge Controller*)controller rpcCallback:type forTorrentStruct:torrentStruct];
-    return TR_RPC_NOREMOVE; //we'll do the remove manually
-}
-
-static void sleepCallback(void* controller, io_service_t /*y*/, natural_t messageType, void* messageArgument)
-{
-    [(__bridge Controller*)controller sleepCallback:messageType argument:messageArgument];
-}
 
 // 2.90 was infected with ransomware which we now check for and attempt to remove
 static void removeKeRangerRansomware()
@@ -234,7 +198,7 @@ static void removeKeRangerRansomware()
     NSLog(@"OSX.KeRanger.A ransomware removal completed, proceeding to normal operation");
 }
 
-@interface Controller ()<UNUserNotificationCenterDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
+@interface Controller ()<UNUserNotificationCenterDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, MessageWindowControllerGetter, PrefsControllerGetter>
 
 @property(nonatomic) IBOutlet NSWindow* fWindow;
 @property(nonatomic) IBOutlet NSStackView* fStackView;
@@ -259,7 +223,7 @@ static void removeKeRangerRansomware()
 @property(nonatomic) IBOutlet NSMenu* fShareMenu;
 @property(nonatomic) IBOutlet NSMenu* fShareContextMenu;
 
-@property(nonatomic, readonly) tr_session* fLib;
+@property(nonatomic, readonly) tr_session* fSession;
 
 @property(nonatomic, readonly) NSMutableArray<Torrent*>* fTorrents;
 @property(nonatomic, readonly) NSMutableArray* fDisplayedTorrents;
@@ -291,7 +255,7 @@ static void removeKeRangerRansomware()
 @property(nonatomic) NSMutableArray<NSString*>* fAutoImportedNames;
 @property(nonatomic) NSTimer* fAutoImportTimer;
 
-@property(nonatomic) NSURLSession* fSession;
+@property(nonatomic) NSURLSession* fUrlSession;
 
 @property(nonatomic) NSMutableSet<Torrent*>* fAddingTransfers;
 
@@ -303,7 +267,33 @@ static void removeKeRangerRansomware()
 @property(nonatomic) BOOL fSoundPlaying;
 @property(nonatomic) id fNoNapActivity;
 
+- (void)rpcCallback:(tr_rpc_callback_type)type forTorrentStruct:(struct tr_torrent*)torrentStruct;
+- (void)rpcAddTorrentStruct:(struct tr_torrent*)torrentStruct;
+- (void)rpcRemoveTorrent:(Torrent*)torrent deleteData:(BOOL)deleteData;
+- (void)rpcStartedStoppedTorrent:(Torrent*)torrent;
+- (void)rpcChangedTorrent:(Torrent*)torrent;
+- (void)rpcMovedTorrent:(Torrent*)torrent;
+- (void)rpcUpdateQueue;
+
 @end
+
+static void altSpeedToggledCallback([[maybe_unused]] tr_session* handle, bool active, bool byUser, void* controller)
+{
+    NSDictionary* dict = @{@"Active" : @(active), @"ByUser" : @(byUser)};
+    [(__bridge Controller*)controller performSelectorOnMainThread:@selector(altSpeedToggledCallbackIsLimited:) withObject:dict
+                                                    waitUntilDone:NO];
+}
+
+static tr_rpc_callback_status rpcCallback([[maybe_unused]] tr_session* handle, tr_rpc_callback_type type, struct tr_torrent* torrentStruct, void* controller)
+{
+    [(__bridge Controller*)controller rpcCallback:type forTorrentStruct:torrentStruct];
+    return TR_RPC_NOREMOVE; //we'll do the remove manually
+}
+
+static void sleepCallback(void* controller, io_service_t /*y*/, natural_t messageType, void* messageArgument)
+{
+    [(__bridge Controller*)controller sleepCallback:messageType argument:messageArgument];
+}
 
 @implementation Controller
 
@@ -544,14 +534,15 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
         tr_formatter_mem_init(1000, kbString.UTF8String, mbString.UTF8String, gbString.UTF8String, tbString.UTF8String);
 
         auto const default_config_dir = tr_getDefaultConfigDir("Transmission");
-        _fLib = tr_sessionInit(default_config_dir.c_str(), YES, settings);
+        _fSession = tr_sessionInit(default_config_dir.c_str(), YES, settings);
+        Transmission.cSession = (c_tr_session*)self.fSession;
         _fConfigDirectory = @(default_config_dir.c_str());
 
-        tr_sessionSetIdleLimitHitCallback(_fLib, onIdleLimitHit, (__bridge void*)(self));
-        tr_sessionSetQueueStartCallback(_fLib, onStartQueue, (__bridge void*)(self));
-        tr_sessionSetRatioLimitHitCallback(_fLib, onRatioLimitHit, (__bridge void*)(self));
-        tr_sessionSetMetadataCallback(_fLib, onMetadataCompleted, (__bridge void*)(self));
-        tr_sessionSetCompletenessCallback(_fLib, onTorrentCompletenessChanged, (__bridge void*)(self));
+        tr_sessionSetIdleLimitHitCallback(self.fSession, onIdleLimitHit, (__bridge void*)(self));
+        tr_sessionSetQueueStartCallback(self.fSession, onStartQueue, (__bridge void*)(self));
+        tr_sessionSetRatioLimitHitCallback(self.fSession, onRatioLimitHit, (__bridge void*)(self));
+        tr_sessionSetMetadataCallback(self.fSession, onMetadataCompleted, (__bridge void*)(self));
+        tr_sessionSetCompletenessCallback(self.fSession, onTorrentCompletenessChanged, (__bridge void*)(self));
 
         NSApp.delegate = self;
 
@@ -567,7 +558,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
 
         NSURLSessionConfiguration* configuration = NSURLSessionConfiguration.defaultSessionConfiguration;
         configuration.requestCachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
-        _fSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+        _fUrlSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
 
         _fInfoController = [[InfoWindowController alloc] init];
 
@@ -575,19 +566,19 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
         _fileWatcherQueue = [[VDKQueue alloc] init];
         _fileWatcherQueue.delegate = self;
 
-        _prefsController = [[PrefsController alloc] initWithHandle:_fLib];
+        _prefsController = [[PrefsController alloc] init];
 
         _fQuitting = NO;
         _fGlobalPopoverShown = NO;
         _fSoundPlaying = NO;
 
-        tr_sessionSetAltSpeedFunc(_fLib, altSpeedToggledCallback, (__bridge void*)(self));
+        tr_sessionSetAltSpeedFunc(self.fSession, altSpeedToggledCallback, (__bridge void*)(self));
         if (usesSpeedLimitSched)
         {
-            [_fDefaults setBool:tr_sessionUsesAltSpeed(_fLib) forKey:@"SpeedLimit"];
+            [_fDefaults setBool:tr_sessionUsesAltSpeed(self.fSession) forKey:@"SpeedLimit"];
         }
 
-        tr_sessionSetRPCCallback(_fLib, rpcCallback, (__bridge void*)(self));
+        tr_sessionSetRPCCallback(self.fSession, rpcCallback, (__bridge void*)(self));
 
         [SUUpdater sharedUpdater].delegate = self;
         _fQuitRequested = NO;
@@ -691,18 +682,16 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
         NSLog(@"Could not IORegisterForSystemPower");
     }
 
-    auto* const session = self.fLib;
-
     //load previous transfers
-    tr_ctor* ctor = tr_ctorNew(session);
+    tr_ctor* ctor = tr_ctorNew(self.fSession);
     tr_ctorSetPaused(ctor, TR_FORCE, true); // paused by default; unpause below after checking state history
-    auto const n_torrents = tr_sessionLoadTorrents(session, ctor);
+    auto const n_torrents = tr_sessionLoadTorrents(self.fSession, ctor);
     tr_ctorFree(ctor);
 
     // process the loaded torrents
     auto torrents = std::vector<tr_torrent*>{};
     torrents.resize(n_torrents);
-    tr_sessionGetAllTorrents(session, std::data(torrents), std::size(torrents));
+    tr_sessionGetAllTorrents(self.fSession, std::data(torrents), std::size(torrents));
     for (auto* tor : torrents)
     {
         NSString* location;
@@ -710,7 +699,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
         {
             location = @(tr_torrentGetDownloadDir(tor));
         }
-        Torrent* torrent = [[Torrent alloc] initWithTorrentStruct:tor location:location lib:self.fLib];
+        Torrent* torrent = [[Torrent alloc] initWithTorrentStruct:tor location:location];
         [self.fTorrents addObject:torrent];
         self.fTorrentHashes[torrent.hashString] = torrent;
     }
@@ -894,7 +883,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
     //shamelessly ask for donations
     if ([self.fDefaults boolForKey:@"WarningDonate"])
     {
-        BOOL const firstLaunch = tr_sessionGetCumulativeStats(self.fLib).sessionCount <= 1;
+        BOOL const firstLaunch = tr_sessionGetCumulativeStats(self.fSession).sessionCount <= 1;
 
         NSDate* lastDonateDate = [self.fDefaults objectForKey:@"DonateAskDate"];
         BOOL const timePassed = !lastDonateDate || (-1 * lastDonateDate.timeIntervalSinceNow) >= kDonateNagTime;
@@ -1017,10 +1006,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
     [NSProcessInfo.processInfo endActivity:self.fNoNapActivity];
 
     //stop the Bonjour service
-    if (BonjourController.defaultControllerExists)
-    {
-        [BonjourController.defaultController stop];
-    }
+    [BonjourController.defaultController stop];
 
     //stop blocklist download
     if (BlocklistDownloader.isRunning)
@@ -1042,7 +1028,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
     }
 
     //remove all torrent downloads
-    [self.fSession invalidateAndCancel];
+    [self.fUrlSession invalidateAndCancel];
 
     //remember window states and close all windows
     [self.fDefaults setBool:self.fInfoController.window.visible forKey:@"InfoVisible"];
@@ -1064,12 +1050,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
     _fileWatcherQueue = nil;
 
     //complete cleanup
-    tr_sessionClose(self.fLib);
-}
-
-- (tr_session*)sessionHandle
-{
-    return self.fLib;
+    tr_sessionClose(self.fSession);
 }
 
 - (void)handleOpenContentsEvent:(NSAppleEventDescriptor*)event replyEvent:(NSAppleEventDescriptor*)replyEvent
@@ -1221,7 +1202,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
             continue;
         }
 
-        auto foundTorrent = tr_torrentFindFromMetainfo(self.fLib, &metainfo);
+        auto foundTorrent = tr_torrentFindFromMetainfo(self.fSession, &metainfo);
         if (foundTorrent != nullptr) // dupe torrent
         {
             if (tr_torrentHasMetadata(foundTorrent))
@@ -1265,8 +1246,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
 
         Torrent* torrent;
         if (!(torrent = [[Torrent alloc] initWithPath:torrentPath location:location
-                                    deleteTorrentFile:showWindow ? NO : deleteTorrentFile
-                                                  lib:self.fLib]))
+                                    deleteTorrentFile:showWindow ? NO : deleteTorrentFile]))
         {
             continue;
         }
@@ -1356,7 +1336,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
 - (void)openMagnet:(NSString*)address
 {
     tr_torrent* duplicateTorrent;
-    if ((duplicateTorrent = tr_torrentFindFromMagnetLink(self.fLib, address.UTF8String)))
+    if ((duplicateTorrent = tr_torrentFindFromMagnetLink(self.fSession, address.UTF8String)))
     {
         NSString* name = @(tr_torrentName(duplicateTorrent));
         [self duplicateOpenMagnetAlert:address transferName:name];
@@ -1371,7 +1351,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
     }
 
     Torrent* torrent;
-    if (!(torrent = [[Torrent alloc] initWithMagnetAddress:address location:location lib:self.fLib]))
+    if (!(torrent = [[Torrent alloc] initWithMagnetAddress:address location:location]))
     {
         [self invalidOpenMagnetAlert:address];
         return;
@@ -1634,7 +1614,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
             return;
         }
 
-        [self.fSession getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask*>* _Nonnull tasks) {
+        [self.fUrlSession getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask*>* _Nonnull tasks) {
             for (NSURLSessionTask* task in tasks)
             {
                 if ([task.originalRequest.URL isEqual:url])
@@ -1643,7 +1623,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
                     return;
                 }
             }
-            NSURLSessionDataTask* download = [self.fSession dataTaskWithURL:url];
+            NSURLSessionDataTask* download = [self.fUrlSession dataTaskWithURL:url];
             [download resume];
         }];
     }
@@ -1671,7 +1651,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
 
 - (void)createFile:(id)sender
 {
-    [CreatorWindowController createTorrentFile:self.fLib];
+    [CreatorWindowController createTorrentFile];
 }
 
 - (void)resumeSelectedTorrents:(id)sender
@@ -2838,23 +2818,23 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
 {
     NSString* filterType = [self.fDefaults stringForKey:@"Filter"];
     BOOL filterActive = NO, filterDownload = NO, filterSeed = NO, filterPause = NO, filterError = NO, filterStatus = YES;
-    if ([filterType isEqualToString:FilterTypeActive])
+    if ([filterType isEqualToString:FilterType.Active])
     {
         filterActive = YES;
     }
-    else if ([filterType isEqualToString:FilterTypeDownload])
+    else if ([filterType isEqualToString:FilterType.Download])
     {
         filterDownload = YES;
     }
-    else if ([filterType isEqualToString:FilterTypeSeed])
+    else if ([filterType isEqualToString:FilterType.Seed])
     {
         filterSeed = YES;
     }
-    else if ([filterType isEqualToString:FilterTypePause])
+    else if ([filterType isEqualToString:FilterType.Pause])
     {
         filterPause = YES;
     }
-    else if ([filterType isEqualToString:FilterTypeError])
+    else if ([filterType isEqualToString:FilterType.Error])
     {
         filterError = YES;
     }
@@ -2864,14 +2844,15 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
     }
 
     NSInteger const groupFilterValue = [self.fDefaults integerForKey:@"FilterGroup"];
-    BOOL const filterGroup = groupFilterValue != kGroupFilterAllTag;
+    BOOL const filterGroup = groupFilterValue != FilterBarController.kGroupFilterAllTag;
 
     NSArray<NSString*>* searchStrings = self.fFilterBar.searchStrings;
     if (searchStrings && searchStrings.count == 0)
     {
         searchStrings = nil;
     }
-    BOOL const filterTracker = searchStrings && [[self.fDefaults stringForKey:@"FilterSearchType"] isEqualToString:FilterSearchTypeTracker];
+    BOOL const filterTracker = searchStrings &&
+        [[self.fDefaults stringForKey:@"FilterSearchType"] isEqualToString:FilterSearchType.Tracker];
 
     std::atomic<int32_t> active{ 0 }, downloading{ 0 }, seeding{ 0 }, paused{ 0 }, error{ 0 };
     // Pointers to be captured by Obj-C Block as const*
@@ -3333,7 +3314,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
 
     NSPopover* popover = [[NSPopover alloc] init];
     popover.behavior = NSPopoverBehaviorTransient;
-    GlobalOptionsPopoverViewController* viewController = [[GlobalOptionsPopoverViewController alloc] initWithHandle:self.fLib];
+    GlobalOptionsPopoverViewController* viewController = [[GlobalOptionsPopoverViewController alloc] init];
     popover.contentViewController = viewController;
     popover.delegate = self;
 
@@ -3416,7 +3397,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
 
 - (void)speedLimitChanged:(id)sender
 {
-    tr_sessionUseAltSpeed(self.fLib, [self.fDefaults boolForKey:@"SpeedLimit"]);
+    tr_sessionUseAltSpeed(self.fSession, [self.fDefaults boolForKey:@"SpeedLimit"]);
     [self.fStatusBar updateSpeedFieldsToolTips];
 }
 
@@ -3894,7 +3875,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
         {
             if (!torrent && files.count == 1)
             {
-                [CreatorWindowController createTorrentFile:self.fLib forFile:files[0]];
+                [CreatorWindowController createTorrentFileForFile:files[0]];
             }
             else
             {
@@ -5067,7 +5048,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
     {
         if (self.fStatusBar == nil)
         {
-            self.fStatusBar = [[StatusBarController alloc] initWithLib:self.fLib];
+            self.fStatusBar = [[StatusBarController alloc] init];
         }
 
         [self.fStackView insertArrangedSubview:self.fStatusBar.view atIndex:idx];
@@ -5453,7 +5434,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
         location = @(tr_torrentGetDownloadDir(torrentStruct));
     }
 
-    Torrent* torrent = [[Torrent alloc] initWithTorrentStruct:torrentStruct location:location lib:self.fLib];
+    Torrent* torrent = [[Torrent alloc] initWithTorrentStruct:torrentStruct location:location];
 
     //change the location if the group calls for it (this has to wait until after the torrent is created)
     if ([GroupsController.groups usesCustomDownloadLocationForIndex:torrent.groupValue])

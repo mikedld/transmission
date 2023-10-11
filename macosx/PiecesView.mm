@@ -7,7 +7,7 @@
 #import "PiecesView.h"
 #import "Torrent.h"
 #import "InfoWindowController.h"
-#import "NSApplicationAdditions.h"
+#import <Transmission-Swift.h>
 
 static NSInteger const kMaxAcross = 18;
 static NSInteger const kMaxCells = kMaxAcross * kMaxAcross;

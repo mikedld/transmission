@@ -197,7 +197,7 @@ Gw
                             <subviews>
                                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="85">
                                     <rect key="frame" x="335" y="6" width="99" height="25"/>
-                                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="86" customClass="PriorityPopUpButtonCell">
+                                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="86" customClass="PriorityPopUpButtonCell" customModule="Transmission" customModuleProvider="target">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="87">
@@ -228,7 +228,7 @@ Gw
                                 </textField>
                                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="33">
                                     <rect key="frame" x="335" y="30" width="99" height="25"/>
-                                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="34" customClass="GroupPopUpButtonCell">
+                                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="34" customClass="GroupPopUpButtonCell" customModule="Transmission" customModuleProvider="target">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="35"/>

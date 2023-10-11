@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="GlobalOptionsPopoverViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="GlobalOptionsPopoverViewController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="fDownloadLimitField" destination="17" id="69"/>
                 <outlet property="fIdleStopField" destination="81" id="184"/>
@@ -46,7 +46,7 @@
                         <binding destination="119" name="value" keyPath="values.CheckUpload" id="169"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="97" customClass="ColorTextField">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="97" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                     <rect key="frame" x="257" y="12" width="46" height="14"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="minutes" id="98">
                         <font key="font" metaFont="smallSystem"/>
@@ -79,7 +79,7 @@
                         <outlet property="delegate" destination="-2" id="53"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="18" customClass="ColorTextField">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="18" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                     <rect key="frame" x="175" y="78" width="28" height="14"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="KB/s" id="26">
                         <font key="font" metaFont="smallSystem"/>
@@ -90,7 +90,7 @@
                         <binding destination="119" name="enabled" keyPath="values.CheckUpload" id="149"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="179" customClass="ColorTextField">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="179" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                     <rect key="frame" x="175" y="100" width="28" height="14"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="KB/s" id="180">
                         <font key="font" metaFont="smallSystem"/>

@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="MessageWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="MessageWindowController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="fClearButton" destination="13" id="71"/>
                 <outlet property="fFilterField" destination="72" id="74"/>
@@ -85,7 +85,7 @@
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
                                             <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" animates="YES" imageAlignment="top" imageScaling="proportionallyDown" image="imageCell:63:image" id="63"/>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Level"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="level"/>
                                         </tableColumn>
                                         <tableColumn identifier="Date" editable="NO" width="92" minWidth="40" maxWidth="1000" id="32">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Date">
@@ -98,7 +98,7 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Index"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="index"/>
                                             <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
                                         </tableColumn>
                                         <tableColumn identifier="Name" editable="NO" width="99.87988" minWidth="53.87988" maxWidth="5000" id="33">
@@ -111,7 +111,7 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="localizedStandardCompare:" sortKey="Name"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="localizedStandardCompare:" sortKey="name"/>
                                             <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
                                         </tableColumn>
                                         <tableColumn identifier="Message" editable="NO" width="355" minWidth="200" maxWidth="3.4028229999999999e+38" id="68">
@@ -124,7 +124,7 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="localizedStandardCompare:" sortKey="Message"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="localizedStandardCompare:" sortKey="message"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
                                     </tableColumns>

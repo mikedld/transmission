@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="StatusBarController">
+        <customObject id="-2" userLabel="File's Owner" customClass="StatusBarController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="fStatusButton" destination="3" id="18"/>
                 <outlet property="fTotalDLField" destination="7" id="19"/>
@@ -18,7 +18,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView clipsToBounds="YES" id="2" userLabel="StatusBar" customClass="StatusBarView">
+        <customView clipsToBounds="YES" id="2" userLabel="StatusBar" customClass="StatusBarView" customModule="Transmission" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="400" height="21"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <subviews>

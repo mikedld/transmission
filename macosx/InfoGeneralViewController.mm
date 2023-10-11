@@ -3,8 +3,8 @@
 // License text can be found in the licenses/ folder.
 
 #import "InfoGeneralViewController.h"
-#import "NSStringAdditions.h"
 #import "Torrent.h"
+#import <Transmission-Swift.h>
 
 @interface InfoGeneralViewController ()
 

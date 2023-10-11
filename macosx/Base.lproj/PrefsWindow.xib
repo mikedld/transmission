@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="PrefsController">
+        <customObject id="-2" userLabel="File's Owner" customClass="PrefsController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="fAutoSpeedDayTypePopUp" destination="1907" id="1921"/>
                 <outlet property="fBandwidthView" destination="153" id="179"/>
@@ -53,7 +53,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" id="23" userLabel="Preferences" customClass="PrefsWindow">
+        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" id="23" userLabel="Preferences" customClass="PrefsWindow" customModule="Transmission" customModuleProvider="target">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="108" y="632" width="542" height="107"/>
@@ -698,7 +698,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="263" customClass="ColorTextField">
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="263" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                                                 <rect key="frame" x="314" y="143" width="98" height="16"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="active transfers" id="1231">
                                                     <font key="font" metaFont="system"/>
@@ -825,7 +825,7 @@
                                                     <outlet property="nextKeyView" destination="636" id="1639"/>
                                                 </connections>
                                             </textField>
-                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="606" customClass="ColorTextField">
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="606" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                                                 <rect key="frame" x="303" y="123" width="98" height="16"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="active transfers" id="1239">
                                                     <font key="font" metaFont="system"/>
@@ -870,7 +870,7 @@
                                                     <outlet property="nextKeyView" destination="1298" id="1640"/>
                                                 </connections>
                                             </textField>
-                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="638" customClass="ColorTextField">
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="638" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                                                 <rect key="frame" x="367" y="102" width="53" height="16"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="minutes" id="1242">
                                                     <font key="font" metaFont="system"/>
@@ -963,7 +963,7 @@
                                                     <binding destination="365" name="value" keyPath="values.PlayDownloadSound" id="1322"/>
                                                 </connections>
                                             </button>
-                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1969" customClass="ColorTextField">
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1969" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                                                 <rect key="frame" x="340" y="215" width="53" height="16"/>
                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="minutes" id="1970">
                                                     <font key="font" metaFont="system"/>
@@ -1465,7 +1465,7 @@
                                 <outlet property="nextKeyView" destination="526" id="583"/>
                             </connections>
                         </datePicker>
-                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="310" customClass="ColorTextField">
+                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="310" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="402" y="5" width="17" height="16"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="to" id="1281">
                                 <font key="font" metaFont="system"/>
@@ -1591,7 +1591,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="159" customClass="ColorTextField">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="159" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="357" y="160" width="32" height="16"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="KB/s" id="1269">
                                 <font key="font" metaFont="system"/>
@@ -1602,7 +1602,7 @@
                                 <binding destination="365" name="enabled" keyPath="values.CheckUpload" id="1701"/>
                             </connections>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="158" customClass="ColorTextField">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="158" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="357" y="185" width="32" height="16"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="KB/s" id="1268">
                                 <font key="font" metaFont="system"/>
@@ -1901,7 +1901,7 @@
                                 <binding destination="365" name="value" keyPath="values.PEXGlobal" id="1464"/>
                             </connections>
                         </button>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1987" customClass="ColorTextField">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1987" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="125" y="70" width="34" height="16"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="URL:" id="1988">
                                 <font key="font" metaFont="system"/>
@@ -2498,7 +2498,7 @@
                                 <outlet property="nextKeyView" destination="1552" id="1627"/>
                             </connections>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1556" customClass="ColorTextField">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1556" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="57" y="247" width="70" height="16"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Username:" usesSingleLineMode="YES" id="1557">
                                 <font key="font" metaFont="system"/>
@@ -2517,7 +2517,7 @@
                                 </binding>
                             </connections>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1554" customClass="ColorTextField">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1554" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="57" y="221" width="70" height="16"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Password:" usesSingleLineMode="YES" id="1555">
                                 <font key="font" metaFont="system"/>
@@ -2536,7 +2536,7 @@
                                 </binding>
                             </connections>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1492" customClass="ColorTextField">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1492" customClass="ColorTextField" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="38" y="178" width="92" height="16"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Listening port:" id="1493">
                                 <font key="font" metaFont="system"/>
@@ -2634,7 +2634,7 @@
             <point key="canvasLocation" x="-552" y="982"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="365" userLabel="Shared Defaults"/>
-        <customObject id="1783" customClass="GroupsPrefsController">
+        <customObject id="1783" customClass="GroupsPrefsController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="fAddRemoveControl" destination="1772" id="1785"/>
                 <outlet property="fAutoAssignRulesEditButton" destination="1832" id="1883"/>

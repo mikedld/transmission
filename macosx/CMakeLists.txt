@@ -1,7 +1,10 @@
-# minimum macOS target support
 if(CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS MACOS_SUPPORT_MINIMUM)
     message(FATAL_ERROR "Targeting macOS versions before ${MACOS_SUPPORT_MINIMUM} is not supported for the macOS project, please adjust CMAKE_OSX_DEPLOYMENT_TARGET (${CMAKE_OSX_DEPLOYMENT_TARGET})")
 endif()
+
+# Swift support
+cmake_minimum_required(VERSION 3.15.1 FATAL_ERROR)
+enable_language(Swift)
 
 find_program(ACTOOL_EXECUTABLE actool REQUIRED)
 find_program(CODESIGN_EXECUTABLE codesign REQUIRED)
@@ -35,41 +38,31 @@ add_executable(${TR_NAME}-mac MACOSX_BUNDLE)
 
 target_sources(${TR_NAME}-mac
     PRIVATE
-        AboutWindowController.h
-        AboutWindowController.mm
+        AboutWindowController.swift
         AddMagnetWindowController.h
         AddMagnetWindowController.mm
         AddWindowController.h
         AddWindowController.mm
+        Array+Additions.swift
         Badger.h
         Badger.mm
-        BadgeView.h
-        BadgeView.mm
-        BlocklistDownloader.h
-        BlocklistDownloader.mm
-        BlocklistDownloaderViewController.h
-        BlocklistDownloaderViewController.mm
-        BlocklistScheduler.h
-        BlocklistScheduler.mm
-        BonjourController.h
-        BonjourController.mm
-        ButtonToolbarItem.h
-        ButtonToolbarItem.mm
+        BadgeView.swift
+        BlocklistDownloader.swift
+        BlocklistDownloaderViewController.swift
+        BlocklistScheduler.swift
+        BonjourController.swift
+        ButtonToolbarItem.swift
         CocoaCompatibility.h
-        ColorTextField.h
-        ColorTextField.mm
+        Collection+Additions.swift
+        ColorTextField.swift
         Controller.h
         Controller.mm
         CreatorWindowController.h
         CreatorWindowController.mm
-        DragOverlayView.h
-        DragOverlayView.mm
-        DragOverlayWindow.h
-        DragOverlayWindow.mm
-        ExpandedPathToIconTransformer.h
-        ExpandedPathToIconTransformer.mm
-        ExpandedPathToPathTransformer.h
-        ExpandedPathToPathTransformer.mm
+        DragOverlayView.swift
+        DragOverlayWindow.swift
+        ExpandedPathToIconTransformer.swift
+        ExpandedPathToPathTransformer.swift
         FileListNode.h
         FileListNode.mm
         FileNameCell.h
@@ -82,24 +75,17 @@ target_sources(${TR_NAME}-mac
         FilePriorityCell.mm
         FileRenameSheetController.h
         FileRenameSheetController.mm
-        FilterBarController.h
-        FilterBarController.mm
-        FilterBarView.h
-        FilterBarView.mm
-        FilterButton.h
-        FilterButton.mm
-        GlobalOptionsPopoverViewController.h
-        GlobalOptionsPopoverViewController.mm
+        FilterBarController.swift
+        FilterBarView.swift
+        FilterButton.swift
+        GlobalOptionsPopoverViewController.swift
         GroupCell.h
         GroupCell.mm
-        GroupPopUpButtonCell.h
-        GroupPopUpButtonCell.mm
+        GroupPopUpButtonCell.swift
         GroupsController.h
         GroupsController.mm
-        GroupsPrefsController.h
-        GroupsPrefsController.mm
-        GroupToolbarItem.h
-        GroupToolbarItem.mm
+        GroupsPrefsController.swift
+        GroupToolbarItem.swift
         InfoActivityViewController.h
         InfoActivityViewController.mm
         InfoFileViewController.h
@@ -110,63 +96,51 @@ target_sources(${TR_NAME}-mac
         InfoOptionsViewController.mm
         InfoPeersViewController.h
         InfoPeersViewController.mm
-        InfoTextField.h
-        InfoTextField.mm
+        InfoTextField.swift
         InfoTrackersViewController.h
         InfoTrackersViewController.mm
         InfoViewController.h
         InfoWindowController.h
         InfoWindowController.mm
         main.mm
-        MessageWindowController.h
-        MessageWindowController.mm
-        NSApplicationAdditions.h
-        NSApplicationAdditions.mm
-        NSDataAdditions.h
-        NSDataAdditions.mm
-        NSImageAdditions.h
-        NSImageAdditions.mm
-        NSKeyedUnarchiverAdditions.h
-        NSKeyedUnarchiverAdditions.mm
-        NSMutableArrayAdditions.h
-        NSMutableArrayAdditions.mm
+        MessageWindowController.swift
+        NSApplication+Additions.swift
+        NSImage+Additions.swift
+        NSKeyedUnarchiver+Additions.swift
+        NSMutableArray+Additions.swift
+        NSString+Additions.swift
         NSStringAdditions.h
-        NSStringAdditions.mm
-        PeerProgressIndicatorCell.h
-        PeerProgressIndicatorCell.mm
-        PeerTableView.h
-        PeerTableView.mm
+        objc.h
+        objc_log.h
+        objc_log.mm
+        objc_torrent-metainfo.h
+        objc_torrent-metainfo.mm
+        objc_transmission.h
+        objc_transmission.mm
+        PeerProgressIndicatorCell.swift
+        PeerTableView.swift
         PiecesView.h
         PiecesView.mm
-        PortChecker.h
-        PortChecker.mm
-        PredicateEditorRowTemplateAny.h
-        PredicateEditorRowTemplateAny.mm
-        PrefsController.h
-        PrefsController.mm
-        PrefsWindow.h
-        PrefsWindow.mm
-        PriorityPopUpButtonCell.h
-        PriorityPopUpButtonCell.mm
+        PortChecker.swift
+        PredicateEditorRowTemplateAny.swift
+        PrefsController.swift
+        PrefsWindow.swift
+        PriorityPopUpButtonCell.swift
         ProgressBarView.h
         ProgressBarView.mm
-        ProgressGradients.h
-        ProgressGradients.mm
-        ShareToolbarItem.h
-        ShareToolbarItem.mm
+        ProgressGradients.swift
+        ShareToolbarItem.swift
         ShareTorrentFileHelper.h
         ShareTorrentFileHelper.mm
         SmallTorrentCell.h
         SmallTorrentCell.mm
         SparkleProxy.mm
-        StatsWindowController.h
-        StatsWindowController.mm
-        StatusBarController.h
-        StatusBarController.mm
-        StatusBarView.h
-        StatusBarView.mm
-        Toolbar.h
-        Toolbar.mm
+        StatsWindowController.swift
+        StatusBarController.swift
+        StatusBarView.swift
+        SwiftShims.h
+        SwiftShims.m
+        Toolbar.swift
         Torrent.h
         Torrent.mm
         TorrentCell.h
@@ -187,10 +161,13 @@ target_sources(${TR_NAME}-mac
         TrackerNode.mm
         TrackerTableView.h
         TrackerTableView.mm
-        URLSheetWindowController.h
-        URLSheetWindowController.mm
-        WebSeedTableView.h
-        WebSeedTableView.mm)
+        Transmission.swift
+        Transmission+CXX.h
+        Transmission+CXX.mm
+        Transmission-Bridging-Header.h
+        URLSheetWindowController.swift
+        WebSeed.swift
+        WebSeedTableView.swift)
 
 set(XIB_FILES
     AboutWindow.xib
@@ -414,14 +391,7 @@ target_link_libraries(${TR_NAME}-mac
         ${TR_NAME}
         fmt::fmt-header-only
         vdkqueue
-        ${SPARKLE_FRAMEWORK}
-        "-framework AppKit"
-        "-framework Carbon"
-        "-framework Foundation"
-        "-framework IOKit"
-        "-framework Quartz"
-        "-framework Security"
-        "-weak_framework UserNotifications")
+        ${SPARKLE_FRAMEWORK})
 
 if(NOT CMAKE_GENERATOR STREQUAL Xcode)
     add_custom_command(
@@ -436,7 +406,11 @@ set_target_properties(
         INSTALL_RPATH "@executable_path;@executable_path/../Frameworks"
         MACOSX_BUNDLE_GUI_IDENTIFIER "org.m0k.transmission"
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in
-        OUTPUT_NAME ${MAC_BUNDLE_NAME})
+        OUTPUT_NAME ${MAC_BUNDLE_NAME}
+        XCODE_ATTRIBUTE_CLANG_ENABLE_MODULES YES
+        XCODE_ATTRIBUTE_OTHER_SWIFT_FLAGS ""
+        XCODE_ATTRIBUTE_SWIFT_OBJC_BRIDGING_HEADER "macosx/Transmission-Bridging-Header.h"
+        XCODE_ATTRIBUTE_SWIFT_VERSION "5.0")
 
 install(
     TARGETS ${TR_NAME}-mac

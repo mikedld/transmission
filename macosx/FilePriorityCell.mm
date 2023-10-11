@@ -5,8 +5,8 @@
 #import "FilePriorityCell.h"
 #import "FileOutlineView.h"
 #import "FileListNode.h"
-#import "NSImageAdditions.h"
 #import "Torrent.h"
+#import <Transmission-Swift.h>
 
 static CGFloat const kImageOverlap = 1.0;
 

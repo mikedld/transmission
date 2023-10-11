@@ -6,7 +6,7 @@
 
 #include <libtransmission/torrent-metainfo.h>
 
-#import "NSStringAdditions.h"
+#import <QuickLookPlugin-Swift.h>
 
 QL_EXTERN_C_BEGIN
 OSStatus GeneratePreviewForURL(void* thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options);

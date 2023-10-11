@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="FilterBarController">
+        <customObject id="-2" userLabel="File's Owner" customClass="FilterBarController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="fActiveFilterButton" destination="3" id="30"/>
                 <outlet property="fDownloadFilterButton" destination="8" id="29"/>
@@ -22,7 +22,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView clipsToBounds="YES" id="2" userLabel="FilterBar" customClass="FilterBarView">
+        <customView clipsToBounds="YES" id="2" userLabel="FilterBar" customClass="FilterBarView" customModule="Transmission" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="501" height="23"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <subviews>
@@ -61,7 +61,7 @@
                 <stackView distribution="fillProportionally" orientation="horizontal" alignment="centerY" spacing="1" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mzg-HE-ptV">
                     <rect key="frame" x="42" y="5" width="329" height="14"/>
                     <subviews>
-                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="9" customClass="FilterButton">
+                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="9" customClass="FilterButton" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="-1" width="29" height="15"/>
                             <buttonCell key="cell" type="recessed" title="All" bezelStyle="recessed" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="12">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -71,7 +71,7 @@
                                 <action selector="setFilter:" target="-2" id="40"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="3" customClass="FilterButton">
+                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="3" customClass="FilterButton" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="30" y="-1" width="50" height="15"/>
                             <buttonCell key="cell" type="recessed" title="Active" bezelStyle="recessed" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="21">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -81,7 +81,7 @@
                                 <action selector="setFilter:" target="-2" id="41"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="8" customClass="FilterButton">
+                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="8" customClass="FilterButton" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="81" y="-1" width="87" height="15"/>
                             <buttonCell key="cell" type="recessed" title="Downloading" bezelStyle="recessed" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="13">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -91,7 +91,7 @@
                                 <action selector="setFilter:" target="-2" id="42"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7" customClass="FilterButton">
+                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7" customClass="FilterButton" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="169" y="-1" width="60" height="15"/>
                             <buttonCell key="cell" type="recessed" title="Seeding" bezelStyle="recessed" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="14">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -101,7 +101,7 @@
                                 <action selector="setFilter:" target="-2" id="43"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6" customClass="FilterButton">
+                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6" customClass="FilterButton" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="230" y="-1" width="55" height="15"/>
                             <buttonCell key="cell" type="recessed" title="Paused" bezelStyle="recessed" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="15">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -111,7 +111,7 @@
                                 <action selector="setFilter:" target="-2" id="44"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="nvH-xy-86S" customClass="FilterButton">
+                        <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="nvH-xy-86S" customClass="FilterButton" customModule="Transmission" customModuleProvider="target">
                             <rect key="frame" x="286" y="-1" width="43" height="15"/>
                             <buttonCell key="cell" type="recessed" title="Error" bezelStyle="recessed" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AtX-O4-Mqp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>

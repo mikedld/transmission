@@ -4,11 +4,10 @@
 
 #import "AddWindowController.h"
 #import "Controller.h"
-#import "ExpandedPathToIconTransformer.h"
 #import "FileOutlineController.h"
 #import "GroupsController.h"
-#import "NSStringAdditions.h"
 #import "Torrent.h"
+#import <Transmission-Swift.h>
 
 static NSTimeInterval const kUpdateSeconds = 1.0;
 

@@ -13,11 +13,12 @@
 #include <libtransmission/log.h>
 #include <libtransmission/utils.h>
 
+#import "Transmission+CXX.h"
 #import "Torrent.h"
 #import "GroupsController.h"
 #import "FileListNode.h"
-#import "NSStringAdditions.h"
 #import "TrackerNode.h"
+#import <Transmission-Swift.h>
 
 NSString* const kTorrentDidChangeGroupNotification = @"TorrentDidChangeGroup";
 
@@ -98,13 +99,9 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error** error)
 
 @implementation Torrent
 
-- (instancetype)initWithPath:(NSString*)path
-                    location:(NSString*)location
-           deleteTorrentFile:(BOOL)torrentDelete
-                         lib:(tr_session*)lib
+- (instancetype)initWithPath:(NSString*)path location:(NSString*)location deleteTorrentFile:(BOOL)torrentDelete
 {
-    self = [self initWithPath:path hash:nil torrentStruct:NULL magnetAddress:nil lib:lib groupValue:nil
-        removeWhenFinishSeeding:nil
+    self = [self initWithPath:path hash:nil torrentStruct:NULL magnetAddress:nil groupValue:nil removeWhenFinishSeeding:nil
                  downloadFolder:location
          legacyIncompleteFolder:nil];
 
@@ -118,9 +115,9 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error** error)
     return self;
 }
 
-- (instancetype)initWithTorrentStruct:(tr_torrent*)torrentStruct location:(NSString*)location lib:(tr_session*)lib
+- (instancetype)initWithTorrentStruct:(tr_torrent*)torrentStruct location:(NSString*)location
 {
-    self = [self initWithPath:nil hash:nil torrentStruct:torrentStruct magnetAddress:nil lib:lib groupValue:nil
+    self = [self initWithPath:nil hash:nil torrentStruct:torrentStruct magnetAddress:nil groupValue:nil
         removeWhenFinishSeeding:nil
                  downloadFolder:location
          legacyIncompleteFolder:nil];
@@ -128,10 +125,9 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error** error)
     return self;
 }
 
-- (instancetype)initWithMagnetAddress:(NSString*)address location:(NSString*)location lib:(tr_session*)lib
+- (instancetype)initWithMagnetAddress:(NSString*)address location:(NSString*)location
 {
-    self = [self initWithPath:nil hash:nil torrentStruct:nil magnetAddress:address lib:lib groupValue:nil
-        removeWhenFinishSeeding:nil
+    self = [self initWithPath:nil hash:nil torrentStruct:nil magnetAddress:address groupValue:nil removeWhenFinishSeeding:nil
                  downloadFolder:location
          legacyIncompleteFolder:nil];
 
@@ -982,7 +978,7 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error** error)
     return tr_torrentWebseedCount(self.fHandle);
 }
 
-- (NSArray<NSDictionary*>*)webSeeds
+- (NSArray<WebSeed*>*)webSeeds
 {
     NSUInteger n = tr_torrentWebseedCount(self.fHandle);
     NSMutableArray* webSeeds = [NSMutableArray arrayWithCapacity:n];
@@ -990,17 +986,9 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error** error)
     for (NSUInteger i = 0; i < n; ++i)
     {
         auto const webseed = tr_torrentWebseed(self.fHandle, i);
-        NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:3];
-
-        dict[@"Name"] = self.name;
-        dict[@"Address"] = @(webseed.url);
-
-        if (webseed.is_downloading)
-        {
-            dict[@"DL From Rate"] = @(double(webseed.download_bytes_per_second) / 1000);
-        }
-
-        [webSeeds addObject:dict];
+        WebSeed* webSeed = [[WebSeed alloc] initWithName:self.name address:@(webseed.url) isDownloading:webseed.is_downloading
+                                              dlFromRate:double(webseed.download_bytes_per_second) / 1000];
+        [webSeeds addObject:webSeed];
     }
 
     return webSeeds;
@@ -1711,7 +1699,6 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error** error)
                         hash:(NSString*)hashString
                torrentStruct:(tr_torrent*)torrentStruct
                magnetAddress:(NSString*)magnetAddress
-                         lib:(tr_session*)lib
                   groupValue:(NSNumber*)groupValue
      removeWhenFinishSeeding:(NSNumber*)removeWhenFinishSeeding
               downloadFolder:(NSString*)downloadFolder
@@ -1731,7 +1718,7 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error** error)
     else
     {
         //set libtransmission settings for initialization
-        tr_ctor* ctor = tr_ctorNew(lib);
+        tr_ctor* ctor = tr_ctorNew(Transmission.session);
 
         tr_ctorSetPaused(ctor, TR_FORCE, YES);
         if (downloadFolder)
@@ -1818,7 +1805,7 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error** error)
         {
             auto const file = tr_torrentFile(self.fHandle, i);
 
-            NSString* fullPath = [NSString convertedStringFromCString:file.name];
+            NSString* fullPath = [NSString convertedStringWithCString:file.name];
             NSArray* pathComponents = fullPath.pathComponents;
             while (pathComponents.count <= 1)
             {

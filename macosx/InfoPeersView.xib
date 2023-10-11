@@ -26,7 +26,7 @@
                         <rect key="frame" x="1" y="1" width="298" height="70"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" typeSelect="NO" autosaveName="InspectorTableWebSeeds" rowHeight="14" headerView="25" id="22" customClass="WebSeedTableView">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" typeSelect="NO" autosaveName="InspectorTableWebSeeds" rowHeight="14" headerView="25" id="22" customClass="WebSeedTableView" customModule="Transmission" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="299" height="47"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -43,7 +43,7 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <sortDescriptor key="sortDescriptorPrototype" selector="localizedCaseInsensitiveCompare:" sortKey="Address"/>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="localizedCaseInsensitiveCompare:" sortKey="address"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="DL From" editable="NO" width="38" minWidth="18" maxWidth="60" id="26">
@@ -56,7 +56,7 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="DL From Rate"/>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="dlFromRate"/>
                                         <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
                                     </tableColumn>
                                 </tableColumns>
@@ -89,7 +89,7 @@
                         <rect key="frame" x="1" y="1" width="298" height="148"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" multipleSelection="NO" typeSelect="NO" autosaveName="InspectorTable" rowHeight="16" headerView="6" id="9" customClass="PeerTableView">
+                            <tableView allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" multipleSelection="NO" typeSelect="NO" autosaveName="InspectorTable" rowHeight="16" headerView="6" id="9" customClass="PeerTableView" customModule="Transmission" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="298" height="125"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -136,7 +136,7 @@
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
-                                        <levelIndicatorCell key="dataCell" controlSize="small" alignment="left" maxValue="1" warningValue="0.69999999999999996" criticalValue="0.29999999999999999" levelIndicatorStyle="continuousCapacity" id="17" customClass="PeerProgressIndicatorCell"/>
+                                        <levelIndicatorCell key="dataCell" controlSize="small" alignment="left" maxValue="1" warningValue="0.69999999999999996" criticalValue="0.29999999999999999" levelIndicatorStyle="continuousCapacity" id="17" customClass="PeerProgressIndicatorCell" customModule="Transmission" customModuleProvider="target"/>
                                         <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Progress"/>
                                         <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
                                     </tableColumn>

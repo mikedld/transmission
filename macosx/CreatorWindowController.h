@@ -4,14 +4,10 @@
 
 #import <AppKit/AppKit.h>
 
-#include <libtransmission/transmission.h>
-
 @interface CreatorWindowController : NSWindowController
 
-+ (CreatorWindowController*)createTorrentFile:(tr_session*)handle;
-+ (CreatorWindowController*)createTorrentFile:(tr_session*)handle forFile:(NSURL*)file;
-
-- (instancetype)initWithHandle:(tr_session*)handle path:(NSURL*)path;
++ (CreatorWindowController*)createTorrentFile;
++ (CreatorWindowController*)createTorrentFileForFile:(NSURL*)file;
 
 - (IBAction)setLocation:(id)sender;
 - (IBAction)create:(id)sender;

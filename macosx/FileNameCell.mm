@@ -9,7 +9,7 @@
 #import "FileOutlineView.h"
 #import "Torrent.h"
 #import "FileListNode.h"
-#import "NSStringAdditions.h"
+#import <Transmission-Swift.h>
 
 static CGFloat const kPaddingHorizontal = 2.0;
 static CGFloat const kImageFolderSize = 16.0;

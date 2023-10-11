@@ -3,9 +3,7 @@
 // License text can be found in the licenses/ folder.
 
 #import "GroupsController.h"
-#import "NSImageAdditions.h"
-#import "NSKeyedUnarchiverAdditions.h"
-#import "NSMutableArrayAdditions.h"
+#import <Transmission-Swift.h>
 
 static CGFloat const kIconWidth = 16.0;
 static CGFloat const kBorderWidth = 1.25;

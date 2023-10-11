@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AboutWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="AboutWindowController" customModule="Transmission" customModuleProvider="target">
             <connections>
                 <outlet property="fCopyrightField" destination="9" id="32"/>
                 <outlet property="fLicenseButton" destination="10" id="33"/>
