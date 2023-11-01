@@ -1,0 +1,85 @@
+# doc: https://realm.github.io/SwiftLint/rule-directory.html
+
+excluded:
+  - ../third-party
+
+disabled_rules:
+  # TODOs and FIXMEs are encouraged
+  - todo
+  # trailing comma is encouraged with versioning
+  - trailing_comma
+  # length rules aren't relevant with text wrapping and scrollbars
+  - file_length
+  - function_body_length
+  - line_length
+  - type_body_length
+
+opt_in_rules:
+  - array_init
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - discouraged_object_literal
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - empty_xctest_method
+  - explicit_init
+  - extension_access_modifier
+  - fatal_error_message
+  - file_name
+  - first_where
+  - flatmap_over_map_reduce
+  - identical_operands
+  - joined_default_parameter
+  - last_where
+  - legacy_multiple
+  - literal_expression_end_indentation
+  - local_doc_comment
+  - lower_acl_than_parent
+  - modifier_order
+  - nimble_operator
+  - nslocalizedstring_key
+  - number_separator
+  - operator_usage_whitespace
+  - overridden_super_call
+  - override_in_extension
+  - pattern_matching_keywords
+  - prefer_self_type_over_type_of_self
+  - private_action
+  - private_outlet
+  - prohibited_super_call
+  - reduce_into
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - return_value_from_void_function
+  - single_test_class
+  - sorted_first_last
+  - sorted_imports
+  - static_operator
+  - test_case_accessibility
+  - toggle_bool
+  - unavailable_function
+  - unneeded_parentheses_in_closure_argument
+  - unowned_variable_capture
+  - untyped_error_in_catch
+  - vertical_parameter_alignment_on_call
+  - vertical_whitespace_closing_braces
+  - vertical_whitespace_opening_braces
+  - xct_specific_matcher
+  - yoda_condition
+
+identifier_name:
+  min_length: 1
+  max_length: 1000
+generic_type_name:
+  min_length: 1
+  max_length: 1000
+type_name:
+  min_length: 1
+  max_length: 1000

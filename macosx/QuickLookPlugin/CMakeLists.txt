@@ -2,12 +2,19 @@ set(MAC_QL_BUNDLE_NAME QuickLookPlugin)
 
 add_library(${TR_NAME}-mac-ql MODULE)
 
+target_compile_options(${TR_NAME}-mac-ql
+    PRIVATE
+        # equivalent of XCODE_ATTRIBUTE_SWIFT_OBJC_BRIDGING_HEADER "macosx/QuickLookPlugin-Bridging-Header.h"
+        $<$<COMPILE_LANGUAGE:Swift>:-import-objc-header>
+        $<$<COMPILE_LANGUAGE:Swift>:${CMAKE_CURRENT_SOURCE_DIR}/QuickLookPlugin-Bridging-Header.h>)
+
 target_sources(${TR_NAME}-mac-ql
     PRIVATE
         ../NSDataAdditions.mm
         ../NSStringAdditions.mm
         GeneratePreviewForURL.mm
         GenerateThumbnailForURL.mm
+        QuickLookPlugin-Bridging-Header.h
         main.cc)
 
 set(LINGUAS
@@ -71,7 +78,14 @@ set_target_properties(
         INSTALL_RPATH "@loader_path/../../../../../MacOS;@loader_path/../../../../../Frameworks"
         MACOSX_BUNDLE ON
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in"
-        OUTPUT_NAME ${MAC_QL_BUNDLE_NAME})
+        OUTPUT_NAME ${MAC_QL_BUNDLE_NAME}
+
+        # Ninja|Xcode compatibility
+        Swift_LANGUAGE_VERSION "5"
+        XCODE_ATTRIBUTE_SWIFT_VERSION "5.0"
+
+        # Xcode preferred way over `-import-objc-header ${CMAKE_CURRENT_SOURCE_DIR}/QuickLookPlugin-Bridging-Header.h`
+        XCODE_ATTRIBUTE_SWIFT_OBJC_BRIDGING_HEADER "macosx/QuickLookPlugin-Bridging-Header.h")
 
 target_include_directories(${TR_NAME}-mac-ql
     PRIVATE
@@ -79,12 +93,7 @@ target_include_directories(${TR_NAME}-mac-ql
 
 target_link_libraries(${TR_NAME}-mac-ql
     PRIVATE
-        ${TR_NAME}
-        "-framework Foundation"
-        "-framework CoreFoundation"
-        "-framework CoreServices"
-        "-framework AppKit"
-        "-framework QuickLook")
+        ${TR_NAME})
 
 install(
     TARGETS ${TR_NAME}-mac-ql

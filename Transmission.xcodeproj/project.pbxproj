@@ -1207,6 +1207,7 @@
 		C809AEE5291ECFD000BFDBE1 /* NSDataAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDataAdditions.h; sourceTree = "<group>"; };
 		C809AEE6291ECFD000BFDBE1 /* NSDataAdditions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NSDataAdditions.mm; sourceTree = "<group>"; };
 		C81E411127F5BABD00652F56 /* CocoaCompatibility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocoaCompatibility.h; sourceTree = "<group>"; };
+		C82B300E29514A9E0001BD6E /* QuickLookPlugin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QuickLookPlugin-Bridging-Header.h"; sourceTree = "<group>"; };
 		C841A27F29197724009F18E8 /* NSKeyedUnarchiverAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSKeyedUnarchiverAdditions.h; sourceTree = "<group>"; };
 		C841A28029197724009F18E8 /* NSKeyedUnarchiverAdditions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NSKeyedUnarchiverAdditions.mm; sourceTree = "<group>"; };
 		C843FC8329C51B9400491854 /* utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = utils.mm; sourceTree = "<group>"; };
@@ -1221,6 +1222,8 @@
 		C8B27B7F28153F2B00A22B5D /* transmission-create */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "transmission-create"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8B27B9028153F3100A22B5D /* transmission-edit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "transmission-edit"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8B27BA128153F3400A22B5D /* transmission-show */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "transmission-show"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8D278B1295A219C00A2373E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = macosx/README.md; sourceTree = "<group>"; };
+		C8F708332950383400D901C8 /* Transmission-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Transmission-Bridging-Header.h"; sourceTree = "<group>"; };
 		CAB35C62252F6F5E00552A55 /* mime-types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mime-types.h"; sourceTree = "<group>"; };
 		CCEBA596277340F6DF9F4481 /* session-alt-speeds.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "session-alt-speeds.cc"; sourceTree = "<group>"; };
 		CCEBA596277340F6DF9F4483 /* session-alt-speeds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "session-alt-speeds.h"; sourceTree = "<group>"; };
@@ -1441,6 +1444,7 @@
 			isa = PBXGroup;
 			children = (
 				29B97316FDCFA39411CA2CEA /* main.mm */,
+				C8F708332950383400D901C8 /* Transmission-Bridging-Header.h */,
 				C86BCD9828228A9600F45599 /* SparkleProxy.mm */,
 				4DF0C5AA0899190500DD8943 /* Controller.h */,
 				4DF0C5A90899190500DD8943 /* Controller.mm */,
@@ -1575,6 +1579,7 @@
 		29B97314FDCFA39411CA2CEA /* Transmission */ = {
 			isa = PBXGroup;
 			children = (
+				C8D278B1295A219C00A2373E /* README.md */,
 				A22CEF9E21CDC44400C5C1BA /* Transmission.entitlements */,
 				4DDBB70A09E16B3200284745 /* GUI */,
 				A2F35BC315C5A0A100EBF632 /* QuickLookPlugin */,
@@ -1950,6 +1955,7 @@
 				A2F35BC915C5A0A100EBF632 /* GenerateThumbnailForURL.mm */,
 				A2F35BCB15C5A0A100EBF632 /* GeneratePreviewForURL.mm */,
 				A2F35BCD15C5A0A100EBF632 /* main.cc */,
+				C82B300E29514A9E0001BD6E /* QuickLookPlugin-Bridging-Header.h */,
 				A2F35BC415C5A0A100EBF632 /* Supporting Files */,
 			);
 			name = QuickLookPlugin;
@@ -2497,6 +2503,7 @@
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				A24F191B0A3A792300C9C145 /* Copy Files */,
 				A2EB2E7615C8CF1C00FBD5B4 /* CopyFiles */,
+				C82B3002295070C40001BD6E /* Swiftlint Script */,
 			);
 			buildRules = (
 			);
@@ -2764,11 +2771,15 @@
 				ORGANIZATIONNAME = "The Transmission Project";
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
+						LastSwiftMigration = 1420;
 						SystemCapabilities = {
 							com.apple.HardenedRuntime = {
 								enabled = 1;
 							};
 						};
+					};
+					A2F35BB815C5A0A100EBF632 = {
+						LastSwiftMigration = 1420;
 					};
 					C1639A6E1A55F4D600E42033 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -2974,6 +2985,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "sed 's|@LIBPSL_[A-Z_]*@|0|' < third-party/libpsl/include/libpsl.h.in > third-party/libpsl/include/libpsl.h\n\n# Generate files to be included\nPYTHON=$( command -v python3 ) || PYTHON=$( command -v python3.7 ) || PYTHON=$( command -v python2 )\n\"${PYTHON}\" \"third-party/libpsl/src/psl-make-dafsa\" --output-format=cxx+ \"third-party/libpsl/list/public_suffix_list.dat\" \"third-party/suffixes_dafsa.h\"\n";
+		};
+		C82B3002295070C40001BD6E /* Swiftlint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swiftlint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  exit 0 # uncomment when at least one swift file in the project\n  swiftlint --config macosx/.swiftlint.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3729,9 +3759,11 @@
 		0053D3D50C86774200545606 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = macosx/Transmission.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -3749,6 +3781,9 @@
 				);
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_NAME = Transmission;
+				SWIFT_OBJC_BRIDGING_HEADER = "macosx/Transmission-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4011,9 +4046,11 @@
 		4DF0C599089918A300DD8943 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = macosx/Transmission.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -4031,6 +4068,8 @@
 				);
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_NAME = Transmission;
+				SWIFT_OBJC_BRIDGING_HEADER = "macosx/Transmission-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4106,6 +4145,7 @@
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.m0k.transmission;
 				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};
@@ -4207,15 +4247,18 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.m0k.transmission;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = "Release - Debug";
 		};
 		A250CFEC0CDA19680068B4B6 /* Release - Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = macosx/Transmission.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -4233,6 +4276,8 @@
 				);
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_NAME = Transmission;
+				SWIFT_OBJC_BRIDGING_HEADER = "macosx/Transmission-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4421,6 +4466,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PREFIX_HEADER = "macosx/QuickLookPlugin/QuickLookPlugin-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -4429,6 +4475,11 @@
 				);
 				INFOPLIST_FILE = "macosx/QuickLookPlugin/QuickLookPlugin-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(inherited)",
 					"-fmodules",
@@ -4437,6 +4488,9 @@
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.m0k.transmission.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "macosx/QuickLookPlugin/QuickLookPlugin-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4451,6 +4505,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PREFIX_HEADER = "macosx/QuickLookPlugin/QuickLookPlugin-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -4459,6 +4514,11 @@
 				);
 				INFOPLIST_FILE = "macosx/QuickLookPlugin/QuickLookPlugin-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(inherited)",
 					"-fmodules",
@@ -4467,6 +4527,8 @@
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.m0k.transmission.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "macosx/QuickLookPlugin/QuickLookPlugin-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4481,6 +4543,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PREFIX_HEADER = "macosx/QuickLookPlugin/QuickLookPlugin-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -4489,6 +4552,11 @@
 				);
 				INFOPLIST_FILE = "macosx/QuickLookPlugin/QuickLookPlugin-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(inherited)",
 					"-fmodules",
@@ -4497,6 +4565,8 @@
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.m0k.transmission.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "macosx/QuickLookPlugin/QuickLookPlugin-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
