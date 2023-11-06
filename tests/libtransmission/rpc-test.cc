@@ -215,7 +215,7 @@ TEST_F(RpcTest, torrentGet)
     EXPECT_EQ(1UL, tr_variantListSize(torrents));
 
     tr_variant* first_torrent = tr_variantListChild(torrents, 0);
-
+    EXPECT_NE(nullptr, first_torrent);
     EXPECT_TRUE(first_torrent->holds_alternative<tr_variant::Map>());
     int64_t first_torrent_id = 0;
     EXPECT_TRUE(tr_variantDictFindInt(first_torrent, TR_KEY_id, &first_torrent_id));

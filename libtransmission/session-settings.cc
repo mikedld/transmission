@@ -28,7 +28,7 @@ void tr_session_settings::load(tr_variant const& src)
 
 tr_variant tr_session_settings::settings() const
 {
-    auto map = tr_variant::Map{};
+    auto map = tr_variant::Map{ 60U };
 #define V(key, field, type, default_value, comment) \
     map.try_emplace(key, libtransmission::VariantConverter::save<decltype(field)>(field));
     SESSION_SETTINGS_FIELDS(V)

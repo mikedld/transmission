@@ -915,7 +915,7 @@ void tr_rpc_server::load(tr_variant const& src)
 
 tr_variant tr_rpc_server::settings() const
 {
-    auto settings = tr_variant::Map{};
+    auto settings = tr_variant::Map{ 14U };
 #define V(key, field, type, default_value, comment) \
     settings.try_emplace(key, libtransmission::VariantConverter::save<decltype(field)>(field));
     RPC_SETTINGS_FIELDS(V)
@@ -925,7 +925,7 @@ tr_variant tr_rpc_server::settings() const
 
 tr_variant tr_rpc_server::default_settings()
 {
-    auto settings = tr_variant::Map{};
+    auto settings = tr_variant::Map{ 14U };
 #define V(key, field, type, default_value, comment) \
     settings.try_emplace(key, libtransmission::VariantConverter::save<decltype(field)>(default_value));
     RPC_SETTINGS_FIELDS(V)

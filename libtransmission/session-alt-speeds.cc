@@ -40,7 +40,7 @@ void tr_session_alt_speeds::load(tr_variant const& src)
 
 tr_variant tr_session_alt_speeds::settings() const
 {
-    auto settings = tr_variant::Map{};
+    auto settings = tr_variant::Map{ 6U };
 #define V(key, field, type, default_value, comment) \
     settings.try_emplace(key, libtransmission::VariantConverter::save<decltype(field)>(field));
     ALT_SPEEDS_FIELDS(V)
@@ -50,7 +50,7 @@ tr_variant tr_session_alt_speeds::settings() const
 
 tr_variant tr_session_alt_speeds::default_settings()
 {
-    auto settings = tr_variant::Map{};
+    auto settings = tr_variant::Map{ 6U };
 #define V(key, field, type, default_value, comment) \
     settings.try_emplace(key, libtransmission::VariantConverter::save<decltype(field)>(static_cast<type>(default_value)));
     ALT_SPEEDS_FIELDS(V)

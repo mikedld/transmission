@@ -21,6 +21,7 @@
 #include "libtransmission/variant.h"
 
 struct tr_error;
+struct tr_variant;
 
 /**
  * @addtogroup utils Utilities
@@ -328,7 +329,7 @@ extern uint64_t tr_size_K; /* unused? */
 /** @brief Format a file size from bytes into a user-readable string. */
 [[nodiscard]] std::string tr_formatter_size_B(uint64_t bytes);
 
-struct tr_variant tr_formatter_get_units();
+[[nodiscard]] tr_variant tr_formatter_get_units();
 
 [[nodiscard]] static inline size_t tr_toSpeedBytes(size_t KBps)
 {
