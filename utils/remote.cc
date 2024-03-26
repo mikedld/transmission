@@ -211,7 +211,7 @@ enum
 
 // --- Command-Line Arguments
 
-auto constexpr Options = std::array<tr_option, 103>{
+auto constexpr Options = std::array<tr_option, 105>{
     { { 'a', "add", "Add torrent files by filename or URL", "a", false, nullptr },
       { 970, "alt-speed", "Use the alternate Limits", "as", false, nullptr },
       { 971, "no-alt-speed", "Don't use the alternate Limits", "AS", false, nullptr },
@@ -340,6 +340,8 @@ auto constexpr Options = std::array<tr_option, 103>{
       { 991, "no-start-paused", "Start added torrents unpaused", nullptr, false, nullptr },
       { 992, "trash-torrent", "Delete torrents after adding", nullptr, false, nullptr },
       { 993, "no-trash-torrent", "Do not delete torrents after adding", nullptr, false, nullptr },
+      { 994, "sequential-download", "Download the torrent sequentially", "seq", false, nullptr },
+      { 995, "no-sequential-download", "Download the torrent sequentially", "SEQ", false, nullptr },
       { 984, "honor-session", "Make the current torrent(s) honor the session limits", "hl", false, nullptr },
       { 985, "no-honor-session", "Make the current torrent(s) not honor the session limits", "HL", false, nullptr },
       { 'u',
@@ -500,6 +502,10 @@ enum
     case 'U': /* no upload speed limit */
     case 930: /* peers */
         return MODE_SESSION_SET | MODE_TORRENT_SET;
+
+    case 994: /* sequential-download */
+    case 995: /* no-sequential-download */
+        return MODE_SESSION_SET | MODE_TORRENT_SET | MODE_TORRENT_ADD;
 
     case 'r': /* remove */
     case 840: /* remove and delete */
@@ -3105,6 +3111,36 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                     }
                     list->emplace_back(optarg_sv);
                 }
+                break;
+
+            default:
+                TR_ASSERT_MSG(false, "unhandled value");
+                break;
+            }
+        }
+        else if (step_mode == (MODE_SESSION_SET | MODE_TORRENT_SET | MODE_TORRENT_ADD))
+        {
+            tr_variant::Map& args = [&]() -> tr_variant::Map&
+            {
+                if (tadd.has_value())
+                {
+                    return ensure_tadd(tadd);
+                }
+                if (!std::empty(config.torrent_ids))
+                {
+                    return ensure_tset(tset);
+                }
+                return ensure_sset(sset);
+            }();
+
+            switch (c)
+            {
+            case 994:
+                args.insert_or_assign(TR_KEY_sequentialDownload, true);
+                break;
+
+            case 995:
+                args.insert_or_assign(TR_KEY_sequentialDownload, false);
                 break;
 
             default:
