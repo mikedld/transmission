@@ -124,7 +124,7 @@ public:
     }
 
     template<typename ContiguousRange>
-    [[nodiscard]] constexpr auto operator==(ContiguousRange const& x) const noexcept
+    [[nodiscard]] constexpr bool operator==(ContiguousRange const& x) const noexcept
     {
         return sv() == x;
     }
