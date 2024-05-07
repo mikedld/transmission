@@ -232,15 +232,16 @@ int tr_main(int argc, char* argv[])
     }
 
     fmt::print(
-        tr_ngettext("{file_count:L} file, {total_size}\n", "{file_count:L} files, {total_size}\n", builder.file_count()),
+        fmt::runtime(
+            tr_ngettext("{file_count:L} file, {total_size}\n", "{file_count:L} files, {total_size}\n", builder.file_count())),
         fmt::arg("file_count", builder.file_count()),
         fmt::arg("total_size", Storage{ builder.total_size(), Storage::Units::Bytes }.to_string()));
 
     fmt::print(
-        tr_ngettext(
+        fmt::runtime(tr_ngettext(
             "{piece_count:L} piece, {piece_size}\n",
             "{piece_count:L} pieces, {piece_size} each\n",
-            builder.piece_count()),
+            builder.piece_count())),
         fmt::arg("piece_count", builder.piece_count()),
         fmt::arg("piece_size", Memory{ builder.piece_size(), Memory::Units::Bytes }.to_string()));
 

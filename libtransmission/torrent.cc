@@ -136,7 +136,7 @@ bool tr_torrentSetMetainfoFromFile(tr_torrent* tor, tr_torrent_metainfo const* m
     if (error)
     {
         tor->error().set_local_error(fmt::format(
-            _("Couldn't use metainfo from '{path}' for '{magnet}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't use metainfo from '{path}' for '{magnet}': {error} ({error_code})")),
             fmt::arg("path", filename),
             fmt::arg("magnet", tor->magnet()),
             fmt::arg("error", error.message()),
@@ -400,7 +400,7 @@ void torrentCallScript(tr_torrent const* tor, std::string const& script)
         { "TR_TORRENT_TRACKERS"sv, trackers_str },
     };
 
-    tr_logAddInfoTor(tor, fmt::format(_("Calling script '{path}'"), fmt::arg("path", script)));
+    tr_logAddInfoTor(tor, fmt::format(fmt::runtime(_("Calling script '{path}'")), fmt::arg("path", script)));
 
     auto error = tr_error{};
     if (!tr_spawn_async(std::data(cmd), env, TR_IF_WIN32("\\", "/"), &error))
@@ -408,7 +408,7 @@ void torrentCallScript(tr_torrent const* tor, std::string const& script)
         tr_logAddWarnTor(
             tor,
             fmt::format(
-                _("Couldn't call script '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't call script '{path}': {error} ({error_code})")),
                 fmt::arg("path", script),
                 fmt::arg("error", error.message()),
                 fmt::arg("error_code", error.code())));
@@ -1081,7 +1081,7 @@ void tr_torrent::init(tr_ctor const& ctor)
         if (error)
         {
             this->error().set_local_error(fmt::format(
-                _("Couldn't save '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't save '{path}': {error} ({error_code})")),
                 fmt::arg("path", filename),
                 fmt::arg("error", error.message()),
                 fmt::arg("error_code", error.code())));
@@ -1179,7 +1179,7 @@ void tr_torrent::set_location_in_session_thread(std::string_view const path, boo
         if (error)
         {
             this->error().set_local_error(fmt::format(
-                _("Couldn't move '{old_path}' to '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't move '{old_path}' to '{path}': {error} ({error_code})")),
                 fmt::arg("old_path", current_dir()),
                 fmt::arg("path", path),
                 fmt::arg("error", error.message()),
@@ -1685,7 +1685,7 @@ void tr_torrent::update_file_path(tr_file_index_t file, std::optional<bool> has_
         tr_logAddErrorTor(
             this,
             fmt::format(
-                _("Couldn't move '{old_path}' to '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't move '{old_path}' to '{path}': {error} ({error_code})")),
                 fmt::arg("old_path", oldpath),
                 fmt::arg("path", newpath),
                 fmt::arg("error", error.message()),
@@ -2070,7 +2070,7 @@ bool tr_torrent::set_announce_list(tr_announce_list announce_list)
     if (save_error.has_value())
     {
         error().set_local_error(fmt::format(
-            _("Couldn't save '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't save '{path}': {error} ({error_code})")),
             fmt::arg("path", filename),
             fmt::arg("error", save_error.message()),
             fmt::arg("error_code", save_error.code())));
@@ -2123,7 +2123,7 @@ void tr_torrent::on_tracker_response(tr_tracker_event const* event)
         tr_logAddWarnTor(
             this,
             fmt::format(
-                _("Tracker warning: '{warning}' ({url})"),
+                fmt::runtime(_("Tracker warning: '{warning}' ({url})")),
                 fmt::arg("warning", event->text),
                 fmt::arg("url", tr_urlTrackerLogName(event->announce_url))));
         error_.set_tracker_warning(event->announce_url, event->text);

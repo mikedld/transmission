@@ -269,8 +269,10 @@ tr_port_forwarding_state tr_upnpPulse(
 #endif
             == UPNP_IGD_VALID_CONNECTED)
         {
-            tr_logAddInfo(fmt::format(_("Found Internet Gateway Device '{url}'"), fmt::arg("url", handle->urls.controlURL)));
-            tr_logAddInfo(fmt::format(_("Local Address is '{address}'"), fmt::arg("address", lanaddr.data())));
+            tr_logAddInfo(fmt::format(
+                fmt::runtime(_("Found Internet Gateway Device '{url}'")),
+                fmt::arg("url", handle->urls.controlURL)));
+            tr_logAddInfo(fmt::format(fmt::runtime(_("Local Address is '{address}'")), fmt::arg("address", lanaddr.data())));
             handle->state = UpnpState::Idle;
             handle->lanaddr = std::data(lanaddr);
         }
@@ -295,7 +297,7 @@ tr_port_forwarding_state tr_upnpPulse(
          get_specific_port_mapping_entry(handle, "UDP") != UPNPCOMMAND_SUCCESS))
     {
         tr_logAddInfo(fmt::format(
-            _("Local port {local_port} is not forwarded to {advertised_port}"),
+            fmt::runtime(_("Local port {local_port} is not forwarded to {advertised_port}")),
             fmt::arg("local_port", handle->local_port.host()),
             fmt::arg("advertised_port", handle->advertised_port.host())));
         handle->isMapped = false;
@@ -307,7 +309,7 @@ tr_port_forwarding_state tr_upnpPulse(
         tr_upnpDeletePortMapping(handle, "UDP", handle->advertised_port);
 
         tr_logAddInfo(fmt::format(
-            _("Stopping port forwarding through '{url}', service '{type}'"),
+            fmt::runtime(_("Stopping port forwarding through '{url}', service '{type}'")),
             fmt::arg("url", handle->urls.controlURL),
             fmt::arg("type", handle->data.first.servicetype)));
 
@@ -340,7 +342,7 @@ tr_port_forwarding_state tr_upnpPulse(
         }
 
         tr_logAddDebug(fmt::format(
-            _("Port forwarding through '{url}', service '{type}'. (local address: {address}:{port})"),
+            fmt::runtime(_("Port forwarding through '{url}', service '{type}'. (local address: {address}:{port})")),
             fmt::arg("url", handle->urls.controlURL),
             fmt::arg("type", handle->data.first.servicetype),
             fmt::arg("address", handle->lanaddr),
@@ -349,7 +351,7 @@ tr_port_forwarding_state tr_upnpPulse(
         if (handle->isMapped)
         {
             tr_logAddInfo(fmt::format(
-                _("Forwarded local port {local_port} to {advertised_port}"),
+                fmt::runtime(_("Forwarded local port {local_port} to {advertised_port}")),
                 fmt::arg("local_port", local_port.host()),
                 fmt::arg("advertised_port", advertised_port.host())));
             handle->advertised_port = advertised_port;

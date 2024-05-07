@@ -181,8 +181,9 @@ public:
         if (curl_ssl_verify)
         {
             auto const* bundle = std::empty(curl_ca_bundle) ? "none" : curl_ca_bundle.c_str();
-            tr_logAddInfo(
-                fmt::format(_("Will verify tracker certs using envvar CURL_CA_BUNDLE: {bundle}"), fmt::arg("bundle", bundle)));
+            tr_logAddInfo(fmt::format(
+                fmt::runtime(_("Will verify tracker certs using envvar CURL_CA_BUNDLE: {bundle}")),
+                fmt::arg("bundle", bundle)));
             tr_logAddInfo(_("NB: this only works if you built against libcurl with openssl or gnutls, NOT nss"));
             tr_logAddInfo(_("NB: Invalid certs will appear as 'Could not connect to tracker' like many other errors"));
         }
@@ -460,7 +461,7 @@ public:
             if (code != NoResponseCode && code != PartialContentResponseCode)
             {
                 tr_logAddWarn(fmt::format(
-                    _("Couldn't fetch '{url}': expected HTTP response code {expected_code}, got {actual_code}"),
+                    fmt::runtime(_("Couldn't fetch '{url}': expected HTTP response code {expected_code}, got {actual_code}")),
                     fmt::arg("url", task->url()),
                     fmt::arg("expected_code", PartialContentResponseCode),
                     fmt::arg("actual_code", code)));

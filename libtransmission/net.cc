@@ -189,7 +189,7 @@ tr_socket_t createSocket(int domain, int type)
         if (sockerrno != EAFNOSUPPORT)
         {
             tr_logAddWarn(fmt::format(
-                _("Couldn't create socket: {error} ({error_code})"),
+                fmt::runtime(_("Couldn't create socket: {error} ({error_code})")),
                 fmt::arg("error", tr_net_strerror(sockerrno)),
                 fmt::arg("error_code", sockerrno)));
         }
@@ -266,7 +266,7 @@ tr_peer_socket tr_netOpenPeerSocket(tr_session* session, tr_socket_address const
     if (bind(s, reinterpret_cast<sockaddr const*>(&source_sock), sourcelen) == -1)
     {
         tr_logAddWarn(fmt::format(
-            _("Couldn't set source address {address} on {socket}: {error} ({error_code})"),
+            fmt::runtime(_("Couldn't set source address {address} on {socket}: {error} ({error_code})")),
             fmt::arg("address", source_addr.display_name()),
             fmt::arg("socket", s),
             fmt::arg("error", tr_net_strerror(sockerrno)),
@@ -285,7 +285,7 @@ tr_peer_socket tr_netOpenPeerSocket(tr_session* session, tr_socket_address const
             (tmperrno != ECONNREFUSED && tmperrno != ENETUNREACH && tmperrno != EHOSTUNREACH) || addr.is_ipv4())
         {
             tr_logAddWarn(fmt::format(
-                _("Couldn't connect socket {socket} to {address}:{port}: {error} ({error_code})"),
+                fmt::runtime(_("Couldn't connect socket {socket} to {address}:{port}: {error} ({error_code})")),
                 fmt::arg("socket", s),
                 fmt::arg("address", addr.display_name()),
                 fmt::arg("port", port.host()),
@@ -343,9 +343,10 @@ tr_socket_t tr_netBindTCPImpl(tr_address const& addr, tr_port port, bool suppres
         if (!suppress_msgs)
         {
             tr_logAddError(fmt::format(
-                err == EADDRINUSE ?
-                    _("Couldn't bind port {port} on {address}: {error} ({error_code}) -- Is another copy of Transmission already running?") :
-                    _("Couldn't bind port {port} on {address}: {error} ({error_code})"),
+                fmt::runtime(
+                    err == EADDRINUSE ?
+                        _("Couldn't bind port {port} on {address}: {error} ({error_code}) -- Is another copy of Transmission already running?") :
+                        _("Couldn't bind port {port} on {address}: {error} ({error_code})")),
                 fmt::arg("address", addr.display_name()),
                 fmt::arg("port", port.host()),
                 fmt::arg("error", tr_net_strerror(err)),
@@ -798,7 +799,7 @@ int tr_address::compare(tr_address const& that) const noexcept // <=>
 
 std::string tr_socket_address::display_name(tr_address const& address, tr_port port) noexcept
 {
-    return fmt::format(address.is_ipv6() ? "[{:s}]:{:d}" : "{:s}:{:d}", address.display_name(), port.host());
+    return fmt::format(fmt::runtime(address.is_ipv6() ? "[{:s}]:{:d}" : "{:s}:{:d}"), address.display_name(), port.host());
 }
 
 bool tr_socket_address::is_valid_for_peers(tr_peer_from from) const noexcept

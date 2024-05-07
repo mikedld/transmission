@@ -101,7 +101,7 @@ public:
         if (std::size(src) >= TrUnixAddrStrLen)
         {
             tr_logAddError(fmt::format(
-                _("Unix socket path must be fewer than {count} characters (including '{prefix}' prefix)"),
+                fmt::runtime(_("Unix socket path must be fewer than {count} characters (including '{prefix}' prefix)")),
                 fmt::arg("count", TrUnixAddrStrLen - 1),
                 fmt::arg("prefix", TrUnixSocketPrefix)));
             return false;
@@ -654,8 +654,9 @@ bool bindUnixSocket(
 
     if (chmod(addr.sun_path, socket_mode) != 0)
     {
-        tr_logAddWarn(
-            fmt::format(_("Couldn't set RPC socket mode to {mode:#o}, defaulting to 0755"), fmt::arg("mode", socket_mode)));
+        tr_logAddWarn(fmt::format(
+            fmt::runtime(_("Couldn't set RPC socket mode to {mode:#o}, defaulting to 0755")),
+            fmt::arg("mode", socket_mode)));
     }
 
     return evhttp_bind_listener(httpd, lev) != nullptr;
@@ -717,10 +718,10 @@ void start_server(tr_rpc_server* server)
         }
 
         tr_logAddError(fmt::format(
-            tr_ngettext(
+            fmt::runtime(tr_ngettext(
                 "Couldn't bind to {address} after {count} attempt, giving up",
                 "Couldn't bind to {address} after {count} attempts, giving up",
-                ServerStartRetryCount),
+                ServerStartRetryCount)),
             fmt::arg("address", addr_port_str),
             fmt::arg("count", ServerStartRetryCount)));
     }
@@ -729,7 +730,9 @@ void start_server(tr_rpc_server* server)
         evhttp_set_gencb(httpd, handle_request, server);
         server->httpd.reset(httpd);
 
-        tr_logAddInfo(fmt::format(_("Listening for RPC and Web requests on '{address}'"), fmt::arg("address", addr_port_str)));
+        tr_logAddInfo(fmt::format(
+            fmt::runtime(_("Listening for RPC and Web requests on '{address}'")),
+            fmt::arg("address", addr_port_str)));
     }
 
     rpc_server_start_retry_cancel(server);
@@ -757,7 +760,7 @@ void stop_server(tr_rpc_server* server)
     }
 
     tr_logAddInfo(fmt::format(
-        _("Stopped listening for RPC and Web requests on '{address}'"),
+        fmt::runtime(_("Stopped listening for RPC and Web requests on '{address}'")),
         fmt::arg("address", server->bind_address_->to_string(server->port()))));
 }
 
@@ -779,7 +782,7 @@ auto parse_whitelist(std::string_view whitelist)
         auto const pos = whitelist.find_first_of(" ,;"sv);
         auto const token = tr_strv_strip(whitelist.substr(0, pos));
         list.emplace_back(token);
-        tr_logAddInfo(fmt::format(_("Added '{entry}' to host whitelist"), fmt::arg("entry", token)));
+        tr_logAddInfo(fmt::format(fmt::runtime(_("Added '{entry}' to host whitelist")), fmt::arg("entry", token)));
         whitelist = pos == std::string_view::npos ? ""sv : whitelist.substr(pos + 1);
     }
 
@@ -899,7 +902,8 @@ void tr_rpc_server::load(Settings&& settings)
     {
         // NOTE: bind_address_ is default initialized to INADDR_ANY
         tr_logAddWarn(fmt::format(
-            _("The '{key}' setting is '{value}' but must be an IPv4 or IPv6 address or a Unix socket path. Using default value '0.0.0.0'"),
+            fmt::runtime(_(
+                "The '{key}' setting is '{value}' but must be an IPv4 or IPv6 address or a Unix socket path. Using default value '0.0.0.0'")),
             fmt::arg("key", tr_quark_get_string_view(TR_KEY_rpc_bind_address)),
             fmt::arg("value", settings_.bind_address_str)));
     }
@@ -912,7 +916,7 @@ void tr_rpc_server::load(Settings&& settings)
     if (this->is_enabled())
     {
         auto const rpc_uri = bind_address_->to_string(port()) + settings_.url;
-        tr_logAddInfo(fmt::format(_("Serving RPC and Web requests on {address}"), fmt::arg("address", rpc_uri)));
+        tr_logAddInfo(fmt::format(fmt::runtime(_("Serving RPC and Web requests on {address}")), fmt::arg("address", rpc_uri)));
         session->run_in_session_thread(start_server, this);
 
         if (this->is_whitelist_enabled())
@@ -928,7 +932,8 @@ void tr_rpc_server::load(Settings&& settings)
 
     if (!std::empty(web_client_dir_))
     {
-        tr_logAddInfo(fmt::format(_("Serving RPC and Web requests from '{path}'"), fmt::arg("path", web_client_dir_)));
+        tr_logAddInfo(
+            fmt::format(fmt::runtime(_("Serving RPC and Web requests from '{path}'")), fmt::arg("path", web_client_dir_)));
     }
 }
 

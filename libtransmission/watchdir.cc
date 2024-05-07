@@ -49,7 +49,7 @@ namespace
     if (error && !tr_error_is_enoent(error.code()))
     {
         tr_logAddWarn(fmt::format(
-            _("Skipping '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Skipping '{path}': {error} ({error_code})")),
             fmt::arg("path", path),
             fmt::arg("error", error.message()),
             fmt::arg("error_code", error.code())));
@@ -88,7 +88,7 @@ void BaseWatchdir::processFile(std::string_view basename)
 
         if (now - info.first_kick_at > timeoutDuration())
         {
-            tr_logAddWarn(fmt::format(_("Couldn't add torrent file '{path}'"), fmt::arg("path", basename)));
+            tr_logAddWarn(fmt::format(fmt::runtime(_("Couldn't add torrent file '{path}'")), fmt::arg("path", basename)));
             pending_.erase(iter);
         }
         else
@@ -115,7 +115,7 @@ void BaseWatchdir::scan()
     if (error)
     {
         tr_logAddWarn(fmt::format(
-            _("Couldn't read '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't read '{path}': {error} ({error_code})")),
             fmt::arg("path", dirname()),
             fmt::arg("error", error.message()),
             fmt::arg("error_code", error.code())));
