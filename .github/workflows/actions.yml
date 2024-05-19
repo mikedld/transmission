@@ -1028,3 +1028,79 @@ jobs:
       working-directory: ./android
       run: |
         gradle build
+
+  ubuntu-24-04-cxx-23:
+    needs: [ what-to-make ]
+    if: ${{ needs.what-to-make.outputs.make-cli == 'true' || needs.what-to-make.outputs.make-daemon == 'true' || needs.what-to-make.outputs.make-gtk == 'true' || needs.what-to-make.outputs.make-qt == 'true' || needs.what-to-make.outputs.make-tests == 'true' || needs.what-to-make.outputs.make-utils == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Show Configuration
+        run: |
+          echo '${{ toJSON(needs) }}'
+          echo '${{ toJSON(runner) }}'
+          cat /etc/os-release
+      - name: Get Dependencies
+        run: |
+          set -ex
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            appstream \
+            ca-certificates \
+            clang \
+            cmake \
+            gettext \
+            libcurl4-openssl-dev \
+            libdeflate-dev \
+            libevent-dev \
+            libfmt-dev \
+            libminiupnpc-dev \
+            libnatpmp-dev \
+            libpsl-dev \
+            libssl-dev \
+            ninja-build \
+            npm
+      - name: Get Dependencies (GTK)
+        if: ${{ needs.what-to-make.outputs.make-gtk == 'true' }}
+        run: sudo apt-get install -y --no-install-recommends libglibmm-2.4-dev libgtkmm-3.0-dev
+      - name: Get Dependencies (Qt)
+        if: ${{ needs.what-to-make.outputs.make-qt == 'true' }}
+        run: sudo apt-get install -y --no-install-recommends qtbase5-dev libqt5svg5-dev qttools5-dev
+      - name: Get Source
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          path: src
+      - name: Configure
+        run: |
+          cmake \
+            -S src \
+            -B obj \
+            -G Ninja \
+            -DCMAKE_CXX_STANDARD=23 \
+            -DCMAKE_CXX_COMPILER='clang++' \
+            -DCMAKE_C_COMPILER='clang' \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_INSTALL_PREFIX=pfx \
+            -DENABLE_CLI=${{ (needs.what-to-make.outputs.make-cli == 'true') && 'ON' || 'OFF' }} \
+            -DENABLE_DAEMON=${{ (needs.what-to-make.outputs.make-daemon == 'true') && 'ON' || 'OFF' }} \
+            -DENABLE_GTK=${{ (needs.what-to-make.outputs.make-gtk == 'true') && 'ON' || 'OFF' }} \
+            -DENABLE_MAC=OFF \
+            -DENABLE_QT=${{ (needs.what-to-make.outputs.make-qt == 'true') && 'ON' || 'OFF' }} \
+            -DENABLE_TESTS=OFF \
+            -DENABLE_UTILS=${{ (needs.what-to-make.outputs.make-utils == 'true') && 'ON' || 'OFF' }} \
+            -DREBUILD_WEB=${{ (needs.what-to-make.outputs.make-web == 'true') && 'ON' || 'OFF' }} \
+            -DENABLE_WERROR=ON \
+            -DRUN_CLANG_TIDY=OFF
+      - name: Make
+        run: cmake --build obj --config RelWithDebInfo -- "-k 0"
+      - name: Test
+        if: ${{ needs.what-to-make.outputs.make-tests == 'true' }}
+        env:
+          TMPDIR: /private/tmp
+        run: cmake -E chdir obj ctest -j $(nproc) --build-config RelWithDebInfo --output-on-failure
+      - name: Install
+        run: cmake --build obj --config RelWithDebInfo --target install/strip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binaries-${{ github.job }}
+          path: pfx/**/*
