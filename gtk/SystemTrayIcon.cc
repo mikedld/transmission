@@ -204,7 +204,7 @@ std::string SystemTrayIcon::Impl::make_tooltip_text() const
 {
     auto const* const session = core_->get_session();
     return fmt::format(
-        _("{upload_speed} ▲ {download_speed} ▼"),
+        fmt::runtime(_("{upload_speed} ▲ {download_speed} ▼")),
         fmt::arg("upload_speed", Speed{ tr_sessionGetRawSpeed_KBps(session, TR_UP), Speed::Units::KByps }.to_string()),
         fmt::arg("download_speed", Speed{ tr_sessionGetRawSpeed_KBps(session, TR_DOWN), Speed::Units::KByps }.to_string()));
 }

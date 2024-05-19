@@ -319,7 +319,7 @@ void rename_torrent(Glib::RefPtr<Gio::File> const& file)
     catch (Glib::Error const& e)
     {
         gtr_message(fmt::format(
-            _("Couldn't rename '{old_path}' as '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't rename '{old_path}' as '{path}': {error} ({error_code})")),
             fmt::arg("old_path", old_name),
             fmt::arg("path", new_name),
             fmt::arg("error", e.what()),
@@ -794,7 +794,7 @@ void Session::Impl::add_file_async_callback(
 
         if (!file->load_contents_finish(result, contents, length))
         {
-            gtr_message(fmt::format(_("Couldn't read '{path}'"), fmt::arg("path", file->get_parse_name())));
+            gtr_message(fmt::format(fmt::runtime(_("Couldn't read '{path}'")), fmt::arg("path", file->get_parse_name())));
         }
         else if (tr_ctorSetMetainfo(ctor, contents, length, nullptr))
         {
@@ -808,7 +808,7 @@ void Session::Impl::add_file_async_callback(
     catch (Glib::Error const& e)
     {
         gtr_message(fmt::format(
-            _("Couldn't read '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't read '{path}': {error} ({error_code})")),
             fmt::arg("path", file->get_parse_name()),
             fmt::arg("error", e.what()),
             fmt::arg("error_code", e.code())));
@@ -859,7 +859,10 @@ bool Session::Impl::add_file(Glib::RefPtr<Gio::File> const& file, bool do_start,
     else
     {
         tr_ctorFree(ctor);
-        std::cerr << fmt::format(_("Couldn't add torrent file '{path}'"), fmt::arg("path", file->get_parse_name())) << '\n';
+        std::cerr << fmt::format(
+                         fmt::runtime(_("Couldn't add torrent file '{path}'")),
+                         fmt::arg("path", file->get_parse_name()))
+                  << '\n';
     }
 
     return handled;
@@ -1085,7 +1088,8 @@ bool gtr_inhibit_hibernation(guint32& cookie)
     }
     catch (Glib::Error const& e)
     {
-        tr_logAddError(fmt::format(_("Couldn't inhibit desktop hibernation: {error}"), fmt::arg("error", e.what())));
+        tr_logAddError(
+            fmt::format(fmt::runtime(_("Couldn't inhibit desktop hibernation: {error}")), fmt::arg("error", e.what())));
     }
 
     return success;
@@ -1110,7 +1114,8 @@ void gtr_uninhibit_hibernation(guint inhibit_cookie)
     }
     catch (Glib::Error const& e)
     {
-        tr_logAddError(fmt::format(_("Couldn't inhibit desktop hibernation: {error}"), fmt::arg("error", e.what())));
+        tr_logAddError(
+            fmt::format(fmt::runtime(_("Couldn't inhibit desktop hibernation: {error}")), fmt::arg("error", e.what())));
     }
 }
 
@@ -1224,7 +1229,7 @@ bool core_read_rpc_response_idle(tr_variant& response)
         }
         else
         {
-            gtr_warning(fmt::format(_("Couldn't find pending RPC request for tag {tag}"), fmt::arg("tag", tag)));
+            gtr_warning(fmt::format(fmt::runtime(_("Couldn't find pending RPC request for tag {tag}")), fmt::arg("tag", tag)));
         }
     }
 

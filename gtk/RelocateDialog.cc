@@ -83,7 +83,7 @@ void RelocateDialog::Impl::startMovingNextTorrent()
     torrent_ids_.pop_back();
 
     message_dialog_->set_message(
-        fmt::format(_("Moving '{torrent_name}'"), fmt::arg("torrent_name", tr_torrentName(tor))),
+        fmt::format(fmt::runtime(_("Moving '{torrent_name}'")), fmt::arg("torrent_name", tr_torrentName(tor))),
         true);
 }
 

@@ -241,7 +241,7 @@ void MessageLogWindow::Impl::doSave(std::string const& filename)
         auto w = std::make_shared<Gtk::MessageDialog>(
             window_,
             fmt::format(
-                _("Couldn't save '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't save '{path}': {error} ({error_code})")),
                 fmt::arg("path", Glib::filename_to_utf8(filename)),
                 fmt::arg("error", e.code().message()),
                 fmt::arg("error_code", e.code().value())),

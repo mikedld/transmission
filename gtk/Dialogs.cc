@@ -53,9 +53,12 @@ void gtr_confirm_remove(
     }
 
     auto const primary_text = fmt::format(
-        !delete_files ?
-            ngettext("Remove torrent?", "Remove {count:L} torrents?", count) :
-            ngettext("Delete this torrent's downloaded files?", "Delete these {count:L} torrents' downloaded files?", count),
+        fmt::runtime(
+            !delete_files ? ngettext("Remove torrent?", "Remove {count:L} torrents?", count) :
+                            ngettext(
+                                "Delete this torrent's downloaded files?",
+                                "Delete these {count:L} torrents' downloaded files?",
+                                count)),
         fmt::arg("count", count));
 
     Glib::ustring secondary_text;
