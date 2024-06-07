@@ -765,7 +765,7 @@ tr_resume::fields_t load_from_file(tr_torrent* tor, tr_torrent::ResumeHelper& he
     }
 
     // Note: load_filenames() must come before load_progress()
-    // so that load_progress() -> tor->initCheckedPieces() -> tor->findFile()
+    // so that load_progress() -> helper.load_checked_pieces() -> tor_.find_file()
     // will know where to look
     if ((fields_to_load & tr_resume::Filenames) != 0)
     {
