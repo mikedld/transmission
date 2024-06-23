@@ -57,13 +57,12 @@
 
   /* ICONS -- see assets/img/README.md for sources and license details */
   /* Are you a designer? New icon PRs welcomed! */
-  --image-alt-speed-disabled: url('../img/modern-tortoise.png');
-  --image-alt-speed-enabled: url('../img/modern-tortoise-blue.png');
   --image-baseline: url('../img/horizontal-rule.svg');
   --image-chevron-dn: url('../img/chevron-down.svg');
   --image-chevron-up: url('../img/chevron-up.svg');
   --image-lock-fill: url('../img/lock-fill.svg');
   --image-magnet: url('../img/magnet.svg');
+  --image-turtle: url('../img/turtle.svg');
 
   --app-image-url: url('../img/box.svg');
   --audio-image-url: url('../img/music.svg');
@@ -366,12 +365,6 @@ a {
     height: 36px;
     width: 36px;
   }
-
-  &.alt-speed-enabled {
-    background-image: var(--image-alt-speed-enabled);
-    background-position: bottom left;
-    background-size: 20px;
-  }
 }
 
 /// FILTERBAR
@@ -427,6 +420,37 @@ a {
   #speed-dn-label,
   #speed-up-label {
     text-align: right;
+  }
+
+  button {
+    cursor: pointer;
+    border: 1px solid var(--color-border-default);
+    border-radius: 4px;
+    height: 22px;
+    user-select: none;
+    -webkit-user-select: none;
+    width: 36px;
+  }
+
+  #turtle {
+    &.alt-speed-enabled {
+      background-color: var(--color-bg-selected);
+
+      &::before {
+        filter: hue-rotate(120deg) saturate(180%);
+      }
+    }
+
+    &::before {
+      content: '';
+      background: var(--image-turtle) no-repeat;
+      filter: grayscale(100%) brightness(50%);
+      height: 18px;
+      width: 18px;
+      left: calc(20% - 5px);
+      position: relative;
+      display: inline-block;
+    }
   }
 }
 
@@ -812,11 +836,11 @@ a {
     }
   }
 
-  .alt-speed-section-label {
-    background: transparent var(--image-alt-speed-enabled) no-repeat;
-    background-position: left;
-    background-position-y: 4px;
+  .alt-speed-section-label::before {
+    content: '';
+    background: transparent var(--image-turtle) no-repeat;
     background-size: 20px;
+    filter: hue-rotate(120deg) saturate(180%);
     padding-left: 22px;
   }
 
@@ -1423,28 +1447,19 @@ a {
       grid-template-areas:
         'check   lb'
         'turtle  values';
-      grid-template-columns: 22px 1fr;
-      margin-bottom: 4px;
     }
 
     #alt-speed-check {
       grid-area: check;
 
-      &:checked ~ #alt-speed-image {
-        background-image: var(--image-alt-speed-enabled);
-        background-position: left;
-        background-size: 22px;
-      }
-
-      &:not(:checked) ~ #alt-speed-image {
-        background-image: var(--image-alt-speed-disabled);
-        background-size: 22px;
+      &:not(:checked) ~ #alt-speed-icon {
+        filter: grayscale(100%) brightness(50%);
       }
     }
 
-    #alt-speed-image {
-      background-position: center;
-      background-repeat: no-repeat;
+    #alt-speed-icon {
+      background: var(--image-turtle) no-repeat;
+      filter: hue-rotate(120deg) saturate(180%);
       grid-area: turtle;
     }
 
