@@ -40,8 +40,8 @@ using key_bigend_t = tr_message_stream_encryption::DH::key_bigend_t;
 // 1 A->B: our public key (Ya) and some padding (PadA)
 void tr_handshake::send_ya(tr_peerIo* io)
 {
-    tr_logAddTraceHand(this, "sending MSE handshake (Ya)");
     pad_a_len_ = send_public_key_and_pad<PadaMaxlen>(io);
+    tr_logAddTraceHand(this, fmt::format("sent MSE handshake (Ya)... len(PadA) = {}", pad_a_len_));
     set_state(tr_handshake::State::AwaitingYb);
 }
 
@@ -390,8 +390,8 @@ ReadState tr_handshake::read_ya(tr_peerIo* peer_io)
     peer_io->read_buffer_discard(pad_a_len_);
 
     // send our public key to the peer
-    tr_logAddTraceHand(this, "sending B->A: Diffie Hellman Yb, PadB");
     pad_b_len_ = send_public_key_and_pad<PadbMaxlen>(peer_io);
+    tr_logAddTraceHand(this, fmt::format("sent B->A: Diffie Hellman Yb, PadB... len(PadB) = {}", pad_b_len_));
 
     set_state(State::AwaitingPadA);
     // LATER, not NOW: recv buffer was just drained and peer was blocking
