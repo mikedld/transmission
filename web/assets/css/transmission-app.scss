@@ -298,7 +298,7 @@ a {
     margin-right: 6px;
     user-select: none;
     -webkit-user-select: none;
-    width: var(--toolbar-height);
+    min-width: var(--toolbar-height);
 
     svg {
       stroke: var(--color-fg-primary);
