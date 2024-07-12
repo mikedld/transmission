@@ -2,9 +2,16 @@
   <qresource prefix="/icons">
       <file alias="alt-limit-off.svg">icons/turtle-silhouette.svg</file>
       <file alias="alt-limit-on.svg">icons/turtle.svg</file>
+      <file alias="document-open.svg">icons/Win11/actions/24/document-open.svg</file>
+      <file alias="document-properties.svg">icons/Win11/actions/24/document-properties.svg</file>
       <file alias="encrypted.svg">icons/lock.svg</file>
+      <file alias="insert-link.svg">icons/Win11/actions/24/insert-link.svg</file>
+      <file alias="list-remove.svg">icons/Win11/actions/24/list-remove.svg</file>
       <file alias="hamburger-menu.svg">icons/hamburger-menu.svg</file>
       <file alias="ratio.svg">icons/yin-yang.svg</file>
       <file alias="transmission.svg">icons/transmission.svg</file>
+      <file alias="transmission.ico">icons/transmission.ico</file>
+      <file alias="transmission-tray.svg">icons/transmission-tray.svg</file>
+      <file alias="transmission-tray.ico">icons/transmission-tray.ico</file>
   </qresource>
 </RCC>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>472</width>
-    <height>427</height>
+    <width>528</width>
+    <height>439</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,7 +67,7 @@
           <string>Options</string>
          </property>
          <property name="icon">
-          <iconset resource="application.qrc">
+          <iconset resource="Win11.qrc">
            <normaloff>:/icons/hamburger-menu.svg</normaloff>:/icons/hamburger-menu.svg</iconset>
          </property>
          <property name="iconSize">
@@ -90,7 +90,7 @@
        <item>
         <widget class="IconToolButton" name="altSpeedButton">
          <property name="icon">
-          <iconset resource="application.qrc">
+          <iconset resource="Win11.qrc">
            <normaloff>:/icons/alt-limit-off.svg</normaloff>
            <normalon>:/icons/alt-limit-on.svg</normalon>:/icons/alt-limit-off.svg</iconset>
          </property>
@@ -150,7 +150,7 @@
           <string>Statistics</string>
          </property>
          <property name="icon">
-          <iconset resource="application.qrc">
+          <iconset resource="Win11.qrc">
            <normaloff>:/icons/ratio.svg</normaloff>:/icons/ratio.svg</iconset>
          </property>
          <property name="iconSize">
@@ -180,8 +180,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>472</width>
-     <height>24</height>
+     <width>528</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -317,14 +317,18 @@
    <addaction name="action_Properties"/>
   </widget>
   <action name="action_OpenFile">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/Win11/actions/24/document-open.svg</normaloff>:/icons/Win11/actions/24/document-open.svg</iconset>
+   </property>
    <property name="text">
-    <string>&amp;Open…</string>
+    <string>Open a Torrent file…</string>
    </property>
    <property name="iconText">
     <string>Open</string>
    </property>
    <property name="toolTip">
-    <string>Open a torrent</string>
+    <string>Open a Torrent file</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+O</string>
@@ -342,6 +346,10 @@
    </property>
   </action>
   <action name="action_Properties">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/Win11/actions/24/document-properties.svg</normaloff>:/icons/Win11/actions/24/document-properties.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;Properties</string>
    </property>
@@ -354,7 +362,7 @@
   </action>
   <action name="action_OpenFolder">
    <property name="text">
-    <string>Open Fold&amp;er</string>
+    <string>Open Folder</string>
    </property>
    <property name="toolTip">
     <string>Open the torrent's folder</string>
@@ -364,6 +372,10 @@
    </property>
   </action>
   <action name="action_Start">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/Win11/actions/24/media-playback-start.svg</normaloff>:/icons/Win11/actions/24/media-playback-start.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;Start</string>
    </property>
@@ -386,6 +398,10 @@
    </property>
   </action>
   <action name="action_Pause">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/Win11/actions/24/media-playback-pause.svg</normaloff>:/icons/Win11/actions/24/media-playback-pause.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;Pause</string>
    </property>
@@ -411,6 +427,10 @@
    </property>
   </action>
   <action name="action_Remove">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/Win11/actions/24/list-remove.svg</normaloff>:/icons/Win11/actions/24/list-remove.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;Remove</string>
    </property>
@@ -724,8 +744,15 @@
    </property>
   </action>
   <action name="action_AddURL">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/Win11/actions/24/insert-link.svg</normaloff>:/icons/Win11/actions/24/insert-link.svg</iconset>
+   </property>
    <property name="text">
-    <string>Open &amp;URL…</string>
+    <string>Open a Magnet or URL…</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a Magnet or URL…</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+U</string>
@@ -798,7 +825,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="application.qrc"/>
+  <include location="/icons/Win11/Win11.qrc"/>
  </resources>
  <connections/>
 </ui>

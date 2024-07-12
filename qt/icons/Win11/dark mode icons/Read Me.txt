@@ -1,0 +1,3 @@
+These icons are an optional extra for those, like the contributor, who prefer to live in the dark, perpetually. Depending on your platform's ability to adjust icon sets and their visibility, these icons are not only the difference between day and night, but also somewhat blindly trying to distinguish a black icon on a black background.
+
+If building from source, you could build two binaries, one for dark and one for light. For ease of use, the directories in this folder can replace the default 'light' ones.
