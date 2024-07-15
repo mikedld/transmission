@@ -39,7 +39,7 @@ namespace tr_resume
 {
 namespace
 {
-constexpr int MaxRememberedPeers = 200;
+constexpr auto MaxRememberedPeers = 200U;
 
 // ---
 
