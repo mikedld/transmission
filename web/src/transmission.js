@@ -50,7 +50,7 @@ export class Transmission extends EventTarget {
     this.refilterAllSoon = debounce(() => this._refilter(true));
 
     this.pointer_device = Object.seal({
-      is_touch_device: 'ontouchstart' in window,
+      is_touch_device: 'ontouchstart' in globalThis,
       long_press_callback: null,
       x: 0,
       y: 0,
@@ -328,14 +328,14 @@ export class Transmission extends EventTarget {
 
   _openTorrentFromUrl() {
     setTimeout(() => {
-      const addTorrent = new URLSearchParams(window.location.search).get(
+      const addTorrent = new URLSearchParams(globalThis.location.search).get(
         'addtorrent',
       );
       if (addTorrent) {
         this.setCurrentPopup(new OpenDialog(this, this.remote, addTorrent));
-        const newUrl = new URL(window.location);
+        const newUrl = new URL(globalThis.location);
         newUrl.search = '';
-        window.history.pushState('', '', newUrl.toString());
+        globalThis.history.pushState('', '', newUrl.toString());
       }
     }, 0);
   }
@@ -822,7 +822,7 @@ TODO: fix this when notifications get fixed
     if (event_.shiftKey) {
       this._selectRange(row);
       // Need to deselect any selected text
-      window.focus();
+      globalThis.focus();
 
       // Apple-Click, not selected
     } else if (!row.isSelected() && meta_key) {
