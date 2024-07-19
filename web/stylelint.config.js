@@ -1,5 +1,5 @@
-
-module.exports = {
+/** @type {import('stylelint').Config} */
+export default {
   "extends": [
     "stylelint-config-sass-guidelines"
   ],
@@ -8,6 +8,7 @@ module.exports = {
     "@primer/stylelint-config/plugins/no-unused-vars"
   ],
   "rules": {
+    "@stylistic/function-parentheses-space-inside": "never-single-line",
     "block-no-empty": true,
     "color-no-invalid-hex": true,
     "comment-no-empty": true,
