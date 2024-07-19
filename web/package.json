@@ -19,8 +19,8 @@
   },
   "devDependencies": {
     "@primer/stylelint-config": "^12.9.2",
-    "esbuild": "^0.19.12",
-    "esbuild-sass-plugin": "^2.16.1",
+    "esbuild": "^0.24.0",
+    "esbuild-sass-plugin": "^3.3.1",
     "eslint": "^8.57.0",
     "eslint-plugin-sonarjs": "^0.19.0",
     "eslint-plugin-unicorn": "^47.0.0",
