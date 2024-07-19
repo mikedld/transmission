@@ -1,3 +1,3 @@
 export default {
-  "singleQuote": true,
+  singleQuote: true,
 };

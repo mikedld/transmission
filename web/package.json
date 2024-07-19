@@ -12,8 +12,8 @@
     "lint:fix": "run-s lint:eslint:fix lint:stylelint:fix lint:prettier:fix",
     "lint:eslint": "eslint",
     "lint:eslint:fix": "eslint --fix",
-    "lint:prettier": "prettier --log-level warn --check package.json public_html/index.html assets/css/*scss src/*.js",
-    "lint:prettier:fix": "prettier --log-level warn -w package.json public_html/index.html assets/css/*scss src/*.js",
+    "lint:prettier": "prettier --log-level warn --check .",
+    "lint:prettier:fix": "prettier --log-level warn -w .",
     "lint:stylelint": "stylelint assets/css/*scss",
     "lint:stylelint:fix": "stylelint --fix assets/css/*scss"
   },
