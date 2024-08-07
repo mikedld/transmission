@@ -218,6 +218,7 @@ TEST_F(RpcTest, sessionGet)
         TR_KEY_seed_queue_size,
         TR_KEY_seedRatioLimit,
         TR_KEY_seedRatioLimited,
+        TR_KEY_sequentialDownload,
         TR_KEY_session_id,
         TR_KEY_speed_limit_down,
         TR_KEY_speed_limit_down_enabled,
