@@ -469,6 +469,7 @@ Request arguments:
 | `priority-high`      | array     | indices of high-priority file(s)
 | `priority-low`       | array     | indices of low-priority file(s)
 | `priority-normal`    | array     | indices of normal-priority file(s)
+| `sequentialDownload` | boolean   | download torrent pieces sequentially
 
 Either `filename` **or** `metainfo` **must** be included. All other arguments are optional.
 
@@ -1027,6 +1028,7 @@ Transmission 4.0.0 (`rpc-version-semver` 5.3.0, `rpc-version`: 17)
 Transmission 4.1.0 (`rpc-version-semver` 5.4.0, `rpc-version`: 18)
 | Method | Description
 |:---|:---
+| `torrent-add` | new arg `sequentialDownload`
 | `torrent-get` | new arg `sequentialDownload`
 | `torrent-set` | new arg `sequentialDownload`
 | `torrent-get` | new arg `files.beginPiece`
