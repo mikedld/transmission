@@ -102,6 +102,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **peer-limit-per-torrent:** Number (default = 50)
  * **peer-socket-tos:** String (default = "le") Set the [DiffServ](https://en.wikipedia.org/wiki/Differentiated_services) parameter for outgoing packets. Allowed values are lowercase DSCP names. See the `tr_tos_t` class from `libtransmission/net.h` for the exact list of possible values.
  * **reqq:** Number (default = 2000) The number of outstanding block requests a peer is allowed to queue in the client. The higher this number, the higher the max possible upload speed towards each peer.
+ * **sequentialDownload** Boolean (default = false) Enable sequential download by default when adding torrents.
 
 #### Peer Port
  * **peer-port:** Number (default = 51413)
