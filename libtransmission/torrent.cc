@@ -1381,8 +1381,11 @@ tr_stat tr_torrent::stats() const
     stats.secondsDownloading = this->seconds_downloading(now_sec);
 
     stats.corruptEver = this->bytes_corrupt_.ever();
+    stats.corruptThisSession = this->bytes_corrupt_.during_this_session();
     stats.downloadedEver = this->bytes_downloaded_.ever();
+    stats.downloadedThisSession = this->bytes_downloaded_.during_this_session();
     stats.uploadedEver = this->bytes_uploaded_.ever();
+    stats.uploadedThisSession = this->bytes_uploaded_.during_this_session();
     stats.haveValid = this->completion_.has_valid();
     stats.haveUnchecked = this->has_total() - stats.haveValid;
     stats.desiredAvailable = tr_peerMgrGetDesiredAvailable(this);

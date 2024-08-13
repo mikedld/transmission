@@ -65,12 +65,32 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkLabel" id="uploaded_this_session_label">
+                            <property name="label" translatable="1">Uploaded this session:</property>
+                            <property name="xalign">0</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">3</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkLabel" id="downloaded_label">
                             <property name="label" translatable="1">Downloaded:</property>
                             <property name="xalign">0</property>
                             <layout>
                               <property name="column">0</property>
-                              <property name="row">3</property>
+                              <property name="row">4</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="downloaded_this_session_label">
+                            <property name="label" translatable="1">Downloaded this session:</property>
+                            <property name="xalign">0</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">5</property>
                             </layout>
                           </object>
                         </child>
@@ -80,7 +100,7 @@
                             <property name="xalign">0</property>
                             <layout>
                               <property name="column">0</property>
-                              <property name="row">4</property>
+                              <property name="row">6</property>
                             </layout>
                           </object>
                         </child>
@@ -90,7 +110,7 @@
                             <property name="xalign">0</property>
                             <layout>
                               <property name="column">0</property>
-                              <property name="row">5</property>
+                              <property name="row">7</property>
                             </layout>
                           </object>
                         </child>
@@ -100,7 +120,7 @@
                             <property name="xalign">0</property>
                             <layout>
                               <property name="column">0</property>
-                              <property name="row">6</property>
+                              <property name="row">8</property>
                             </layout>
                           </object>
                         </child>
@@ -110,7 +130,7 @@
                             <property name="xalign">0</property>
                             <layout>
                               <property name="column">0</property>
-                              <property name="row">7</property>
+                              <property name="row">9</property>
                             </layout>
                           </object>
                         </child>
@@ -121,7 +141,7 @@
                             <property name="yalign">0</property>
                             <layout>
                               <property name="column">0</property>
-                              <property name="row">8</property>
+                              <property name="row">10</property>
                             </layout>
                           </object>
                         </child>
@@ -159,7 +179,7 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="downloaded_value_label">
+                          <object class="GtkLabel" id="uploaded_this_session_value_label">
                             <property name="hexpand">1</property>
                             <property name="label">...</property>
                             <property name="xalign">0</property>
@@ -170,7 +190,7 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="state_value_label">
+                          <object class="GtkLabel" id="downloaded_value_label">
                             <property name="hexpand">1</property>
                             <property name="label">...</property>
                             <property name="xalign">0</property>
@@ -181,7 +201,7 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="running_time_value_label">
+                          <object class="GtkLabel" id="downloaded_this_session_value_label">
                             <property name="hexpand">1</property>
                             <property name="label">...</property>
                             <property name="xalign">0</property>
@@ -192,7 +212,7 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="remaining_time_value_label">
+                          <object class="GtkLabel" id="state_value_label">
                             <property name="hexpand">1</property>
                             <property name="label">...</property>
                             <property name="xalign">0</property>
@@ -203,13 +223,35 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="last_activity_value_label">
+                          <object class="GtkLabel" id="running_time_value_label">
                             <property name="hexpand">1</property>
                             <property name="label">...</property>
                             <property name="xalign">0</property>
                             <layout>
                               <property name="column">1</property>
                               <property name="row">7</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="remaining_time_value_label">
+                            <property name="hexpand">1</property>
+                            <property name="label">...</property>
+                            <property name="xalign">0</property>
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">8</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="last_activity_value_label">
+                            <property name="hexpand">1</property>
+                            <property name="label">...</property>
+                            <property name="xalign">0</property>
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">9</property>
                             </layout>
                           </object>
                         </child>
@@ -225,7 +267,7 @@
                             <property name="xalign">0</property>
                             <layout>
                               <property name="column">1</property>
-                              <property name="row">8</property>
+                              <property name="row">10</property>
                             </layout>
                           </object>
                         </child>
@@ -856,7 +898,9 @@
       <widget name="torrent_size_label"/>
       <widget name="have_label"/>
       <widget name="uploaded_label"/>
+      <widget name="uploaded_this_session_label"/>
       <widget name="downloaded_label"/>
+      <widget name="downloaded_this_session_label"/>
       <widget name="state_label"/>
       <widget name="running_time_label"/>
       <widget name="remaining_time_label"/>

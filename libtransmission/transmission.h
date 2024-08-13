@@ -1450,13 +1450,26 @@ struct tr_stat
         grow very large. */
     uint64_t corruptEver;
 
+    /** Byte count of all the corrupt data you've downloaded during this session for
+        this torrent. If you're on a poisoned torrent, this number can
+        grow very large. */
+    uint64_t corruptThisSession;
+
     /** Byte count of all data you've ever uploaded for this torrent. */
     uint64_t uploadedEver;
+
+    /** Byte count of all data you've uploaded during this session for this torrent. */
+    uint64_t uploadedThisSession;
 
     /** Byte count of all the non-corrupt data you've ever downloaded
         for this torrent. If you deleted the files and downloaded a second
         time, this will be `2*totalSize`.. */
     uint64_t downloadedEver;
+
+    /** Byte count of all the non-corrupt data you've downloaded during this session
+        for this torrent. If you deleted the files and downloaded a second
+        time, this will be `2*totalSize`.. */
+    uint64_t downloadedThisSession;
 
     /** Byte count of all the checksum-verified data we have for this torrent.
       */

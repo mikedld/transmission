@@ -727,25 +727,27 @@ void setGroup(tr_variant* args, std::string_view group)
     return files;
 }
 
-auto constexpr FilesKeys = std::array<tr_quark, 4>{
+auto constexpr FilesKeys = std::array<tr_quark, 4U>{
     TR_KEY_files,
     TR_KEY_name,
     TR_KEY_priorities,
     TR_KEY_wanted,
 };
 
-static auto constexpr DetailsKeys = std::array<tr_quark, 56>{
+auto constexpr DetailsKeys = std::array<tr_quark, 58U>{
     TR_KEY_activityDate,
     TR_KEY_addedDate,
     TR_KEY_bandwidthPriority,
     TR_KEY_comment,
     TR_KEY_corruptEver,
+    TR_KEY_corruptThisSession,
     TR_KEY_creator,
     TR_KEY_dateCreated,
     TR_KEY_desiredAvailable,
     TR_KEY_doneDate,
     TR_KEY_downloadDir,
     TR_KEY_downloadedEver,
+    TR_KEY_downloadedThisSession,
     TR_KEY_downloadLimit,
     TR_KEY_downloadLimited,
     TR_KEY_error,
@@ -785,6 +787,7 @@ static auto constexpr DetailsKeys = std::array<tr_quark, 56>{
     TR_KEY_status,
     TR_KEY_totalSize,
     TR_KEY_uploadedEver,
+    TR_KEY_uploadedThisSession,
     TR_KEY_uploadLimit,
     TR_KEY_uploadLimited,
     TR_KEY_uploadRatio,
@@ -792,7 +795,7 @@ static auto constexpr DetailsKeys = std::array<tr_quark, 56>{
     TR_KEY_webseedsSendingToUs,
 };
 
-auto constexpr ListKeys = std::array<tr_quark, 15>{
+auto constexpr ListKeys = std::array<tr_quark, 15U>{
     TR_KEY_addedDate,
     TR_KEY_error,
     TR_KEY_errorString,
@@ -1052,6 +1055,21 @@ void printDetails(tr_variant* top)
                 }
             }
 
+            if (tr_variantDictFindInt(t, TR_KEY_downloadedThisSession, &i))
+            {
+                if (auto corrupt = int64_t{}; tr_variantDictFindInt(t, TR_KEY_corruptThisSession, &corrupt) && corrupt != 0)
+                {
+                    fmt::print(
+                        "  Downloaded this session: {:s} (+{:s} discarded after failed checksum)\n",
+                        strlsize(i),
+                        strlsize(corrupt));
+                }
+                else
+                {
+                    fmt::print("  Downloaded this session: {:s}\n", strlsize(i));
+                }
+            }
+
             if (tr_variantDictFindInt(t, TR_KEY_downloadedEver, &i))
             {
                 if (auto corrupt = int64_t{}; tr_variantDictFindInt(t, TR_KEY_corruptEver, &corrupt) && corrupt != 0)
@@ -1062,6 +1080,11 @@ void printDetails(tr_variant* top)
                 {
                     fmt::print("  Downloaded: {:s}\n", strlsize(i));
                 }
+            }
+
+            if (tr_variantDictFindInt(t, TR_KEY_uploadedThisSession, &i))
+            {
+                fmt::print("  Uploaded this session: {:s}\n", strlsize(i));
             }
 
             if (tr_variantDictFindInt(t, TR_KEY_uploadedEver, &i))

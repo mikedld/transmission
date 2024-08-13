@@ -296,9 +296,19 @@ public:
         return downloaded_ever_;
     }
 
+    [[nodiscard]] constexpr auto downloadedThisSession() const noexcept
+    {
+        return downloaded_this_session_;
+    }
+
     [[nodiscard]] constexpr auto uploadedEver() const noexcept
     {
         return uploaded_ever_;
+    }
+
+    [[nodiscard]] constexpr auto uploadedThisSession() const noexcept
+    {
+        return uploaded_this_session_;
     }
 
     [[nodiscard]] constexpr auto ratio() const noexcept
@@ -323,6 +333,11 @@ public:
     [[nodiscard]] constexpr auto failedEver() const noexcept
     {
         return failed_ever_;
+    }
+
+    [[nodiscard]] constexpr auto failedThisSession() const noexcept
+    {
+        return failed_this_session_;
     }
 
     int compareSeedProgress(Torrent const&) const;
@@ -575,6 +590,7 @@ public:
         DATE_CREATED,
         DESIRED_AVAILABLE,
         DOWNLOADED_EVER,
+        DOWNLOADED_THIS_SESSION,
         DOWNLOAD_DIR,
         DOWNLOAD_LIMIT,
         DOWNLOAD_LIMITED,
@@ -584,6 +600,7 @@ public:
         TORRENT_ERROR_STRING,
         ETA,
         FAILED_EVER,
+        FAILED_THIS_SESSION,
         FILE_COUNT,
         FILES,
         HASH,
@@ -621,6 +638,7 @@ public:
         TRACKER_STATS,
         TRACKER_LIST,
         UPLOADED_EVER,
+        UPLOADED_THIS_SESSION,
         UPLOAD_LIMIT,
         UPLOAD_LIMITED,
         UPLOAD_SPEED,
@@ -667,7 +685,9 @@ private:
     uint64_t desired_available_ = {};
     uint64_t download_limit_ = {};
     uint64_t downloaded_ever_ = {};
+    uint64_t downloaded_this_session_ = {};
     uint64_t failed_ever_ = {};
+    uint64_t failed_this_session_ = {};
     uint64_t file_count_ = {};
     uint64_t have_unchecked_ = {};
     uint64_t have_verified_ = {};
@@ -677,6 +697,7 @@ private:
     uint64_t total_size_ = {};
     uint64_t upload_limit_ = {};
     uint64_t uploaded_ever_ = {};
+    uint64_t uploaded_this_session_ = {};
 
     double metadata_percent_complete_ = {};
     double percent_done_ = {};

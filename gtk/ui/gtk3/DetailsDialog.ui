@@ -66,7 +66,7 @@
                   </packing>
                 </child>
                 <child>
-                  <!-- n-columns=2 n-rows=9 -->
+                  <!-- n-columns=2 n-rows=11 -->
                   <object class="GtkGrid" id="activity_section_layout">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -110,6 +110,18 @@
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkLabel" id="uploaded_this_session_label">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Uploaded this session:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkLabel" id="downloaded_label">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -118,7 +130,19 @@
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
-                        <property name="top-attach">3</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="downloaded_this_session_label">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Downloaded this session:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">5</property>
                       </packing>
                     </child>
                     <child>
@@ -130,7 +154,7 @@
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
-                        <property name="top-attach">4</property>
+                        <property name="top-attach">6</property>
                       </packing>
                     </child>
                     <child>
@@ -142,7 +166,7 @@
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
-                        <property name="top-attach">5</property>
+                        <property name="top-attach">7</property>
                       </packing>
                     </child>
                     <child>
@@ -154,7 +178,7 @@
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
-                        <property name="top-attach">6</property>
+                        <property name="top-attach">8</property>
                       </packing>
                     </child>
                     <child>
@@ -166,7 +190,7 @@
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
-                        <property name="top-attach">7</property>
+                        <property name="top-attach">9</property>
                       </packing>
                     </child>
                     <child>
@@ -179,7 +203,7 @@
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
-                        <property name="top-attach">8</property>
+                        <property name="top-attach">10</property>
                       </packing>
                     </child>
                     <child>
@@ -222,7 +246,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="downloaded_value_label">
+                      <object class="GtkLabel" id="uploaded_this_session_value_label">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="hexpand">True</property>
@@ -235,7 +259,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="state_value_label">
+                      <object class="GtkLabel" id="downloaded_value_label">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="hexpand">True</property>
@@ -248,7 +272,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="running_time_value_label">
+                      <object class="GtkLabel" id="downloaded_this_session_value_label">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="hexpand">True</property>
@@ -261,7 +285,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="remaining_time_value_label">
+                      <object class="GtkLabel" id="state_value_label">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="hexpand">True</property>
@@ -274,7 +298,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="last_activity_value_label">
+                      <object class="GtkLabel" id="running_time_value_label">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="hexpand">True</property>
@@ -284,6 +308,32 @@
                       <packing>
                         <property name="left-attach">1</property>
                         <property name="top-attach">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="remaining_time_value_label">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="hexpand">True</property>
+                        <property name="label">...</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="last_activity_value_label">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="hexpand">True</property>
+                        <property name="label">...</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">9</property>
                       </packing>
                     </child>
                     <child>
@@ -300,7 +350,7 @@
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
-                        <property name="top-attach">8</property>
+                        <property name="top-attach">10</property>
                       </packing>
                     </child>
                   </object>
@@ -1200,7 +1250,9 @@
       <widget name="torrent_size_label"/>
       <widget name="have_label"/>
       <widget name="uploaded_label"/>
+      <widget name="uploaded_this_session_label"/>
       <widget name="downloaded_label"/>
+      <widget name="downloaded_this_session_label"/>
       <widget name="state_label"/>
       <widget name="running_time_label"/>
       <widget name="remaining_time_label"/>

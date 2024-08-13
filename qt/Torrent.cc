@@ -184,11 +184,13 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(addedDate, added_date, ADDED_DATE)
             HANDLE_KEY(bandwidthPriority, bandwidth_priority, BANDWIDTH_PRIORITY)
             HANDLE_KEY(corruptEver, failed_ever, FAILED_EVER)
+            HANDLE_KEY(corruptThisSession, failed_this_session, FAILED_THIS_SESSION)
             HANDLE_KEY(dateCreated, date_created, DATE_CREATED)
             HANDLE_KEY(desiredAvailable, desired_available, DESIRED_AVAILABLE)
             HANDLE_KEY(downloadLimit, download_limit, DOWNLOAD_LIMIT) // KB/s
             HANDLE_KEY(downloadLimited, download_limited, DOWNLOAD_LIMITED)
             HANDLE_KEY(downloadedEver, downloaded_ever, DOWNLOADED_EVER)
+            HANDLE_KEY(downloadedThisSession, downloaded_this_session, DOWNLOADED_THIS_SESSION)
             HANDLE_KEY(editDate, edit_date, EDIT_DATE)
             HANDLE_KEY(error, error, TORRENT_ERROR)
             HANDLE_KEY(eta, eta, ETA)
@@ -234,6 +236,7 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(uploadLimit, upload_limit, UPLOAD_LIMIT) // KB/s
             HANDLE_KEY(uploadLimited, upload_limited, UPLOAD_LIMITED)
             HANDLE_KEY(uploadedEver, uploaded_ever, UPLOADED_EVER)
+            HANDLE_KEY(uploadedThisSession, uploaded_this_session, UPLOADED_THIS_SESSION)
             HANDLE_KEY(webseedsSendingToUs, webseeds_sending_to_us, WEBSEEDS_SENDING_TO_US)
 #undef HANDLE_KEY
 

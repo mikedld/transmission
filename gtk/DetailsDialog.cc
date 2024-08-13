@@ -158,7 +158,9 @@ private:
     Gtk::Label* state_lb_ = nullptr;
     Gtk::Label* have_lb_ = nullptr;
     Gtk::Label* dl_lb_ = nullptr;
+    Gtk::Label* dl_ts_lb_ = nullptr;
     Gtk::Label* ul_lb_ = nullptr;
+    Gtk::Label* ul_ts_lb_ = nullptr;
     Gtk::Label* error_lb_ = nullptr;
     Gtk::Label* date_started_lb_ = nullptr;
     Gtk::Label* eta_lb_ = nullptr;
@@ -996,6 +998,40 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
 
     dl_lb_->set_text(str);
 
+    // dl_ts_lb
+    if (stats.empty())
+    {
+        str = no_torrent;
+    }
+    else
+    {
+        auto const downloaded_str = tr_strlsize(std::accumulate(
+            std::begin(stats),
+            std::end(stats),
+            uint64_t{ 0 },
+            [](auto sum, auto const* st) { return sum + st->downloadedThisSession; }));
+
+        auto const failed = std::accumulate(
+            std::begin(stats),
+            std::end(stats),
+            uint64_t{ 0 },
+            [](auto sum, auto const* st) { return sum + st->corruptThisSession; });
+
+        if (failed != 0)
+        {
+            str = fmt::format(
+                _("{downloaded_size} verified (+{discarded_size} discarded after failed checksum)"),
+                fmt::arg("downloaded_size", downloaded_str),
+                fmt::arg("discarded_size", tr_strlsize(failed)));
+        }
+        else
+        {
+            str = downloaded_str;
+        }
+    }
+
+    dl_ts_lb_->set_text(str);
+
     /* ul_lb */
     if (stats.empty())
     {
@@ -1020,6 +1056,23 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
     }
 
     ul_lb_->set_text(str);
+
+    /* ul_ts_lb */
+    if (stats.empty())
+    {
+        str = no_torrent;
+    }
+    else
+    {
+        auto const uploaded = std::accumulate(
+            std::begin(stats),
+            std::end(stats),
+            uint64_t{},
+            [](auto sum, auto const* st) { return sum + st->uploadedThisSession; });
+        str = tr_strlsize(uploaded);
+    }
+
+    ul_ts_lb_->set_text(str);
 
     /* hash_lb */
     if (infos.empty())
@@ -2556,7 +2609,9 @@ DetailsDialog::Impl::Impl(DetailsDialog& dialog, Glib::RefPtr<Gtk::Builder> cons
     , state_lb_(gtr_get_widget<Gtk::Label>(builder, "state_value_label"))
     , have_lb_(gtr_get_widget<Gtk::Label>(builder, "have_value_label"))
     , dl_lb_(gtr_get_widget<Gtk::Label>(builder, "downloaded_value_label"))
+    , dl_ts_lb_(gtr_get_widget<Gtk::Label>(builder, "downloaded_this_session_value_label"))
     , ul_lb_(gtr_get_widget<Gtk::Label>(builder, "uploaded_value_label"))
+    , ul_ts_lb_(gtr_get_widget<Gtk::Label>(builder, "uploaded_this_session_value_label"))
     , error_lb_(gtr_get_widget<Gtk::Label>(builder, "error_value_label"))
     , date_started_lb_(gtr_get_widget<Gtk::Label>(builder, "running_time_value_label"))
     , eta_lb_(gtr_get_widget<Gtk::Label>(builder, "remaining_time_value_label"))

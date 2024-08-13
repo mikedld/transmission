@@ -508,6 +508,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_bandwidthPriority:
     case TR_KEY_comment:
     case TR_KEY_corruptEver:
+    case TR_KEY_corruptThisSession:
     case TR_KEY_creator:
     case TR_KEY_dateCreated:
     case TR_KEY_desiredAvailable:
@@ -516,6 +517,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_downloadLimit:
     case TR_KEY_downloadLimited:
     case TR_KEY_downloadedEver:
+    case TR_KEY_downloadedThisSession:
     case TR_KEY_editDate:
     case TR_KEY_error:
     case TR_KEY_errorString:
@@ -577,6 +579,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_uploadLimited:
     case TR_KEY_uploadRatio:
     case TR_KEY_uploadedEver:
+    case TR_KEY_uploadedThisSession:
     case TR_KEY_wanted:
     case TR_KEY_webseeds:
     case TR_KEY_webseedsSendingToUs:
@@ -602,6 +605,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_bandwidthPriority: return tor.get_priority();
     case TR_KEY_comment: return tor.comment();
     case TR_KEY_corruptEver: return st.corruptEver;
+    case TR_KEY_corruptThisSession: return st.corruptThisSession;
     case TR_KEY_creator: return tor.creator();
     case TR_KEY_dateCreated: return tor.date_created();
     case TR_KEY_desiredAvailable: return st.desiredAvailable;
@@ -610,6 +614,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_downloadLimit: return tr_torrentGetSpeedLimit_KBps(&tor, TR_DOWN);
     case TR_KEY_downloadLimited: return tor.uses_speed_limit(TR_DOWN);
     case TR_KEY_downloadedEver: return st.downloadedEver;
+    case TR_KEY_downloadedThisSession: return st.downloadedThisSession;
     case TR_KEY_editDate: return st.editDate;
     case TR_KEY_error: return st.error;
     case TR_KEY_errorString: return st.errorString;
@@ -671,6 +676,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_uploadLimited: return tor.uses_speed_limit(TR_UP);
     case TR_KEY_uploadRatio: return st.ratio;
     case TR_KEY_uploadedEver: return st.uploadedEver;
+    case TR_KEY_uploadedThisSession: return st.uploadedThisSession;
     case TR_KEY_wanted: return make_file_wanted_vec(tor);
     case TR_KEY_webseeds: return make_webseed_vec(tor);
     case TR_KEY_webseedsSendingToUs: return st.webseedsSendingToUs;

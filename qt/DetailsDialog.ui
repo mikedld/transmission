@@ -133,17 +133,17 @@
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QLabel" name="downloadedLabel">
+           <widget class="QLabel" name="uploadedThisSessionLabel">
             <property name="text">
-             <string>Downloaded:</string>
+             <string>Uploaded this session:</string>
             </property>
             <property name="buddy">
-             <cstring>downloadedValueLabel</cstring>
+             <cstring>uploadedThisSessionValueLabel</cstring>
             </property>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="SqueezeLabel" name="downloadedValueLabel">
+           <widget class="SqueezeLabel" name="uploadedThisSessionValueLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -165,17 +165,17 @@
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QLabel" name="stateLabel">
+           <widget class="QLabel" name="downloadedLabel">
             <property name="text">
-             <string>State:</string>
+             <string>Downloaded:</string>
             </property>
             <property name="buddy">
-             <cstring>stateValueLabel</cstring>
+             <cstring>downloadedValueLabel</cstring>
             </property>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="SqueezeLabel" name="stateValueLabel">
+           <widget class="SqueezeLabel" name="downloadedValueLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -197,17 +197,17 @@
            </widget>
           </item>
           <item row="5" column="0">
-           <widget class="QLabel" name="runningTimeLabel">
+           <widget class="QLabel" name="downloadedThisSessionLabel">
             <property name="text">
-             <string>Running time:</string>
+             <string>Downloaded this session:</string>
             </property>
             <property name="buddy">
-             <cstring>runningTimeValueLabel</cstring>
+             <cstring>downloadedThisSessionValueLabel</cstring>
             </property>
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="SqueezeLabel" name="runningTimeValueLabel">
+           <widget class="SqueezeLabel" name="downloadedThisSessionValueLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -229,17 +229,17 @@
            </widget>
           </item>
           <item row="6" column="0">
-           <widget class="QLabel" name="remainingTimeLabel">
+           <widget class="QLabel" name="stateLabel">
             <property name="text">
-             <string>Remaining time:</string>
+             <string>State:</string>
             </property>
             <property name="buddy">
-             <cstring>remainingTimeValueLabel</cstring>
+             <cstring>stateValueLabel</cstring>
             </property>
            </widget>
           </item>
           <item row="6" column="1">
-           <widget class="SqueezeLabel" name="remainingTimeValueLabel">
+           <widget class="SqueezeLabel" name="stateValueLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -261,17 +261,17 @@
            </widget>
           </item>
           <item row="7" column="0">
-           <widget class="QLabel" name="lastActivityLabel">
+           <widget class="QLabel" name="runningTimeLabel">
             <property name="text">
-             <string>Last activity:</string>
+             <string>Running time:</string>
             </property>
             <property name="buddy">
-             <cstring>lastActivityValueLabel</cstring>
+             <cstring>runningTimeValueLabel</cstring>
             </property>
            </widget>
           </item>
           <item row="7" column="1">
-           <widget class="SqueezeLabel" name="lastActivityValueLabel">
+           <widget class="SqueezeLabel" name="runningTimeValueLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -293,6 +293,70 @@
            </widget>
           </item>
           <item row="8" column="0">
+           <widget class="QLabel" name="remainingTimeLabel">
+            <property name="text">
+             <string>Remaining time:</string>
+            </property>
+            <property name="buddy">
+             <cstring>remainingTimeValueLabel</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="SqueezeLabel" name="remainingTimeValueLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="text">
+             <string notr="true">...</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::PlainText</enum>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="lastActivityLabel">
+            <property name="text">
+             <string>Last activity:</string>
+            </property>
+            <property name="buddy">
+             <cstring>lastActivityValueLabel</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="SqueezeLabel" name="lastActivityValueLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="text">
+             <string notr="true">...</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::PlainText</enum>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
            <widget class="QLabel" name="errorLabel">
             <property name="text">
              <string>Error:</string>
@@ -302,7 +366,7 @@
             </property>
            </widget>
           </item>
-          <item row="8" column="1">
+          <item row="10" column="1">
            <widget class="SqueezeLabel" name="errorValueLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
