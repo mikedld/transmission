@@ -384,6 +384,7 @@ public:
         bool script_torrent_done_enabled = false;
         bool script_torrent_done_seeding_enabled = false;
         bool seed_queue_enabled = false;
+        bool sequential_download = false;
         bool should_delete_source_torrents = false;
         bool should_scrape_paused_torrents = true;
         bool should_start_added_torrents = true;
@@ -474,6 +475,7 @@ public:
                 { TR_KEY_script_torrent_done_seeding_filename, &script_torrent_done_seeding_filename },
                 { TR_KEY_seed_queue_enabled, &seed_queue_enabled },
                 { TR_KEY_seed_queue_size, &seed_queue_size },
+                { TR_KEY_sequentialDownload, &sequential_download },
                 { TR_KEY_sleep_per_seconds_during_verify, &sleep_per_seconds_during_verify },
                 { TR_KEY_speed_limit_down, &speed_limit_down },
                 { TR_KEY_speed_limit_down_enabled, &speed_limit_down_enabled },
@@ -691,6 +693,16 @@ public:
     [[nodiscard]] constexpr auto peerLimitPerTorrent() const noexcept
     {
         return settings().peer_limit_per_torrent;
+    }
+
+    [[nodiscard]] constexpr auto sequential_download() const noexcept
+    {
+        return settings().sequential_download;
+    }
+
+    void set_sequential_download(bool seq) noexcept
+    {
+        settings_.sequential_download = seq;
     }
 
     // bandwidth

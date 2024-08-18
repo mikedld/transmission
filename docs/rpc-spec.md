@@ -465,6 +465,7 @@ Request arguments:
 | `priority-high`      | array     | indices of high-priority file(s)
 | `priority-low`       | array     | indices of low-priority file(s)
 | `priority-normal`    | array     | indices of normal-priority file(s)
+| `sequentialDownload` | boolean   | download torrent pieces sequentially
 
 Either `filename` **or** `metainfo` **must** be included. All other arguments are optional.
 
@@ -567,6 +568,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `seed-queue-size` | number | max number of torrents to uploaded at once (see seed-queue-enabled)
 | `seedRatioLimit` | double | the default seed ratio for torrents to use
 | `seedRatioLimited` | boolean | true if seedRatioLimit is honored by default
+| `sequentialDownload` | boolean | true means sequential download is enabled by default for added torrents
 | `session-id` | string | the current `X-Transmission-Session-Id` value
 | `speed-limit-down-enabled` | boolean | true means enabled
 | `speed-limit-down` | number | max global download speed (KBps)
@@ -1022,6 +1024,9 @@ Transmission 4.0.0 (`rpc-version-semver` 5.3.0, `rpc-version`: 17)
 Transmission 4.1.0 (`rpc-version-semver` 5.4.0, `rpc-version`: 18)
 | Method | Description
 |:---|:---
+| `session-get` | new arg `sequentialDownload`
+| `session-set` | new arg `sequentialDownload`
+| `torrent-add` | new arg `sequentialDownload`
 | `torrent-get` | new arg `sequentialDownload`
 | `torrent-set` | new arg `sequentialDownload`
 | `torrent-get` | new arg `files.beginPiece`
