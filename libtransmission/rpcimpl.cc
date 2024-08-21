@@ -2104,7 +2104,7 @@ using AsyncHandler = char const* (*)(tr_session*, tr_variant::Map const&, tr_rpc
 auto constexpr AsyncHandlers = std::array<std::pair<std::string_view, AsyncHandler>, 4U>{ {
     { "blocklist-update"sv, blocklistUpdate },
     { "port-test"sv, portTest },
-    { "torrent-add"sv, torrentAdd },
+    { "torrent_add"sv, torrentAdd },
     { "torrent-rename-path"sv, torrentRenamePath },
 } };
 

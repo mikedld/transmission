@@ -74,7 +74,7 @@ export class OpenDialog extends EventTarget {
             metainfo: contents.slice(Math.max(0, index + key.length)),
             paused,
           },
-          method: 'torrent-add',
+          method: 'torrent_add',
         };
         remote.sendRequest(o, (response) => {
           if (response.result !== 'success') {
@@ -102,7 +102,7 @@ export class OpenDialog extends EventTarget {
           filename: url,
           paused,
         },
-        method: 'torrent-add',
+        method: 'torrent_add',
       };
       remote.sendRequest(o, (payload) => {
         if (payload.result !== 'success') {

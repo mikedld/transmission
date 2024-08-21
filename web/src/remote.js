@@ -257,7 +257,7 @@ export class Remote {
         filename: url,
         paused: options.paused,
       },
-      method: 'torrent-add',
+      method: 'torrent_add',
     };
     this.sendRequest(o, () => {
       this._controller.refreshTorrents();
