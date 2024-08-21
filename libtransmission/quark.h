@@ -456,3 +456,10 @@ enum
  * created.
  */
 [[nodiscard]] tr_quark tr_quark_new(std::string_view str);
+
+/**
+ * Get the replacement quark from old deprecated quarks.
+ *
+ * Note: Temporary shim just for the transition period to snake_case.
+ */
+[[nodiscard]] tr_quark tr_quark_convert(tr_quark quark);

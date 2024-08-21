@@ -239,7 +239,7 @@ Prefs::Prefs(QString config_dir)
 
     for (int i = 0; i < PREFS_COUNT; ++i)
     {
-        tr_variant const* b = tr_variantDictFind(&settings, Items[i].key);
+        tr_variant const* b = tr_variantDictFind(&settings, tr_quark_convert(getKey(i)));
 
         switch (Items[i].type)
         {
@@ -337,7 +337,7 @@ Prefs::~Prefs()
             continue;
         }
 
-        tr_quark const key = Items[i].key;
+        tr_quark const key = tr_quark_convert(getKey(i));
         QVariant const& val = values_[i];
 
         switch (Items[i].type)
@@ -408,16 +408,14 @@ Prefs::~Prefs()
     auto serde = tr_variant_serde::json();
     auto const file = QFile{ QDir{ config_dir_ }.absoluteFilePath(QStringLiteral("settings.json")) };
     auto const filename = file.fileName().toStdString();
-    auto settings = serde.parse_file(filename);
-    if (!settings)
+    auto settings = tr_variant::make_map(PREFS_COUNT);
+    if (auto const file_settings = serde.parse_file(filename); file_settings)
     {
-        auto empty_dict = tr_variant{};
-        tr_variantInitDict(&empty_dict, PREFS_COUNT);
-        settings = std::move(empty_dict);
+        settings.merge(*file_settings);
     }
 
-    tr_variantMergeDicts(&*settings, &current_settings);
-    serde.to_file(*settings, filename);
+    settings.merge(current_settings);
+    serde.to_file(settings, filename);
 }
 
 /**

@@ -253,7 +253,7 @@ void tr_variant::Merge::operator()(tr_variant::Map const& src)
         tgt->reserve(std::size(*tgt) + std::size(src));
         for (auto const& [key, val] : src)
         {
-            std::visit(Merge{ (*tgt)[key] }, val.val_);
+            std::visit(Merge{ (*tgt)[tr_quark_convert(key)] }, val.val_);
         }
     }
 }
