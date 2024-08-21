@@ -250,12 +250,12 @@ void OptionsDialog::onAccepted()
     int const priority = ui_.priorityCombo->itemData(index).toInt();
     dictAdd(&args, TR_KEY_bandwidth_priority_camel, priority);
 
-    // files-unwanted
+    // files_unwanted
     auto count = std::count(wanted_.begin(), wanted_.end(), false);
 
     if (count > 0)
     {
-        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_files_unwanted, count);
+        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_files_unwanted_kebab, count);
 
         for (int i = 0, n = wanted_.size(); i < n; ++i)
         {
