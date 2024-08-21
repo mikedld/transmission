@@ -142,8 +142,8 @@ Request arguments:
 | Key | Value Type | Value Description
 |:--|:--|:--
 | `bandwidth_priority`  | number   | this torrent's bandwidth tr_priority_t
-| `downloadLimit`       | number   | maximum download speed (KBps)
-| `downloadLimited`     | boolean  | true if `downloadLimit` is honored
+| `download_limit`      | number   | maximum download speed (KBps)
+| `downloadLimited`     | boolean  | true if `download_limit` is honored
 | `files-unwanted`      | array    | indices of file(s) to not download
 | `files-wanted`        | array    | indices of file(s) to download
 | `group`               | string   | The name of this torrent's bandwidth group
@@ -222,7 +222,7 @@ The 'source' column here corresponds to the data structure there.
 | `doneDate`| number | tr_stat
 | `downloadDir` | string  | tr_torrent
 | `downloadedEver` | number  | tr_stat
-| `downloadLimit` | number  | tr_torrent
+| `download_limit` | number  | tr_torrent
 | `downloadLimited` | boolean | tr_torrent
 | `editDate` | number | tr_stat
 | `error` | number | tr_stat

@@ -1525,7 +1525,7 @@ void DetailsDialog::initOptionsTab()
     ui_.singleDownSpin->setSuffix(speed_unit_suffix);
     ui_.singleUpSpin->setSuffix(speed_unit_suffix);
 
-    ui_.singleDownSpin->setProperty(PrefKey, TR_KEY_downloadLimit);
+    ui_.singleDownSpin->setProperty(PrefKey, TR_KEY_download_limit_camel);
     ui_.singleUpSpin->setProperty(PrefKey, TR_KEY_uploadLimit);
     ui_.ratioSpin->setProperty(PrefKey, TR_KEY_seedRatioLimit);
     ui_.idleSpin->setProperty(PrefKey, TR_KEY_seedIdleLimit);
