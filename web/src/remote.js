@@ -234,7 +234,7 @@ export class Remote {
   }
   verifyTorrents(torrent_ids, callback, context) {
     this.sendTorrentActionRequests(
-      'torrent-verify',
+      'torrent_verify',
       torrent_ids,
       callback,
       context,
