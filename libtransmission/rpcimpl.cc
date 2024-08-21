@@ -112,7 +112,7 @@ void tr_idle_function_done(struct tr_rpc_idle_data* data, std::string_view resul
 
         if (auto const val = var.value_if<std::string_view>())
         {
-            if (*val == "recently-active"sv)
+            if (*val == "recently_active"sv || *val == "recently-active")
             {
                 auto const cutoff = tr_time() - RecentlyActiveSeconds;
                 auto const recent = torrents.get_matching([cutoff](auto* walk) { return walk->has_changed_since(cutoff); });
@@ -720,7 +720,8 @@ char const* torrentGet(tr_session* session, tr_variant::Map const& args_in, tr_v
     auto const format = args_in.value_if<std::string_view>(TR_KEY_format).value_or("object"sv) == "table"sv ? TrFormat::Table :
                                                                                                               TrFormat::Object;
 
-    if (args_in.value_if<std::string_view>(TR_KEY_ids).value_or(""sv) == "recently-active"sv)
+    if (auto val = args_in.value_if<std::string_view>(TR_KEY_ids).value_or(""sv);
+        val == "recently_active"sv || val == "recently-active"sv)
     {
         auto const cutoff = tr_time() - RecentlyActiveSeconds;
         auto const ids = session->torrents().removedSince(cutoff);

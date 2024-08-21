@@ -127,7 +127,7 @@ All torrents are used if the `ids` argument is omitted.
 
 1. an integer referring to a torrent id
 2. a list of torrent id numbers, SHA1 hash strings, or both
-3. a string, `recently-active`, for recently-active torrents
+3. a string, `recently_active`, for recently-active torrents
 
 Note that integer torrent ids are not stable across Transmission daemon
 restarts. Use torrent hashes if you need stable ids.
@@ -200,7 +200,7 @@ Response arguments:
    a torrent's values for those keys. This format is more efficient
    in terms of JSON generation and JSON parsing.
 
-2. If the request's `ids` field was `recently-active`,
+2. If the request's `ids` field was `recently_active`,
    a `removed` array of torrent-id numbers of recently-removed
    torrents.
 

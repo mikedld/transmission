@@ -764,7 +764,7 @@ TODO: fix this when notifications get fixed
 
   refreshTorrents() {
     const fields = ['id', ...Torrent.Fields.Stats];
-    this.updateTorrents('recently-active', fields);
+    this.updateTorrents('recently_active', fields);
   }
 
   _initializeTorrents() {
