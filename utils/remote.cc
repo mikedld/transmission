@@ -3052,7 +3052,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
             switch (c)
             {
             case 'g':
-                args.insert_or_assign(TR_KEY_files_wanted, make_files_list(optarg_sv));
+                args.insert_or_assign(TR_KEY_files_wanted_kebab, make_files_list(optarg_sv));
                 break;
 
             case 'G':

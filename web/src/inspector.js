@@ -853,7 +853,7 @@ export class Inspector extends EventTarget {
     const { indices, wanted } = event_;
     this._changeFileCommand(
       indices,
-      wanted ? 'files-wanted' : 'files_unwanted',
+      wanted ? 'files_wanted' : 'files_unwanted',
     );
   }
 

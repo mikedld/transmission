@@ -1643,7 +1643,7 @@ void DetailsDialog::onFilePriorityChanged(file_indices_t const& indices, int pri
 
 void DetailsDialog::onFileWantedChanged(file_indices_t const& indices, bool wanted)
 {
-    tr_quark const key = wanted ? TR_KEY_files_wanted : TR_KEY_files_unwanted_kebab;
+    tr_quark const key = wanted ? TR_KEY_files_wanted_kebab : TR_KEY_files_unwanted_kebab;
     torrentSet(key, std::vector<int>{ std::begin(indices), std::end(indices) });
 }
 

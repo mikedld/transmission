@@ -128,6 +128,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "files-wanted"sv,
     "filesAdded"sv,
     "files_unwanted"sv,
+    "files_wanted"sv,
     "filter-mode"sv,
     "filter-text"sv,
     "filter-trackers"sv,
@@ -513,6 +514,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_download_limit_camel: return TR_KEY_download_limit;
     case TR_KEY_download_limited_camel: return TR_KEY_download_limited;
     case TR_KEY_files_unwanted_kebab: return TR_KEY_files_unwanted;
+    case TR_KEY_files_wanted_kebab: return TR_KEY_files_wanted;
     case TR_KEY_torrent_set_kebab: return TR_KEY_torrent_set;
     case TR_KEY_torrent_set_location_kebab: return TR_KEY_torrent_set_location;
     default: return q;
