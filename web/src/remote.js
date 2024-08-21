@@ -203,7 +203,7 @@ export class Remote {
 
   moveTorrents(torrent_ids, new_location, callback, context) {
     this.sendTorrentSetRequests(
-      'torrent-set-location',
+      'torrent_set_location',
       torrent_ids,
       {
         location: new_location,

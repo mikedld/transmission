@@ -3252,7 +3252,9 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                     args.try_emplace(TR_KEY_location, optarg_sv);
                     args.try_emplace(TR_KEY_move, true);
                     add_id_arg(args, config);
-                    map.try_emplace(TR_KEY_method, tr_variant::unmanaged_string("torrent-set-location"sv));
+                    map.try_emplace(
+                        TR_KEY_method,
+                        tr_variant::unmanaged_string(tr_quark_get_string_view(TR_KEY_torrent_set_location_kebab)));
                     map.try_emplace(TR_KEY_arguments, std::move(args));
                     auto top = tr_variant{ std::move(map) };
                     status |= flush(rpcurl, &top, config);
@@ -3279,7 +3281,9 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                     args.try_emplace(TR_KEY_location, optarg_sv);
                     args.try_emplace(TR_KEY_move, false);
                     add_id_arg(args, config);
-                    map.try_emplace(TR_KEY_method, tr_variant::unmanaged_string("torrent-set-location"sv));
+                    map.try_emplace(
+                        TR_KEY_method,
+                        tr_variant::unmanaged_string(tr_quark_get_string_view(TR_KEY_torrent_set_location_kebab)));
                     map.try_emplace(TR_KEY_arguments, std::move(args));
                     auto top = tr_variant{ std::move(map) };
                     status |= flush(rpcurl, &top, config);

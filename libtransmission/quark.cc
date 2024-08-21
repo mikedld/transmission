@@ -390,6 +390,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "torrentCount"sv,
     "torrentFile"sv,
     "torrent_set"sv,
+    "torrent_set_location"sv,
     "torrents"sv,
     "totalSize"sv,
     "total_size"sv,
@@ -503,6 +504,7 @@ tr_quark tr_quark_convert(tr_quark q)
     switch (q)
     {
     case TR_KEY_torrent_set_kebab: return TR_KEY_torrent_set;
+    case TR_KEY_torrent_set_location_kebab: return TR_KEY_torrent_set_location;
     default: return q;
     }
     // clang-format on

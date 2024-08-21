@@ -2093,7 +2093,7 @@ auto constexpr SyncHandlers = std::array<std::pair<std::string_view, SyncHandler
     { "torrent_reannounce"sv, torrentReannounce },
     { "torrent-remove"sv, torrentRemove },
     { "torrent_set"sv, torrentSet },
-    { "torrent-set-location"sv, torrentSetLocation },
+    { "torrent_set_location"sv, torrentSetLocation },
     { "torrent_start"sv, torrentStart },
     { "torrent_start_now"sv, torrentStartNow },
     { "torrent_stop"sv, torrentStop },

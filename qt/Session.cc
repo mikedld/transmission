@@ -476,7 +476,7 @@ void Session::torrentSetLocation(torrent_ids_t const& torrent_ids, QString const
     dictAdd(&args, TR_KEY_location, path);
     dictAdd(&args, TR_KEY_move, do_move);
 
-    exec(TR_KEY_torrent_set_location, &args);
+    exec(TR_KEY_torrent_set_location_kebab, &args);
 }
 
 void Session::torrentRenamePath(torrent_ids_t const& torrent_ids, QString const& oldpath, QString const& newname)
