@@ -691,7 +691,7 @@ static_assert(FilesKeys[std::size(FilesKeys) - 1] != tr_quark{});
 auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_activityDate,
     TR_KEY_addedDate,
-    TR_KEY_bandwidthPriority,
+    TR_KEY_bandwidth_priority_camel,
     TR_KEY_comment,
     TR_KEY_corruptEver,
     TR_KEY_creator,
@@ -1242,7 +1242,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Peer limit: {:d}\n", *i);
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_bandwidthPriority); i)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_bandwidth_priority, TR_KEY_bandwidth_priority_camel }); i)
         {
             fmt::print("  Bandwidth Priority: {:s}\n", BandwidthPriorityNames[(*i + 1) & 0b11]);
         }
@@ -3084,15 +3084,15 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 700:
-                args.insert_or_assign(TR_KEY_bandwidthPriority, 1);
+                args.insert_or_assign(TR_KEY_bandwidth_priority_camel, 1);
                 break;
 
             case 701:
-                args.insert_or_assign(TR_KEY_bandwidthPriority, 0);
+                args.insert_or_assign(TR_KEY_bandwidth_priority_camel, 0);
                 break;
 
             case 702:
-                args.insert_or_assign(TR_KEY_bandwidthPriority, -1);
+                args.insert_or_assign(TR_KEY_bandwidth_priority_camel, -1);
                 break;
 
             case 710:

@@ -248,7 +248,7 @@ void OptionsDialog::onAccepted()
     // priority
     int const index = ui_.priorityCombo->currentIndex();
     int const priority = ui_.priorityCombo->itemData(index).toInt();
-    dictAdd(&args, TR_KEY_bandwidthPriority, priority);
+    dictAdd(&args, TR_KEY_bandwidth_priority_camel, priority);
 
     // files-unwanted
     auto count = std::count(wanted_.begin(), wanted_.end(), false);

@@ -746,7 +746,7 @@ tr_resume::fields_t load_from_file(tr_torrent* tor, tr_torrent::ResumeHelper& he
         fields_loaded |= tr_resume::TimeDownloading;
     }
 
-    if (auto i = map.value_if<int64_t>(TR_KEY_bandwidth_priority);
+    if (auto i = map.value_if<int64_t>({ TR_KEY_bandwidth_priority, TR_KEY_bandwidth_priority_kebab });
         i && (fields_to_load & tr_resume::BandwidthPriority) != 0 && tr_isPriority(static_cast<tr_priority_t>(*i)))
     {
         tr_torrentSetPriority(tor, static_cast<tr_priority_t>(*i));

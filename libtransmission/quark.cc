@@ -48,6 +48,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "availability"sv,
     "bandwidth-priority"sv,
     "bandwidthPriority"sv,
+    "bandwidth_priority"sv,
     "beginPiece"sv,
     "bind-address-ipv4"sv,
     "bind-address-ipv6"sv,
@@ -503,6 +504,9 @@ tr_quark tr_quark_convert(tr_quark q)
     // clang-format off
     switch (q)
     {
+    case TR_KEY_bandwidth_priority_camel:
+    case TR_KEY_bandwidth_priority_kebab:
+        return TR_KEY_bandwidth_priority;
     case TR_KEY_torrent_set_kebab: return TR_KEY_torrent_set;
     case TR_KEY_torrent_set_location_kebab: return TR_KEY_torrent_set_location;
     default: return q;

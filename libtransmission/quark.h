@@ -48,8 +48,9 @@ enum
     TR_KEY_anti_brute_force_threshold, /* rpc */
     TR_KEY_arguments, /* rpc */
     TR_KEY_availability, // rpc
+    TR_KEY_bandwidth_priority_kebab,
+    TR_KEY_bandwidth_priority_camel,
     TR_KEY_bandwidth_priority,
-    TR_KEY_bandwidthPriority,
     TR_KEY_beginPiece,
     TR_KEY_bind_address_ipv4,
     TR_KEY_bind_address_ipv6,

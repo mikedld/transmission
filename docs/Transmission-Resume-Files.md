@@ -19,7 +19,7 @@ The file contains the following **per-torrent** properties:
 | `peers2` | IPv4 peers |
 | `peers2-6` | IPv6 peers |
 | `priority` | list of file download priorities (one item per file in torrent),<br/>each value is -1 (low), 0 (std), +1 (high) |
-| `bandwidth-priority` |  |
+| `bandwidth_priority` |  |
 | `progress` |  |
 | `speed-limit` |  |
 | `speed-limit-up` | Torrent upload speed limit |

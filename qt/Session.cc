@@ -580,7 +580,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
         // changing fields needed by the details dialog
         static auto constexpr DetailStatKeys = std::array<tr_quark, 18>{
             TR_KEY_activityDate, //
-            TR_KEY_bandwidthPriority, //
+            TR_KEY_bandwidth_priority_camel, //
             TR_KEY_corruptEver, //
             TR_KEY_desiredAvailable, //
             TR_KEY_downloadedEver, //
