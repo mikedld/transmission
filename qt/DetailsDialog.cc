@@ -1351,7 +1351,7 @@ void DetailsDialog::onHonorsSessionLimitsToggled(bool val)
 
 void DetailsDialog::onDownloadLimitedToggled(bool val)
 {
-    torrentSet(TR_KEY_downloadLimited, val);
+    torrentSet(TR_KEY_download_limited_camel, val);
 }
 
 void DetailsDialog::onSpinBoxEditingFinished()

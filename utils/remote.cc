@@ -701,7 +701,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_downloadDir,
     TR_KEY_downloadedEver,
     TR_KEY_download_limit_camel,
-    TR_KEY_downloadLimited,
+    TR_KEY_download_limited_camel,
     TR_KEY_error,
     TR_KEY_errorString,
     TR_KEY_eta,
@@ -1149,7 +1149,7 @@ void print_details(tr_variant::Map const& map)
 
         fmt::print("LIMITS & BANDWIDTH\n");
 
-        if (auto b = t->value_if<bool>(TR_KEY_downloadLimited); b)
+        if (auto b = t->value_if<bool>({ TR_KEY_download_limited, TR_KEY_download_limited_camel }); b)
         {
             if (auto i = t->value_if<int64_t>({ TR_KEY_download_limit, TR_KEY_download_limit_camel }); i)
             {
@@ -2039,7 +2039,7 @@ void print_groups(tr_variant::Map const& map)
 
         auto const name = group->value_if<std::string_view>(TR_KEY_name);
         auto const up_enabled = group->value_if<bool>(TR_KEY_uploadLimited);
-        auto const down_enabled = group->value_if<bool>(TR_KEY_downloadLimited);
+        auto const down_enabled = group->value_if<bool>({ TR_KEY_download_limited, TR_KEY_download_limited_camel });
         auto const up_limit = group->value_if<int64_t>(TR_KEY_uploadLimit);
         auto const down_limit = group->value_if<int64_t>({ TR_KEY_download_limit, TR_KEY_download_limit_camel });
         auto const honors = group->value_if<bool>(TR_KEY_honorsSessionLimits);
@@ -2923,7 +2923,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 if (targs != nullptr)
                 {
                     targs->insert_or_assign(TR_KEY_download_limit_camel, numarg(optarg_sv));
-                    targs->insert_or_assign(TR_KEY_downloadLimited, true);
+                    targs->insert_or_assign(TR_KEY_download_limited_camel, true);
                 }
                 else
                 {
@@ -2936,7 +2936,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
             case 'D':
                 if (targs != nullptr)
                 {
-                    targs->insert_or_assign(TR_KEY_downloadLimited, false);
+                    targs->insert_or_assign(TR_KEY_download_limited_camel, false);
                 }
                 else
                 {

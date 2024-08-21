@@ -585,7 +585,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_desiredAvailable, //
             TR_KEY_downloadedEver, //
             TR_KEY_download_limit_camel, //
-            TR_KEY_downloadLimited, //
+            TR_KEY_download_limited_camel, //
             TR_KEY_fileStats, //
             TR_KEY_haveUnchecked, //
             TR_KEY_honorsSessionLimits, //

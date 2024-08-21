@@ -106,7 +106,7 @@ void bandwidthGroupRead(tr_session* session, std::string_view config_dir)
             limits.up_limited = *val;
         }
 
-        if (auto const val = group_map->value_if<bool>(TR_KEY_downloadLimited))
+        if (auto const val = group_map->value_if<bool>({ TR_KEY_download_limited, TR_KEY_download_limited_camel }); val)
         {
             limits.down_limited = *val;
         }
@@ -140,7 +140,7 @@ void bandwidthGroupWrite(tr_session const* session, std::string_view config_dir)
         auto const limits = group->get_limits();
         auto group_map = tr_variant::Map{ 6U };
         group_map.try_emplace(TR_KEY_download_limit, limits.down_limit.count(Speed::Units::KByps));
-        group_map.try_emplace(TR_KEY_downloadLimited, limits.down_limited);
+        group_map.try_emplace(TR_KEY_download_limited, limits.down_limited);
         group_map.try_emplace(TR_KEY_honorsSessionLimits, group->are_parent_limits_honored(TR_UP));
         group_map.try_emplace(TR_KEY_name, name.sv());
         group_map.try_emplace(TR_KEY_uploadLimit, limits.up_limit.count(Speed::Units::KByps));
