@@ -115,7 +115,7 @@ username and password (respectively), separated by a colon.
 | Method name          | libtransmission function | Description
 |:--|:--|:--
 | `torrent_start`      | tr_torrentStart          | start torrent
-| `torrent-start-now`  | tr_torrentStartNow       | start torrent disregarding queue position
+| `torrent_start_now`  | tr_torrentStartNow       | start torrent disregarding queue position
 | `torrent-stop`       | tr_torrentStop           | stop torrent
 | `torrent-verify`     | tr_torrentVerify         | verify torrent
 | `torrent-reannounce` | tr_torrentManualUpdate   | re-announce to trackers now
