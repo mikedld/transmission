@@ -189,7 +189,7 @@ export class Remote {
   }
 
   startTorrents(torrent_ids, noqueue, callback, context) {
-    const name = noqueue ? 'torrent-start-now' : 'torrent-start';
+    const name = noqueue ? 'torrent-start-now' : 'torrent_start';
     this.sendTorrentActionRequests(name, torrent_ids, callback, context);
   }
   stopTorrents(torrent_ids, callback, context) {
