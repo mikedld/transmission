@@ -499,7 +499,7 @@ Request arguments:
 |:--|:--|:--
 | `ids`      | array   | torrent list, as described in 3.1
 | `location` | string  | the new torrent location
-| `move`     | boolean | if true, move from previous location. otherwise, search "location" for files (default: false)
+| `move`     | boolean | if true, move from previous location. otherwise, search `location` for files (default: false)
 
 Response arguments: none
 
@@ -864,7 +864,7 @@ Transmission 1.70 (`rpc-version-semver` 2.1.0, `rpc-version`: 6)
 
 | Method | Description
 |:---|:---
-| `method torrent-set-location` | new method
+| method `torrent-set-location` | new method
 
 Transmission 1.80 (`rpc-version-semver` 3.0.0, `rpc-version`: 7)
 
