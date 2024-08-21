@@ -118,7 +118,7 @@ username and password (respectively), separated by a colon.
 | `torrent_start_now`  | tr_torrentStartNow       | start torrent disregarding queue position
 | `torrent_stop`       | tr_torrentStop           | stop torrent
 | `torrent_verify`     | tr_torrentVerify         | verify torrent
-| `torrent-reannounce` | tr_torrentManualUpdate   | re-announce to trackers now
+| `torrent_reannounce` | tr_torrentManualUpdate   | re-announce to trackers now
 
 Request arguments: `ids`, which specifies which torrents to use.
 All torrents are used if the `ids` argument is omitted.
