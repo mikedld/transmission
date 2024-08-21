@@ -116,7 +116,7 @@ export class Remote {
       ids: torrentIds,
       labels,
     };
-    this.sendRequest({ arguments: args, method: 'torrent-set' }, callback);
+    this.sendRequest({ arguments: args, method: 'torrent_set' }, callback);
   }
 
   loadDaemonStats(callback, context) {
@@ -164,7 +164,7 @@ export class Remote {
     this.sendRequest(
       {
         arguments: arguments_,
-        method: 'torrent-set',
+        method: 'torrent_set',
       },
       () => {
         this._controller.refreshTorrents([torrentId]);

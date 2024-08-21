@@ -406,7 +406,7 @@ Session::Tag Session::torrentSetImpl(tr_variant* args)
     auto* const q = new RpcQueue{};
     auto const tag = q->tag();
 
-    q->add([this, args]() { return rpc_.exec(TR_KEY_torrent_set, args); });
+    q->add([this, args]() { return rpc_.exec(TR_KEY_torrent_set_kebab, args); });
     q->add([this, tag]() { emit sessionCalled(tag); });
     q->setTolerateErrors();
     q->run();

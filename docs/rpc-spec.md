@@ -134,8 +134,8 @@ restarts. Use torrent hashes if you need stable ids.
 
 Response arguments: none
 
-### 3.2 Torrent mutator: `torrent-set`
-Method name: `torrent-set`
+### 3.2 Torrent mutator: `torrent_set`
+Method name: `torrent_set`
 
 Request arguments:
 
@@ -1028,7 +1028,7 @@ Transmission 4.1.0 (`rpc-version-semver` 5.4.0, `rpc-version`: 18)
 | Method | Description
 |:---|:---
 | `torrent-get` | new arg `sequentialDownload`
-| `torrent-set` | new arg `sequentialDownload`
+| `torrent_set` | new arg `sequentialDownload`
 | `torrent-get` | new arg `files.beginPiece`
 | `torrent-get` | new arg `files.endPiece`
 | `port-test` | new arg `ipProtocol`

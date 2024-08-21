@@ -2461,7 +2461,7 @@ tr_variant::Map& ensure_tset(tr_variant& tset)
     {
         tset = tr_variant::Map{ 3 };
         map = tset.get_if<tr_variant::Map>();
-        map->try_emplace(TR_KEY_method, tr_variant::unmanaged_string("torrent-set"sv));
+        map->try_emplace(TR_KEY_method, tr_variant::unmanaged_string(tr_quark_get_string_view(TR_KEY_torrent_set_kebab)));
     }
 
     auto* args = map->find_if<tr_variant::Map>(TR_KEY_arguments);

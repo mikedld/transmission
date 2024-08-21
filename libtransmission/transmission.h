@@ -372,7 +372,7 @@ enum tr_rpc_callback_type
     TR_RPC_TORRENT_STOPPED,
     TR_RPC_TORRENT_REMOVING,
     TR_RPC_TORRENT_TRASHING, /* _REMOVING + delete local data */
-    TR_RPC_TORRENT_CHANGED, /* catch-all for the "torrent-set" rpc method */
+    TR_RPC_TORRENT_CHANGED, /* catch-all for the "torrent_set" rpc method */
     TR_RPC_TORRENT_MOVED,
     TR_RPC_SESSION_CHANGED,
     TR_RPC_SESSION_QUEUE_POSITIONS_CHANGED, /* catch potentially multiple torrents being moved in the queue */
