@@ -1,3 +1,11 @@
+> [!IMPORTANT] 
+> Since `4.1.0` (`rpc-version` 18), Transmission has switched to snake_case for all RPC strings.
+> Transmission used to use a mix of kebab-case and camelCase. Those are still available for backward compatibility,
+> but they are deprecated and will be removed in `5.0.0`.
+> 
+> For documentation of the old RPC strings, please consult documentation from previous versions.
+> https://github.com/transmission/transmission/blob/4.0.6/docs/rpc-spec.md
+
 # Transmission's RPC specification
 This document describes a protocol for interacting with Transmission sessions remotely.
 
