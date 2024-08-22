@@ -709,7 +709,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_hashString,
     TR_KEY_haveUnchecked,
     TR_KEY_haveValid,
-    TR_KEY_honorsSessionLimits,
+    TR_KEY_honors_session_limits_camel,
     TR_KEY_id,
     TR_KEY_isFinished,
     TR_KEY_isPrivate,
@@ -1232,7 +1232,7 @@ void print_details(tr_variant::Map const& map)
             }
         }
 
-        if (auto b = t->value_if<bool>(TR_KEY_honorsSessionLimits); b)
+        if (auto b = t->value_if<bool>({ TR_KEY_honors_session_limits, TR_KEY_honors_session_limits_camel }); b)
         {
             fmt::print("  Honors Session Limits: {:s}\n", *b ? "Yes" : "No");
         }
@@ -2042,7 +2042,7 @@ void print_groups(tr_variant::Map const& map)
         auto const down_enabled = group->value_if<bool>({ TR_KEY_download_limited, TR_KEY_download_limited_camel });
         auto const up_limit = group->value_if<int64_t>(TR_KEY_uploadLimit);
         auto const down_limit = group->value_if<int64_t>({ TR_KEY_download_limit, TR_KEY_download_limit_camel });
-        auto const honors = group->value_if<bool>(TR_KEY_honorsSessionLimits);
+        auto const honors = group->value_if<bool>({ TR_KEY_honors_session_limits, TR_KEY_honors_session_limits_camel });
         if (name && down_limit && down_enabled && up_limit && up_enabled && honors)
         {
             fmt::print("{:s}: ", *name);
@@ -3033,11 +3033,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 984:
-                args.insert_or_assign(TR_KEY_honorsSessionLimits, true);
+                args.insert_or_assign(TR_KEY_honors_session_limits_camel, true);
                 break;
 
             case 985:
-                args.insert_or_assign(TR_KEY_honorsSessionLimits, false);
+                args.insert_or_assign(TR_KEY_honors_session_limits_camel, false);
                 break;
 
             default:

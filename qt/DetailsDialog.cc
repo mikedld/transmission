@@ -1346,7 +1346,7 @@ void DetailsDialog::onShowBackupTrackersToggled(bool val)
 
 void DetailsDialog::onHonorsSessionLimitsToggled(bool val)
 {
-    torrentSet(TR_KEY_honorsSessionLimits, val);
+    torrentSet(TR_KEY_honors_session_limits_camel, val);
 }
 
 void DetailsDialog::onDownloadLimitedToggled(bool val)

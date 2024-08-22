@@ -492,7 +492,7 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
     auto const speed_units_kbyps_str = Speed::units().display_name(Speed::Units::KByps);
 
     honor_limits_check_tag_ = honor_limits_check_->signal_toggled().connect(
-        [this]() { torrent_set_bool(TR_KEY_honorsSessionLimits, honor_limits_check_->get_active()); });
+        [this]() { torrent_set_bool(TR_KEY_honors_session_limits_camel, honor_limits_check_->get_active()); });
 
     down_limited_check_->set_label(
         fmt::format(fmt::runtime(down_limited_check_->get_label().raw()), fmt::arg("speed_units", speed_units_kbyps_str)));
