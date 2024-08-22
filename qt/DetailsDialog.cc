@@ -1527,7 +1527,7 @@ void DetailsDialog::initOptionsTab()
 
     ui_.singleDownSpin->setProperty(PrefKey, TR_KEY_download_limit_camel);
     ui_.singleUpSpin->setProperty(PrefKey, TR_KEY_uploadLimit);
-    ui_.ratioSpin->setProperty(PrefKey, TR_KEY_seedRatioLimit);
+    ui_.ratioSpin->setProperty(PrefKey, TR_KEY_seed_ratio_limit_camel);
     ui_.idleSpin->setProperty(PrefKey, TR_KEY_seed_idle_limit_camel);
     ui_.peerLimitSpin->setProperty(PrefKey, TR_KEY_peer_limit_kebab);
 

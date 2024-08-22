@@ -532,7 +532,7 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
     ratio_spin_->set_adjustment(Gtk::Adjustment::create(0, 0, 1000, .05));
     ratio_spin_->set_width_chars(7);
     ratio_spin_tag_ = ratio_spin_->signal_value_changed().connect(
-        [this]() { torrent_set_real(TR_KEY_seedRatioLimit, ratio_spin_->get_value()); });
+        [this]() { torrent_set_real(TR_KEY_seed_ratio_limit_camel, ratio_spin_->get_value()); });
 
     gtr_combo_box_set_enum(
         *idle_combo_,

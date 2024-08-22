@@ -211,7 +211,7 @@ void Session::updatePref(int key)
             break;
 
         case Prefs::RATIO:
-            sessionSet(TR_KEY_seedRatioLimit, prefs_.variant(key));
+            sessionSet(TR_KEY_seed_ratio_limit_camel, prefs_.variant(key));
             break;
 
         case Prefs::RATIO_ENABLED:
@@ -555,7 +555,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_rateDownload,
             TR_KEY_rateUpload,
             TR_KEY_recheckProgress,
-            TR_KEY_seedRatioLimit,
+            TR_KEY_seed_ratio_limit_camel,
             TR_KEY_seedRatioMode,
             TR_KEY_sizeWhenDone,
             TR_KEY_status,
@@ -938,7 +938,7 @@ void Session::updateInfo(tr_variant* args_dict)
         prefs_.set(Prefs::RATIO_ENABLED, *b);
     }
 
-    if (auto const x = dictFind<double>(args_dict, TR_KEY_seedRatioLimit); x)
+    if (auto const x = dictFind<double>(args_dict, TR_KEY_seed_ratio_limit_camel); x)
     {
         prefs_.set(Prefs::RATIO, *x);
     }

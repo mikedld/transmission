@@ -569,7 +569,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_seed_idle_limit_camel:
     case TR_KEY_seed_idle_mode:
     case TR_KEY_seed_idle_mode_camel:
-    case TR_KEY_seedRatioLimit:
+    case TR_KEY_seed_ratio_limit:
+    case TR_KEY_seed_ratio_limit_camel:
     case TR_KEY_seedRatioMode:
     case TR_KEY_sequentialDownload:
     case TR_KEY_sizeWhenDone:
@@ -679,7 +680,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_seed_idle_mode:
     case TR_KEY_seed_idle_mode_camel:
         return tor.idle_limit_mode();
-    case TR_KEY_seedRatioLimit: return tor.seed_ratio();
+    case TR_KEY_seed_ratio_limit:
+    case TR_KEY_seed_ratio_limit_camel:
+        return tor.seed_ratio();
     case TR_KEY_seedRatioMode: return tor.seed_ratio_mode();
     case TR_KEY_sequentialDownload: return tor.is_sequential_download();
     case TR_KEY_sizeWhenDone: return st.sizeWhenDone;
@@ -1073,7 +1076,7 @@ char const* torrentSet(tr_session* session, tr_variant::Map const& args_in, tr_v
             tor->set_idle_limit_mode(static_cast<tr_idlelimit>(*val));
         }
 
-        if (auto const val = args_in.value_if<double>(TR_KEY_seedRatioLimit))
+        if (auto const val = args_in.value_if<double>({ TR_KEY_seed_ratio_limit, TR_KEY_seed_ratio_limit_camel }); val)
         {
             tor->set_seed_ratio(*val);
         }
@@ -1776,7 +1779,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetIncompleteFileNamingEnabled(session, *val);
     }
 
-    if (auto const val = args_in.value_if<double>(TR_KEY_seedRatioLimit))
+    if (auto const val = args_in.value_if<double>({ TR_KEY_seed_ratio_limit, TR_KEY_seed_ratio_limit_camel }); val)
     {
         tr_sessionSetRatioLimit(session, *val);
     }
@@ -2006,7 +2009,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_script_torrent_done_filename: return session.script(TR_SCRIPT_ON_TORRENT_DONE);
     case TR_KEY_script_torrent_done_seeding_enabled: return session.useScript(TR_SCRIPT_ON_TORRENT_DONE_SEEDING);
     case TR_KEY_script_torrent_done_seeding_filename: return session.script(TR_SCRIPT_ON_TORRENT_DONE_SEEDING);
-    case TR_KEY_seedRatioLimit: return session.desiredRatio();
+    case TR_KEY_seed_ratio_limit:
+    case TR_KEY_seed_ratio_limit_camel:
+        return session.desiredRatio();
     case TR_KEY_seedRatioLimited: return session.isRatioLimited();
     case TR_KEY_seed_queue_enabled: return session.queueEnabled(TR_UP);
     case TR_KEY_seed_queue_size: return session.queueSize(TR_UP);

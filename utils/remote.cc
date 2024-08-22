@@ -731,7 +731,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_seed_idle_mode_camel,
     TR_KEY_seed_idle_limit_camel,
     TR_KEY_seedRatioMode,
-    TR_KEY_seedRatioLimit,
+    TR_KEY_seed_ratio_limit_camel,
     TR_KEY_sequentialDownload,
     TR_KEY_sizeWhenDone,
     TR_KEY_source,
@@ -1192,7 +1192,7 @@ void print_details(tr_variant::Map const& map)
                 break;
 
             case TR_RATIOLIMIT_SINGLE:
-                if (auto d = t->value_if<double>(TR_KEY_seedRatioLimit); d)
+                if (auto d = t->value_if<double>({ TR_KEY_seed_ratio_limit, TR_KEY_seed_ratio_limit_camel }); d)
                 {
                     fmt::print("  Ratio Limit: {:s}\n", strlratio2(*d));
                 }
@@ -1847,7 +1847,7 @@ void print_session(tr_variant::Map const& map)
     auto const down_limit = args->value_if<int64_t>(TR_KEY_speed_limit_down);
     auto const peer_limit = args->value_if<int64_t>(TR_KEY_peer_limit_global);
     auto const idle_seeding_limit = args->value_if<int64_t>(TR_KEY_idle_seeding_limit);
-    auto const seed_ratio_limit = args->value_if<double>(TR_KEY_seedRatioLimit);
+    auto const seed_ratio_limit = args->value_if<double>({ TR_KEY_seed_ratio_limit, TR_KEY_seed_ratio_limit_camel });
 
     if (alt_down && alt_enabled && alt_begin && alt_time_enabled && alt_end && alt_day && alt_up && peer_limit && down_limit &&
         down_enabled && up_limit && up_enabled && seed_ratio_limit && speed_ratio_limited && idle_seeding_limited &&

@@ -399,7 +399,7 @@ export class Transmission extends EventTarget {
   seedRatioLimit() {
     const p = this.session_properties;
     if (p && p.seedRatioLimited) {
-      return p.seedRatioLimit;
+      return p.seed_ratio_limit;
     }
     return -1;
   }

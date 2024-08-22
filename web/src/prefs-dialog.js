@@ -338,7 +338,7 @@ export class PrefsDialog extends EventTarget {
     input.type = 'number';
     input.min = '0.1';
     input.step = 'any';
-    input.dataset.key = 'seedRatioLimit';
+    input.dataset.key = 'seed_ratio_limit';
     root.append(input);
     PrefsDialog._enableIfChecked(input, cal.check);
     const stop_ratio_input = input;
