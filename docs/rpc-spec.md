@@ -167,7 +167,7 @@ Request arguments:
 | `seed_idle_limit`       | number   | torrent-level number of minutes of seeding inactivity
 | `seed_idle_mode`        | number   | which seeding inactivity to use. See tr_idlelimit
 | `seed_ratio_limit`      | double   | torrent-level seeding ratio
-| `seedRatioMode`         | number   | which ratio to use. See tr_ratiolimit
+| `seed_ratio_mode`       | number   | which ratio to use. See tr_ratiolimit
 | `sequentialDownload`    | boolean  | download torrent pieces sequentially
 | `trackerAdd`            | array    | **DEPRECATED** use trackerList instead
 | `trackerList`           | string   | string of announce URLs, one per line, and a blank line between [tiers](https://www.bittorrent.org/beps/bep_0012.html).
@@ -278,7 +278,7 @@ The 'source' column here corresponds to the data structure there.
 | `seed_idle_limit`| number| tr_torrent
 | `seed_idle_mode`| number| tr_inactivelimit
 | `seed_ratio_limit`| double| tr_torrent
-| `seedRatioMode`| number| tr_ratiolimit
+| `seed_ratio_mode`| number| tr_ratiolimit
 | `sequentialDownload`| boolean| tr_torrent
 | `sizeWhenDone`| number| tr_stat
 | `startDate`| number| tr_stat

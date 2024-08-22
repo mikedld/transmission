@@ -1392,7 +1392,7 @@ void DetailsDialog::onIdleLimitChanged()
 void DetailsDialog::onRatioModeChanged(int index)
 {
     int const val = ui_.ratioCombo->itemData(index).toInt();
-    torrentSet(TR_KEY_seedRatioMode, val);
+    torrentSet(TR_KEY_seed_ratio_mode_camel, val);
 }
 
 void DetailsDialog::onBandwidthPriorityChanged(int index)

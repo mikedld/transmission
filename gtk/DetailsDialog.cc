@@ -526,7 +526,7 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
     ratio_combo_tag_ = ratio_combo_->signal_changed().connect(
         [this]()
         {
-            torrent_set_int(TR_KEY_seedRatioMode, gtr_combo_box_get_active_enum(*ratio_combo_));
+            torrent_set_int(TR_KEY_seed_ratio_mode_camel, gtr_combo_box_get_active_enum(*ratio_combo_));
             refresh();
         });
     ratio_spin_->set_adjustment(Gtk::Adjustment::create(0, 0, 1000, .05));
