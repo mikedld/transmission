@@ -160,7 +160,7 @@ Request arguments:
 | `labels`                | array    | array of string labels
 | `location`              | string   | new location of the torrent's content
 | `peer_limit`            | number   | maximum number of peers
-| `priority-high`         | array    | indices of high-priority file(s)
+| `priority_high`         | array    | indices of high-priority file(s)
 | `priority-low`          | array    | indices of low-priority file(s)
 | `priority-normal`       | array    | indices of normal-priority file(s)
 | `queuePosition`         | number   | position of this torrent in its queue [0...n)
@@ -177,7 +177,7 @@ Request arguments:
 | `uploadLimited`         | boolean  | true if `uploadLimit` is honored
 
 Just as an empty `ids` value is shorthand for "all ids", using an empty array
-for `files_wanted`, `files_unwanted`, `priority-high`, `priority-low`, or
+for `files_wanted`, `files_unwanted`, `priority_high`, `priority-low`, or
 `priority-normal` is shorthand for saying "all files".
 
    Response arguments: none
@@ -474,7 +474,7 @@ Request arguments:
 | `bandwidth_priority` | number    | torrent's bandwidth tr_priority_t
 | `files_wanted`       | array     | indices of file(s) to download
 | `files_unwanted`     | array     | indices of file(s) to not download
-| `priority-high`      | array     | indices of high-priority file(s)
+| `priority_high`      | array     | indices of high-priority file(s)
 | `priority-low`       | array     | indices of low-priority file(s)
 | `priority-normal`    | array     | indices of normal-priority file(s)
 

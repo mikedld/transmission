@@ -1006,7 +1006,8 @@ char const* torrentSet(tr_session* session, tr_variant::Map const& args_in, tr_v
             tr_torrentSetPeerLimit(tor, *val);
         }
 
-        if (auto const* val = args_in.find_if<tr_variant::Vector>(TR_KEY_priority_high); val != nullptr && errmsg == nullptr)
+        if (auto const* val = args_in.find_if<tr_variant::Vector>({ TR_KEY_priority_high, TR_KEY_priority_high_kebab });
+            val != nullptr && errmsg == nullptr)
         {
             errmsg = set_file_priorities(tor, TR_PRI_HIGH, *val);
         }
@@ -1454,7 +1455,8 @@ char const* torrentAdd(tr_session* session, tr_variant::Map const& args_in, tr_r
         ctor.set_file_priorities(std::data(files), std::size(files), TR_PRI_NORMAL);
     }
 
-    if (auto const* val = args_in.find_if<tr_variant::Vector>(TR_KEY_priority_high))
+    if (auto const* val = args_in.find_if<tr_variant::Vector>({ TR_KEY_priority_high, TR_KEY_priority_high_kebab });
+        val != nullptr)
     {
         auto const files = file_list_from_list(*val);
         ctor.set_file_priorities(std::data(files), std::size(files), TR_PRI_HIGH);

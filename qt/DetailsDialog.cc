@@ -98,7 +98,7 @@ constexpr tr_quark priorityKey(int priority)
         return TR_KEY_priority_low;
 
     case TR_PRI_HIGH:
-        return TR_KEY_priority_high;
+        return TR_KEY_priority_high_kebab;
 
     default:
         return TR_KEY_priority_normal;

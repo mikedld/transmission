@@ -3072,7 +3072,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 900:
-                args.insert_or_assign(TR_KEY_priority_high, make_files_list(optarg_sv));
+                args.insert_or_assign(TR_KEY_priority_high_kebab, make_files_list(optarg_sv));
                 break;
 
             case 901:

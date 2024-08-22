@@ -866,7 +866,7 @@ export class Inspector extends EventTarget {
         command = 'priority-low';
         break;
       case '1':
-        command = 'priority-high';
+        command = 'priority_high';
         break;
       default:
         command = 'priority-normal';

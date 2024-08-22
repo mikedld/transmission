@@ -282,12 +282,12 @@ void OptionsDialog::onAccepted()
         }
     }
 
-    // priority-high
+    // priority_high
     count = std::count(priorities_.begin(), priorities_.end(), TR_PRI_HIGH);
 
     if (count > 0)
     {
-        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_priority_high, count);
+        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_priority_high_kebab, count);
 
         for (int i = 0, n = priorities_.size(); i < n; ++i)
         {
