@@ -141,8 +141,8 @@ auto constexpr Options = std::array<tr_option, 47>{
         "GSR",
         false,
         nullptr },
-      { 994, "sequential-download", "Download the torrent sequentially", "seq", false, nullptr },
-      { 995, "no-sequential-download", "Download the torrent sequentially", "SEQ", false, nullptr },
+      { 994, "sequential-download", "Enable sequential download by default", "seq", false, nullptr },
+      { 995, "no-sequential-download", "Disable sequential download by default", "SEQ", false, nullptr },
       { 'x', "pid-file", "Enable PID file", "x", true, "<pid-file>" },
       { 0, nullptr, nullptr, nullptr, false, nullptr } }
 };
