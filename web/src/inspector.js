@@ -863,7 +863,7 @@ export class Inspector extends EventTarget {
     let command = null;
     switch (priority.toString()) {
       case '-1':
-        command = 'priority-low';
+        command = 'priority_low';
         break;
       case '1':
         command = 'priority_high';

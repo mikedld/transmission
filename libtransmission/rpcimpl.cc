@@ -1012,7 +1012,8 @@ char const* torrentSet(tr_session* session, tr_variant::Map const& args_in, tr_v
             errmsg = set_file_priorities(tor, TR_PRI_HIGH, *val);
         }
 
-        if (auto const* val = args_in.find_if<tr_variant::Vector>(TR_KEY_priority_low); val != nullptr && errmsg == nullptr)
+        if (auto const* val = args_in.find_if<tr_variant::Vector>({ TR_KEY_priority_low, TR_KEY_priority_low_kebab });
+            val != nullptr && errmsg == nullptr)
         {
             errmsg = set_file_priorities(tor, TR_PRI_LOW, *val);
         }
@@ -1443,7 +1444,8 @@ char const* torrentAdd(tr_session* session, tr_variant::Map const& args_in, tr_r
         ctor.set_files_wanted(std::data(files), std::size(files), true);
     }
 
-    if (auto const val = args_in.find_if<tr_variant::Vector>(TR_KEY_priority_low))
+    if (auto const val = args_in.find_if<tr_variant::Vector>({ TR_KEY_priority_low, TR_KEY_priority_low_kebab });
+        val != nullptr)
     {
         auto const files = file_list_from_list(*val);
         ctor.set_file_priorities(std::data(files), std::size(files), TR_PRI_LOW);

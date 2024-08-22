@@ -95,7 +95,7 @@ constexpr tr_quark priorityKey(int priority)
     switch (priority)
     {
     case TR_PRI_LOW:
-        return TR_KEY_priority_low;
+        return TR_KEY_priority_low_kebab;
 
     case TR_PRI_HIGH:
         return TR_KEY_priority_high_kebab;

@@ -269,6 +269,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "priority-low"sv,
     "priority-normal"sv,
     "priority_high"sv,
+    "priority_low"sv,
     "private"sv,
     "progress"sv,
     "prompt-before-exit"sv,
@@ -521,6 +522,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_honors_session_limits_camel: return TR_KEY_honors_session_limits;
     case TR_KEY_peer_limit_kebab: return TR_KEY_peer_limit;
     case TR_KEY_priority_high_kebab: return TR_KEY_priority_high;
+    case TR_KEY_priority_low_kebab: return TR_KEY_priority_low;
     case TR_KEY_torrent_set_kebab: return TR_KEY_torrent_set;
     case TR_KEY_torrent_set_location_kebab: return TR_KEY_torrent_set_location;
     default: return q;

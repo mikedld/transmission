@@ -266,12 +266,12 @@ void OptionsDialog::onAccepted()
         }
     }
 
-    // priority-low
+    // priority_low
     count = std::count(priorities_.begin(), priorities_.end(), TR_PRI_LOW);
 
     if (count > 0)
     {
-        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_priority_low, count);
+        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_priority_low_kebab, count);
 
         for (int i = 0, n = priorities_.size(); i < n; ++i)
         {
