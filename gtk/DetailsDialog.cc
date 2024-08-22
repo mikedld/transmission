@@ -553,7 +553,7 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
 
     max_peers_spin_->set_adjustment(Gtk::Adjustment::create(1, 1, 3000, 5));
     max_peers_spin_tag_ = max_peers_spin_->signal_value_changed().connect(
-        [this]() { torrent_set_int(TR_KEY_peer_limit, max_peers_spin_->get_value_as_int()); });
+        [this]() { torrent_set_int(TR_KEY_peer_limit_kebab, max_peers_spin_->get_value_as_int()); });
 }
 
 /****

@@ -159,7 +159,7 @@ Request arguments:
 | `ids`                   | array    | torrent list, as described in 3.1
 | `labels`                | array    | array of string labels
 | `location`              | string   | new location of the torrent's content
-| `peer-limit`            | number   | maximum number of peers
+| `peer_limit`            | number   | maximum number of peers
 | `priority-high`         | array    | indices of high-priority file(s)
 | `priority-low`          | array    | indices of low-priority file(s)
 | `priority-normal`       | array    | indices of normal-priority file(s)
@@ -256,7 +256,7 @@ The 'source' column here corresponds to the data structure there.
 | `maxConnectedPeers` | number| tr_torrent
 | `metadataPercentComplete` | double| tr_stat
 | `name` | string| tr_torrent_view
-| `peer-limit` | number| tr_torrent
+| `peer_limit` | number| tr_torrent
 | `peers` | array (see below)| n/a
 | `peersConnected` | number| tr_stat
 | `peersFrom` | object (see below)| n/a
@@ -470,7 +470,7 @@ Request arguments:
 | `labels`             | array     | array of string labels
 | `metainfo`           | string    | base64-encoded .torrent content
 | `paused`             | boolean   | if true, don't start the torrent
-| `peer-limit`         | number    | maximum number of peers
+| `peer_limit`         | number    | maximum number of peers
 | `bandwidth_priority` | number    | torrent's bandwidth tr_priority_t
 | `files_wanted`       | array     | indices of file(s) to download
 | `files_unwanted`     | array     | indices of file(s) to not download

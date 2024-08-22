@@ -1529,7 +1529,7 @@ void DetailsDialog::initOptionsTab()
     ui_.singleUpSpin->setProperty(PrefKey, TR_KEY_uploadLimit);
     ui_.ratioSpin->setProperty(PrefKey, TR_KEY_seedRatioLimit);
     ui_.idleSpin->setProperty(PrefKey, TR_KEY_seedIdleLimit);
-    ui_.peerLimitSpin->setProperty(PrefKey, TR_KEY_peer_limit);
+    ui_.peerLimitSpin->setProperty(PrefKey, TR_KEY_peer_limit_kebab);
 
     ui_.bandwidthPriorityCombo->addItem(tr("High"), TR_PRI_HIGH);
     ui_.bandwidthPriorityCombo->addItem(tr("Normal"), TR_PRI_NORMAL);

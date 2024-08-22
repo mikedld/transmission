@@ -545,6 +545,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_metadataPercentComplete:
     case TR_KEY_name:
     case TR_KEY_peer_limit:
+    case TR_KEY_peer_limit_kebab:
     case TR_KEY_peers:
     case TR_KEY_peersConnected:
     case TR_KEY_peersFrom:
@@ -646,7 +647,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_maxConnectedPeers: return tor.peer_limit();
     case TR_KEY_metadataPercentComplete: return st.metadataPercentComplete;
     case TR_KEY_name: return tor.name();
-    case TR_KEY_peer_limit: return tor.peer_limit();
+    case TR_KEY_peer_limit:
+    case TR_KEY_peer_limit_kebab:
+        return tor.peer_limit();
     case TR_KEY_peers: return make_peer_vec(tor);
     case TR_KEY_peersConnected: return st.peersConnected;
     case TR_KEY_peersFrom: return make_peer_counts_map(st);
@@ -998,7 +1001,7 @@ char const* torrentSet(tr_session* session, tr_variant::Map const& args_in, tr_v
             errmsg = set_file_dls(tor, true, *val);
         }
 
-        if (auto const val = args_in.value_if<int64_t>(TR_KEY_peer_limit))
+        if (auto const val = args_in.value_if<int64_t>({ TR_KEY_peer_limit, TR_KEY_peer_limit_kebab }); val)
         {
             tr_torrentSetPeerLimit(tor, *val);
         }
@@ -1415,7 +1418,7 @@ char const* torrentAdd(tr_session* session, tr_variant::Map const& args_in, tr_r
         ctor.set_paused(TR_FORCE, *val);
     }
 
-    if (auto const val = args_in.value_if<int64_t>(TR_KEY_peer_limit))
+    if (auto const val = args_in.value_if<int64_t>({ TR_KEY_peer_limit, TR_KEY_peer_limit_kebab }); val)
     {
         ctor.set_peer_limit(TR_FORCE, static_cast<uint16_t>(*val));
     }

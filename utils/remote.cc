@@ -720,7 +720,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_peersConnected,
     TR_KEY_peersGettingFromUs,
     TR_KEY_peersSendingToUs,
-    TR_KEY_peer_limit,
+    TR_KEY_peer_limit_kebab,
     TR_KEY_pieceCount,
     TR_KEY_pieceSize,
     TR_KEY_rateDownload,
@@ -1237,7 +1237,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Honors Session Limits: {:s}\n", *b ? "Yes" : "No");
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_peer_limit); i)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_peer_limit, TR_KEY_peer_limit_kebab }); i)
         {
             fmt::print("  Peer limit: {:d}\n", *i);
         }
@@ -2974,7 +2974,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
             case 930:
                 if (targs != nullptr)
                 {
-                    targs->insert_or_assign(TR_KEY_peer_limit, tr_num_parse<int64_t>(optarg_sv).value());
+                    targs->insert_or_assign(TR_KEY_peer_limit_kebab, tr_num_parse<int64_t>(optarg_sv).value());
                 }
                 else
                 {
