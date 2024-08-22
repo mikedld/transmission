@@ -101,7 +101,7 @@ constexpr tr_quark priorityKey(int priority)
         return TR_KEY_priority_high_kebab;
 
     default:
-        return TR_KEY_priority_normal;
+        return TR_KEY_priority_normal_kebab;
     }
 }
 

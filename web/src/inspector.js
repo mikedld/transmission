@@ -869,7 +869,7 @@ export class Inspector extends EventTarget {
         command = 'priority_high';
         break;
       default:
-        command = 'priority-normal';
+        command = 'priority_normal';
     }
 
     this._changeFileCommand(indices, command);
