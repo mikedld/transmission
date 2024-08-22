@@ -591,7 +591,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_honors_session_limits_camel, //
             TR_KEY_peer_limit_kebab, //
             TR_KEY_peers, //
-            TR_KEY_seedIdleLimit, //
+            TR_KEY_seed_idle_limit_camel, //
             TR_KEY_seedIdleMode, //
             TR_KEY_startDate, //
             TR_KEY_trackerStats, //

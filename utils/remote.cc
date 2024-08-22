@@ -729,7 +729,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_secondsDownloading,
     TR_KEY_secondsSeeding,
     TR_KEY_seedIdleMode,
-    TR_KEY_seedIdleLimit,
+    TR_KEY_seed_idle_limit_camel,
     TR_KEY_seedRatioMode,
     TR_KEY_seedRatioLimit,
     TR_KEY_sequentialDownload,
@@ -1216,7 +1216,7 @@ void print_details(tr_variant::Map const& map)
                 break;
 
             case TR_IDLELIMIT_SINGLE:
-                if (auto j = t->value_if<int64_t>(TR_KEY_seedIdleLimit); j)
+                if (auto j = t->value_if<int64_t>({ TR_KEY_seed_idle_limit, TR_KEY_seed_idle_limit_camel }); j)
                 {
                     fmt::print("  Idle Limit: {} minutes\n", *j);
                 }
@@ -2865,7 +2865,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 953:
-                args.insert_or_assign(TR_KEY_seedRatioLimit, tr_num_parse<double>(optarg_sv).value());
+                args.insert_or_assign(TR_KEY_seed_ratio_limit_camel, tr_num_parse<double>(optarg_sv).value());
                 args.insert_or_assign(TR_KEY_seedRatioLimited, true);
                 break;
 
@@ -3007,7 +3007,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 950:
-                args.insert_or_assign(TR_KEY_seedRatioLimit, tr_num_parse<double>(optarg_sv).value());
+                args.insert_or_assign(TR_KEY_seed_ratio_limit_camel, tr_num_parse<double>(optarg_sv).value());
                 args.insert_or_assign(TR_KEY_seedRatioMode, TR_RATIOLIMIT_SINGLE);
                 break;
 
@@ -3020,7 +3020,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 955:
-                args.insert_or_assign(TR_KEY_seedIdleLimit, tr_num_parse<int64_t>(optarg_sv).value());
+                args.insert_or_assign(TR_KEY_seed_idle_limit_camel, tr_num_parse<int64_t>(optarg_sv).value());
                 args.insert_or_assign(TR_KEY_seedIdleMode, TR_IDLELIMIT_SINGLE);
                 break;
 
