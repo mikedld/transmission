@@ -558,7 +558,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_pieces:
     case TR_KEY_primary_mime_type:
     case TR_KEY_priorities:
-    case TR_KEY_queuePosition:
+    case TR_KEY_queue_position:
+    case TR_KEY_queue_position_camel:
     case TR_KEY_rateDownload:
     case TR_KEY_rateUpload:
     case TR_KEY_recheckProgress:
@@ -662,7 +663,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_pieces: return make_piece_bitfield(tor);
     case TR_KEY_primary_mime_type: return tr_variant::unmanaged_string(tor.primary_mime_type());
     case TR_KEY_priorities: return make_file_priorities_vec(tor);
-    case TR_KEY_queuePosition: return st.queuePosition;
+    case TR_KEY_queue_position:
+    case TR_KEY_queue_position_camel:
+        return st.queuePosition;
     case TR_KEY_rateDownload: return Speed{ st.pieceDownloadSpeed_KBps, Speed::Units::KByps }.base_quantity();
     case TR_KEY_rateUpload: return Speed{ st.pieceUploadSpeed_KBps, Speed::Units::KByps }.base_quantity();
     case TR_KEY_recheckProgress: return st.recheckProgress;
@@ -1074,7 +1077,7 @@ char const* torrentSet(tr_session* session, tr_variant::Map const& args_in, tr_v
             tor->set_seed_ratio_mode(static_cast<tr_ratiolimit>(*val));
         }
 
-        if (auto const val = args_in.value_if<int64_t>(TR_KEY_queuePosition))
+        if (auto const val = args_in.value_if<int64_t>({ TR_KEY_queue_position, TR_KEY_queue_position_camel }); val)
         {
             tr_torrentSetQueuePosition(tor, static_cast<size_t>(*val));
         }

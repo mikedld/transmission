@@ -206,7 +206,7 @@ export class Torrent extends EventTarget {
     return this.fields.isPrivate;
   }
   getQueuePosition() {
-    return this.fields.queuePosition;
+    return this.fields.queue_position;
   }
   getRecheckProgress() {
     return this.fields.recheckProgress;
@@ -602,7 +602,7 @@ Torrent.Fields.Stats = [
   'peersGettingFromUs',
   'peersSendingToUs',
   'percentDone',
-  'queuePosition',
+  'queue_position',
   'rateDownload',
   'rateUpload',
   'recheckProgress',

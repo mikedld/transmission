@@ -551,7 +551,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_peersGettingFromUs,
             TR_KEY_peersSendingToUs,
             TR_KEY_percentDone,
-            TR_KEY_queuePosition,
+            TR_KEY_queue_position_camel,
             TR_KEY_rateDownload,
             TR_KEY_rateUpload,
             TR_KEY_recheckProgress,

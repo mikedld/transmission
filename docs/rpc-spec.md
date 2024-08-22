@@ -163,7 +163,7 @@ Request arguments:
 | `priority_high`         | array    | indices of high-priority file(s)
 | `priority_low`          | array    | indices of low-priority file(s)
 | `priority_normal`       | array    | indices of normal-priority file(s)
-| `queuePosition`         | number   | position of this torrent in its queue [0...n)
+| `queue_position`        | number   | position of this torrent in its queue [0...n)
 | `seedIdleLimit`         | number   | torrent-level number of minutes of seeding inactivity
 | `seedIdleMode`          | number   | which seeding inactivity to use. See tr_idlelimit
 | `seedRatioLimit`        | double   | torrent-level seeding ratio
@@ -269,7 +269,7 @@ The 'source' column here corresponds to the data structure there.
 | `pieceSize`| number| tr_torrent_view
 | `priorities`| array (see below)| n/a
 | `primary-mime-type`| string| tr_torrent
-| `queuePosition`| number| tr_stat
+| `queue_position`| number| tr_stat
 | `rateDownload` (B/s)| number| tr_stat
 | `rateUpload` (B/s)| number| tr_stat
 | `recheckProgress`| double| tr_stat

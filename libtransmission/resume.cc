@@ -412,14 +412,14 @@ tr_resume::fields_t load_filenames(tr_variant::Map const& map, tr_torrent* tor)
 
 void save_queue_state(tr_variant::Map& map, tr_torrent const* tor)
 {
-    map.insert_or_assign(TR_KEY_queuePosition, tor->queue_position());
+    map.insert_or_assign(TR_KEY_queue_position, tor->queue_position());
     map.insert_or_assign(TR_KEY_is_queued, tor->is_queued(tor->queue_direction()));
 }
 
 auto load_queue_state(tr_variant::Map const& map, tr_torrent* tor, tr_torrent::ResumeHelper& helper)
 {
     auto ret = tr_resume::fields_t{};
-    if (auto val = map.value_if<int64_t>(TR_KEY_queuePosition))
+    if (auto val = map.value_if<int64_t>({ TR_KEY_queue_position, TR_KEY_queue_position_camel }))
     {
         helper.load_queue_position(*val);
         ret = tr_resume::QueueState;
