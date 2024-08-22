@@ -728,7 +728,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_recheckProgress,
     TR_KEY_secondsDownloading,
     TR_KEY_secondsSeeding,
-    TR_KEY_seedIdleMode,
+    TR_KEY_seed_idle_mode_camel,
     TR_KEY_seed_idle_limit_camel,
     TR_KEY_seedRatioMode,
     TR_KEY_seedRatioLimit,
@@ -1207,7 +1207,7 @@ void print_details(tr_variant::Map const& map)
             }
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_seedIdleMode); i)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_seed_idle_mode, TR_KEY_seed_idle_mode_camel }); i)
         {
             switch (*i)
             {
@@ -3021,15 +3021,15 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
 
             case 955:
                 args.insert_or_assign(TR_KEY_seed_idle_limit_camel, tr_num_parse<int64_t>(optarg_sv).value());
-                args.insert_or_assign(TR_KEY_seedIdleMode, TR_IDLELIMIT_SINGLE);
+                args.insert_or_assign(TR_KEY_seed_idle_mode_camel, TR_IDLELIMIT_SINGLE);
                 break;
 
             case 956:
-                args.insert_or_assign(TR_KEY_seedIdleMode, TR_IDLELIMIT_GLOBAL);
+                args.insert_or_assign(TR_KEY_seed_idle_mode_camel, TR_IDLELIMIT_GLOBAL);
                 break;
 
             case 957:
-                args.insert_or_assign(TR_KEY_seedIdleMode, TR_IDLELIMIT_UNLIMITED);
+                args.insert_or_assign(TR_KEY_seed_idle_mode_camel, TR_IDLELIMIT_UNLIMITED);
                 break;
 
             case 984:

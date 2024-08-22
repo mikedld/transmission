@@ -1378,7 +1378,7 @@ void DetailsDialog::onUploadLimitedToggled(bool val)
 void DetailsDialog::onIdleModeChanged(int index)
 {
     int const val = ui_.idleCombo->itemData(index).toInt();
-    torrentSet(TR_KEY_seedIdleMode, val);
+    torrentSet(TR_KEY_seed_idle_mode_camel, val);
 }
 
 void DetailsDialog::onIdleLimitChanged()
