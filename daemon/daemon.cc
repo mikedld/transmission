@@ -144,6 +144,7 @@ auto constexpr Options = std::array<tr_option, 45>{
       { 'x', "pid-file", "Enable PID file", "x", true, "<pid-file>" },
       { 0, nullptr, nullptr, nullptr, false, nullptr } }
 };
+static_assert(Options[std::size(Options) - 2].val != 0);
 
 [[nodiscard]] std::string getConfigDir(int argc, char const* const* argv)
 {
