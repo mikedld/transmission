@@ -519,7 +519,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_desired_available_camel:
     case TR_KEY_done_date:
     case TR_KEY_done_date_camel:
-    case TR_KEY_downloadDir:
+    case TR_KEY_download_dir:
+    case TR_KEY_download_dir_camel:
     case TR_KEY_download_limit:
     case TR_KEY_download_limit_camel:
     case TR_KEY_download_limited:
@@ -639,7 +640,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_done_date:
     case TR_KEY_done_date_camel:
         return st.doneDate;
-    case TR_KEY_downloadDir: return tr_variant::unmanaged_string(tor.download_dir().sv());
+    case TR_KEY_download_dir:
+    case TR_KEY_download_dir_camel:
+        return tr_variant::unmanaged_string(tor.download_dir().sv());
     case TR_KEY_download_limit:
     case TR_KEY_download_limit_camel:
         return tr_torrentGetSpeedLimit_KBps(&tor, TR_DOWN);
@@ -1444,7 +1447,7 @@ char const* torrentAdd(tr_session* session, tr_variant::Map const& args_in, tr_r
         return "no filename or metainfo specified";
     }
 
-    auto const download_dir = args_in.value_if<std::string_view>(TR_KEY_download_dir);
+    auto const download_dir = args_in.value_if<std::string_view>({ TR_KEY_download_dir, TR_KEY_download_dir_kebab });
     if (download_dir && tr_sys_path_is_relative(*download_dir))
     {
         return "download directory path is not absolute";
@@ -1655,7 +1658,7 @@ char const* groupSet(tr_session* session, tr_variant::Map const& args_in, tr_var
 
 char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_variant::Map& /*args_out*/)
 {
-    auto const download_dir = args_in.value_if<std::string_view>(TR_KEY_download_dir);
+    auto const download_dir = args_in.value_if<std::string_view>({ TR_KEY_download_dir, TR_KEY_download_dir_kebab });
     if (download_dir && tr_sys_path_is_relative(*download_dir))
     {
         return "download directory path is not absolute";
@@ -2013,7 +2016,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_config_dir: return session.configDir();
     case TR_KEY_default_trackers: return session.defaultTrackersStr();
     case TR_KEY_dht_enabled: return session.allowsDHT();
-    case TR_KEY_download_dir: return session.downloadDir();
+    case TR_KEY_download_dir:
+    case TR_KEY_download_dir_kebab:
+        return session.downloadDir();
     case TR_KEY_download_dir_free_space: return tr_sys_path_get_capacity(session.downloadDir()).value_or(tr_sys_path_capacity{}).free;
     case TR_KEY_download_queue_enabled: return session.queueEnabled(TR_DOWN);
     case TR_KEY_download_queue_size: return session.queueSize(TR_DOWN);

@@ -228,7 +228,7 @@ The 'source' column here corresponds to the data structure there.
 | `date_created`| number| tr_torrent_view
 | `desired_available`| number| tr_stat
 | `done_date`| number | tr_stat
-| `downloadDir` | string  | tr_torrent
+| `download_dir` | string  | tr_torrent
 | `downloadedEver` | number  | tr_stat
 | `download_limit` | number  | tr_torrent
 | `download_limited` | boolean | tr_torrent
@@ -465,7 +465,7 @@ Request arguments:
 | Key | Value Type | Description
 |:--|:--|:--
 | `cookies`            | string    | pointer to a string of one or more cookies.
-| `download-dir`       | string    | path to download the torrent to
+| `download_dir`       | string    | path to download the torrent to
 | `filename`           | string    | filename or URL of the .torrent file
 | `labels`             | array     | array of string labels
 | `metainfo`           | string    | base64-encoded .torrent content
@@ -547,7 +547,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `config-dir` | string | location of transmission's configuration directory
 | `default-trackers` | string | announce URLs, one per line, and a blank line between [tiers](https://www.bittorrent.org/beps/bep_0012.html).
 | `dht-enabled` | boolean | true means allow DHT in public torrents
-| `download-dir` | string | default path to download torrents
+| `download_dir` | string | default path to download torrents
 | `download-dir-free-space` | number |  **DEPRECATED** Use the `free-space` method instead.
 | `download-queue-enabled` | boolean | if true, limit how many torrents can be downloaded at once
 | `download-queue-size` | number | max number of torrents to download at once (see download-queue-enabled)

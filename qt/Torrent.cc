@@ -266,7 +266,8 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
 
             HANDLE_KEY(comment, comment, COMMENT)
             HANDLE_KEY(creator, creator, CREATOR)
-            HANDLE_KEY(downloadDir, download_dir, DOWNLOAD_DIR)
+            HANDLE_KEY(download_dir, download_dir, DOWNLOAD_DIR)
+            HANDLE_KEY(download_dir_camel, download_dir, DOWNLOAD_DIR)
             HANDLE_KEY(errorString, error_string, TORRENT_ERROR_STRING)
 
 #undef HANDLE_KEY

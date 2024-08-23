@@ -48,7 +48,7 @@ Now, the config file can be edited. Some settings to draw your attention to:
 {
     ...
     # The default download directory.
-    "download-dir": "/home/youruser/Downloads",
+    "download_dir": "/home/youruser/Downloads",
     ...
     # Reduce the global peer limit if your router is low on memory.
     "peer-limit-global": 32,

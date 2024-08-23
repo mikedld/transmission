@@ -524,7 +524,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
         // unchanging fields needed by the main window
         static auto constexpr MainInfoKeys = std::array<tr_quark, 9>{
             TR_KEY_added_date_camel, //
-            TR_KEY_downloadDir, //
+            TR_KEY_download_dir_camel, //
             TR_KEY_file_count, //
             TR_KEY_hashString, //
             TR_KEY_labels, //
@@ -1099,7 +1099,7 @@ void Session::addNewlyCreatedTorrent(QString const& filename, QString const& loc
 
     tr_variant args;
     tr_variantInitDict(&args, 3);
-    dictAdd(&args, TR_KEY_download_dir, local_path);
+    dictAdd(&args, TR_KEY_download_dir_kebab, local_path);
     dictAdd(&args, TR_KEY_paused, !prefs_.getBool(Prefs::START));
     dictAdd(&args, TR_KEY_metainfo, b64);
 

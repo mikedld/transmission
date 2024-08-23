@@ -341,25 +341,6 @@ int tr_main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    if (auto sv = std::string_view{}; tr_variantDictFindStrView(&settings, TR_KEY_download_dir, &sv))
-    {
-        auto const sz_download_dir = std::string{ sv };
-
-        if (!tr_sys_path_exists(sz_download_dir))
-        {
-            if (auto error = tr_error{}; !tr_sys_dir_create(sz_download_dir, TR_SYS_DIR_CREATE_PARENTS, 0700, &error) && error)
-            {
-                auto const errmsg = fmt::format(
-                    "Couldn't create '{path}': {error} ({error_code})",
-                    fmt::arg("path", sz_download_dir),
-                    fmt::arg("error", error.message()),
-                    fmt::arg("error_code", error.code()));
-                fmt::print(stderr, "{:s}\n", errmsg);
-                return EXIT_FAILURE;
-            }
-        }
-    }
-
     auto* const h = tr_sessionInit(config_dir.c_str(), false, settings);
     auto* const ctor = tr_ctorNew(h);
 

@@ -240,7 +240,7 @@ void OptionsDialog::onAccepted()
         download_dir = ui_.destinationEdit->text();
     }
 
-    dictAdd(&args, TR_KEY_download_dir, download_dir);
+    dictAdd(&args, TR_KEY_download_dir_kebab, download_dir);
 
     // paused
     dictAdd(&args, TR_KEY_paused, !ui_.startCheck->isChecked());
