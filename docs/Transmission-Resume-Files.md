@@ -1,6 +1,6 @@
 Transmission keeps working information on each torrent in a "resume" file. This file is stored in the 'resume' directory.
 
-Filename: `<torrent file name>.<hash?>.resume`
+Filename: `<hash?>.resume`
 
 The file contains the following **per-torrent** properties:
 
