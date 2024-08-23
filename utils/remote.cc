@@ -697,7 +697,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_creator,
     TR_KEY_date_created_camel,
     TR_KEY_desired_available_camel,
-    TR_KEY_doneDate,
+    TR_KEY_done_date_camel,
     TR_KEY_downloadDir,
     TR_KEY_downloadedEver,
     TR_KEY_download_limit_camel,
@@ -1083,7 +1083,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Date added:       {:s}\n", format_date(buf, i));
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_doneDate).value_or(0); i != 0)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_done_date, TR_KEY_done_date_camel }).value_or(0); i != 0)
         {
             fmt::print("  Date finished:    {:s}\n", format_date(buf, i));
         }

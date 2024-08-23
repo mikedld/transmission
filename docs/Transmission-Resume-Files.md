@@ -9,7 +9,7 @@ The file contains the following **per-torrent** properties:
 | `activity_date` | Date we last uploaded/downloaded a piece of data |
 | `added_date` | Date torrent was added |
 | `corrupt` | total number of corrupt bytes downloaded |
-| `done-date` | Date torrent finished downloading |
+| `done_date` | Date torrent finished downloading |
 | `destination` | Download directory |
 | `dnd` | Do not download file integer list (one item per file in torrent) 0=download, 1=dnd |
 | `downloaded` | Total non-corrupt bytes downloaded |
