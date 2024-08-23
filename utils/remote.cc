@@ -739,7 +739,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_status,
     TR_KEY_totalSize,
     TR_KEY_uploadedEver,
-    TR_KEY_uploadLimit,
+    TR_KEY_upload_limit_camel,
     TR_KEY_upload_limited_camel,
     TR_KEY_uploadRatio,
     TR_KEY_webseeds,
@@ -1168,7 +1168,7 @@ void print_details(tr_variant::Map const& map)
 
         if (auto b = t->value_if<bool>({ TR_KEY_upload_limited, TR_KEY_upload_limited_camel }); b)
         {
-            if (auto i = t->value_if<int64_t>(TR_KEY_uploadLimit); i)
+            if (auto i = t->value_if<int64_t>({ TR_KEY_upload_limit, TR_KEY_upload_limit_camel }); i)
             {
                 fmt::print("  Upload Limit: ");
 
@@ -2040,7 +2040,7 @@ void print_groups(tr_variant::Map const& map)
         auto const name = group->value_if<std::string_view>(TR_KEY_name);
         auto const up_enabled = group->value_if<bool>({ TR_KEY_upload_limited, TR_KEY_upload_limited_camel });
         auto const down_enabled = group->value_if<bool>({ TR_KEY_download_limited, TR_KEY_download_limited_camel });
-        auto const up_limit = group->value_if<int64_t>(TR_KEY_uploadLimit);
+        auto const up_limit = group->value_if<int64_t>({ TR_KEY_upload_limit, TR_KEY_upload_limit_camel });
         auto const down_limit = group->value_if<int64_t>({ TR_KEY_download_limit, TR_KEY_download_limit_camel });
         auto const honors = group->value_if<bool>({ TR_KEY_honors_session_limits, TR_KEY_honors_session_limits_camel });
         if (name && down_limit && down_enabled && up_limit && up_enabled && honors)
@@ -2948,7 +2948,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
             case 'u':
                 if (targs != nullptr)
                 {
-                    targs->insert_or_assign(TR_KEY_uploadLimit, numarg(optarg_sv));
+                    targs->insert_or_assign(TR_KEY_upload_limit_camel, numarg(optarg_sv));
                     targs->insert_or_assign(TR_KEY_upload_limited_camel, true);
                 }
                 else

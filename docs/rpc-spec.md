@@ -173,8 +173,8 @@ Request arguments:
 | `tracker_list`          | string   | string of announce URLs, one per line, and a blank line between [tiers](https://www.bittorrent.org/beps/bep_0012.html).
 | `tracker_remove`        | array    | **DEPRECATED** use `tracker_list` instead
 | `tracker_replace`       | array    | **DEPRECATED** use `tracker_list` instead
-| `uploadLimit`           | number   | maximum upload speed (KBps)
-| `upload_limited`        | boolean  | true if `uploadLimit` is honored
+| `upload_limit`          | number   | maximum upload speed (KBps)
+| `upload_limited`        | boolean  | true if `upload_limit` is honored
 
 Just as an empty `ids` value is shorthand for "all ids", using an empty array
 for `files_wanted`, `files_unwanted`, `priority_high`, `priority_low`, or
@@ -289,7 +289,7 @@ The 'source' column here corresponds to the data structure there.
 | `totalSize`| number| tr_torrent_view
 | `torrentFile`| string| tr_info
 | `uploadedEver`| number| tr_stat
-| `uploadLimit`| number| tr_torrent
+| `upload_limit`| number| tr_torrent
 | `upload_limited`| boolean| tr_torrent
 | `uploadRatio`| double| tr_stat
 | `wanted`| array (see below)| n/a

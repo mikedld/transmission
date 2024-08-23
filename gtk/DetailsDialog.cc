@@ -510,7 +510,7 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
 
     up_limit_sping_->set_adjustment(Gtk::Adjustment::create(0, 0, std::numeric_limits<int>::max(), 5));
     up_limit_spin_tag_ = up_limit_sping_->signal_value_changed().connect(
-        [this]() { torrent_set_int(TR_KEY_uploadLimit, up_limit_sping_->get_value_as_int()); });
+        [this]() { torrent_set_int(TR_KEY_upload_limit_camel, up_limit_sping_->get_value_as_int()); });
 
     gtr_priority_combo_init(*bandwidth_combo_);
     bandwidth_combo_tag_ = bandwidth_combo_->signal_changed().connect(

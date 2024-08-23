@@ -241,7 +241,8 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(tracker_list_camel, tracker_list, TRACKER_LIST)
             HANDLE_KEY(trackerStats, tracker_stats, TRACKER_STATS)
             HANDLE_KEY(trackers, tracker_stats, TRACKER_STATS)
-            HANDLE_KEY(uploadLimit, upload_limit, UPLOAD_LIMIT) // KB/s
+            HANDLE_KEY(upload_limit, upload_limit, UPLOAD_LIMIT) // KB/s
+            HANDLE_KEY(upload_limit_camel, upload_limit, UPLOAD_LIMIT) // KB/s
             HANDLE_KEY(upload_limited, upload_limited, UPLOAD_LIMITED)
             HANDLE_KEY(upload_limited_camel, upload_limited, UPLOAD_LIMITED)
             HANDLE_KEY(uploadedEver, uploaded_ever, UPLOADED_EVER)
