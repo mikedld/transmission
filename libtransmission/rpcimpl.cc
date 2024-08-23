@@ -513,7 +513,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_corrupt_ever:
     case TR_KEY_corrupt_ever_camel:
     case TR_KEY_creator:
-    case TR_KEY_dateCreated:
+    case TR_KEY_date_created:
+    case TR_KEY_date_created_camel:
     case TR_KEY_desiredAvailable:
     case TR_KEY_doneDate:
     case TR_KEY_downloadDir:
@@ -627,7 +628,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_corrupt_ever_camel:
         return st.corruptEver;
     case TR_KEY_creator: return tor.creator();
-    case TR_KEY_dateCreated: return tor.date_created();
+    case TR_KEY_date_created:
+    case TR_KEY_date_created_camel:
+        return tor.date_created();
     case TR_KEY_desiredAvailable: return st.desiredAvailable;
     case TR_KEY_doneDate: return st.doneDate;
     case TR_KEY_downloadDir: return tr_variant::unmanaged_string(tor.download_dir().sv());

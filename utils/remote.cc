@@ -695,7 +695,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_comment,
     TR_KEY_corrupt_ever_camel,
     TR_KEY_creator,
-    TR_KEY_dateCreated,
+    TR_KEY_date_created_camel,
     TR_KEY_desiredAvailable,
     TR_KEY_doneDate,
     TR_KEY_downloadDir,
@@ -1111,7 +1111,7 @@ void print_details(tr_variant::Map const& map)
 
         fmt::print("ORIGINS\n");
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_dateCreated).value_or(0); i != 0)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_date_created, TR_KEY_date_created_camel }).value_or(0); i != 0)
         {
             fmt::print("  Date created: {:s}\n", format_date(buf, i));
         }
