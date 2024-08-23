@@ -502,7 +502,8 @@ namespace make_torrent_field_helpers
 {
     switch (key)
     {
-    case TR_KEY_activityDate:
+    case TR_KEY_activity_date:
+    case TR_KEY_activity_date_camel:
     case TR_KEY_addedDate:
     case TR_KEY_availability:
     case TR_KEY_bandwidth_priority:
@@ -609,7 +610,9 @@ namespace make_torrent_field_helpers
     // clang-format off
     switch (key)
     {
-    case TR_KEY_activityDate: return st.activityDate;
+    case TR_KEY_activity_date:
+    case TR_KEY_activity_date_camel:
+        return st.activityDate;
     case TR_KEY_addedDate: return st.addedDate;
     case TR_KEY_availability: return make_piece_availability_vec(tor);
     case TR_KEY_bandwidth_priority:

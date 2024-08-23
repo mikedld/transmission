@@ -6,7 +6,7 @@ The file contains the following **per-torrent** properties:
 
 | Property | Description |
 | :-- | :-- |
-| `activity-date` | Date we last uploaded/downloaded a piece of data |
+| `activity_date` | Date we last uploaded/downloaded a piece of data |
 | `added-date` | Date torrent was added |
 | `corrupt` | total number of corrupt bytes downloaded |
 | `done-date` | Date torrent finished downloading |

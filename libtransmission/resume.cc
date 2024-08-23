@@ -727,7 +727,8 @@ tr_resume::fields_t load_from_file(tr_torrent* tor, tr_torrent::ResumeHelper& he
         fields_loaded |= tr_resume::DoneDate;
     }
 
-    if (auto i = map.value_if<int64_t>(TR_KEY_activity_date); i && (fields_to_load & tr_resume::ActivityDate) != 0)
+    if (auto i = map.value_if<int64_t>({ TR_KEY_activity_date, TR_KEY_activity_date_kebab });
+        i && (fields_to_load & tr_resume::ActivityDate) != 0)
     {
         tor->set_date_active(*i);
         fields_loaded |= tr_resume::ActivityDate;

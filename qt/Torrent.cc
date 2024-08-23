@@ -180,7 +180,8 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
         changed.set(bit, field_changed); \
         break;
 
-            HANDLE_KEY(activityDate, activity_date, ACTIVITY_DATE)
+            HANDLE_KEY(activity_date, activity_date, ACTIVITY_DATE)
+            HANDLE_KEY(activity_date_camel, activity_date, ACTIVITY_DATE)
             HANDLE_KEY(addedDate, added_date, ADDED_DATE)
             HANDLE_KEY(bandwidth_priority, bandwidth_priority, BANDWIDTH_PRIORITY)
             HANDLE_KEY(bandwidth_priority_camel, bandwidth_priority, BANDWIDTH_PRIORITY)

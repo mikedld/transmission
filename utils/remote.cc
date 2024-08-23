@@ -689,7 +689,7 @@ auto constexpr FilesKeys = std::array<tr_quark, 4>{
 static_assert(FilesKeys[std::size(FilesKeys) - 1] != tr_quark{});
 
 auto constexpr DetailsKeys = std::array<tr_quark, 55>{
-    TR_KEY_activityDate,
+    TR_KEY_activity_date_camel,
     TR_KEY_addedDate,
     TR_KEY_bandwidth_priority_camel,
     TR_KEY_comment,
@@ -1091,7 +1091,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Date started:     {:s}\n", format_date(buf, i));
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_activityDate).value_or(0); i != 0)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_activity_date, TR_KEY_activity_date_camel }).value_or(0); i != 0)
         {
             fmt::print("  Latest activity:  {:s}\n", format_date(buf, i));
         }
