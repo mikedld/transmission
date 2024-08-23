@@ -1487,7 +1487,7 @@ char const* torrentAdd(tr_session* session, tr_variant::Map const& args_in, tr_r
         ctor.set_file_priorities(std::data(files), std::size(files), TR_PRI_HIGH);
     }
 
-    if (auto const* val = args_in.find_if<tr_variant::Vector>(TR_KEY_labels))
+    if (auto const* val = args_in.find_if<tr_variant::Vector>(TR_KEY_labels); val != nullptr)
     {
         auto [labels, errmsg] = make_labels(*val);
 
