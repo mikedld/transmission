@@ -696,7 +696,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_corrupt_ever_camel,
     TR_KEY_creator,
     TR_KEY_date_created_camel,
-    TR_KEY_desiredAvailable,
+    TR_KEY_desired_available_camel,
     TR_KEY_doneDate,
     TR_KEY_downloadDir,
     TR_KEY_downloadedEver,
@@ -995,7 +995,8 @@ void print_details(tr_variant::Map const& map)
             {
                 fmt::print("  Availability: None\n");
             }
-            else if (auto j = t->value_if<int64_t>(TR_KEY_desiredAvailable), k = t->value_if<int64_t>(TR_KEY_leftUntilDone);
+            else if (auto j = t->value_if<int64_t>({ TR_KEY_desired_available, TR_KEY_desired_available_camel }),
+                     k = t->value_if<int64_t>(TR_KEY_leftUntilDone);
                      j && k)
             {
                 fmt::print("  Availability: {:s}%\n", strlpercent(100.0 * (*j + i - *k) / i));

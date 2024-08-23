@@ -226,7 +226,7 @@ The 'source' column here corresponds to the data structure there.
 | `corrupt_ever`| number | tr_stat
 | `creator`| string | tr_torrent_view
 | `date_created`| number| tr_torrent_view
-| `desiredAvailable`| number| tr_stat
+| `desired_available`| number| tr_stat
 | `doneDate`| number | tr_stat
 | `downloadDir` | string  | tr_torrent
 | `downloadedEver` | number  | tr_stat

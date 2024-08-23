@@ -116,7 +116,7 @@ export class Torrent extends EventTarget {
     return this.fields.date_created;
   }
   getDesiredAvailable() {
-    return this.fields.desiredAvailable;
+    return this.fields.desired_available;
   }
   getDownloadDir() {
     return this.fields.downloadDir;
@@ -634,7 +634,7 @@ Torrent.Fields.InfoExtra = [
 Torrent.Fields.StatsExtra = [
   'activity_date',
   'corrupt_ever',
-  'desiredAvailable',
+  'desired_available',
   'downloadedEver',
   'fileStats',
   'haveUnchecked',

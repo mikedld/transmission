@@ -190,7 +190,8 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(corrupt_ever_camel, failed_ever, FAILED_EVER)
             HANDLE_KEY(date_created, date_created, DATE_CREATED)
             HANDLE_KEY(date_created_camel, date_created, DATE_CREATED)
-            HANDLE_KEY(desiredAvailable, desired_available, DESIRED_AVAILABLE)
+            HANDLE_KEY(desired_available, desired_available, DESIRED_AVAILABLE)
+            HANDLE_KEY(desired_available_camel, desired_available, DESIRED_AVAILABLE)
             HANDLE_KEY(download_limit, download_limit, DOWNLOAD_LIMIT) // KB/s
             HANDLE_KEY(download_limit_camel, download_limit, DOWNLOAD_LIMIT) // KB/s
             HANDLE_KEY(download_limited, download_limited, DOWNLOAD_LIMITED)
