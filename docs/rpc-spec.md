@@ -174,7 +174,7 @@ Request arguments:
 | `tracker_remove`        | array    | **DEPRECATED** use `tracker_list` instead
 | `tracker_replace`       | array    | **DEPRECATED** use `tracker_list` instead
 | `uploadLimit`           | number   | maximum upload speed (KBps)
-| `uploadLimited`         | boolean  | true if `uploadLimit` is honored
+| `upload_limited`        | boolean  | true if `uploadLimit` is honored
 
 Just as an empty `ids` value is shorthand for "all ids", using an empty array
 for `files_wanted`, `files_unwanted`, `priority_high`, `priority_low`, or
@@ -290,7 +290,7 @@ The 'source' column here corresponds to the data structure there.
 | `torrentFile`| string| tr_info
 | `uploadedEver`| number| tr_stat
 | `uploadLimit`| number| tr_torrent
-| `uploadLimited`| boolean| tr_torrent
+| `upload_limited`| boolean| tr_torrent
 | `uploadRatio`| double| tr_stat
 | `wanted`| array (see below)| n/a
 | `webseeds`| array of strings | tr_tracker_view

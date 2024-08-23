@@ -596,7 +596,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_startDate, //
             TR_KEY_trackerStats, //
             TR_KEY_uploadLimit, //
-            TR_KEY_uploadLimited, //
+            TR_KEY_upload_limited_camel, //
         };
 
         // keys needed after renaming a torrent

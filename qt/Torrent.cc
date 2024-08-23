@@ -242,7 +242,8 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(trackerStats, tracker_stats, TRACKER_STATS)
             HANDLE_KEY(trackers, tracker_stats, TRACKER_STATS)
             HANDLE_KEY(uploadLimit, upload_limit, UPLOAD_LIMIT) // KB/s
-            HANDLE_KEY(uploadLimited, upload_limited, UPLOAD_LIMITED)
+            HANDLE_KEY(upload_limited, upload_limited, UPLOAD_LIMITED)
+            HANDLE_KEY(upload_limited_camel, upload_limited, UPLOAD_LIMITED)
             HANDLE_KEY(uploadedEver, uploaded_ever, UPLOADED_EVER)
             HANDLE_KEY(webseedsSendingToUs, webseeds_sending_to_us, WEBSEEDS_SENDING_TO_US)
 #undef HANDLE_KEY

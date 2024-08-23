@@ -506,7 +506,7 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
     up_limited_check_->set_label(
         fmt::format(fmt::runtime(up_limited_check_->get_label().raw()), fmt::arg("speed_units", speed_units_kbyps_str)));
     up_limited_check_tag_ = up_limited_check_->signal_toggled().connect(
-        [this]() { torrent_set_bool(TR_KEY_uploadLimited, up_limited_check_->get_active()); });
+        [this]() { torrent_set_bool(TR_KEY_upload_limited_camel, up_limited_check_->get_active()); });
 
     up_limit_sping_->set_adjustment(Gtk::Adjustment::create(0, 0, std::numeric_limits<int>::max(), 5));
     up_limit_spin_tag_ = up_limit_sping_->signal_value_changed().connect(

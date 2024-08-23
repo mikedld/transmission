@@ -1372,7 +1372,7 @@ void DetailsDialog::onSpinBoxEditingFinished()
 
 void DetailsDialog::onUploadLimitedToggled(bool val)
 {
-    torrentSet(TR_KEY_uploadLimited, val);
+    torrentSet(TR_KEY_upload_limited_camel, val);
 }
 
 void DetailsDialog::onIdleModeChanged(int index)
