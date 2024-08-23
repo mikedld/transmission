@@ -1103,7 +1103,8 @@ char const* torrentSet(tr_session* session, tr_variant::Map const& args_in, tr_v
             errmsg = add_tracker_urls(tor, *val);
         }
 
-        if (auto const* val = args_in.find_if<tr_variant::Vector>(TR_KEY_trackerRemove))
+        if (auto const* val = args_in.find_if<tr_variant::Vector>({ TR_KEY_tracker_remove, TR_KEY_tracker_remove_camel });
+            val != nullptr)
         {
             errmsg = remove_trackers(tor, *val);
         }

@@ -2996,10 +2996,10 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
             {
             case 712:
                 {
-                    auto* list = args.find_if<tr_variant::Vector>(TR_KEY_trackerRemove);
+                    auto* list = args.find_if<tr_variant::Vector>(TR_KEY_tracker_remove_camel);
                     if (list == nullptr)
                     {
-                        list = args.insert_or_assign(TR_KEY_trackerRemove, tr_variant::make_vector(1))
+                        list = args.insert_or_assign(TR_KEY_tracker_remove_camel, tr_variant::make_vector(1))
                                    .first.get_if<tr_variant::Vector>();
                     }
                     list->emplace_back(tr_num_parse<int64_t>(optarg_sv).value());

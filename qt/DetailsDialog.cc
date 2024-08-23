@@ -1513,7 +1513,7 @@ void DetailsDialog::onRemoveTrackerClicked()
     {
         auto const ids = torrent_ids_t{ torrent_id };
         auto const values = std::vector<int>{ std::begin(tracker_ids), std::end(tracker_ids) };
-        torrentSet(ids, TR_KEY_trackerRemove, values);
+        torrentSet(ids, TR_KEY_tracker_remove_camel, values);
     }
 
     selection_model->clearSelection();

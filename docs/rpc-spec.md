@@ -171,7 +171,7 @@ Request arguments:
 | `sequential_download`   | boolean  | download torrent pieces sequentially
 | `tracker_add`           | array    | **DEPRECATED** use `tracker_list` instead
 | `tracker_list`          | string   | string of announce URLs, one per line, and a blank line between [tiers](https://www.bittorrent.org/beps/bep_0012.html).
-| `trackerRemove`         | array    | **DEPRECATED** use `tracker_list` instead
+| `tracker_remove`        | array    | **DEPRECATED** use `tracker_list` instead
 | `trackerReplace`        | array    | **DEPRECATED** use `tracker_list` instead
 | `uploadLimit`           | number   | maximum upload speed (KBps)
 | `uploadLimited`         | boolean  | true if `uploadLimit` is honored

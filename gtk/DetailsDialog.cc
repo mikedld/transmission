@@ -2419,7 +2419,7 @@ void DetailsDialog::Impl::on_tracker_list_remove_button_clicked()
         tr_variantDictAddStrView(&top, TR_KEY_method, tr_quark_get_string_view(TR_KEY_torrent_set_kebab));
         auto* const args = tr_variantDictAddDict(&top, TR_KEY_arguments, 2);
         tr_variantDictAddInt(args, TR_KEY_id, torrent_id);
-        auto* const trackers = tr_variantDictAddList(args, TR_KEY_trackerRemove, 1);
+        auto* const trackers = tr_variantDictAddList(args, TR_KEY_tracker_remove_camel, 1);
         tr_variantListAddInt(trackers, tracker_id);
 
         core_->exec(top);
