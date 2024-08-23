@@ -182,8 +182,8 @@ for `files_wanted`, `files_unwanted`, `priority_high`, `priority_low`, or
 
    Response arguments: none
 
-### 3.3 Torrent accessor: `torrent-get`
-Method name: `torrent-get`.
+### 3.3 Torrent accessor: `torrent_get`
+Method name: `torrent_get`.
 
 Request arguments:
 
@@ -315,7 +315,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | Key | Value Type | transmission.h source
 |:--|:--|:--
 | `bytesCompleted` | number | tr_file_view
-| `wanted` | boolean | tr_file_view (**Note:** Not to be confused with `torrent-get.wanted`, which is an array of 0/1 instead of boolean)
+| `wanted` | boolean | tr_file_view (**Note:** Not to be confused with `torrent_get.wanted`, which is an array of 0/1 instead of boolean)
 | `priority` | number | tr_file_view
 
 `peers`: an array of objects, each containing:
@@ -429,7 +429,7 @@ Request:
        "fields": [ "id", "name", "totalSize" ],
        "ids": [ 7, 10 ]
    },
-   "method": "torrent-get",
+   "method": "torrent_get",
    "tag": 39693
 }
 ```
@@ -517,7 +517,7 @@ Method name: `torrent-rename-path`
 For more information on the use of this function, see the transmission.h
 documentation of `tr_torrentRenamePath()`. In particular, note that if this
 call succeeds you'll want to update the torrent's `files` and `name` field
-with `torrent-get`.
+with `torrent_get`.
 
 Request arguments:
 
@@ -1035,8 +1035,8 @@ Transmission 4.0.0 (`rpc-version-semver` 5.3.0, `rpc-version`: 17)
 Transmission 4.1.0 (`rpc-version-semver` 5.4.0, `rpc-version`: 18)
 | Method | Description
 |:---|:---
-| `torrent-get` | new arg `sequential_download`
+| `torrent_get` | new arg `sequential_download`
 | `torrent_set` | new arg `sequential_download`
-| `torrent-get` | new arg `files.beginPiece`
-| `torrent-get` | new arg `files.endPiece`
+| `torrent_get` | new arg `files.beginPiece`
+| `torrent_get` | new arg `files.endPiece`
 | `port-test` | new arg `ipProtocol`

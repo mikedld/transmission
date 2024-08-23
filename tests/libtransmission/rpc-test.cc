@@ -272,7 +272,7 @@ TEST_F(RpcTest, torrentGet)
     tr_variant request;
     tr_variantInitDict(&request, 1);
 
-    tr_variantDictAddStrView(&request, TR_KEY_method, "torrent-get");
+    tr_variantDictAddStrView(&request, TR_KEY_method, "torrent_get");
 
     tr_variant* args_in = tr_variantDictAddDict(&request, TR_KEY_arguments, 1);
     tr_variant* fields = tr_variantDictAddList(args_in, TR_KEY_fields, 1);

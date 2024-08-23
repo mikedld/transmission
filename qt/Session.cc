@@ -132,7 +132,7 @@ void Session::copyMagnetLinkToClipboard(int torrent_id)
 
     auto* q = new RpcQueue{};
 
-    q->add([this, &args]() { return exec(TR_KEY_torrent_get, &args); });
+    q->add([this, &args]() { return exec(TR_KEY_torrent_get_kebab, &args); });
 
     q->add(
         [](RpcResponse const& r)
@@ -658,7 +658,7 @@ void Session::refreshTorrents(torrent_ids_t const& torrent_ids, TorrentPropertie
 
     auto* q = new RpcQueue{};
 
-    q->add([this, &args]() { return exec(TR_KEY_torrent_get, &args); });
+    q->add([this, &args]() { return exec(TR_KEY_torrent_get_kebab, &args); });
 
     bool const all_torrents = std::empty(torrent_ids);
 

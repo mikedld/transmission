@@ -132,7 +132,7 @@ export class Remote {
         fields,
         format: 'table',
       },
-      method: 'torrent-get',
+      method: 'torrent_get',
     };
     if (torrentIds) {
       o.arguments.ids = torrentIds;
