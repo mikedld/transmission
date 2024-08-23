@@ -223,7 +223,7 @@ The 'source' column here corresponds to the data structure there.
 | `availability` | array (see below)| tr_torrentAvailability()
 | `bandwidth_priority` | number | tr_priority_t
 | `comment` | string | tr_torrent_view
-| `corruptEver`| number | tr_stat
+| `corrupt_ever`| number | tr_stat
 | `creator`| string | tr_torrent_view
 | `dateCreated`| number| tr_torrent_view
 | `desiredAvailable`| number| tr_stat

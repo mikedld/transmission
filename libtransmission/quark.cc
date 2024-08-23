@@ -74,6 +74,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "cookies"sv,
     "corrupt"sv,
     "corruptEver"sv,
+    "corrupt_ever"sv,
     "created by"sv,
     "created by.utf-8"sv,
     "creation date"sv,
@@ -536,6 +537,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_bandwidth_priority_camel:
     case TR_KEY_bandwidth_priority_kebab:
         return TR_KEY_bandwidth_priority;
+    case TR_KEY_corrupt_ever_camel: return TR_KEY_corrupt_ever;
     case TR_KEY_download_limit_camel: return TR_KEY_download_limit;
     case TR_KEY_download_limited_camel: return TR_KEY_download_limited;
     case TR_KEY_files_unwanted_kebab: return TR_KEY_files_unwanted;

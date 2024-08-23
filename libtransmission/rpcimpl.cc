@@ -510,7 +510,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_bandwidth_priority:
     case TR_KEY_bandwidth_priority_camel:
     case TR_KEY_comment:
-    case TR_KEY_corruptEver:
+    case TR_KEY_corrupt_ever:
+    case TR_KEY_corrupt_ever_camel:
     case TR_KEY_creator:
     case TR_KEY_dateCreated:
     case TR_KEY_desiredAvailable:
@@ -622,7 +623,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_bandwidth_priority_camel:
         return tor.get_priority();
     case TR_KEY_comment: return tor.comment();
-    case TR_KEY_corruptEver: return st.corruptEver;
+    case TR_KEY_corrupt_ever:
+    case TR_KEY_corrupt_ever_camel:
+        return st.corruptEver;
     case TR_KEY_creator: return tor.creator();
     case TR_KEY_dateCreated: return tor.date_created();
     case TR_KEY_desiredAvailable: return st.desiredAvailable;

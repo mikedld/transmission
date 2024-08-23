@@ -693,7 +693,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_added_date_camel,
     TR_KEY_bandwidth_priority_camel,
     TR_KEY_comment,
-    TR_KEY_corruptEver,
+    TR_KEY_corrupt_ever_camel,
     TR_KEY_creator,
     TR_KEY_dateCreated,
     TR_KEY_desiredAvailable,
@@ -1009,7 +1009,8 @@ void print_details(tr_variant::Map const& map)
 
         if (auto i = t->value_if<int64_t>(TR_KEY_downloadedEver); i)
         {
-            if (auto corrupt = t->value_if<int64_t>(TR_KEY_corruptEver).value_or(0); corrupt != 0)
+            if (auto corrupt = t->value_if<int64_t>({ TR_KEY_corrupt_ever, TR_KEY_corrupt_ever_camel }).value_or(0);
+                corrupt != 0)
             {
                 fmt::print("  Downloaded: {:s} (+{:s} discarded after failed checksum)\n", strlsize(*i), strlsize(corrupt));
             }

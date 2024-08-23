@@ -186,7 +186,8 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(added_date_camel, added_date, ADDED_DATE)
             HANDLE_KEY(bandwidth_priority, bandwidth_priority, BANDWIDTH_PRIORITY)
             HANDLE_KEY(bandwidth_priority_camel, bandwidth_priority, BANDWIDTH_PRIORITY)
-            HANDLE_KEY(corruptEver, failed_ever, FAILED_EVER)
+            HANDLE_KEY(corrupt_ever, failed_ever, FAILED_EVER)
+            HANDLE_KEY(corrupt_ever_camel, failed_ever, FAILED_EVER)
             HANDLE_KEY(dateCreated, date_created, DATE_CREATED)
             HANDLE_KEY(desiredAvailable, desired_available, DESIRED_AVAILABLE)
             HANDLE_KEY(download_limit, download_limit, DOWNLOAD_LIMIT) // KB/s
