@@ -237,7 +237,8 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(startDate, start_date, START_DATE)
             HANDLE_KEY(status, status, STATUS)
             HANDLE_KEY(totalSize, total_size, TOTAL_SIZE)
-            HANDLE_KEY(trackerList, tracker_list, TRACKER_LIST)
+            HANDLE_KEY(tracker_list, tracker_list, TRACKER_LIST)
+            HANDLE_KEY(tracker_list_camel, tracker_list, TRACKER_LIST)
             HANDLE_KEY(trackerStats, tracker_stats, TRACKER_STATS)
             HANDLE_KEY(trackers, tracker_stats, TRACKER_STATS)
             HANDLE_KEY(uploadLimit, upload_limit, UPLOAD_LIMIT) // KB/s

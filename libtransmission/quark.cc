@@ -415,6 +415,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "trackerReplace"sv,
     "trackerStats"sv,
     "tracker_add"sv,
+    "tracker_list"sv,
     "trackers"sv,
     "trash-can-enabled"sv,
     "trash-original-torrent-files"sv,
@@ -539,6 +540,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_torrent_set_kebab: return TR_KEY_torrent_set;
     case TR_KEY_torrent_set_location_kebab: return TR_KEY_torrent_set_location;
     case TR_KEY_tracker_add_camel: return TR_KEY_tracker_add;
+    case TR_KEY_tracker_list_camel: return TR_KEY_tracker_list;
     default: return q;
     }
     // clang-format on

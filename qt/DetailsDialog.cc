@@ -1473,7 +1473,7 @@ void DetailsDialog::onAddTrackerClicked()
 
 void DetailsDialog::onTrackerListEdited(QString tracker_list)
 {
-    torrentSet(TR_KEY_trackerList, tracker_list);
+    torrentSet(TR_KEY_tracker_list_camel, tracker_list);
 }
 
 void DetailsDialog::onEditTrackersClicked()
