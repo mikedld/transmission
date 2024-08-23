@@ -1466,7 +1466,7 @@ void DetailsDialog::onAddTrackerClicked()
                 urls_list << url;
             }
 
-            torrentSet(torrent_ids_t{ std::begin(ids), std::end(ids) }, TR_KEY_trackerAdd, urls_list);
+            torrentSet(torrent_ids_t{ std::begin(ids), std::end(ids) }, TR_KEY_tracker_add_camel, urls_list);
         }
     }
 }

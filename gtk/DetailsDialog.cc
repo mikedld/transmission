@@ -2372,7 +2372,7 @@ void AddTrackerDialog::on_response(int response)
                 tr_variantDictAddStrView(&top, TR_KEY_method, tr_quark_get_string_view(TR_KEY_torrent_set_kebab));
                 auto* const args = tr_variantDictAddDict(&top, TR_KEY_arguments, 2);
                 tr_variantDictAddInt(args, TR_KEY_id, torrent_id_);
-                auto* const trackers = tr_variantDictAddList(args, TR_KEY_trackerAdd, 1);
+                auto* const trackers = tr_variantDictAddList(args, TR_KEY_tracker_add_camel, 1);
                 tr_variantListAddStr(trackers, url.raw());
 
                 core_->exec(top);
