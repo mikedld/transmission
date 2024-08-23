@@ -109,7 +109,7 @@ export class Inspector extends EventTarget {
       ['hash', 'Hash:'],
       ['privacy', 'Privacy:'],
       ['origin', 'Origin:'],
-      ['dateAdded', 'Date added:'],
+      ['date_added', 'Date added:'],
       ['magnetLink', 'Magnet:'],
       ['comment', 'Comment:'],
       ['labels', 'Labels:'],
@@ -541,7 +541,7 @@ export class Inspector extends EventTarget {
     }
     setTextContent(e.info.location, string);
 
-    // dateAdded
+    // date_added
     if (torrents.length === 0) {
       string = none;
     } else {
@@ -561,7 +561,7 @@ export class Inspector extends EventTarget {
           })
         : mixed;
     }
-    setTextContent(e.info.dateAdded, string);
+    setTextContent(e.info.date_added, string);
 
     // magnetLink
     if (torrents.length === 0) {

@@ -30,6 +30,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "added6"sv,
     "added6.f"sv,
     "addedDate"sv,
+    "added_date"sv,
     "address"sv,
     "alt-speed-down"sv,
     "alt-speed-enabled"sv,
@@ -529,6 +530,9 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_activity_date_camel:
     case TR_KEY_activity_date_kebab:
         return TR_KEY_activity_date;
+    case TR_KEY_added_date_camel:
+    case TR_KEY_added_date_kebab:
+        return TR_KEY_added_date;
     case TR_KEY_bandwidth_priority_camel:
     case TR_KEY_bandwidth_priority_kebab:
         return TR_KEY_bandwidth_priority;

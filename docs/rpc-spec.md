@@ -219,7 +219,7 @@ The 'source' column here corresponds to the data structure there.
 | Key | Value Type | transmission.h source
 |:--|:--|:--
 | `activity_date` | number | tr_stat
-| `addedDate` | number | tr_stat
+| `added_date` | number | tr_stat
 | `availability` | array (see below)| tr_torrentAvailability()
 | `bandwidth_priority` | number | tr_priority_t
 | `comment` | string | tr_torrent_view

@@ -504,7 +504,8 @@ namespace make_torrent_field_helpers
     {
     case TR_KEY_activity_date:
     case TR_KEY_activity_date_camel:
-    case TR_KEY_addedDate:
+    case TR_KEY_added_date:
+    case TR_KEY_added_date_camel:
     case TR_KEY_availability:
     case TR_KEY_bandwidth_priority:
     case TR_KEY_bandwidth_priority_camel:
@@ -613,7 +614,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_activity_date:
     case TR_KEY_activity_date_camel:
         return st.activityDate;
-    case TR_KEY_addedDate: return st.addedDate;
+    case TR_KEY_added_date:
+    case TR_KEY_added_date_camel:
+        return st.addedDate;
     case TR_KEY_availability: return make_piece_availability_vec(tor);
     case TR_KEY_bandwidth_priority:
     case TR_KEY_bandwidth_priority_camel:

@@ -27,11 +27,12 @@ enum
     TR_KEY_activity_date_camel, /* rpc (deprecated) */
     TR_KEY_activity_date, /* rpc, resume file */
     TR_KEY_added, /* pex */
-    TR_KEY_added_date, /* rpc */
+    TR_KEY_added_date_kebab, /* resume file (legacy) */
     TR_KEY_added_f, /* pex */
     TR_KEY_added6, /* pex */
     TR_KEY_added6_f, /* pex */
-    TR_KEY_addedDate, /* rpc */
+    TR_KEY_added_date_camel, /* rpc (deprecated) */
+    TR_KEY_added_date, /* rpc, resume file */
     TR_KEY_address, /* rpc */
     TR_KEY_alt_speed_down, /* rpc, settings */
     TR_KEY_alt_speed_enabled, /* rpc, settings */

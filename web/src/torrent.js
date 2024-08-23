@@ -110,7 +110,7 @@ export class Torrent extends EventTarget {
     return this.fields.creator;
   }
   getDateAdded() {
-    return this.fields.addedDate;
+    return this.fields.added_date;
   }
   getDateCreated() {
     return this.fields.dateCreated;
@@ -581,7 +581,7 @@ Torrent.Fields = {};
 // either on startup or when a magnet finishes downloading its metadata
 // finishes downloading its metadata
 Torrent.Fields.Metadata = [
-  'addedDate',
+  'added_date',
   'file-count',
   'name',
   'primary-mime-type',
