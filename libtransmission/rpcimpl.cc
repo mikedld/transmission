@@ -573,7 +573,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_seed_ratio_limit_camel:
     case TR_KEY_seed_ratio_mode:
     case TR_KEY_seed_ratio_mode_camel:
-    case TR_KEY_sequentialDownload:
+    case TR_KEY_sequential_download:
     case TR_KEY_sizeWhenDone:
     case TR_KEY_source:
     case TR_KEY_startDate:
@@ -687,7 +687,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_seed_ratio_mode:
     case TR_KEY_seed_ratio_mode_camel:
         return tor.seed_ratio_mode();
-    case TR_KEY_sequentialDownload: return tor.is_sequential_download();
+    case TR_KEY_sequential_download: return tor.is_sequential_download();
     case TR_KEY_sizeWhenDone: return st.sizeWhenDone;
     case TR_KEY_source: return tor.source();
     case TR_KEY_startDate: return st.startDate;
@@ -1044,7 +1044,7 @@ char const* torrentSet(tr_session* session, tr_variant::Map const& args_in, tr_v
             tr_torrentSetSpeedLimit_KBps(tor, TR_DOWN, *val);
         }
 
-        if (auto const val = args_in.value_if<bool>(TR_KEY_sequentialDownload))
+        if (auto const val = args_in.value_if<bool>(TR_KEY_sequential_download); val)
         {
             tor->set_sequential_download(*val);
         }

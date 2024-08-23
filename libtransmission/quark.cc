@@ -351,7 +351,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "seed_ratio_mode"sv,
     "seederCount"sv,
     "seeding-time-seconds"sv,
-    "sequentialDownload"sv,
+    "sequential_download"sv,
     "session-count"sv,
     "session-id"sv,
     "sessionCount"sv,

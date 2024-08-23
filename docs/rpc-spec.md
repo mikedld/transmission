@@ -168,7 +168,7 @@ Request arguments:
 | `seed_idle_mode`        | number   | which seeding inactivity to use. See tr_idlelimit
 | `seed_ratio_limit`      | double   | torrent-level seeding ratio
 | `seed_ratio_mode`       | number   | which ratio to use. See tr_ratiolimit
-| `sequentialDownload`    | boolean  | download torrent pieces sequentially
+| `sequential_download`   | boolean  | download torrent pieces sequentially
 | `trackerAdd`            | array    | **DEPRECATED** use trackerList instead
 | `trackerList`           | string   | string of announce URLs, one per line, and a blank line between [tiers](https://www.bittorrent.org/beps/bep_0012.html).
 | `trackerRemove`         | array    | **DEPRECATED** use trackerList instead
@@ -279,7 +279,7 @@ The 'source' column here corresponds to the data structure there.
 | `seed_idle_mode`| number| tr_inactivelimit
 | `seed_ratio_limit`| double| tr_torrent
 | `seed_ratio_mode`| number| tr_ratiolimit
-| `sequentialDownload`| boolean| tr_torrent
+| `sequential_download`| boolean| tr_torrent
 | `sizeWhenDone`| number| tr_stat
 | `startDate`| number| tr_stat
 | `status`| number (see below)| tr_stat
@@ -1035,8 +1035,8 @@ Transmission 4.0.0 (`rpc-version-semver` 5.3.0, `rpc-version`: 17)
 Transmission 4.1.0 (`rpc-version-semver` 5.4.0, `rpc-version`: 18)
 | Method | Description
 |:---|:---
-| `torrent-get` | new arg `sequentialDownload`
-| `torrent_set` | new arg `sequentialDownload`
+| `torrent-get` | new arg `sequential_download`
+| `torrent_set` | new arg `sequential_download`
 | `torrent-get` | new arg `files.beginPiece`
 | `torrent-get` | new arg `files.endPiece`
 | `port-test` | new arg `ipProtocol`

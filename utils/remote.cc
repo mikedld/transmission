@@ -732,7 +732,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_seed_idle_limit_camel,
     TR_KEY_seed_ratio_mode_camel,
     TR_KEY_seed_ratio_limit_camel,
-    TR_KEY_sequentialDownload,
+    TR_KEY_sequential_download,
     TR_KEY_sizeWhenDone,
     TR_KEY_source,
     TR_KEY_startDate,
@@ -958,7 +958,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Location: {:s}\n", *sv);
         }
 
-        if (auto b = t->value_if<bool>(TR_KEY_sequentialDownload); b)
+        if (auto b = t->value_if<bool>(TR_KEY_sequential_download); b)
         {
             fmt::print("  Sequential Download: {:s}\n", *b ? "Yes" : "No");
         }

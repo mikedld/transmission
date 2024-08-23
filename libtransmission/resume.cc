@@ -753,7 +753,7 @@ tr_resume::fields_t load_from_file(tr_torrent* tor, tr_torrent::ResumeHelper& he
         fields_loaded |= tr_resume::BandwidthPriority;
     }
 
-    if (auto b = map.value_if<bool>(TR_KEY_sequentialDownload); b && (fields_to_load & tr_resume::SequentialDownload) != 0)
+    if (auto b = map.value_if<bool>(TR_KEY_sequential_download); b && (fields_to_load & tr_resume::SequentialDownload) != 0)
     {
         tor->set_sequential_download(*b);
         fields_loaded |= tr_resume::SequentialDownload;
@@ -928,7 +928,7 @@ void save(tr_torrent* const tor, tr_torrent::ResumeHelper const& helper)
     map.try_emplace(TR_KEY_max_peers, tor->peer_limit());
     map.try_emplace(TR_KEY_bandwidth_priority, tor->get_priority());
     map.try_emplace(TR_KEY_paused, !helper.start_when_stable());
-    map.try_emplace(TR_KEY_sequentialDownload, tor->is_sequential_download());
+    map.try_emplace(TR_KEY_sequential_download, tor->is_sequential_download());
     save_peers(map, tor);
 
     if (tor->has_metainfo())

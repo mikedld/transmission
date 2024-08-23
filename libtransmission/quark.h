@@ -353,7 +353,7 @@ enum
     TR_KEY_seed_ratio_mode,
     TR_KEY_seederCount,
     TR_KEY_seeding_time_seconds,
-    TR_KEY_sequentialDownload,
+    TR_KEY_sequential_download,
     TR_KEY_session_count,
     TR_KEY_session_id,
     TR_KEY_sessionCount,
