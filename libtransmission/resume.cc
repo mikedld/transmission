@@ -823,6 +823,15 @@ auto set_from_ctor(
         }
     }
 
+    if ((fields & tr_resume::SequentialDownload) != 0)
+    {
+        if (auto const& val = ctor.sequential_download(mode); val)
+        {
+            tor->set_sequential_download(*val);
+            ret |= tr_resume::SequentialDownload;
+        }
+    }
+
     return ret;
 }
 

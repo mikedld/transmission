@@ -77,7 +77,7 @@ char constexpr Usage[] = "Transmission " LONG_VERSION_STRING
 
 // --- Config File
 
-auto constexpr Options = std::array<tr_option, 45>{
+auto constexpr Options = std::array<tr_option, 47>{
     { { 'a', "allowed", "Allowed IP addresses. (Default: " TR_DEFAULT_RPC_WHITELIST ")", "a", true, "<list>" },
       { 'b', "blocklist", "Enable peer blocklists", "b", false, nullptr },
       { 'B', "no-blocklist", "Disable peer blocklists", "B", false, nullptr },
@@ -141,9 +141,12 @@ auto constexpr Options = std::array<tr_option, 45>{
         "GSR",
         false,
         nullptr },
+      { 994, "sequential-download", "Download the torrent sequentially", "seq", false, nullptr },
+      { 995, "no-sequential-download", "Download the torrent sequentially", "SEQ", false, nullptr },
       { 'x', "pid-file", "Enable PID file", "x", true, "<pid-file>" },
       { 0, nullptr, nullptr, nullptr, false, nullptr } }
 };
+static_assert(Options[std::size(Options) - 2].val != 0);
 
 [[nodiscard]] std::string getConfigDir(int argc, char const* const* argv)
 {
@@ -484,6 +487,14 @@ bool tr_daemon::parse_args(int argc, char const* const* argv, bool* dump_setting
 
         case 943:
             tr_variantDictAddStr(&settings_, TR_KEY_default_trackers, optstr);
+            break;
+
+        case 994:
+            tr_variantDictAddBool(&settings_, TR_KEY_sequentialDownload, true);
+            break;
+
+        case 995:
+            tr_variantDictAddBool(&settings_, TR_KEY_sequentialDownload, false);
             break;
 
         case 'd':
