@@ -699,7 +699,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_desired_available_camel,
     TR_KEY_done_date_camel,
     TR_KEY_download_dir_camel,
-    TR_KEY_downloadedEver,
+    TR_KEY_downloaded_ever_camel,
     TR_KEY_download_limit_camel,
     TR_KEY_download_limited_camel,
     TR_KEY_error,
@@ -1008,7 +1008,7 @@ void print_details(tr_variant::Map const& map)
             }
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_downloadedEver); i)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_downloaded_ever, TR_KEY_downloaded_ever_camel }); i)
         {
             if (auto corrupt = t->value_if<int64_t>({ TR_KEY_corrupt_ever, TR_KEY_corrupt_ever_camel }).value_or(0);
                 corrupt != 0)

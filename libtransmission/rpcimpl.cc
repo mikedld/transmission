@@ -525,7 +525,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_download_limit_camel:
     case TR_KEY_download_limited:
     case TR_KEY_download_limited_camel:
-    case TR_KEY_downloadedEver:
+    case TR_KEY_downloaded_ever:
+    case TR_KEY_downloaded_ever_camel:
     case TR_KEY_editDate:
     case TR_KEY_error:
     case TR_KEY_errorString:
@@ -649,7 +650,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_download_limited:
     case TR_KEY_download_limited_camel:
         return tor.uses_speed_limit(TR_DOWN);
-    case TR_KEY_downloadedEver: return st.downloadedEver;
+    case TR_KEY_downloaded_ever:
+    case TR_KEY_downloaded_ever_camel:
+        return st.downloadedEver;
     case TR_KEY_editDate: return st.editDate;
     case TR_KEY_error: return st.error;
     case TR_KEY_errorString: return st.errorString;

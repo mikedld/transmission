@@ -536,7 +536,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
 
         // changing fields needed by the main window
         static auto constexpr MainStatKeys = std::array<tr_quark, 25>{
-            TR_KEY_downloadedEver,
+            TR_KEY_downloaded_ever_camel,
             TR_KEY_editDate,
             TR_KEY_error,
             TR_KEY_errorString,
@@ -583,7 +583,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_bandwidth_priority_camel, //
             TR_KEY_corrupt_ever_camel, //
             TR_KEY_desired_available_camel, //
-            TR_KEY_downloadedEver, //
+            TR_KEY_downloaded_ever_camel, //
             TR_KEY_download_limit_camel, //
             TR_KEY_download_limited_camel, //
             TR_KEY_fileStats, //

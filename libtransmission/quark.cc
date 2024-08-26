@@ -112,6 +112,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "downloaded-bytes"sv,
     "downloadedBytes"sv,
     "downloadedEver"sv,
+    "downloaded_ever"sv,
     "downloaders"sv,
     "downloading-time-seconds"sv,
     "dropped"sv,
@@ -552,6 +553,7 @@ tr_quark tr_quark_convert(tr_quark q)
         return TR_KEY_download_dir;
     case TR_KEY_download_limit_camel: return TR_KEY_download_limit;
     case TR_KEY_download_limited_camel: return TR_KEY_download_limited;
+    case TR_KEY_downloaded_ever_camel: return TR_KEY_downloaded_ever;
     case TR_KEY_files_unwanted_kebab: return TR_KEY_files_unwanted;
     case TR_KEY_files_wanted_kebab: return TR_KEY_files_wanted;
     case TR_KEY_honors_session_limits_camel: return TR_KEY_honors_session_limits;

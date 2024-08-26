@@ -125,7 +125,7 @@ export class Torrent extends EventTarget {
     return this.fields.rateDownload;
   }
   getDownloadedEver() {
-    return this.fields.downloadedEver;
+    return this.fields.downloaded_ever;
   }
   getError() {
     return this.fields.error;
@@ -635,7 +635,7 @@ Torrent.Fields.StatsExtra = [
   'activity_date',
   'corrupt_ever',
   'desired_available',
-  'downloadedEver',
+  'downloaded_ever',
   'fileStats',
   'haveUnchecked',
   'haveValid',
