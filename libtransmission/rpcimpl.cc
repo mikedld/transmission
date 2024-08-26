@@ -527,7 +527,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_download_limited_camel:
     case TR_KEY_downloaded_ever:
     case TR_KEY_downloaded_ever_camel:
-    case TR_KEY_editDate:
+    case TR_KEY_edit_date:
+    case TR_KEY_edit_date_camel:
     case TR_KEY_error:
     case TR_KEY_errorString:
     case TR_KEY_eta:
@@ -653,7 +654,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_downloaded_ever:
     case TR_KEY_downloaded_ever_camel:
         return st.downloadedEver;
-    case TR_KEY_editDate: return st.editDate;
+    case TR_KEY_edit_date:
+    case TR_KEY_edit_date_camel:
+        return st.editDate;
     case TR_KEY_error: return st.error;
     case TR_KEY_errorString: return st.errorString;
     case TR_KEY_eta: return st.eta;

@@ -232,7 +232,7 @@ The 'source' column here corresponds to the data structure there.
 | `downloaded_ever` | number  | tr_stat
 | `download_limit` | number  | tr_torrent
 | `download_limited` | boolean | tr_torrent
-| `editDate` | number | tr_stat
+| `edit_date` | number | tr_stat
 | `error` | number | tr_stat
 | `errorString` | string | tr_stat
 | `eta` | number | tr_stat
