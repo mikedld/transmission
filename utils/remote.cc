@@ -703,7 +703,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_download_limit_camel,
     TR_KEY_download_limited_camel,
     TR_KEY_error,
-    TR_KEY_errorString,
+    TR_KEY_error_string_camel,
     TR_KEY_eta,
     TR_KEY_group,
     TR_KEY_hashString,
@@ -750,7 +750,7 @@ static_assert(DetailsKeys[std::size(DetailsKeys) - 1] != tr_quark{});
 auto constexpr ListKeys = std::array<tr_quark, 15>{
     TR_KEY_added_date_camel,
     TR_KEY_error,
-    TR_KEY_errorString,
+    TR_KEY_error_string_camel,
     TR_KEY_eta,
     TR_KEY_id,
     TR_KEY_isFinished,
@@ -1033,7 +1033,8 @@ void print_details(tr_variant::Map const& map)
 
         if (auto i = t->value_if<int64_t>(TR_KEY_error).value_or(0); i != 0)
         {
-            if (auto sv = t->value_if<std::string_view>(TR_KEY_errorString).value_or(""sv); !std::empty(sv))
+            if (auto sv = t->value_if<std::string_view>({ TR_KEY_error_string, TR_KEY_error_string_camel }).value_or(""sv);
+                !std::empty(sv))
             {
                 switch (i)
                 {

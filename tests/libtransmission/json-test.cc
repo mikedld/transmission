@@ -248,7 +248,7 @@ TEST_P(JSONTest, test3)
 {
     static auto constexpr Input =
         "{ \"error\": 2,"
-        "  \"errorString\": \"torrent not registered with this tracker 6UHsVW'*C\","
+        "  \"error_string\": \"torrent not registered with this tracker 6UHsVW'*C\","
         "  \"eta\": 262792,"
         "  \"id\": 25,"
         "  \"leftUntilDone\": 2275655680 }"sv;
@@ -257,7 +257,7 @@ TEST_P(JSONTest, test3)
     auto* map = var.get_if<tr_variant::Map>();
     ASSERT_NE(map, nullptr);
 
-    auto sv = map->value_if<std::string_view>(TR_KEY_errorString);
+    auto sv = map->value_if<std::string_view>(TR_KEY_error_string);
     ASSERT_TRUE(sv);
     EXPECT_EQ("torrent not registered with this tracker 6UHsVW'*C"sv, *sv);
 }

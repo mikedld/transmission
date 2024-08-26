@@ -234,7 +234,7 @@ The 'source' column here corresponds to the data structure there.
 | `download_limited` | boolean | tr_torrent
 | `edit_date` | number | tr_stat
 | `error` | number | tr_stat
-| `errorString` | string | tr_stat
+| `error_string` | string | tr_stat
 | `eta` | number | tr_stat
 | `etaIdle` | number | tr_stat
 | `file-count` | number | tr_info

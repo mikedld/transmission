@@ -539,7 +539,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_downloaded_ever_camel,
             TR_KEY_edit_date_camel,
             TR_KEY_error,
-            TR_KEY_errorString,
+            TR_KEY_error_string_camel,
             TR_KEY_eta,
             TR_KEY_haveUnchecked,
             TR_KEY_haveValid,

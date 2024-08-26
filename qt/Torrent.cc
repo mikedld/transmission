@@ -269,7 +269,8 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(creator, creator, CREATOR)
             HANDLE_KEY(download_dir, download_dir, DOWNLOAD_DIR)
             HANDLE_KEY(download_dir_camel, download_dir, DOWNLOAD_DIR)
-            HANDLE_KEY(errorString, error_string, TORRENT_ERROR_STRING)
+            HANDLE_KEY(error_string, error_string, TORRENT_ERROR_STRING)
+            HANDLE_KEY(error_string_camel, error_string, TORRENT_ERROR_STRING)
 
 #undef HANDLE_KEY
         default:
