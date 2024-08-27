@@ -239,7 +239,7 @@ The 'source' column here corresponds to the data structure there.
 | `eta_idle` | number | tr_stat
 | `file_count` | number | tr_info
 | `files`| array (see below)| n/a
-| `fileStats`| array (see below)| n/a
+| `file_stats`| array (see below)| n/a
 | `group`| string| n/a
 | `hashString`| string| tr_torrent_view
 | `haveUnchecked`| number| tr_stat
@@ -310,7 +310,7 @@ The 'source' column here corresponds to the data structure there.
 
 Files are returned in the order they are laid out in the torrent. References to "file indices" throughout this specification should be interpreted as the position of the file within this ordering, with the first file bearing index 0.
 
-`fileStats`: a file's non-constant properties. An array of `tr_info.filecount` objects, in the same order as `files`, each containing:
+`file_stats`: a file's non-constant properties. An array of `tr_info.filecount` objects, in the same order as `files`, each containing:
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--

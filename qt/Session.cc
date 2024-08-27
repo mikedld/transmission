@@ -586,7 +586,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_downloaded_ever_camel, //
             TR_KEY_download_limit_camel, //
             TR_KEY_download_limited_camel, //
-            TR_KEY_fileStats, //
+            TR_KEY_file_stats_camel, //
             TR_KEY_haveUnchecked, //
             TR_KEY_honors_session_limits_camel, //
             TR_KEY_peer_limit_kebab, //
@@ -601,7 +601,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
 
         // keys needed after renaming a torrent
         static auto constexpr RenameKeys = std::array<tr_quark, 3>{
-            TR_KEY_fileStats,
+            TR_KEY_file_stats_camel,
             TR_KEY_files,
             TR_KEY_name,
         };
