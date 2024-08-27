@@ -273,7 +273,7 @@ The 'source' column here corresponds to the data structure there.
 | `rate_download` (B/s)| number| tr_stat
 | `rate_upload` (B/s)| number| tr_stat
 | `recheck_progress`| double| tr_stat
-| `secondsDownloading`| number| tr_stat
+| `seconds_downloading`| number| tr_stat
 | `secondsSeeding`| number| tr_stat
 | `seed_idle_limit`| number| tr_torrent
 | `seed_idle_mode`| number| tr_inactivelimit

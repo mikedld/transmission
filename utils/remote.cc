@@ -726,7 +726,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_rate_download_camel,
     TR_KEY_rate_upload_camel,
     TR_KEY_recheck_progress_camel,
-    TR_KEY_secondsDownloading,
+    TR_KEY_seconds_downloading_camel,
     TR_KEY_secondsSeeding,
     TR_KEY_seed_idle_mode_camel,
     TR_KEY_seed_idle_limit_camel,
@@ -1105,7 +1105,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Latest activity:  {:s}\n", format_date(buf, i));
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_secondsDownloading).value_or(0); i > 0)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_seconds_downloading, TR_KEY_seconds_downloading_camel }).value_or(0); i > 0)
         {
             fmt::print("  Downloading Time: {:s}\n", tr_strltime(i));
         }
