@@ -237,7 +237,7 @@ The 'source' column here corresponds to the data structure there.
 | `error_string` | string | tr_stat
 | `eta` | number | tr_stat
 | `eta_idle` | number | tr_stat
-| `file-count` | number | tr_info
+| `file_count` | number | tr_info
 | `files`| array (see below)| n/a
 | `fileStats`| array (see below)| n/a
 | `group`| string| n/a

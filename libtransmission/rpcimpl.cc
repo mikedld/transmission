@@ -537,6 +537,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_eta_idle_camel:
     case TR_KEY_fileStats:
     case TR_KEY_file_count:
+    case TR_KEY_file_count_kebab:
     case TR_KEY_files:
     case TR_KEY_group:
     case TR_KEY_hashString:
@@ -668,7 +669,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_eta_idle_camel:
         return st.etaIdle;
     case TR_KEY_fileStats: return make_file_stats_vec(tor);
-    case TR_KEY_file_count: return tor.file_count();
+    case TR_KEY_file_count:
+    case TR_KEY_file_count_kebab:
+        return tor.file_count();
     case TR_KEY_files: return make_file_vec(tor);
     case TR_KEY_group: return tr_variant::unmanaged_string(tor.bandwidth_group().sv());
     case TR_KEY_hashString: return tr_variant::unmanaged_string(tor.info_hash_string().sv());

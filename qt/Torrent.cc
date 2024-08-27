@@ -204,6 +204,7 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(fileStats, files, FILES)
             HANDLE_KEY(files, files, FILES)
             HANDLE_KEY(file_count, file_count, FILE_COUNT)
+            HANDLE_KEY(file_count_kebab, file_count, FILE_COUNT)
             HANDLE_KEY(hashString, hash, HASH)
             HANDLE_KEY(haveUnchecked, have_unchecked, HAVE_UNCHECKED)
             HANDLE_KEY(haveValid, have_verified, HAVE_VERIFIED)
@@ -282,6 +283,7 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             switch (key)
             {
             case TR_KEY_file_count:
+            case TR_KEY_file_count_kebab:
             case TR_KEY_primary_mime_type:
                 icon_ = {};
                 break;

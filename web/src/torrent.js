@@ -146,7 +146,7 @@ export class Torrent extends EventTarget {
     return this.fields.files[index];
   }
   getFileCount() {
-    return this.fields['file-count'];
+    return this.fields.file_count;
   }
   getHashString() {
     return this.fields.hashString;
@@ -582,7 +582,7 @@ Torrent.Fields = {};
 // finishes downloading its metadata
 Torrent.Fields.Metadata = [
   'added_date',
-  'file-count',
+  'file_count',
   'name',
   'primary-mime-type',
   'totalSize',

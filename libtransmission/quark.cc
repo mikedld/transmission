@@ -132,6 +132,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "fields"sv,
     "file-count"sv,
     "fileStats"sv,
+    "file_count"sv,
     "filename"sv,
     "files"sv,
     "files-added"sv,
@@ -560,6 +561,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_edit_date_camel: return TR_KEY_edit_date;
     case TR_KEY_error_string_camel: return TR_KEY_error_string;
     case TR_KEY_eta_idle_camel: return TR_KEY_eta_idle;
+    case TR_KEY_file_count_kebab: return TR_KEY_file_count;
     case TR_KEY_files_unwanted_kebab: return TR_KEY_files_unwanted;
     case TR_KEY_files_wanted_kebab: return TR_KEY_files_wanted;
     case TR_KEY_honors_session_limits_camel: return TR_KEY_honors_session_limits;
