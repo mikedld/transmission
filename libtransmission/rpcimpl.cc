@@ -575,7 +575,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_peers_connected_camel:
     case TR_KEY_peers_from:
     case TR_KEY_peers_from_camel:
-    case TR_KEY_peersGettingFromUs:
+    case TR_KEY_peers_getting_from_us:
+    case TR_KEY_peers_getting_from_us_camel:
     case TR_KEY_peersSendingToUs:
     case TR_KEY_percentComplete:
     case TR_KEY_percentDone:
@@ -739,7 +740,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_peers_from:
     case TR_KEY_peers_from_camel:
         return make_peer_counts_map(st);
-    case TR_KEY_peersGettingFromUs: return st.peersGettingFromUs;
+    case TR_KEY_peers_getting_from_us:
+    case TR_KEY_peers_getting_from_us_camel:
+        return st.peersGettingFromUs;
     case TR_KEY_peersSendingToUs: return st.peersSendingToUs;
     case TR_KEY_percentComplete: return st.percentComplete;
     case TR_KEY_percentDone: return st.percentDone;

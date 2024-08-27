@@ -547,7 +547,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_manual_announce_time_camel,
             TR_KEY_metadata_percent_complete_camel,
             TR_KEY_peers_connected_camel,
-            TR_KEY_peersGettingFromUs,
+            TR_KEY_peers_getting_from_us_camel,
             TR_KEY_peersSendingToUs,
             TR_KEY_percentDone,
             TR_KEY_queue_position_camel,

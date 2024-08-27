@@ -260,7 +260,7 @@ The 'source' column here corresponds to the data structure there.
 | `peers` | array (see below)| n/a
 | `peers_connected` | number| tr_stat
 | `peers_from` | object (see below)| n/a
-| `peersGettingFromUs` | number| tr_stat
+| `peers_getting_from_us` | number| tr_stat
 | `peersSendingToUs` | number| tr_stat
 | `percentComplete` | double | tr_stat
 | `percentDone` | double | tr_stat

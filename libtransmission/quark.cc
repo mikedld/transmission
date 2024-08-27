@@ -273,6 +273,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "peersSendingToUs"sv,
     "peers_connected"sv,
     "peers_from"sv,
+    "peers_getting_from_us"sv,
     "percentComplete"sv,
     "percentDone"sv,
     "pex-enabled"sv,
@@ -594,6 +595,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_peer_limit_kebab: return TR_KEY_peer_limit;
     case TR_KEY_peers_connected_camel: return TR_KEY_peers_connected;
     case TR_KEY_peers_from_camel: return TR_KEY_peers_from;
+    case TR_KEY_peers_getting_from_us_camel: return TR_KEY_peers_getting_from_us;
     case TR_KEY_priority_high_kebab: return TR_KEY_priority_high;
     case TR_KEY_priority_low_kebab: return TR_KEY_priority_low;
     case TR_KEY_priority_normal_kebab: return TR_KEY_priority_normal;
