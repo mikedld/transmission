@@ -192,6 +192,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "isStalled"sv,
     "isUTP"sv,
     "isUploadingTo"sv,
+    "is_finished"sv,
     "is_queued"sv,
     "labels"sv,
     "lastAnnouncePeerCount"sv,
@@ -573,6 +574,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_have_unchecked_camel: return TR_KEY_have_unchecked;
     case TR_KEY_have_valid_camel: return TR_KEY_have_valid;
     case TR_KEY_honors_session_limits_camel: return TR_KEY_honors_session_limits;
+    case TR_KEY_is_finished_camel: return TR_KEY_is_finished;
     case TR_KEY_peer_limit_kebab: return TR_KEY_peer_limit;
     case TR_KEY_priority_high_kebab: return TR_KEY_priority_high;
     case TR_KEY_priority_low_kebab: return TR_KEY_priority_low;

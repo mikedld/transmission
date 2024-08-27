@@ -246,7 +246,7 @@ The 'source' column here corresponds to the data structure there.
 | `have_valid`| number| tr_stat
 | `honors_session_limits`| boolean| tr_torrent
 | `id` | number | tr_torrent
-| `isFinished` | boolean| tr_stat
+| `is_finished` | boolean| tr_stat
 | `isPrivate` | boolean| tr_torrent
 | `isStalled` | boolean| tr_stat
 | `labels` | array of strings | tr_torrent
