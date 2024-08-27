@@ -723,7 +723,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_peer_limit_kebab,
     TR_KEY_piece_count_camel,
     TR_KEY_piece_size_camel,
-    TR_KEY_rateDownload,
+    TR_KEY_rate_download_camel,
     TR_KEY_rateUpload,
     TR_KEY_recheckProgress,
     TR_KEY_secondsDownloading,
@@ -758,7 +758,7 @@ auto constexpr ListKeys = std::array<tr_quark, 15>{
     TR_KEY_name,
     TR_KEY_peers_getting_from_us_camel,
     TR_KEY_peers_sending_to_us_camel,
-    TR_KEY_rateDownload,
+    TR_KEY_rate_download_camel,
     TR_KEY_rateUpload,
     TR_KEY_sizeWhenDone,
     TR_KEY_status,
@@ -977,7 +977,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  ETA: {:s}\n", tr_strltime(*i));
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_rateDownload); i)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_rate_download, TR_KEY_rate_download_camel }); i)
         {
             fmt::print("  Download Speed: {:s}\n", Speed{ *i, Speed::Units::Byps }.to_string());
         }
@@ -1542,7 +1542,7 @@ void print_torrent_list(tr_variant::Map const& map)
         auto o_eta = t->value_if<int64_t>(TR_KEY_eta);
         auto o_status = t->value_if<int64_t>(TR_KEY_status);
         auto o_up = t->value_if<int64_t>(TR_KEY_rateUpload);
-        auto o_down = t->value_if<int64_t>(TR_KEY_rateDownload);
+        auto o_down = t->value_if<int64_t>({ TR_KEY_rate_download, TR_KEY_rate_download_camel });
         auto o_size_when_done = t->value_if<int64_t>(TR_KEY_sizeWhenDone);
         auto o_left_until_done = t->value_if<int64_t>({ TR_KEY_left_until_done, TR_KEY_left_until_done_camel });
         auto o_ratio = t->value_if<double>(TR_KEY_uploadRatio);

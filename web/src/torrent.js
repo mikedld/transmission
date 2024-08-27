@@ -122,7 +122,7 @@ export class Torrent extends EventTarget {
     return this.fields.download_dir;
   }
   getDownloadSpeed() {
-    return this.fields.rateDownload;
+    return this.fields.rate_download;
   }
   getDownloadedEver() {
     return this.fields.downloaded_ever;
@@ -603,7 +603,7 @@ Torrent.Fields.Stats = [
   'peers_sending_to_us',
   'percent_done',
   'queue_position',
-  'rateDownload',
+  'rate_download',
   'rateUpload',
   'recheckProgress',
   'seed_ratio_mode',
