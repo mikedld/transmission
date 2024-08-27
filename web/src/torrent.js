@@ -221,7 +221,7 @@ export class Torrent extends EventTarget {
     return this.fields.size_when_done;
   }
   getStartDate() {
-    return this.fields.startDate;
+    return this.fields.start_date;
   }
   getStatus() {
     return this.fields.status;
@@ -640,6 +640,6 @@ Torrent.Fields.StatsExtra = [
   'have_unchecked',
   'have_valid',
   'peers',
-  'startDate',
+  'start_date',
   'trackerStats',
 ];

@@ -735,7 +735,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_sequential_download,
     TR_KEY_size_when_done_camel,
     TR_KEY_source,
-    TR_KEY_startDate,
+    TR_KEY_start_date_camel,
     TR_KEY_status,
     TR_KEY_totalSize,
     TR_KEY_uploadedEver,
@@ -1095,7 +1095,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Date finished:    {:s}\n", format_date(buf, i));
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_startDate).value_or(0); i != 0)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_start_date, TR_KEY_start_date_camel }).value_or(0); i != 0)
         {
             fmt::print("  Date started:     {:s}\n", format_date(buf, i));
         }
