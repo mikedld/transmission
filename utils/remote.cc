@@ -727,7 +727,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_rate_upload_camel,
     TR_KEY_recheck_progress_camel,
     TR_KEY_seconds_downloading_camel,
-    TR_KEY_secondsSeeding,
+    TR_KEY_seconds_seeding_camel,
     TR_KEY_seed_idle_mode_camel,
     TR_KEY_seed_idle_limit_camel,
     TR_KEY_seed_ratio_mode_camel,
@@ -1110,7 +1110,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Downloading Time: {:s}\n", tr_strltime(i));
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_secondsSeeding).value_or(0); i > 0)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_seconds_seeding, TR_KEY_seconds_seeding_camel }).value_or(0); i > 0)
         {
             fmt::print("  Seeding Time:     {:s}\n", tr_strltime(i));
         }

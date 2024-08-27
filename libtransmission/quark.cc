@@ -375,6 +375,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "secondsDownloading"sv,
     "secondsSeeding"sv,
     "seconds_downloading"sv,
+    "seconds_seeding"sv,
     "seed-queue-enabled"sv,
     "seed-queue-size"sv,
     "seedIdleLimit"sv,
@@ -620,6 +621,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_rate_upload_camel: return TR_KEY_rate_upload;
     case TR_KEY_recheck_progress_camel: return TR_KEY_recheck_progress;
     case TR_KEY_seconds_downloading_camel: return TR_KEY_seconds_downloading;
+    case TR_KEY_seconds_seeding_camel: return TR_KEY_seconds_seeding;
     case TR_KEY_seed_idle_limit_camel: return TR_KEY_seed_idle_limit;
     case TR_KEY_seed_idle_mode_camel: return TR_KEY_seed_idle_mode;
     case TR_KEY_seed_ratio_limit_camel: return TR_KEY_seed_ratio_limit;
