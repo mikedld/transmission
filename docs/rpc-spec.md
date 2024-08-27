@@ -261,7 +261,7 @@ The 'source' column here corresponds to the data structure there.
 | `peers_connected` | number| tr_stat
 | `peers_from` | object (see below)| n/a
 | `peers_getting_from_us` | number| tr_stat
-| `peersSendingToUs` | number| tr_stat
+| `peers_sending_to_us` | number| tr_stat
 | `percentComplete` | double | tr_stat
 | `percentDone` | double | tr_stat
 | `pieces` | string (see below)| tr_torrent

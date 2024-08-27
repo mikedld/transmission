@@ -719,7 +719,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_name,
     TR_KEY_peers_connected_camel,
     TR_KEY_peers_getting_from_us_camel,
-    TR_KEY_peersSendingToUs,
+    TR_KEY_peers_sending_to_us_camel,
     TR_KEY_peer_limit_kebab,
     TR_KEY_pieceCount,
     TR_KEY_pieceSize,
@@ -757,7 +757,7 @@ auto constexpr ListKeys = std::array<tr_quark, 15>{
     TR_KEY_left_until_done_camel,
     TR_KEY_name,
     TR_KEY_peers_getting_from_us_camel,
-    TR_KEY_peersSendingToUs,
+    TR_KEY_peers_sending_to_us_camel,
     TR_KEY_rateDownload,
     TR_KEY_rateUpload,
     TR_KEY_sizeWhenDone,
@@ -843,7 +843,7 @@ static_assert(ListKeys[std::size(ListKeys) - 1] != tr_quark{});
     case TR_STATUS_SEED:
         if (auto from_us = t.value_if<int64_t>({ TR_KEY_peers_getting_from_us, TR_KEY_peers_getting_from_us_camel })
                                .value_or(0),
-            to_us = t.value_if<int64_t>(TR_KEY_peersSendingToUs).value_or(0);
+            to_us = t.value_if<int64_t>({ TR_KEY_peers_sending_to_us, TR_KEY_peers_sending_to_us_camel }).value_or(0);
             from_us != 0 && to_us != 0)
         {
             return "Up & Down"s;
@@ -1064,7 +1064,7 @@ void print_details(tr_variant::Map const& map)
 
         if (auto i = t->value_if<int64_t>({ TR_KEY_peers_connected, TR_KEY_peers_connected_camel }),
             j = t->value_if<int64_t>({ TR_KEY_peers_getting_from_us, TR_KEY_peers_getting_from_us_camel }),
-            k = t->value_if<int64_t>(TR_KEY_peersSendingToUs);
+            k = t->value_if<int64_t>({ TR_KEY_peers_sending_to_us, TR_KEY_peers_sending_to_us_camel });
             i && j && k)
         {
             fmt::print("  Peers: connected to {:d}, uploading to {:d}, downloading from {:d}\n", *i, *j, *k);
