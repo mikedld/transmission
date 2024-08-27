@@ -263,7 +263,7 @@ The 'source' column here corresponds to the data structure there.
 | `peers_getting_from_us` | number| tr_stat
 | `peers_sending_to_us` | number| tr_stat
 | `percent_complete` | double | tr_stat
-| `percentDone` | double | tr_stat
+| `percent_done` | double | tr_stat
 | `pieces` | string (see below)| tr_torrent
 | `pieceCount`| number| tr_torrent_view
 | `pieceSize`| number| tr_torrent_view

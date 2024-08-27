@@ -283,7 +283,7 @@ export class Torrent extends EventTarget {
     return Formatter.percentString(100 * this.getPercentDone(), 1);
   }
   getPercentDone() {
-    return this.fields.percentDone;
+    return this.fields.percent_done;
   }
   getStateString() {
     switch (this.getStatus()) {
@@ -601,7 +601,7 @@ Torrent.Fields.Stats = [
   'peers_connected',
   'peers_getting_from_us',
   'peers_sending_to_us',
-  'percentDone',
+  'percent_done',
   'queue_position',
   'rateDownload',
   'rateUpload',
