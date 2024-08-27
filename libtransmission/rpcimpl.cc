@@ -557,7 +557,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_is_stalled:
     case TR_KEY_is_stalled_camel:
     case TR_KEY_labels:
-    case TR_KEY_leftUntilDone:
+    case TR_KEY_left_until_done:
+    case TR_KEY_left_until_done_camel:
     case TR_KEY_magnetLink:
     case TR_KEY_manualAnnounceTime:
     case TR_KEY_maxConnectedPeers:
@@ -706,7 +707,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_is_stalled_camel:
         return st.isStalled;
     case TR_KEY_labels: return make_labels_vec(tor);
-    case TR_KEY_leftUntilDone: return st.leftUntilDone;
+    case TR_KEY_left_until_done:
+    case TR_KEY_left_until_done_camel:
+        return st.leftUntilDone;
     case TR_KEY_magnetLink: return tor.magnet();
     case TR_KEY_manualAnnounceTime: return tr_announcerNextManualAnnounce(&tor);
     case TR_KEY_maxConnectedPeers: return tor.peer_limit();

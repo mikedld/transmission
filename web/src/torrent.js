@@ -170,7 +170,7 @@ export class Torrent extends EventTarget {
     return this.fields.activity_date;
   }
   getLeftUntilDone() {
-    return this.fields.leftUntilDone;
+    return this.fields.left_until_done;
   }
   getMagnetLink() {
     return this.fields.magnetLink;
@@ -596,7 +596,7 @@ Torrent.Fields.Stats = [
   'is_finished',
   'is_stalled',
   'labels',
-  'leftUntilDone',
+  'left_until_done',
   'metadataPercentComplete',
   'peersConnected',
   'peersGettingFromUs',

@@ -251,7 +251,7 @@ TEST_P(JSONTest, test3)
         "  \"error_string\": \"torrent not registered with this tracker 6UHsVW'*C\","
         "  \"eta\": 262792,"
         "  \"id\": 25,"
-        "  \"leftUntilDone\": 2275655680 }"sv;
+        "  \"left_until_done\": 2275655680 }"sv;
 
     auto var = tr_variant_serde::json().inplace().parse(Input).value_or(tr_variant{});
     auto* map = var.get_if<tr_variant::Map>();
