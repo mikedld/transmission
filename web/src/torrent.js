@@ -158,7 +158,7 @@ export class Torrent extends EventTarget {
     return this.fields.have_unchecked;
   }
   getHaveValid() {
-    return this.fields.haveValid;
+    return this.fields.have_valid;
   }
   getId() {
     return this.fields.id;
@@ -638,7 +638,7 @@ Torrent.Fields.StatsExtra = [
   'downloaded_ever',
   'file_stats',
   'have_unchecked',
-  'haveValid',
+  'have_valid',
   'peers',
   'startDate',
   'trackerStats',
