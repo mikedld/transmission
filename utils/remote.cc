@@ -1747,7 +1747,7 @@ void print_trackers(tr_variant::Map const& map)
             continue;
         }
 
-        auto* const tracker_stats = t->find_if<tr_variant::Vector>(TR_KEY_trackerStats);
+        auto* const tracker_stats = t->find_if<tr_variant::Vector>({ TR_KEY_tracker_stats, TR_KEY_tracker_stats_camel });
         if (tracker_stats == nullptr)
         {
             continue;
@@ -2727,7 +2727,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
 
             case 943:
                 map.insert_or_assign(TR_KEY_tag, TAG_TRACKERS);
-                fields.emplace_back(tr_variant::unmanaged_string("trackerStats"sv));
+                fields.emplace_back(tr_variant::unmanaged_string(tr_quark_get_string_view(TR_KEY_tracker_stats_camel)));
                 add_id_arg(args, config);
                 break;
 

@@ -593,7 +593,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_seed_idle_limit_camel, //
             TR_KEY_seed_idle_mode_camel, //
             TR_KEY_start_date_camel, //
-            TR_KEY_trackerStats, //
+            TR_KEY_tracker_stats_camel, //
             TR_KEY_upload_limit_camel, //
             TR_KEY_upload_limited_camel, //
         };

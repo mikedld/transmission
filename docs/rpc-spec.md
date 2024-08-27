@@ -285,7 +285,7 @@ The 'source' column here corresponds to the data structure there.
 | `status`| number (see below)| tr_stat
 | `trackers`| array (see below)| n/a
 | `tracker_list` | string | string of announce URLs, one per line, with a blank line between tiers
-| `trackerStats`| array (see below)| n/a
+| `tracker_stats`| array (see below)| n/a
 | `totalSize`| number| tr_torrent_view
 | `torrentFile`| string| tr_info
 | `uploadedEver`| number| tr_stat
@@ -379,7 +379,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `sitename` | string | tr_tracker_view
 | `tier` | number | tr_tracker_view
 
-`trackerStats`: array of objects, each containing:
+`tracker_stats`: array of objects, each containing:
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--

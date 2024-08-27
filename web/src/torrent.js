@@ -72,7 +72,7 @@ export class Torrent extends EventTarget {
         case 'file_stats': // merge files and file_stats together
           changed |= this.updateFiles(value);
           break;
-        case 'trackerStats': // 'trackerStats' is a superset of 'trackers'...
+        case 'tracker_stats': // 'tracker_stats' is a superset of 'trackers'...
           changed |= this.setField(this.fields, 'trackers', value);
           break;
         case 'trackers': // ...so only save 'trackers' if we don't have it already
@@ -569,7 +569,7 @@ Torrent._ErrTrackerWarning = 1;
 Torrent._ErrTrackerError = 2;
 Torrent._ErrLocalError = 3;
 
-// TrackerStats' announceState
+// tracker_stats' announceState
 Torrent._TrackerInactive = 0;
 Torrent._TrackerWaiting = 1;
 Torrent._TrackerQueued = 2;
@@ -641,5 +641,5 @@ Torrent.Fields.StatsExtra = [
   'have_valid',
   'peers',
   'start_date',
-  'trackerStats',
+  'tracker_stats',
 ];
