@@ -251,7 +251,7 @@ The 'source' column here corresponds to the data structure there.
 | `is_stalled` | boolean| tr_stat
 | `labels` | array of strings | tr_torrent
 | `left_until_done` | number| tr_stat
-| `magnetLink` | string| n/a
+| `magnet_link` | string| n/a
 | `manualAnnounceTime` | number| tr_stat
 | `maxConnectedPeers` | number| tr_torrent
 | `metadataPercentComplete` | double| tr_stat

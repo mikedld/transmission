@@ -110,7 +110,7 @@ export class Inspector extends EventTarget {
       ['privacy', 'Privacy:'],
       ['origin', 'Origin:'],
       ['date_added', 'Date added:'],
-      ['magnetLink', 'Magnet:'],
+      ['magnet_link', 'Magnet:'],
       ['comment', 'Comment:'],
       ['labels', 'Labels:'],
     ];
@@ -563,14 +563,14 @@ export class Inspector extends EventTarget {
     }
     setTextContent(e.info.date_added, string);
 
-    // magnetLink
+    // magnet_link
     if (torrents.length === 0) {
-      setTextContent(e.info.magnetLink, none);
+      setTextContent(e.info.magnet_link, none);
     } else if (torrents.length > 1) {
-      setTextContent(e.info.magnetLink, mixed);
+      setTextContent(e.info.magnet_link, mixed);
     } else {
       const link = torrents[0].getMagnetLink();
-      e.info.magnetLink.innerHTML = `<a class="inspector-info-magnet" href="${link}"><button></button></a>`;
+      e.info.magnet_link.innerHTML = `<a class="inspector-info-magnet" href="${link}"><button></button></a>`;
     }
   }
 

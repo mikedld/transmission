@@ -216,6 +216,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "lpd-enabled"sv,
     "m"sv,
     "magnetLink"sv,
+    "magnet_link"sv,
     "main-window-height"sv,
     "main-window-is-maximized"sv,
     "main-window-layout-order"sv,
@@ -581,6 +582,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_is_private_camel: return TR_KEY_is_private;
     case TR_KEY_is_stalled_camel: return TR_KEY_is_stalled;
     case TR_KEY_left_until_done_camel: return TR_KEY_left_until_done;
+    case TR_KEY_magnet_link_camel: return TR_KEY_magnet_link;
     case TR_KEY_peer_limit_kebab: return TR_KEY_peer_limit;
     case TR_KEY_priority_high_kebab: return TR_KEY_priority_high;
     case TR_KEY_priority_low_kebab: return TR_KEY_priority_low;

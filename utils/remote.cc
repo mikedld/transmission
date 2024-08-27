@@ -715,7 +715,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_is_private_camel,
     TR_KEY_labels,
     TR_KEY_left_until_done_camel,
-    TR_KEY_magnetLink,
+    TR_KEY_magnet_link_camel,
     TR_KEY_name,
     TR_KEY_peersConnected,
     TR_KEY_peersGettingFromUs,
@@ -924,7 +924,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Hash: {:s}\n", *sv);
         }
 
-        if (auto sv = t->value_if<std::string_view>(TR_KEY_magnetLink); sv)
+        if (auto sv = t->value_if<std::string_view>({ TR_KEY_magnet_link, TR_KEY_magnet_link_camel }); sv)
         {
             fmt::print("  Magnet: {:s}\n", *sv);
         }
