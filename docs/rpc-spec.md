@@ -248,7 +248,7 @@ The 'source' column here corresponds to the data structure there.
 | `id` | number | tr_torrent
 | `is_finished` | boolean| tr_stat
 | `is_private` | boolean| tr_torrent
-| `isStalled` | boolean| tr_stat
+| `is_stalled` | boolean| tr_stat
 | `labels` | array of strings | tr_torrent
 | `leftUntilDone` | number| tr_stat
 | `magnetLink` | string| n/a

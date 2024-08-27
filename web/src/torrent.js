@@ -594,7 +594,7 @@ Torrent.Fields.Stats = [
   'error_string',
   'eta',
   'is_finished',
-  'isStalled',
+  'is_stalled',
   'labels',
   'leftUntilDone',
   'metadataPercentComplete',
