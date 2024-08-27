@@ -722,7 +722,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_peers_sending_to_us_camel,
     TR_KEY_peer_limit_kebab,
     TR_KEY_piece_count_camel,
-    TR_KEY_pieceSize,
+    TR_KEY_piece_size_camel,
     TR_KEY_rateDownload,
     TR_KEY_rateUpload,
     TR_KEY_recheckProgress,
@@ -1149,7 +1149,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Piece Count: {:d}\n", *i);
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_pieceSize); i)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_piece_size, TR_KEY_piece_size_camel }); i)
         {
             fmt::print("  Piece Size: {:s}\n", Memory{ *i, Memory::Units::Bytes }.to_string());
         }

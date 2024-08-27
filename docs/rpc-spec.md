@@ -266,7 +266,7 @@ The 'source' column here corresponds to the data structure there.
 | `percent_done` | double | tr_stat
 | `pieces` | string (see below)| tr_torrent
 | `piece_count`| number| tr_torrent_view
-| `pieceSize`| number| tr_torrent_view
+| `piece_size`| number| tr_torrent_view
 | `priorities`| array (see below)| n/a
 | `primary-mime-type`| string| tr_torrent
 | `queue_position`| number| tr_stat

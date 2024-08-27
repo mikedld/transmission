@@ -585,7 +585,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_percent_done_camel:
     case TR_KEY_piece_count:
     case TR_KEY_piece_count_camel:
-    case TR_KEY_pieceSize:
+    case TR_KEY_piece_size:
+    case TR_KEY_piece_size_camel:
     case TR_KEY_pieces:
     case TR_KEY_primary_mime_type:
     case TR_KEY_priorities:
@@ -759,7 +760,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_piece_count:
     case TR_KEY_piece_count_camel:
         return tor.piece_count();
-    case TR_KEY_pieceSize: return tor.piece_size();
+    case TR_KEY_piece_size:
+    case TR_KEY_piece_size_camel:
+        return tor.piece_size();
     case TR_KEY_pieces: return make_piece_bitfield(tor);
     case TR_KEY_primary_mime_type: return tr_variant::unmanaged_string(tor.primary_mime_type());
     case TR_KEY_priorities: return make_file_priorities_vec(tor);

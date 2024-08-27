@@ -197,7 +197,7 @@ export class Torrent extends EventTarget {
     return this.fields.piece_count;
   }
   getPieceSize() {
-    return this.fields.pieceSize;
+    return this.fields.piece_size;
   }
   getPrimaryMimeType() {
     return this.fields['primary-mime-type'] || 'application/octet-stream';
@@ -627,7 +627,7 @@ Torrent.Fields.InfoExtra = [
   'is_private',
   'magnet_link',
   'piece_count',
-  'pieceSize',
+  'piece_size',
 ];
 
 // fields used in the inspector which need to be periodically refreshed
