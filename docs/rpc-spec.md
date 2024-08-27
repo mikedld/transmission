@@ -259,7 +259,7 @@ The 'source' column here corresponds to the data structure there.
 | `peer_limit` | number| tr_torrent
 | `peers` | array (see below)| n/a
 | `peers_connected` | number| tr_stat
-| `peersFrom` | object (see below)| n/a
+| `peers_from` | object (see below)| n/a
 | `peersGettingFromUs` | number| tr_stat
 | `peersSendingToUs` | number| tr_stat
 | `percentComplete` | double | tr_stat
@@ -339,7 +339,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `rateToClient` (B/s) | number     | tr_peer_stat
 | `rateToPeer` (B/s)   | number     | tr_peer_stat
 
-`peersFrom`: an object containing:
+`peers_from`: an object containing:
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--
@@ -975,7 +975,7 @@ Transmission 2.40 (`rpc-version-semver` 5.0.0, `rpc-version`: 14)
 | `session-set` | new arg `queue-stalled-minutes`
 | `session-set` | new arg `seed-queue-enabled`
 | `session-set` | new arg `seed-queue-size`
-| `torrent-get` | new arg `fromLpd` in peersFrom
+| `torrent-get` | new arg `fromLpd` in `peersFrom`
 | `torrent-get` | new arg `isStalled`
 | `torrent-get` | new arg `queuePosition`
 | `torrent-set` | new arg `queuePosition`
