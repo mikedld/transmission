@@ -528,7 +528,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_hash_string_camel, //
             TR_KEY_labels, //
             TR_KEY_name, //
-            TR_KEY_primary_mime_type, //
+            TR_KEY_primary_mime_type_kebab, //
             TR_KEY_totalSize, //
             TR_KEY_trackers, //
         };

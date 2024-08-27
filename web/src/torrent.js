@@ -200,7 +200,7 @@ export class Torrent extends EventTarget {
     return this.fields.piece_size;
   }
   getPrimaryMimeType() {
-    return this.fields['primary-mime-type'] || 'application/octet-stream';
+    return this.fields.primary_mime_type || 'application/octet-stream';
   }
   getPrivateFlag() {
     return this.fields.is_private;
@@ -584,7 +584,7 @@ Torrent.Fields.Metadata = [
   'added_date',
   'file_count',
   'name',
-  'primary-mime-type',
+  'primary_mime_type',
   'totalSize',
 ];
 

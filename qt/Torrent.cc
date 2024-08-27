@@ -243,6 +243,7 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             HANDLE_KEY(piece_size, piece_size, PIECE_SIZE)
             HANDLE_KEY(piece_size_camel, piece_size, PIECE_SIZE)
             HANDLE_KEY(primary_mime_type, primary_mime_type, PRIMARY_MIME_TYPE)
+            HANDLE_KEY(primary_mime_type_kebab, primary_mime_type, PRIMARY_MIME_TYPE)
             HANDLE_KEY(queue_position, queue_position, QUEUE_POSITION)
             HANDLE_KEY(queue_position_camel, queue_position, QUEUE_POSITION)
             HANDLE_KEY(rateDownload, download_speed, DOWNLOAD_SPEED)
@@ -301,6 +302,7 @@ Torrent::fields_t Torrent::update(tr_quark const* keys, tr_variant const* const*
             case TR_KEY_file_count:
             case TR_KEY_file_count_kebab:
             case TR_KEY_primary_mime_type:
+            case TR_KEY_primary_mime_type_kebab:
                 icon_ = {};
                 break;
 

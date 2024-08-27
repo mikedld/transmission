@@ -589,6 +589,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_piece_size_camel:
     case TR_KEY_pieces:
     case TR_KEY_primary_mime_type:
+    case TR_KEY_primary_mime_type_kebab:
     case TR_KEY_priorities:
     case TR_KEY_queue_position:
     case TR_KEY_queue_position_camel:
@@ -764,7 +765,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_piece_size_camel:
         return tor.piece_size();
     case TR_KEY_pieces: return make_piece_bitfield(tor);
-    case TR_KEY_primary_mime_type: return tr_variant::unmanaged_string(tor.primary_mime_type());
+    case TR_KEY_primary_mime_type:
+    case TR_KEY_primary_mime_type_kebab:
+        return tr_variant::unmanaged_string(tor.primary_mime_type());
     case TR_KEY_priorities: return make_file_priorities_vec(tor);
     case TR_KEY_queue_position:
     case TR_KEY_queue_position_camel:
