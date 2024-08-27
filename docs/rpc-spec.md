@@ -242,7 +242,7 @@ The 'source' column here corresponds to the data structure there.
 | `file_stats`| array (see below)| n/a
 | `group`| string| n/a
 | `hash_string`| string| tr_torrent_view
-| `haveUnchecked`| number| tr_stat
+| `have_unchecked`| number| tr_stat
 | `haveValid`| number| tr_stat
 | `honors_session_limits`| boolean| tr_torrent
 | `id` | number | tr_torrent

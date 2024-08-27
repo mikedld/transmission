@@ -707,7 +707,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_eta,
     TR_KEY_group,
     TR_KEY_hash_string_camel,
-    TR_KEY_haveUnchecked,
+    TR_KEY_have_unchecked_camel,
     TR_KEY_haveValid,
     TR_KEY_honors_session_limits_camel,
     TR_KEY_id,
@@ -983,7 +983,9 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Upload Speed: {:s}\n", Speed{ *i, Speed::Units::Byps }.to_string());
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_haveUnchecked), j = t->value_if<int64_t>(TR_KEY_haveValid); i && j)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_have_unchecked, TR_KEY_have_unchecked_camel }),
+            j = t->value_if<int64_t>(TR_KEY_haveValid);
+            i && j)
         {
             fmt::print("  Have: {:s} ({:s} verified)\n", strlsize(*i + *j), strlsize(*j));
         }

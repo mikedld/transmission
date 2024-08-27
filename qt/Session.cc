@@ -541,7 +541,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_error,
             TR_KEY_error_string_camel,
             TR_KEY_eta,
-            TR_KEY_haveUnchecked,
+            TR_KEY_have_unchecked_camel,
             TR_KEY_haveValid,
             TR_KEY_isFinished,
             TR_KEY_leftUntilDone,
@@ -587,7 +587,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_download_limit_camel, //
             TR_KEY_download_limited_camel, //
             TR_KEY_file_stats_camel, //
-            TR_KEY_haveUnchecked, //
+            TR_KEY_have_unchecked_camel, //
             TR_KEY_honors_session_limits_camel, //
             TR_KEY_peer_limit_kebab, //
             TR_KEY_peers, //

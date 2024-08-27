@@ -163,6 +163,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "have"sv,
     "haveUnchecked"sv,
     "haveValid"sv,
+    "have_unchecked"sv,
     "honorsSessionLimits"sv,
     "honors_session_limits"sv,
     "host"sv,
@@ -568,6 +569,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_files_unwanted_kebab: return TR_KEY_files_unwanted;
     case TR_KEY_files_wanted_kebab: return TR_KEY_files_wanted;
     case TR_KEY_hash_string_camel: return TR_KEY_hash_string;
+    case TR_KEY_have_unchecked_camel: return TR_KEY_have_unchecked;
     case TR_KEY_honors_session_limits_camel: return TR_KEY_honors_session_limits;
     case TR_KEY_peer_limit_kebab: return TR_KEY_peer_limit;
     case TR_KEY_priority_high_kebab: return TR_KEY_priority_high;
