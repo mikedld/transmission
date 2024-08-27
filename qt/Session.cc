@@ -526,7 +526,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_added_date_camel, //
             TR_KEY_download_dir_camel, //
             TR_KEY_file_count_kebab, //
-            TR_KEY_hashString, //
+            TR_KEY_hash_string_camel, //
             TR_KEY_labels, //
             TR_KEY_name, //
             TR_KEY_primary_mime_type, //
@@ -1044,7 +1044,7 @@ void Session::addTorrent(AddData add_me, tr_variant* args_dict)
             {
                 add_me.disposeSourceFile();
 
-                if (auto const hash = dictFind<QString>(dup, TR_KEY_hashString); hash)
+                if (auto const hash = dictFind<QString>(dup, TR_KEY_hash_string_camel); hash)
                 {
                     duplicates_.try_emplace(add_me.readableShortName(), *hash);
                     duplicates_timer_.start(1000);

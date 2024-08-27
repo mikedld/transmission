@@ -706,7 +706,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_error_string_camel,
     TR_KEY_eta,
     TR_KEY_group,
-    TR_KEY_hashString,
+    TR_KEY_hash_string_camel,
     TR_KEY_haveUnchecked,
     TR_KEY_haveValid,
     TR_KEY_honors_session_limits_camel,
@@ -918,7 +918,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Name: {:s}\n", *sv);
         }
 
-        if (auto sv = t->value_if<std::string_view>(TR_KEY_hashString); sv)
+        if (auto sv = t->value_if<std::string_view>({ TR_KEY_hash_string, TR_KEY_hash_string_camel }); sv)
         {
             fmt::print("  Hash: {:s}\n", *sv);
         }

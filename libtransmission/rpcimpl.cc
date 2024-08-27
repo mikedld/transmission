@@ -541,7 +541,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_file_count_kebab:
     case TR_KEY_files:
     case TR_KEY_group:
-    case TR_KEY_hashString:
+    case TR_KEY_hash_string:
+    case TR_KEY_hash_string_camel:
     case TR_KEY_haveUnchecked:
     case TR_KEY_haveValid:
     case TR_KEY_honors_session_limits:
@@ -677,7 +678,9 @@ namespace make_torrent_field_helpers
         return tor.file_count();
     case TR_KEY_files: return make_file_vec(tor);
     case TR_KEY_group: return tr_variant::unmanaged_string(tor.bandwidth_group().sv());
-    case TR_KEY_hashString: return tr_variant::unmanaged_string(tor.info_hash_string().sv());
+    case TR_KEY_hash_string:
+    case TR_KEY_hash_string_camel:
+        return tr_variant::unmanaged_string(tor.info_hash_string().sv());
     case TR_KEY_haveUnchecked: return st.haveUnchecked;
     case TR_KEY_haveValid: return st.haveValid;
     case TR_KEY_honors_session_limits:
@@ -1374,7 +1377,10 @@ void add_torrent_impl(struct tr_rpc_idle_data* data, tr_ctor& ctor)
         return;
     }
 
-    static auto constexpr Fields = std::array<tr_quark, 3>{ TR_KEY_id, TR_KEY_name, TR_KEY_hashString };
+    static auto constexpr Fields = std::array<tr_quark, 4>{ TR_KEY_id,
+                                                            TR_KEY_name,
+                                                            TR_KEY_hash_string,
+                                                            TR_KEY_hash_string_camel };
     if (duplicate_of != nullptr)
     {
         data->args_out.try_emplace(

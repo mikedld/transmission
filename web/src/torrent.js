@@ -149,7 +149,7 @@ export class Torrent extends EventTarget {
     return this.fields.file_count;
   }
   getHashString() {
-    return this.fields.hashString;
+    return this.fields.hash_string;
   }
   getHave() {
     return this.getHaveValid() + this.getHaveUnchecked();
@@ -250,7 +250,7 @@ export class Torrent extends EventTarget {
 
   // derived accessors
   hasExtraInfo() {
-    return 'hashString' in this.fields;
+    return 'hash_string' in this.fields;
   }
   isSeeding() {
     return this.getStatus() === Torrent._StatusSeed;
@@ -623,7 +623,7 @@ Torrent.Fields.InfoExtra = [
   'creator',
   'date_created',
   'files',
-  'hashString',
+  'hash_string',
   'isPrivate',
   'magnetLink',
   'pieceCount',

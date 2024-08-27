@@ -241,7 +241,7 @@ The 'source' column here corresponds to the data structure there.
 | `files`| array (see below)| n/a
 | `file_stats`| array (see below)| n/a
 | `group`| string| n/a
-| `hashString`| string| tr_torrent_view
+| `hash_string`| string| tr_torrent_view
 | `haveUnchecked`| number| tr_stat
 | `haveValid`| number| tr_stat
 | `honors_session_limits`| boolean| tr_torrent
@@ -484,7 +484,7 @@ The format of the `cookies` should be `NAME=CONTENTS`, where `NAME` is the cooki
 
 Response arguments:
 
-* On success, a `torrent-added` object in the form of one of 3.3's torrent objects with the fields for `id`, `name`, and `hashString`.
+* On success, a `torrent-added` object in the form of one of 3.3's torrent objects with the fields for `id`, `name`, and `hash_string`.
 
 * When attempting to add a duplicate torrent, a `torrent-duplicate` object in the same form is returned, but the response's `result` value is still `success`.
 
