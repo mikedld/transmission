@@ -254,7 +254,7 @@ The 'source' column here corresponds to the data structure there.
 | `magnet_link` | string| n/a
 | `manual_announce_time` | number| tr_stat
 | `max_connected_peers` | number| tr_torrent
-| `metadataPercentComplete` | double| tr_stat
+| `metadata_percent_complete` | double| tr_stat
 | `name` | string| tr_torrent_view
 | `peer_limit` | number| tr_torrent
 | `peers` | array (see below)| n/a
