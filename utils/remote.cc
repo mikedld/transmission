@@ -712,7 +712,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_honors_session_limits_camel,
     TR_KEY_id,
     TR_KEY_is_finished_camel,
-    TR_KEY_isPrivate,
+    TR_KEY_is_private_camel,
     TR_KEY_labels,
     TR_KEY_leftUntilDone,
     TR_KEY_magnetLink,
@@ -1120,7 +1120,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Date created: {:s}\n", format_date(buf, i));
         }
 
-        if (auto b = t->value_if<bool>(TR_KEY_isPrivate); b)
+        if (auto b = t->value_if<bool>({ TR_KEY_is_private, TR_KEY_is_private_camel }); b)
         {
             fmt::print("  Public torrent: {:s}\n", *b ? "No" : "Yes");
         }

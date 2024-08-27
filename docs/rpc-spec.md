@@ -247,7 +247,7 @@ The 'source' column here corresponds to the data structure there.
 | `honors_session_limits`| boolean| tr_torrent
 | `id` | number | tr_torrent
 | `is_finished` | boolean| tr_stat
-| `isPrivate` | boolean| tr_torrent
+| `is_private` | boolean| tr_torrent
 | `isStalled` | boolean| tr_stat
 | `labels` | array of strings | tr_torrent
 | `leftUntilDone` | number| tr_stat

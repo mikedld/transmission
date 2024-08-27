@@ -552,7 +552,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_id:
     case TR_KEY_is_finished:
     case TR_KEY_is_finished_camel:
-    case TR_KEY_isPrivate:
+    case TR_KEY_is_private:
+    case TR_KEY_is_private_camel:
     case TR_KEY_isStalled:
     case TR_KEY_labels:
     case TR_KEY_leftUntilDone:
@@ -697,7 +698,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_is_finished:
     case TR_KEY_is_finished_camel:
         return st.finished;
-    case TR_KEY_isPrivate: return tor.is_private();
+    case TR_KEY_is_private:
+    case TR_KEY_is_private_camel:
+        return tor.is_private();
     case TR_KEY_isStalled: return st.isStalled;
     case TR_KEY_labels: return make_labels_vec(tor);
     case TR_KEY_leftUntilDone: return st.leftUntilDone;

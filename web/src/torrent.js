@@ -203,7 +203,7 @@ export class Torrent extends EventTarget {
     return this.fields['primary-mime-type'] || 'application/octet-stream';
   }
   getPrivateFlag() {
-    return this.fields.isPrivate;
+    return this.fields.is_private;
   }
   getQueuePosition() {
     return this.fields.queue_position;
@@ -624,7 +624,7 @@ Torrent.Fields.InfoExtra = [
   'date_created',
   'files',
   'hash_string',
-  'isPrivate',
+  'is_private',
   'magnetLink',
   'pieceCount',
   'pieceSize',

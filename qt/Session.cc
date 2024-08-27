@@ -569,7 +569,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_creator, //
             TR_KEY_date_created_camel, //
             TR_KEY_files, //
-            TR_KEY_isPrivate, //
+            TR_KEY_is_private_camel, //
             TR_KEY_labels, //
             TR_KEY_pieceCount, //
             TR_KEY_pieceSize, //
