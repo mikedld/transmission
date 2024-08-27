@@ -209,7 +209,7 @@ export class Torrent extends EventTarget {
     return this.fields.queue_position;
   }
   getRecheckProgress() {
-    return this.fields.recheckProgress;
+    return this.fields.recheck_progress;
   }
   getSeedRatioLimit() {
     return this.fields.seed_ratio_limit;
@@ -605,7 +605,7 @@ Torrent.Fields.Stats = [
   'queue_position',
   'rate_download',
   'rate_upload',
-  'recheckProgress',
+  'recheck_progress',
   'seed_ratio_mode',
   'seed_ratio_limit',
   'sizeWhenDone',

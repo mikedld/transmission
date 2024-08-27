@@ -725,7 +725,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_piece_size_camel,
     TR_KEY_rate_download_camel,
     TR_KEY_rate_upload_camel,
-    TR_KEY_recheckProgress,
+    TR_KEY_recheck_progress_camel,
     TR_KEY_secondsDownloading,
     TR_KEY_secondsSeeding,
     TR_KEY_seed_idle_mode_camel,
@@ -826,14 +826,14 @@ static_assert(ListKeys[std::size(ListKeys) - 1] != tr_quark{});
         return "Stopped"s;
 
     case TR_STATUS_CHECK_WAIT:
-        if (auto percent = t.value_if<double>(TR_KEY_recheckProgress); percent)
+        if (auto percent = t.value_if<double>({ TR_KEY_recheck_progress, TR_KEY_recheck_progress_camel }); percent)
         {
             return fmt::format("Will Verify ({:.0f}%)", floor(*percent * 100.0));
         }
         return "Will Verify"s;
 
     case TR_STATUS_CHECK:
-        if (auto percent = t.value_if<double>(TR_KEY_recheckProgress); percent)
+        if (auto percent = t.value_if<double>({ TR_KEY_recheck_progress, TR_KEY_recheck_progress_camel }); percent)
         {
             return fmt::format("Verifying ({:.0f}%)", floor(*percent * 100.0));
         }
