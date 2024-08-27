@@ -252,7 +252,7 @@ The 'source' column here corresponds to the data structure there.
 | `labels` | array of strings | tr_torrent
 | `left_until_done` | number| tr_stat
 | `magnet_link` | string| n/a
-| `manualAnnounceTime` | number| tr_stat
+| `manual_announce_time` | number| tr_stat
 | `maxConnectedPeers` | number| tr_torrent
 | `metadataPercentComplete` | double| tr_stat
 | `name` | string| tr_torrent_view
