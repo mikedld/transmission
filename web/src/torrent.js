@@ -218,7 +218,7 @@ export class Torrent extends EventTarget {
     return this.fields.seed_ratio_mode;
   }
   getSizeWhenDone() {
-    return this.fields.sizeWhenDone;
+    return this.fields.size_when_done;
   }
   getStartDate() {
     return this.fields.startDate;
@@ -608,7 +608,7 @@ Torrent.Fields.Stats = [
   'recheck_progress',
   'seed_ratio_mode',
   'seed_ratio_limit',
-  'sizeWhenDone',
+  'size_when_done',
   'status',
   'trackers',
   'download_dir',

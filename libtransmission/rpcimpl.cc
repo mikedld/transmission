@@ -612,7 +612,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_seed_ratio_mode:
     case TR_KEY_seed_ratio_mode_camel:
     case TR_KEY_sequential_download:
-    case TR_KEY_sizeWhenDone:
+    case TR_KEY_size_when_done:
+    case TR_KEY_size_when_done_camel:
     case TR_KEY_source:
     case TR_KEY_startDate:
     case TR_KEY_status:
@@ -805,7 +806,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_seed_ratio_mode_camel:
         return tor.seed_ratio_mode();
     case TR_KEY_sequential_download: return tor.is_sequential_download();
-    case TR_KEY_sizeWhenDone: return st.sizeWhenDone;
+    case TR_KEY_size_when_done:
+    case TR_KEY_size_when_done_camel:
+        return st.sizeWhenDone;
     case TR_KEY_source: return tor.source();
     case TR_KEY_startDate: return st.startDate;
     case TR_KEY_status: return st.activity;

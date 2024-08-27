@@ -733,7 +733,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_seed_ratio_mode_camel,
     TR_KEY_seed_ratio_limit_camel,
     TR_KEY_sequential_download,
-    TR_KEY_sizeWhenDone,
+    TR_KEY_size_when_done_camel,
     TR_KEY_source,
     TR_KEY_startDate,
     TR_KEY_status,
@@ -760,7 +760,7 @@ auto constexpr ListKeys = std::array<tr_quark, 15>{
     TR_KEY_peers_sending_to_us_camel,
     TR_KEY_rate_download_camel,
     TR_KEY_rate_upload_camel,
-    TR_KEY_sizeWhenDone,
+    TR_KEY_size_when_done_camel,
     TR_KEY_status,
     TR_KEY_uploadRatio,
 };
@@ -965,7 +965,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Sequential Download: {:s}\n", *b ? "Yes" : "No");
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_sizeWhenDone),
+        if (auto i = t->value_if<int64_t>({ TR_KEY_size_when_done, TR_KEY_size_when_done_camel }),
             j = t->value_if<int64_t>({ TR_KEY_left_until_done, TR_KEY_left_until_done_camel });
             i && j)
         {
@@ -994,7 +994,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Have: {:s} ({:s} verified)\n", strlsize(*i + *j), strlsize(*j));
         }
 
-        if (auto oi = t->value_if<int64_t>(TR_KEY_sizeWhenDone); oi)
+        if (auto oi = t->value_if<int64_t>({ TR_KEY_size_when_done, TR_KEY_size_when_done_camel }); oi)
         {
             auto const i = *oi;
             if (i < 1)
@@ -1031,7 +1031,7 @@ void print_details(tr_variant::Map const& map)
         {
             fmt::print("  Uploaded: {:s}\n", strlsize(*i));
 
-            if (auto j = t->value_if<int64_t>(TR_KEY_sizeWhenDone); j)
+            if (auto j = t->value_if<int64_t>({ TR_KEY_size_when_done, TR_KEY_size_when_done_camel }); j)
             {
                 fmt::print("  Ratio: {:s}\n", strlratio(*i, *j));
             }
@@ -1543,7 +1543,7 @@ void print_torrent_list(tr_variant::Map const& map)
         auto o_status = t->value_if<int64_t>(TR_KEY_status);
         auto o_up = t->value_if<int64_t>({ TR_KEY_rate_upload, TR_KEY_rate_upload_camel });
         auto o_down = t->value_if<int64_t>({ TR_KEY_rate_download, TR_KEY_rate_download_camel });
-        auto o_size_when_done = t->value_if<int64_t>(TR_KEY_sizeWhenDone);
+        auto o_size_when_done = t->value_if<int64_t>({ TR_KEY_size_when_done, TR_KEY_size_when_done_camel });
         auto o_left_until_done = t->value_if<int64_t>({ TR_KEY_left_until_done, TR_KEY_left_until_done_camel });
         auto o_ratio = t->value_if<double>(TR_KEY_uploadRatio);
         auto o_name = t->value_if<std::string_view>(TR_KEY_name);
@@ -2168,7 +2168,9 @@ void filter_ids(tr_variant::Map const& map, RemoteConfig& config)
             {
                 continue;
             }
-            else if (auto size_when_done = t->value_if<int64_t>(TR_KEY_sizeWhenDone).value_or(-1); size_when_done < 0)
+            else if (auto size_when_done = t->value_if<int64_t>({ TR_KEY_size_when_done, TR_KEY_size_when_done_camel })
+                                               .value_or(-1);
+                     size_when_done < 0)
             {
                 continue;
             }
