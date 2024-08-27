@@ -571,7 +571,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_peer_limit:
     case TR_KEY_peer_limit_kebab:
     case TR_KEY_peers:
-    case TR_KEY_peersConnected:
+    case TR_KEY_peers_connected:
+    case TR_KEY_peers_connected_camel:
     case TR_KEY_peersFrom:
     case TR_KEY_peersGettingFromUs:
     case TR_KEY_peersSendingToUs:
@@ -731,7 +732,9 @@ namespace make_torrent_field_helpers
     case TR_KEY_peer_limit_kebab:
         return tor.peer_limit();
     case TR_KEY_peers: return make_peer_vec(tor);
-    case TR_KEY_peersConnected: return st.peersConnected;
+    case TR_KEY_peers_connected:
+    case TR_KEY_peers_connected_camel:
+        return st.peersConnected;
     case TR_KEY_peersFrom: return make_peer_counts_map(st);
     case TR_KEY_peersGettingFromUs: return st.peersGettingFromUs;
     case TR_KEY_peersSendingToUs: return st.peersSendingToUs;

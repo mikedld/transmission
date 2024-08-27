@@ -258,7 +258,7 @@ The 'source' column here corresponds to the data structure there.
 | `name` | string| tr_torrent_view
 | `peer_limit` | number| tr_torrent
 | `peers` | array (see below)| n/a
-| `peersConnected` | number| tr_stat
+| `peers_connected` | number| tr_stat
 | `peersFrom` | object (see below)| n/a
 | `peersGettingFromUs` | number| tr_stat
 | `peersSendingToUs` | number| tr_stat

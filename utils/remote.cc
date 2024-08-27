@@ -717,7 +717,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_left_until_done_camel,
     TR_KEY_magnet_link_camel,
     TR_KEY_name,
-    TR_KEY_peersConnected,
+    TR_KEY_peers_connected_camel,
     TR_KEY_peersGettingFromUs,
     TR_KEY_peersSendingToUs,
     TR_KEY_peer_limit_kebab,
@@ -1061,7 +1061,7 @@ void print_details(tr_variant::Map const& map)
             }
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_peersConnected),
+        if (auto i = t->value_if<int64_t>({ TR_KEY_peers_connected, TR_KEY_peers_connected_camel }),
             j = t->value_if<int64_t>(TR_KEY_peersGettingFromUs),
             k = t->value_if<int64_t>(TR_KEY_peersSendingToUs);
             i && j && k)
