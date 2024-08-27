@@ -2712,13 +2712,13 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
 
             case 941:
                 map.insert_or_assign(TR_KEY_tag, TAG_PEERS);
-                fields.emplace_back(tr_variant::unmanaged_string("peers"sv));
+                fields.emplace_back(tr_variant::unmanaged_string(tr_quark_get_string_view(TR_KEY_peers)));
                 add_id_arg(args, config);
                 break;
 
             case 942:
                 map.insert_or_assign(TR_KEY_tag, TAG_PIECES);
-                fields.emplace_back(tr_variant::unmanaged_string("pieces"sv));
+                fields.emplace_back(tr_variant::unmanaged_string(tr_quark_get_string_view(TR_KEY_pieces)));
                 fields.emplace_back(tr_variant::unmanaged_string(tr_quark_get_string_view(TR_KEY_piece_count_camel)));
                 add_id_arg(args, config);
                 break;
