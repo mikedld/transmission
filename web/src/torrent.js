@@ -194,7 +194,7 @@ export class Torrent extends EventTarget {
     return this.fields.peers_sending_to_us;
   }
   getPieceCount() {
-    return this.fields.pieceCount;
+    return this.fields.piece_count;
   }
   getPieceSize() {
     return this.fields.pieceSize;
@@ -626,7 +626,7 @@ Torrent.Fields.InfoExtra = [
   'hash_string',
   'is_private',
   'magnet_link',
-  'pieceCount',
+  'piece_count',
   'pieceSize',
 ];
 

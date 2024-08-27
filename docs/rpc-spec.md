@@ -265,7 +265,7 @@ The 'source' column here corresponds to the data structure there.
 | `percent_complete` | double | tr_stat
 | `percent_done` | double | tr_stat
 | `pieces` | string (see below)| tr_torrent
-| `pieceCount`| number| tr_torrent_view
+| `piece_count`| number| tr_torrent_view
 | `pieceSize`| number| tr_torrent_view
 | `priorities`| array (see below)| n/a
 | `primary-mime-type`| string| tr_torrent
@@ -296,7 +296,7 @@ The 'source' column here corresponds to the data structure there.
 | `webseeds`| array of strings | tr_tracker_view
 | `webseedsSendingToUs`| number| tr_stat
 
-`availability`: An array of `pieceCount` numbers representing the number of connected peers that have each piece, or -1 if we already have the piece ourselves.
+`availability`: An array of `piece_count` numbers representing the number of connected peers that have each piece, or -1 if we already have the piece ourselves.
 
 `files`: array of objects, each containing:
 
@@ -352,7 +352,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `fromTracker`  | number     | tr_stat
 
 
-`pieces`: A bitfield holding pieceCount flags which are set to 'true' if we have the piece matching that position. JSON doesn't allow raw binary data, so this is a base64-encoded string. (Source: tr_torrent)
+`pieces`: A bitfield holding `piece_count` flags which are set to 'true' if we have the piece matching that position. JSON doesn't allow raw binary data, so this is a base64-encoded string. (Source: tr_torrent)
 
 `priorities`: An array of `tr_torrentFileCount()` numbers. Each is the `tr_priority_t` mode for the corresponding file.
 

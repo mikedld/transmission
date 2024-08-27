@@ -721,7 +721,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_peers_getting_from_us_camel,
     TR_KEY_peers_sending_to_us_camel,
     TR_KEY_peer_limit_kebab,
-    TR_KEY_pieceCount,
+    TR_KEY_piece_count_camel,
     TR_KEY_pieceSize,
     TR_KEY_rateDownload,
     TR_KEY_rateUpload,
@@ -1144,7 +1144,7 @@ void print_details(tr_variant::Map const& map)
             fmt::print("  Source: {:s}\n", sv);
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_pieceCount); i)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_piece_count, TR_KEY_piece_count_camel }); i)
         {
             fmt::print("  Piece Count: {:d}\n", *i);
         }
@@ -1454,7 +1454,7 @@ void print_pieces(tr_variant::Map const& map)
             continue;
         }
 
-        auto piece_count = t->value_if<int64_t>(TR_KEY_pieceCount);
+        auto piece_count = t->value_if<int64_t>({ TR_KEY_piece_count, TR_KEY_piece_count_camel });
         auto pieces = t->value_if<std::string_view>(TR_KEY_pieces);
 
         if (!piece_count || !pieces)
@@ -2719,7 +2719,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
             case 942:
                 map.insert_or_assign(TR_KEY_tag, TAG_PIECES);
                 fields.emplace_back(tr_variant::unmanaged_string("pieces"sv));
-                fields.emplace_back(tr_variant::unmanaged_string("pieceCount"sv));
+                fields.emplace_back(tr_variant::unmanaged_string(tr_quark_get_string_view(TR_KEY_piece_count_camel)));
                 add_id_arg(args, config);
                 break;
 
