@@ -444,6 +444,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "torrent-set-location"sv,
     "torrentCount"sv,
     "torrentFile"sv,
+    "torrent_file"sv,
     "torrent_get"sv,
     "torrent_set"sv,
     "torrent_set_location"sv,
@@ -631,6 +632,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_seed_ratio_mode_camel: return TR_KEY_seed_ratio_mode;
     case TR_KEY_size_when_done_camel: return TR_KEY_size_when_done;
     case TR_KEY_start_date_camel: return TR_KEY_start_date;
+    case TR_KEY_torrent_file_camel: return TR_KEY_torrent_file;
     case TR_KEY_torrent_get_kebab: return TR_KEY_torrent_get;
     case TR_KEY_torrent_set_kebab: return TR_KEY_torrent_set;
     case TR_KEY_torrent_set_location_kebab: return TR_KEY_torrent_set_location;
