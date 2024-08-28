@@ -450,7 +450,7 @@ enum
     TR_KEY_torrent_set,
     TR_KEY_torrent_set_location,
     TR_KEY_torrents,
-    TR_KEY_totalSize,
+    TR_KEY_total_size_camel,
     TR_KEY_total_size,
     TR_KEY_tracker_add_camel,
     TR_KEY_tracker_list_camel,

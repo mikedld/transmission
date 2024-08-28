@@ -283,10 +283,10 @@ The 'source' column here corresponds to the data structure there.
 | `size_when_done`| number| tr_stat
 | `start_date`| number| tr_stat
 | `status`| number (see below)| tr_stat
+| `total_size`| number| tr_torrent_view
 | `trackers`| array (see below)| n/a
 | `tracker_list` | string | string of announce URLs, one per line, with a blank line between tiers
 | `tracker_stats`| array (see below)| n/a
-| `totalSize`| number| tr_torrent_view
 | `torrentFile`| string| tr_info
 | `uploadedEver`| number| tr_stat
 | `upload_limit`| number| tr_torrent
@@ -426,7 +426,7 @@ Request:
 ```json
 {
    "arguments": {
-       "fields": [ "id", "name", "totalSize" ],
+       "fields": [ "id", "name", "total_size" ],
        "ids": [ 7, 10 ]
    },
    "method": "torrent_get",
@@ -443,12 +443,12 @@ Response:
          {
              "id": 10,
              "name": "Fedora x86_64 DVD",
-             "totalSize": 34983493932
+             "total_size": 34983493932
          },
          {
              "id": 7,
              "name": "Ubuntu x86_64 DVD",
-             "totalSize": 9923890123
+             "total_size": 9923890123
          }
       ]
    },

@@ -737,7 +737,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_source,
     TR_KEY_start_date_camel,
     TR_KEY_status,
-    TR_KEY_totalSize,
+    TR_KEY_total_size_camel,
     TR_KEY_uploadedEver,
     TR_KEY_upload_limit_camel,
     TR_KEY_upload_limited_camel,
@@ -1008,7 +1008,7 @@ void print_details(tr_variant::Map const& map)
                 fmt::print("  Availability: {:s}%\n", strlpercent(100.0 * (*j + i - *k) / i));
             }
 
-            if (auto j = t->value_if<int64_t>(TR_KEY_totalSize); j)
+            if (auto j = t->value_if<int64_t>({ TR_KEY_total_size, TR_KEY_total_size_camel }); j)
             {
                 fmt::print("  Total size: {:s} ({:s} wanted)\n", strlsize(*j), strlsize(i));
             }
@@ -2164,7 +2164,8 @@ void filter_ids(tr_variant::Map const& map, RemoteConfig& config)
             }
             break;
         case 'w': // Not all torrent wanted
-            if (auto total_size = t->value_if<int64_t>(TR_KEY_totalSize).value_or(-1); total_size < 0)
+            if (auto total_size = t->value_if<int64_t>({ TR_KEY_total_size, TR_KEY_total_size_camel }).value_or(-1);
+                total_size < 0)
             {
                 continue;
             }

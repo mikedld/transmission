@@ -634,6 +634,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_torrent_get_kebab: return TR_KEY_torrent_get;
     case TR_KEY_torrent_set_kebab: return TR_KEY_torrent_set;
     case TR_KEY_torrent_set_location_kebab: return TR_KEY_torrent_set_location;
+    case TR_KEY_total_size_camel: return TR_KEY_total_size;
     case TR_KEY_tracker_add_camel: return TR_KEY_tracker_add;
     case TR_KEY_tracker_list_camel: return TR_KEY_tracker_list;
     case TR_KEY_tracker_remove_camel: return TR_KEY_tracker_remove;
