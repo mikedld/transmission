@@ -558,7 +558,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_seed_ratio_mode_camel,
             TR_KEY_size_when_done_camel,
             TR_KEY_status,
-            TR_KEY_uploadedEver,
+            TR_KEY_uploaded_ever_camel,
             TR_KEY_webseedsSendingToUs,
         };
 

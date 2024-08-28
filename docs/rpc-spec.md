@@ -288,7 +288,7 @@ The 'source' column here corresponds to the data structure there.
 | `trackers`| array (see below)| n/a
 | `tracker_list` | string | string of announce URLs, one per line, with a blank line between tiers
 | `tracker_stats`| array (see below)| n/a
-| `uploadedEver`| number| tr_stat
+| `uploaded_ever`| number| tr_stat
 | `upload_limit`| number| tr_torrent
 | `upload_limited`| boolean| tr_torrent
 | `uploadRatio`| double| tr_stat

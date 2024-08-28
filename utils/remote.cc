@@ -738,7 +738,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_start_date_camel,
     TR_KEY_status,
     TR_KEY_total_size_camel,
-    TR_KEY_uploadedEver,
+    TR_KEY_uploaded_ever_camel,
     TR_KEY_upload_limit_camel,
     TR_KEY_upload_limited_camel,
     TR_KEY_uploadRatio,
@@ -1027,7 +1027,7 @@ void print_details(tr_variant::Map const& map)
             }
         }
 
-        if (auto i = t->value_if<int64_t>(TR_KEY_uploadedEver); i)
+        if (auto i = t->value_if<int64_t>({ TR_KEY_uploaded_ever, TR_KEY_uploaded_ever_camel }); i)
         {
             fmt::print("  Uploaded: {:s}\n", strlsize(*i));
 
