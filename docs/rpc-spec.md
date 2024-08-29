@@ -291,7 +291,7 @@ The 'source' column here corresponds to the data structure there.
 | `uploaded_ever`| number| tr_stat
 | `upload_limit`| number| tr_torrent
 | `upload_limited`| boolean| tr_torrent
-| `uploadRatio`| double| tr_stat
+| `upload_ratio`| double| tr_stat
 | `wanted`| array (see below)| n/a
 | `webseeds`| array of strings | tr_tracker_view
 | `webseedsSendingToUs`| number| tr_stat

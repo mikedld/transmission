@@ -741,7 +741,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_uploaded_ever_camel,
     TR_KEY_upload_limit_camel,
     TR_KEY_upload_limited_camel,
-    TR_KEY_uploadRatio,
+    TR_KEY_upload_ratio_camel,
     TR_KEY_webseeds,
     TR_KEY_webseedsSendingToUs,
 };
@@ -762,7 +762,7 @@ auto constexpr ListKeys = std::array<tr_quark, 15>{
     TR_KEY_rate_upload_camel,
     TR_KEY_size_when_done_camel,
     TR_KEY_status,
-    TR_KEY_uploadRatio,
+    TR_KEY_upload_ratio_camel,
 };
 static_assert(ListKeys[std::size(ListKeys) - 1] != tr_quark{});
 
@@ -1545,7 +1545,7 @@ void print_torrent_list(tr_variant::Map const& map)
         auto o_down = t->value_if<int64_t>({ TR_KEY_rate_download, TR_KEY_rate_download_camel });
         auto o_size_when_done = t->value_if<int64_t>({ TR_KEY_size_when_done, TR_KEY_size_when_done_camel });
         auto o_left_until_done = t->value_if<int64_t>({ TR_KEY_left_until_done, TR_KEY_left_until_done_camel });
-        auto o_ratio = t->value_if<double>(TR_KEY_uploadRatio);
+        auto o_ratio = t->value_if<double>({ TR_KEY_upload_ratio, TR_KEY_upload_ratio_camel });
         auto o_name = t->value_if<std::string_view>(TR_KEY_name);
 
         if (!o_eta || !o_tor_id || !o_left_until_done || !o_name || !o_down || !o_up || !o_size_when_done || !o_status ||
@@ -2154,7 +2154,7 @@ void filter_ids(tr_variant::Map const& map, RemoteConfig& config)
             }
             break;
         case 'r': // Minimal ratio
-            if (auto ratio = t->value_if<double>(TR_KEY_uploadRatio); !ratio)
+            if (auto ratio = t->value_if<double>({ TR_KEY_upload_ratio, TR_KEY_upload_ratio_camel }); !ratio)
             {
                 continue;
             }
