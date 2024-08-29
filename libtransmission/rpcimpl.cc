@@ -483,7 +483,8 @@ namespace make_torrent_field_helpers
     peer_counts_map.try_emplace(TR_KEY_from_cache_camel, from[TR_PEER_FROM_RESUME]);
     peer_counts_map.try_emplace(TR_KEY_from_dht, from[TR_PEER_FROM_DHT]);
     peer_counts_map.try_emplace(TR_KEY_from_dht_camel, from[TR_PEER_FROM_DHT]);
-    peer_counts_map.try_emplace(TR_KEY_fromIncoming, from[TR_PEER_FROM_INCOMING]);
+    peer_counts_map.try_emplace(TR_KEY_from_incoming, from[TR_PEER_FROM_INCOMING]);
+    peer_counts_map.try_emplace(TR_KEY_from_incoming_camel, from[TR_PEER_FROM_INCOMING]);
     peer_counts_map.try_emplace(TR_KEY_fromLpd, from[TR_PEER_FROM_LPD]);
     peer_counts_map.try_emplace(TR_KEY_fromLtep, from[TR_PEER_FROM_LTEP]);
     peer_counts_map.try_emplace(TR_KEY_fromPex, from[TR_PEER_FROM_PEX]);

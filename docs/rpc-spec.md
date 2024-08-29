@@ -343,13 +343,13 @@ Files are returned in the order they are laid out in the torrent. References to 
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--
-| `from_cache`   | number     | tr_stat
-| `from_dht`     | number     | tr_stat
-| `fromIncoming` | number     | tr_stat
-| `fromLpd`      | number     | tr_stat
-| `fromLtep`     | number     | tr_stat
-| `fromPex`      | number     | tr_stat
-| `fromTracker`  | number     | tr_stat
+| `from_cache`    | number     | tr_stat
+| `from_dht`      | number     | tr_stat
+| `from_incoming` | number     | tr_stat
+| `fromLpd`       | number     | tr_stat
+| `fromLtep`      | number     | tr_stat
+| `fromPex`       | number     | tr_stat
+| `fromTracker`   | number     | tr_stat
 
 
 `pieces`: A bitfield holding `piece_count` flags which are set to 'true' if we have the piece matching that position. JSON doesn't allow raw binary data, so this is a base64-encoded string. (Source: tr_torrent)
