@@ -615,7 +615,7 @@ export class Inspector extends EventTarget {
       (peer, td) =>
         setTextContent(
           td,
-          peer.rateToClient ? fmt.speedBps(peer.rateToClient) : '',
+          peer.rate_to_client ? fmt.speedBps(peer.rate_to_client) : '',
         ),
       (peer, td) => setTextContent(td, `${Math.floor(peer.progress * 100)}%`),
       (peer, td) => {

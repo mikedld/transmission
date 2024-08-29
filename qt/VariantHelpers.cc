@@ -72,7 +72,7 @@ bool change(Peer& setme, tr_variant const* value)
             HANDLE_KEY(peer_is_interested_camel, peer_is_interested)
             HANDLE_KEY(port, port)
             HANDLE_KEY(progress, progress)
-            HANDLE_KEY(rateToClient, rate_to_client)
+            HANDLE_KEY(rate_to_client_camel, rate_to_client)
             HANDLE_KEY(rateToPeer, rate_to_peer)
 #undef HANDLE_KEY
         default:
