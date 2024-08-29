@@ -461,7 +461,8 @@ namespace make_torrent_field_helpers
         peer_map.try_emplace(TR_KEY_is_uploading_to_camel, peer.isUploadingTo);
         peer_map.try_emplace(TR_KEY_peer_is_choked, peer.peerIsChoked);
         peer_map.try_emplace(TR_KEY_peer_is_choked_camel, peer.peerIsChoked);
-        peer_map.try_emplace(TR_KEY_peerIsInterested, peer.peerIsInterested);
+        peer_map.try_emplace(TR_KEY_peer_is_interested, peer.peerIsInterested);
+        peer_map.try_emplace(TR_KEY_peer_is_interested_camel, peer.peerIsInterested);
         peer_map.try_emplace(TR_KEY_port, peer.port);
         peer_map.try_emplace(TR_KEY_progress, peer.progress);
         peer_map.try_emplace(TR_KEY_rateToClient, Speed{ peer.rateToClient_KBps, Speed::Units::KByps }.base_quantity());
