@@ -125,7 +125,7 @@ enum
     TR_KEY_edit_date,
     TR_KEY_encoding,
     TR_KEY_encryption,
-    TR_KEY_endPiece,
+    TR_KEY_end_piece,
     TR_KEY_error,
     TR_KEY_error_string_camel,
     TR_KEY_error_string,

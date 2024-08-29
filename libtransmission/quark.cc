@@ -123,7 +123,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "edit_date"sv,
     "encoding"sv,
     "encryption"sv,
-    "endPiece"sv,
+    "end_piece"sv,
     "error"sv,
     "errorString"sv,
     "error_string"sv,

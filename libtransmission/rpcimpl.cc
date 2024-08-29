@@ -351,7 +351,7 @@ namespace make_torrent_field_helpers
         file_map.try_emplace(TR_KEY_begin_piece, file.beginPiece);
         file_map.try_emplace(TR_KEY_bytes_completed, file.have);
         file_map.try_emplace(TR_KEY_bytes_completed_camel, file.have);
-        file_map.try_emplace(TR_KEY_endPiece, file.endPiece);
+        file_map.try_emplace(TR_KEY_end_piece, file.endPiece);
         file_map.try_emplace(TR_KEY_length, file.length);
         file_map.try_emplace(TR_KEY_name, file.name);
         vec.emplace_back(std::move(file_map));
