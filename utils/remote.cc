@@ -1357,7 +1357,7 @@ void print_peers_impl(tr_variant::Vector const& peers)
         auto const flagstr = peer->value_if<std::string_view>({ TR_KEY_flag_str, TR_KEY_flag_str_camel });
         auto const progress = peer->value_if<double>(TR_KEY_progress);
         auto const rate_to_client = peer->value_if<int64_t>({ TR_KEY_rate_to_client, TR_KEY_rate_to_client_camel });
-        auto const rate_to_peer = peer->value_if<int64_t>(TR_KEY_rateToPeer);
+        auto const rate_to_peer = peer->value_if<int64_t>({ TR_KEY_rate_to_peer, TR_KEY_rate_to_peer_camel });
 
         if (address && client && progress && flagstr && rate_to_client && rate_to_peer)
         {

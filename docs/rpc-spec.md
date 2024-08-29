@@ -337,7 +337,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `port`                 | number     | tr_peer_stat
 | `progress`             | double     | tr_peer_stat
 | `rate_to_client` (B/s) | number     | tr_peer_stat
-| `rateToPeer` (B/s)     | number     | tr_peer_stat
+| `rate_to_peer` (B/s)   | number     | tr_peer_stat
 
 `peers_from`: an object containing:
 

@@ -610,7 +610,7 @@ export class Inspector extends EventTarget {
       (peer, td) =>
         setTextContent(
           td,
-          peer.rateToPeer ? fmt.speedBps(peer.rateToPeer) : '',
+          peer.rate_to_peer ? fmt.speedBps(peer.rate_to_peer) : '',
         ),
       (peer, td) =>
         setTextContent(

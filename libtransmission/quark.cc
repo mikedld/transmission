@@ -333,6 +333,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "rateUpload"sv,
     "rate_download"sv,
     "rate_to_client"sv,
+    "rate_to_peer"sv,
     "rate_upload"sv,
     "ratio-limit"sv,
     "ratio-limit-enabled"sv,
@@ -651,6 +652,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_queue_position_camel: return TR_KEY_queue_position;
     case TR_KEY_rate_download_camel: return TR_KEY_rate_download;
     case TR_KEY_rate_to_client_camel: return TR_KEY_rate_to_client;
+    case TR_KEY_rate_to_peer_camel: return TR_KEY_rate_to_peer;
     case TR_KEY_rate_upload_camel: return TR_KEY_rate_upload;
     case TR_KEY_recheck_progress_camel: return TR_KEY_recheck_progress;
     case TR_KEY_seconds_downloading_camel: return TR_KEY_seconds_downloading;
