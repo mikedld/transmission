@@ -605,7 +605,7 @@ export class Inspector extends EventTarget {
 
     const cell_setters = [
       (peer, td) => {
-        td.dataset.encrypted = peer.isEncrypted;
+        td.dataset.encrypted = peer.is_encrypted;
       },
       (peer, td) =>
         setTextContent(

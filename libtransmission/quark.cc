@@ -198,6 +198,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "isUTP"sv,
     "isUploadingTo"sv,
     "is_downloading_from"sv,
+    "is_encrypted"sv,
     "is_finished"sv,
     "is_private"sv,
     "is_queued"sv,
@@ -614,6 +615,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_have_valid_camel: return TR_KEY_have_valid;
     case TR_KEY_honors_session_limits_camel: return TR_KEY_honors_session_limits;
     case TR_KEY_is_downloading_from_camel: return TR_KEY_is_downloading_from;
+    case TR_KEY_is_encrypted_camel: return TR_KEY_is_encrypted;
     case TR_KEY_is_finished_camel: return TR_KEY_is_finished;
     case TR_KEY_is_private_camel: return TR_KEY_is_private;
     case TR_KEY_is_stalled_camel: return TR_KEY_is_stalled;
