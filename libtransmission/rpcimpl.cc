@@ -330,7 +330,8 @@ namespace make_torrent_field_helpers
     {
         auto const file = tr_torrentFile(&tor, idx);
         auto stats_map = tr_variant::Map{ 3U };
-        stats_map.try_emplace(TR_KEY_bytesCompleted, file.have);
+        stats_map.try_emplace(TR_KEY_bytes_completed, file.have);
+        stats_map.try_emplace(TR_KEY_bytes_completed_camel, file.have);
         stats_map.try_emplace(TR_KEY_priority, file.priority);
         stats_map.try_emplace(TR_KEY_wanted, file.wanted);
         vec.emplace_back(std::move(stats_map));
@@ -348,7 +349,8 @@ namespace make_torrent_field_helpers
         auto const file = tr_torrentFile(&tor, idx);
         auto file_map = tr_variant::Map{ 5U };
         file_map.try_emplace(TR_KEY_beginPiece, file.beginPiece);
-        file_map.try_emplace(TR_KEY_bytesCompleted, file.have);
+        file_map.try_emplace(TR_KEY_bytes_completed, file.have);
+        file_map.try_emplace(TR_KEY_bytes_completed_camel, file.have);
         file_map.try_emplace(TR_KEY_endPiece, file.endPiece);
         file_map.try_emplace(TR_KEY_length, file.length);
         file_map.try_emplace(TR_KEY_name, file.name);

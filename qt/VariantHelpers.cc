@@ -108,7 +108,7 @@ bool change(TorrentFile& setme, tr_variant const* value)
         changed = change(setme.field, child) || changed; \
         break;
 
-            HANDLE_KEY(bytesCompleted, have)
+            HANDLE_KEY(bytes_completed_camel, have)
             HANDLE_KEY(length, size)
             HANDLE_KEY(name, filename)
 #undef HANDLE_KEY

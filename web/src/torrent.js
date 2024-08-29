@@ -44,7 +44,7 @@ export class Torrent extends EventTarget {
   updateFiles(files) {
     let changed = false;
     const myfiles = this.fields.files || [];
-    const keys = ['length', 'name', 'bytesCompleted', 'wanted', 'priority'];
+    const keys = ['length', 'name', 'bytes_completed', 'wanted', 'priority'];
 
     for (const [index, f] of files.entries()) {
       const myfile = myfiles[index] || {};

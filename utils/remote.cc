@@ -1304,7 +1304,7 @@ void print_file_list(tr_variant::Map const& map)
                 continue;
             }
 
-            auto const have = file->value_if<int64_t>(TR_KEY_bytesCompleted);
+            auto const have = file->value_if<int64_t>({ TR_KEY_bytes_completed, TR_KEY_bytes_completed_camel });
             auto const length = file->value_if<int64_t>(TR_KEY_length);
             auto const priority = priorities->at(i).value_if<int64_t>();
             auto const wanted = wanteds->at(i).value_if<bool>();

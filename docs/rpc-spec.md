@@ -302,7 +302,7 @@ The 'source' column here corresponds to the data structure there.
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--
-| `bytesCompleted` | number | tr_file_view
+| `bytes_completed` | number | tr_file_view
 | `length` | number | tr_file_view
 | `name` | string | tr_file_view
 | `beginPiece` | number | tr_file_view
@@ -314,7 +314,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--
-| `bytesCompleted` | number | tr_file_view
+| `bytes_completed` | number | tr_file_view
 | `wanted` | boolean | tr_file_view (**Note:** Not to be confused with `torrent_get.wanted`, which is an array of 0/1 instead of boolean)
 | `priority` | number | tr_file_view
 
