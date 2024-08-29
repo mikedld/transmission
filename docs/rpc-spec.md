@@ -322,22 +322,22 @@ Files are returned in the order they are laid out in the torrent. References to 
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--
-| `address`            | string     | tr_peer_stat
-| `client_is_choked`   | boolean    | tr_peer_stat
-| `clientIsInterested` | boolean    | tr_peer_stat
-| `client_name`        | string     | tr_peer_stat
-| `flagStr`            | string     | tr_peer_stat
-| `isDownloadingFrom`  | boolean    | tr_peer_stat
-| `isEncrypted`        | boolean    | tr_peer_stat
-| `isIncoming`         | boolean    | tr_peer_stat
-| `isUploadingTo`      | boolean    | tr_peer_stat
-| `isUTP`              | boolean    | tr_peer_stat
-| `peerIsChoked`       | boolean    | tr_peer_stat
-| `peerIsInterested`   | boolean    | tr_peer_stat
-| `port`               | number     | tr_peer_stat
-| `progress`           | double     | tr_peer_stat
-| `rateToClient` (B/s) | number     | tr_peer_stat
-| `rateToPeer` (B/s)   | number     | tr_peer_stat
+| `address`              | string     | tr_peer_stat
+| `client_is_choked`     | boolean    | tr_peer_stat
+| `client_is_interested` | boolean    | tr_peer_stat
+| `client_name`          | string     | tr_peer_stat
+| `flagStr`              | string     | tr_peer_stat
+| `isDownloadingFrom`    | boolean    | tr_peer_stat
+| `isEncrypted`          | boolean    | tr_peer_stat
+| `isIncoming`           | boolean    | tr_peer_stat
+| `isUploadingTo`        | boolean    | tr_peer_stat
+| `isUTP`                | boolean    | tr_peer_stat
+| `peerIsChoked`         | boolean    | tr_peer_stat
+| `peerIsInterested`     | boolean    | tr_peer_stat
+| `port`                 | number     | tr_peer_stat
+| `progress`             | double     | tr_peer_stat
+| `rateToClient` (B/s)   | number     | tr_peer_stat
+| `rateToPeer` (B/s)     | number     | tr_peer_stat
 
 `peers_from`: an object containing:
 
