@@ -326,7 +326,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `client_is_choked`     | boolean    | tr_peer_stat
 | `client_is_interested` | boolean    | tr_peer_stat
 | `client_name`          | string     | tr_peer_stat
-| `flagStr`              | string     | tr_peer_stat
+| `flag_str`             | string     | tr_peer_stat
 | `isDownloadingFrom`    | boolean    | tr_peer_stat
 | `isEncrypted`          | boolean    | tr_peer_stat
 | `isIncoming`           | boolean    | tr_peer_stat

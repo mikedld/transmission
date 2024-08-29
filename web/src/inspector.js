@@ -619,8 +619,8 @@ export class Inspector extends EventTarget {
         ),
       (peer, td) => setTextContent(td, `${Math.floor(peer.progress * 100)}%`),
       (peer, td) => {
-        setTextContent(td, peer.flagStr);
-        td.setAttribute('title', Inspector._peerStatusTitle(peer.flagStr));
+        setTextContent(td, peer.flag_str);
+        td.setAttribute('title', Inspector._peerStatusTitle(peer.flag_str));
       },
       (peer, td) => {
         setTextContent(td, peer.address);
