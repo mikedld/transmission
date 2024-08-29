@@ -331,7 +331,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `is_encrypted`         | boolean    | tr_peer_stat
 | `is_incoming`          | boolean    | tr_peer_stat
 | `is_uploading_to`      | boolean    | tr_peer_stat
-| `isUTP`                | boolean    | tr_peer_stat
+| `is_utp`               | boolean    | tr_peer_stat
 | `peerIsChoked`         | boolean    | tr_peer_stat
 | `peerIsInterested`     | boolean    | tr_peer_stat
 | `port`                 | number     | tr_peer_stat
