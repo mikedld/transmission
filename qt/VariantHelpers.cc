@@ -60,7 +60,7 @@ bool change(Peer& setme, tr_variant const* value)
         break;
 
             HANDLE_KEY(address, address)
-            HANDLE_KEY(clientIsChoked, client_is_choked)
+            HANDLE_KEY(client_is_choked_camel, client_is_choked)
             HANDLE_KEY(clientIsInterested, client_is_interested)
             HANDLE_KEY(client_name_camel, client_name)
             HANDLE_KEY(flagStr, flags)

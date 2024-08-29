@@ -67,6 +67,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "clientIsChoked"sv,
     "clientIsInterested"sv,
     "clientName"sv,
+    "client_is_choked"sv,
     "client_name"sv,
     "comment"sv,
     "comment_utf_8"sv,
@@ -582,6 +583,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_bandwidth_priority_kebab:
         return TR_KEY_bandwidth_priority;
     case TR_KEY_bytes_completed_camel: return TR_KEY_bytes_completed;
+    case TR_KEY_client_is_choked_camel: return TR_KEY_client_is_choked;
     case TR_KEY_client_name_camel: return TR_KEY_client_name;
     case TR_KEY_corrupt_ever_camel: return TR_KEY_corrupt_ever;
     case TR_KEY_date_created_camel: return TR_KEY_date_created;
