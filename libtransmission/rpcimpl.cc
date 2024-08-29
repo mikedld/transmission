@@ -348,7 +348,7 @@ namespace make_torrent_field_helpers
     {
         auto const file = tr_torrentFile(&tor, idx);
         auto file_map = tr_variant::Map{ 5U };
-        file_map.try_emplace(TR_KEY_beginPiece, file.beginPiece);
+        file_map.try_emplace(TR_KEY_begin_piece, file.beginPiece);
         file_map.try_emplace(TR_KEY_bytes_completed, file.have);
         file_map.try_emplace(TR_KEY_bytes_completed_camel, file.have);
         file_map.try_emplace(TR_KEY_endPiece, file.endPiece);

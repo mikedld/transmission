@@ -51,7 +51,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "bandwidth-priority"sv,
     "bandwidthPriority"sv,
     "bandwidth_priority"sv,
-    "beginPiece"sv,
+    "begin_piece"sv,
     "bind-address-ipv4"sv,
     "bind-address-ipv6"sv,
     "bitfield"sv,

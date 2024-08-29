@@ -53,7 +53,7 @@ enum
     TR_KEY_bandwidth_priority_kebab,
     TR_KEY_bandwidth_priority_camel,
     TR_KEY_bandwidth_priority,
-    TR_KEY_beginPiece,
+    TR_KEY_begin_piece,
     TR_KEY_bind_address_ipv4,
     TR_KEY_bind_address_ipv6,
     TR_KEY_bitfield,
