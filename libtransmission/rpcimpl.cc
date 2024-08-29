@@ -479,7 +479,8 @@ namespace make_torrent_field_helpers
 {
     auto const& from = st.peersFrom;
     auto peer_counts_map = tr_variant::Map{ 7U };
-    peer_counts_map.try_emplace(TR_KEY_fromCache, from[TR_PEER_FROM_RESUME]);
+    peer_counts_map.try_emplace(TR_KEY_from_cache, from[TR_PEER_FROM_RESUME]);
+    peer_counts_map.try_emplace(TR_KEY_from_cache_camel, from[TR_PEER_FROM_RESUME]);
     peer_counts_map.try_emplace(TR_KEY_fromDht, from[TR_PEER_FROM_DHT]);
     peer_counts_map.try_emplace(TR_KEY_fromIncoming, from[TR_PEER_FROM_INCOMING]);
     peer_counts_map.try_emplace(TR_KEY_fromLpd, from[TR_PEER_FROM_LPD]);

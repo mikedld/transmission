@@ -160,6 +160,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "fromLtep"sv,
     "fromPex"sv,
     "fromTracker"sv,
+    "from_cache"sv,
     "group"sv,
     "hasAnnounced"sv,
     "hasScraped"sv,
@@ -617,6 +618,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_files_unwanted_kebab: return TR_KEY_files_unwanted;
     case TR_KEY_files_wanted_kebab: return TR_KEY_files_wanted;
     case TR_KEY_flag_str_camel: return TR_KEY_flag_str;
+    case TR_KEY_from_cache_camel: return TR_KEY_from_cache;
     case TR_KEY_hash_string_camel: return TR_KEY_hash_string;
     case TR_KEY_have_unchecked_camel: return TR_KEY_have_unchecked;
     case TR_KEY_have_valid_camel: return TR_KEY_have_valid;
