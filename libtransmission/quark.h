@@ -499,7 +499,8 @@ enum
     TR_KEY_watch_dir_enabled,
     TR_KEY_watch_dir_force_generic,
     TR_KEY_webseeds,
-    TR_KEY_webseedsSendingToUs,
+    TR_KEY_webseeds_sending_to_us_camel,
+    TR_KEY_webseeds_sending_to_us,
     TR_KEY_yourip,
     TR_N_KEYS
 };

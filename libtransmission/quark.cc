@@ -498,6 +498,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "watch-dir-force-generic"sv,
     "webseeds"sv,
     "webseedsSendingToUs"sv,
+    "webseeds_sending_to_us"sv,
     "yourip"sv,
 };
 
@@ -648,6 +649,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_upload_limited_camel: return TR_KEY_upload_limited;
     case TR_KEY_upload_ratio_camel: return TR_KEY_upload_ratio;
     case TR_KEY_uploaded_ever_camel: return TR_KEY_uploaded_ever;
+    case TR_KEY_webseeds_sending_to_us_camel: return TR_KEY_webseeds_sending_to_us;
     default: return q;
     }
     // clang-format on

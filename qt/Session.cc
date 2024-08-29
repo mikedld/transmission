@@ -559,7 +559,7 @@ std::set<std::string_view> const& Session::getKeyNames(TorrentProperties props)
             TR_KEY_size_when_done_camel,
             TR_KEY_status,
             TR_KEY_uploaded_ever_camel,
-            TR_KEY_webseedsSendingToUs,
+            TR_KEY_webseeds_sending_to_us_camel,
         };
 
         // unchanging fields needed by the details dialog

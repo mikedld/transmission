@@ -743,7 +743,7 @@ auto constexpr DetailsKeys = std::array<tr_quark, 55>{
     TR_KEY_upload_limited_camel,
     TR_KEY_upload_ratio_camel,
     TR_KEY_webseeds,
-    TR_KEY_webseedsSendingToUs,
+    TR_KEY_webseeds_sending_to_us_camel,
 };
 static_assert(DetailsKeys[std::size(DetailsKeys) - 1] != tr_quark{});
 
@@ -1074,7 +1074,7 @@ void print_details(tr_variant::Map const& map)
         {
             if (auto const n = std::size(*l); n > 0)
             {
-                if (auto i = t->value_if<int64_t>(TR_KEY_webseedsSendingToUs); i)
+                if (auto i = t->value_if<int64_t>({ TR_KEY_webseeds_sending_to_us, TR_KEY_webseeds_sending_to_us_camel }); i)
                 {
                     fmt::print("  Web Seeds: downloading from {:d} of {:d} web seeds\n", *i, n);
                 }

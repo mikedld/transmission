@@ -294,7 +294,7 @@ The 'source' column here corresponds to the data structure there.
 | `upload_ratio`| double| tr_stat
 | `wanted`| array (see below)| n/a
 | `webseeds`| array of strings | tr_tracker_view
-| `webseedsSendingToUs`| number| tr_stat
+| `webseeds_sending_to_us`| number| tr_stat
 
 `availability`: An array of `piece_count` numbers representing the number of connected peers that have each piece, or -1 if we already have the piece ourselves.
 

@@ -637,7 +637,8 @@ namespace make_torrent_field_helpers
     case TR_KEY_uploaded_ever_camel:
     case TR_KEY_wanted:
     case TR_KEY_webseeds:
-    case TR_KEY_webseedsSendingToUs:
+    case TR_KEY_webseeds_sending_to_us:
+    case TR_KEY_webseeds_sending_to_us_camel:
         return true;
 
     default:
@@ -847,7 +848,9 @@ namespace make_torrent_field_helpers
         return st.uploadedEver;
     case TR_KEY_wanted: return make_file_wanted_vec(tor);
     case TR_KEY_webseeds: return make_webseed_vec(tor);
-    case TR_KEY_webseedsSendingToUs: return st.webseedsSendingToUs;
+    case TR_KEY_webseeds_sending_to_us:
+    case TR_KEY_webseeds_sending_to_us_camel:
+        return st.webseedsSendingToUs;
     default: return tr_variant{};
     }
     // clang-format on
