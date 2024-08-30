@@ -1611,7 +1611,8 @@ void print_trackers_impl(tr_variant::Vector const& tracker_stats)
             { TR_KEY_last_announce_peer_count, TR_KEY_last_announce_peer_count_camel });
         auto const last_announce_result = t->value_if<std::string_view>(
             { TR_KEY_last_announce_result, TR_KEY_last_announce_result_camel });
-        auto const last_announce_start_time = t->value_if<int64_t>(TR_KEY_lastAnnounceStartTime);
+        auto const last_announce_start_time = t->value_if<int64_t>(
+            { TR_KEY_last_announce_start_time, TR_KEY_last_announce_start_time_camel });
         auto const last_announce_time = t->value_if<int64_t>(TR_KEY_lastAnnounceTime);
         auto const last_scrape_result = t->value_if<std::string_view>(TR_KEY_lastScrapeResult);
         auto const last_scrape_start_time = t->value_if<int64_t>(TR_KEY_lastScrapeStartTime);
