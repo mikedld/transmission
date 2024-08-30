@@ -406,7 +406,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `next_announce_time`       | number     | tr_tracker_view
 | `next_scrape_time`         | number     | tr_tracker_view
 | `scrape`                   | string     | tr_tracker_view
-| `scrapeState`              | number     | tr_tracker_view
+| `scrape_state`             | number     | tr_tracker_view
 | `seederCount`              | number     | tr_tracker_view
 | `sitename`                 | string     | tr_tracker_view
 | `tier`                     | number     | tr_tracker_view
