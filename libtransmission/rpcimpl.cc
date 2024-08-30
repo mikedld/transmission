@@ -427,7 +427,8 @@ namespace make_torrent_field_helpers
         stats_map.try_emplace(TR_KEY_last_scrape_result_camel, tracker.lastScrapeResult);
         stats_map.try_emplace(TR_KEY_last_scrape_start_time, tracker.lastScrapeStartTime);
         stats_map.try_emplace(TR_KEY_last_scrape_start_time_camel, tracker.lastScrapeStartTime);
-        stats_map.try_emplace(TR_KEY_lastScrapeSucceeded, tracker.lastScrapeSucceeded);
+        stats_map.try_emplace(TR_KEY_last_scrape_succeeded, tracker.lastScrapeSucceeded);
+        stats_map.try_emplace(TR_KEY_last_scrape_succeeded_camel, tracker.lastScrapeSucceeded);
         stats_map.try_emplace(TR_KEY_lastScrapeTime, tracker.lastScrapeTime);
         stats_map.try_emplace(TR_KEY_lastScrapeTimedOut, tracker.lastScrapeTimedOut);
         stats_map.try_emplace(TR_KEY_leecherCount, tracker.leecherCount);
