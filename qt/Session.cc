@@ -1039,7 +1039,7 @@ void Session::addTorrent(AddData add_me, tr_variant* args_dict)
             {
                 add_me.disposeSourceFile();
             }
-            else if (tr_variantDictFindDict(r.args.get(), TR_KEY_torrent_duplicate, &dup))
+            else if (tr_variantDictFindDict(r.args.get(), TR_KEY_torrent_duplicate_kebab, &dup))
             {
                 add_me.disposeSourceFile();
 

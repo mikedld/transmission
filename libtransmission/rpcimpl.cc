@@ -1525,6 +1525,9 @@ void add_torrent_impl(struct tr_rpc_idle_data* data, tr_ctor& ctor)
         data->args_out.try_emplace(
             TR_KEY_torrent_duplicate,
             make_torrent_info(duplicate_of, TrFormat::Object, std::data(Fields), std::size(Fields)));
+        data->args_out.try_emplace(
+            TR_KEY_torrent_duplicate_kebab,
+            make_torrent_info(duplicate_of, TrFormat::Object, std::data(Fields), std::size(Fields)));
         tr_idle_function_done(data, SuccessResult);
         return;
     }

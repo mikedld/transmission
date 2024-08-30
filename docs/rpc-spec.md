@@ -486,7 +486,7 @@ Response arguments:
 
 * On success, a `torrent_added` object in the form of one of 3.3's torrent objects with the fields for `id`, `name`, and `hash_string`.
 
-* When attempting to add a duplicate torrent, a `torrent-duplicate` object in the same form is returned, but the response's `result` value is still `success`.
+* When attempting to add a duplicate torrent, a `torrent_duplicate` object in the same form is returned, but the response's `result` value is still `success`.
 
 ### 3.5 Removing a torrent
 Method name: `torrent-remove`
