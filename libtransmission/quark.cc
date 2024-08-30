@@ -110,6 +110,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "downloadLimit"sv,
     "downloadLimited"sv,
     "downloadSpeed"sv,
+    "download_count"sv,
     "download_dir"sv,
     "download_limit"sv,
     "download_limited"sv,
@@ -612,6 +613,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_done_date_camel:
     case TR_KEY_done_date_kebab:
         return TR_KEY_done_date;
+    case TR_KEY_download_count_camel: return TR_KEY_download_count;
     case TR_KEY_download_dir_camel:
     case TR_KEY_download_dir_kebab:
         return TR_KEY_download_dir;

@@ -140,7 +140,7 @@ bool change(TrackerStat& setme, tr_variant const* value)
         break;
             HANDLE_KEY(announce, announce)
             HANDLE_KEY(announce_state_camel, announce_state)
-            HANDLE_KEY(downloadCount, download_count)
+            HANDLE_KEY(download_count_camel, download_count)
             HANDLE_KEY(hasAnnounced, has_announced)
             HANDLE_KEY(hasScraped, has_scraped)
             HANDLE_KEY(id, id)

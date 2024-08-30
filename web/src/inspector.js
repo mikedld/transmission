@@ -825,7 +825,7 @@ export class Inspector extends EventTarget {
         setTextContent(
           element,
           `Downloads: ${
-            tracker.downloadCount > -1 ? tracker.downloadCount : na
+            tracker.download_count > -1 ? tracker.download_count : na
           }`,
         );
         tier_div.append(element);
