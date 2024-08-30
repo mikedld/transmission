@@ -50,7 +50,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 
 #### Bandwidth
 
- * **alt-speed-enabled:** Boolean (default = false, aka 'Turtle Mode')
+ * **alt_speed_enabled:** Boolean (default = false, aka 'Turtle Mode')
    _Note: Clicking the "Turtle" in the GUI when the [scheduler](#Scheduling) is enabled, will only temporarily remove the scheduled limit until the next cycle._
  * **alt-speed-up:** Number (KB/s, default = 50)
  * **alt_speed_down:** Number (KB/s, default = 50)
@@ -148,7 +148,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 
 #### Scheduling
  * **alt-speed-time-enabled:** Boolean (default = false)
-   _Note: When enabled, this will toggle the **alt-speed-enabled** setting._
+   _Note: When enabled, this will toggle the `alt_speed_enabled` setting._
  * **alt-speed-time-begin:** Number (default = 540, in minutes from midnight, 9am)
  * **alt-speed-time-end:** Number (default = 1020, in minutes from midnight, 5pm)
  * **alt-speed-time-day:** Number/bitfield (default = 127, all days)
