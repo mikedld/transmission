@@ -694,7 +694,7 @@ export class Inspector extends EventTarget {
 
     if (tracker.has_announced) {
       const lastAnnounceTime = Formatter.timestamp(tracker.lastAnnounceTime);
-      if (tracker.lastAnnounceSucceeded) {
+      if (tracker.last_announce_succeeded) {
         lastAnnounce = [
           lastAnnounceTime,
           ' (got ',

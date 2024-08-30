@@ -1626,7 +1626,8 @@ void print_trackers_impl(tr_variant::Vector const& tracker_stats)
         auto const seeder_count = t->value_if<int64_t>(TR_KEY_seederCount);
         auto const tier = t->value_if<int64_t>(TR_KEY_tier);
         auto const tracker_id = t->value_if<int64_t>(TR_KEY_id);
-        auto const last_announce_succeeded = t->value_if<bool>(TR_KEY_lastAnnounceSucceeded);
+        auto const last_announce_succeeded = t->value_if<bool>(
+            { TR_KEY_last_announce_succeeded, TR_KEY_last_announce_succeeded_camel });
         auto const last_announce_timed_out = t->value_if<bool>(TR_KEY_lastAnnounceTimedOut);
 
         if (!download_count || !has_announced || !has_scraped || !host || !tracker_id || !is_backup || !announce_state ||
