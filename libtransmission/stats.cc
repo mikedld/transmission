@@ -3,6 +3,7 @@
 // or any future license endorsed by Mnemosyne LLC.
 // License text can be found in the licenses/ folder.
 
+#include <initializer_list>
 #include <optional>
 #include <utility>
 
@@ -51,9 +52,9 @@ tr_session_stats tr_stats::load_old_stats(std::string_view config_dir)
         return {};
     }
 
-    auto const load = [map](tr_quark const quark, uint64_t& dst)
+    auto const load = [map](std::initializer_list<tr_quark> keys, uint64_t& dst)
     {
-        if (auto const val = map->value_if<int64_t>(quark); val)
+        if (auto const val = map->value_if<int64_t>(keys); val)
         {
             dst = *val;
         }
@@ -61,11 +62,11 @@ tr_session_stats tr_stats::load_old_stats(std::string_view config_dir)
 
     auto ret = tr_session_stats{};
 
-    load(TR_KEY_downloaded_bytes, ret.downloadedBytes);
-    load(TR_KEY_files_added, ret.filesAdded);
-    load(TR_KEY_seconds_active, ret.secondsActive);
-    load(TR_KEY_session_count, ret.sessionCount);
-    load(TR_KEY_uploaded_bytes, ret.uploadedBytes);
+    load({ TR_KEY_downloaded_bytes }, ret.downloadedBytes);
+    load({ TR_KEY_files_added }, ret.filesAdded);
+    load({ TR_KEY_seconds_active }, ret.secondsActive);
+    load({ TR_KEY_session_count }, ret.sessionCount);
+    load({ TR_KEY_uploaded_bytes }, ret.uploadedBytes);
 
     return ret;
 }
