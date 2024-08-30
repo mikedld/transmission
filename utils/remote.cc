@@ -1856,7 +1856,7 @@ void print_session(tr_variant::Map const& map)
     auto const down_enabled = args->value_if<bool>(TR_KEY_speed_limit_down_enabled);
     auto const speed_ratio_limited = args->value_if<bool>(TR_KEY_seedRatioLimited);
     auto const idle_seeding_limited = args->value_if<bool>(TR_KEY_idle_seeding_limit_enabled);
-    auto const alt_down = args->value_if<int64_t>(TR_KEY_alt_speed_down);
+    auto const alt_down = args->value_if<int64_t>({ TR_KEY_alt_speed_down, TR_KEY_alt_speed_down_kebab });
     auto const alt_up = args->value_if<int64_t>(TR_KEY_alt_speed_up);
     auto const alt_begin = args->value_if<int64_t>(TR_KEY_alt_speed_time_begin);
     auto const alt_end = args->value_if<int64_t>(TR_KEY_alt_speed_time_end);
@@ -2785,7 +2785,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 972:
-                args.insert_or_assign(TR_KEY_alt_speed_down, numarg(optarg_sv));
+                args.insert_or_assign(TR_KEY_alt_speed_down_kebab, numarg(optarg_sv));
                 break;
 
             case 973:

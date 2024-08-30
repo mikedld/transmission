@@ -533,7 +533,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 ### 4.1 Session arguments
 | Key | Value Type | Description
 |:--|:--|:--
-| `alt-speed-down` | number | max global download speed (KBps)
+| `alt_speed_down` | number | max global download speed (KBps)
 | `alt-speed-enabled` | boolean | true means use the alt speeds
 | `alt-speed-time-begin` | number | when to turn on alt speeds (units: minutes after midnight)
 | `alt-speed-time-day` | number | what day(s) to turn on alt speeds (look at tr_sched_day)

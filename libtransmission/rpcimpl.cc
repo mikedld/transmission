@@ -1850,7 +1850,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetAltSpeed_KBps(session, TR_UP, *val);
     }
 
-    if (auto const val = args_in.value_if<int64_t>(TR_KEY_alt_speed_down))
+    if (auto const val = args_in.value_if<int64_t>({ TR_KEY_alt_speed_down, TR_KEY_alt_speed_down_kebab }); val)
     {
         tr_sessionSetAltSpeed_KBps(session, TR_DOWN, *val);
     }
@@ -2170,7 +2170,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     // clang-format off
     switch (key)
     {
-    case TR_KEY_alt_speed_down: return tr_sessionGetAltSpeed_KBps(&session, TR_DOWN);
+    case TR_KEY_alt_speed_down:
+    case TR_KEY_alt_speed_down_kebab:
+        return tr_sessionGetAltSpeed_KBps(&session, TR_DOWN);
     case TR_KEY_alt_speed_enabled: return tr_sessionUsesAltSpeed(&session);
     case TR_KEY_alt_speed_time_begin: return tr_sessionGetAltSpeedBegin(&session);
     case TR_KEY_alt_speed_time_day: return tr_sessionGetAltSpeedDay(&session);

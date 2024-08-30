@@ -39,6 +39,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "alt-speed-time-enabled"sv,
     "alt-speed-time-end"sv,
     "alt-speed-up"sv,
+    "alt_speed_down"sv,
     "announce"sv,
     "announce-ip"sv,
     "announce-ip-enabled"sv,
@@ -621,6 +622,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_added_date_camel:
     case TR_KEY_added_date_kebab:
         return TR_KEY_added_date;
+    case TR_KEY_alt_speed_down_kebab: return TR_KEY_alt_speed_down;
     case TR_KEY_announce_state_camel: return TR_KEY_announce_state;
     case TR_KEY_bandwidth_priority_camel:
     case TR_KEY_bandwidth_priority_kebab:
