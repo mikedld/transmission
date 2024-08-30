@@ -1601,7 +1601,7 @@ void print_trackers_impl(tr_variant::Vector const& tracker_stats)
             continue;
         }
 
-        auto const announce_state = t->value_if<int64_t>(TR_KEY_announceState);
+        auto const announce_state = t->value_if<int64_t>({ TR_KEY_announce_state, TR_KEY_announce_state_camel });
         auto const download_count = t->value_if<int64_t>(TR_KEY_downloadCount);
         auto const has_announced = t->value_if<bool>(TR_KEY_hasAnnounced);
         auto const has_scraped = t->value_if<bool>(TR_KEY_hasScraped);

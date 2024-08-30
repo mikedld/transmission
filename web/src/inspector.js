@@ -667,7 +667,7 @@ export class Inspector extends EventTarget {
   /// TRACKERS PAGE
 
   static getAnnounceState(tracker) {
-    switch (tracker.announceState) {
+    switch (tracker.announce_state) {
       case Torrent._TrackerActive:
         return 'Announce in progress';
       case Torrent._TrackerWaiting: {
@@ -684,7 +684,7 @@ export class Inspector extends EventTarget {
           ? 'Tracker will be used as a backup'
           : 'Announce not scheduled';
       default:
-        return `unknown announce state: ${tracker.announceState}`;
+        return `unknown announce state: ${tracker.announce_state}`;
     }
   }
 

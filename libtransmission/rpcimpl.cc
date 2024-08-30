@@ -399,7 +399,8 @@ namespace make_torrent_field_helpers
         auto const tracker = tr_torrentTracker(&tor, idx);
         auto stats_map = tr_variant::Map{ 27U };
         stats_map.try_emplace(TR_KEY_announce, tracker.announce);
-        stats_map.try_emplace(TR_KEY_announceState, tracker.announceState);
+        stats_map.try_emplace(TR_KEY_announce_state, tracker.announceState);
+        stats_map.try_emplace(TR_KEY_announce_state_camel, tracker.announceState);
         stats_map.try_emplace(TR_KEY_downloadCount, tracker.downloadCount);
         stats_map.try_emplace(TR_KEY_hasAnnounced, tracker.hasAnnounced);
         stats_map.try_emplace(TR_KEY_hasScraped, tracker.hasScraped);

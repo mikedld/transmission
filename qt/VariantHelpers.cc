@@ -139,7 +139,7 @@ bool change(TrackerStat& setme, tr_variant const* value)
         field_changed = change(setme.field, child); \
         break;
             HANDLE_KEY(announce, announce)
-            HANDLE_KEY(announceState, announce_state)
+            HANDLE_KEY(announce_state_camel, announce_state)
             HANDLE_KEY(downloadCount, download_count)
             HANDLE_KEY(hasAnnounced, has_announced)
             HANDLE_KEY(hasScraped, has_scraped)

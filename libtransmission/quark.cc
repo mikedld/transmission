@@ -44,6 +44,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "announce-ip-enabled"sv,
     "announce-list"sv,
     "announceState"sv,
+    "announce_state"sv,
     "anti-brute-force-enabled"sv,
     "anti-brute-force-threshold"sv,
     "arguments"sv,
@@ -597,6 +598,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_added_date_camel:
     case TR_KEY_added_date_kebab:
         return TR_KEY_added_date;
+    case TR_KEY_announce_state_camel: return TR_KEY_announce_state;
     case TR_KEY_bandwidth_priority_camel:
     case TR_KEY_bandwidth_priority_kebab:
         return TR_KEY_bandwidth_priority;

@@ -45,7 +45,8 @@ enum
     TR_KEY_announce_ip, /* metainfo, settings */
     TR_KEY_announce_ip_enabled, /* metainfo, settings */
     TR_KEY_announce_list, /* metainfo */
-    TR_KEY_announceState, /* rpc */
+    TR_KEY_announce_state_camel, /* rpc (deprecated) */
+    TR_KEY_announce_state, /* rpc */
     TR_KEY_anti_brute_force_enabled, /* rpc */
     TR_KEY_anti_brute_force_threshold, /* rpc */
     TR_KEY_arguments, /* rpc */
