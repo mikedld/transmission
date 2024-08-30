@@ -1112,7 +1112,7 @@ void Session::removeTorrents(torrent_ids_t const& ids, bool delete_files)
         tr_variant args;
         tr_variantInitDict(&args, 2);
         addOptionalIds(&args, ids);
-        dictAdd(&args, TR_KEY_delete_local_data, delete_files);
+        dictAdd(&args, TR_KEY_delete_local_data_kebab, delete_files);
 
         exec("torrent-remove", &args);
     }

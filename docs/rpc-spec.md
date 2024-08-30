@@ -494,7 +494,7 @@ Method name: `torrent_remove`
 | Key | Value Type | Description
 |:--|:--|:--
 | `ids`               | array   | torrent list, as described in 3.1
-| `delete-local-data` | boolean | delete local data. (default: false)
+| `delete_local_data` | boolean | delete local data. (default: false)
 
 Response arguments: none
 

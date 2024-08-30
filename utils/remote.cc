@@ -3138,7 +3138,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
             auto map = tr_variant::Map{ 2 };
             auto args = tr_variant::Map{ 2 };
 
-            args.try_emplace(TR_KEY_delete_local_data, c == 840);
+            args.try_emplace(TR_KEY_delete_local_data_kebab, c == 840);
             add_id_arg(args, config);
 
             map.try_emplace(TR_KEY_method, tr_variant::unmanaged_string("torrent-remove"sv));

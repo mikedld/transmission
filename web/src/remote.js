@@ -217,7 +217,7 @@ export class Remote {
   removeTorrents(torrents, trash) {
     const o = {
       arguments: {
-        'delete-local-data': trash,
+        delete_local_data: trash,
         ids: [],
       },
       method: 'torrent_remove',
