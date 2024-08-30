@@ -2297,7 +2297,7 @@ int process_response(char const* rpcurl, std::string_view response, RemoteConfig
             case TAG_TORRENT_ADD:
                 if (auto* b = map.find_if<tr_variant::Map>(TR_KEY_arguments); b != nullptr)
                 {
-                    b = b->find_if<tr_variant::Map>(TR_KEY_torrent_added);
+                    b = b->find_if<tr_variant::Map>({ TR_KEY_torrent_added, TR_KEY_torrent_added_kebab });
                     if (b != nullptr)
                     {
                         if (auto i = b->value_if<int64_t>(TR_KEY_id); i)

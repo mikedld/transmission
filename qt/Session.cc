@@ -1035,7 +1035,7 @@ void Session::addTorrent(AddData add_me, tr_variant* args_dict)
     q->add(
         [this, add_me](RpcResponse const& r)
         {
-            if (tr_variant* dup = nullptr; tr_variantDictFindDict(r.args.get(), TR_KEY_torrent_added, &dup))
+            if (tr_variant* dup = nullptr; tr_variantDictFindDict(r.args.get(), TR_KEY_torrent_added_kebab, &dup))
             {
                 add_me.disposeSourceFile();
             }
