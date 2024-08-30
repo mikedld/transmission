@@ -698,7 +698,11 @@ export class Inspector extends EventTarget {
         lastAnnounce = [
           lastAnnounceTime,
           ' (got ',
-          Formatter.countString('peer', 'peers', tracker.lastAnnouncePeerCount),
+          Formatter.countString(
+            'peer',
+            'peers',
+            tracker.last_announce_peer_count,
+          ),
           ')',
         ];
       } else {
