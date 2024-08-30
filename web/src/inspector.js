@@ -692,7 +692,7 @@ export class Inspector extends EventTarget {
     let lastAnnounceLabel = 'Last Announce';
     let lastAnnounce = ['N/A'];
 
-    if (tracker.hasAnnounced) {
+    if (tracker.has_announced) {
       const lastAnnounceTime = Formatter.timestamp(tracker.lastAnnounceTime);
       if (tracker.lastAnnounceSucceeded) {
         lastAnnounce = [
