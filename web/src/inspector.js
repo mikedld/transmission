@@ -732,8 +732,9 @@ export class Inspector extends EventTarget {
       } else {
         lastScrapeLabel = 'Scrape error';
         lastScrape =
-          (tracker.lastScrapeResult ? `${tracker.lastScrapeResult} - ` : '') +
-          lastScrapeTime;
+          (tracker.last_scrape_result
+            ? `${tracker.last_scrape_result} - `
+            : '') + lastScrapeTime;
       }
     }
     return {
