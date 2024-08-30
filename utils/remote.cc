@@ -1604,7 +1604,7 @@ void print_trackers_impl(tr_variant::Vector const& tracker_stats)
         auto const announce_state = t->value_if<int64_t>({ TR_KEY_announce_state, TR_KEY_announce_state_camel });
         auto const download_count = t->value_if<int64_t>({ TR_KEY_download_count, TR_KEY_download_count_camel });
         auto const has_announced = t->value_if<bool>({ TR_KEY_has_announced, TR_KEY_has_announced_camel });
-        auto const has_scraped = t->value_if<bool>(TR_KEY_hasScraped);
+        auto const has_scraped = t->value_if<bool>({ TR_KEY_has_scraped, TR_KEY_has_scraped_camel });
         auto const host = t->value_if<std::string_view>(TR_KEY_host);
         auto const is_backup = t->value_if<bool>(TR_KEY_isBackup);
         auto const last_announce_peer_count = t->value_if<int64_t>(TR_KEY_lastAnnouncePeerCount);

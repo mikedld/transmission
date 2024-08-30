@@ -719,7 +719,7 @@ export class Inspector extends EventTarget {
     let lastScrapeLabel = 'Last Scrape';
     let lastScrape = 'N/A';
 
-    if (tracker.hasScraped) {
+    if (tracker.has_scraped) {
       const lastScrapeTime = Formatter.timestamp(tracker.lastScrapeTime);
       if (tracker.lastScrapeSucceeded) {
         lastScrape = lastScrapeTime;
