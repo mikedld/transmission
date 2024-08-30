@@ -390,7 +390,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `has_scraped`             | boolean    | tr_tracker_view
 | `host`                    | string     | tr_tracker_view
 | `id`                      | number     | tr_tracker_view
-| `isBackup`                | boolean    | tr_tracker_view
+| `is_backup`               | boolean    | tr_tracker_view
 | `lastAnnouncePeerCount`   | number     | tr_tracker_view
 | `lastAnnounceResult`      | string     | tr_tracker_view
 | `lastAnnounceStartTime`   | number     | tr_tracker_view

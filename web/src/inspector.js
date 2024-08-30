@@ -680,7 +680,7 @@ export class Inspector extends EventTarget {
       case Torrent._TrackerQueued:
         return 'Announce is queued';
       case Torrent._TrackerInactive:
-        return tracker.isBackup
+        return tracker.is_backup
           ? 'Tracker will be used as a backup'
           : 'Announce not scheduled';
       default:

@@ -409,7 +409,8 @@ namespace make_torrent_field_helpers
         stats_map.try_emplace(TR_KEY_has_scraped_camel, tracker.hasScraped);
         stats_map.try_emplace(TR_KEY_host, tracker.host_and_port);
         stats_map.try_emplace(TR_KEY_id, tracker.id);
-        stats_map.try_emplace(TR_KEY_isBackup, tracker.isBackup);
+        stats_map.try_emplace(TR_KEY_is_backup, tracker.isBackup);
+        stats_map.try_emplace(TR_KEY_is_backup_camel, tracker.isBackup);
         stats_map.try_emplace(TR_KEY_lastAnnouncePeerCount, tracker.lastAnnouncePeerCount);
         stats_map.try_emplace(TR_KEY_lastAnnounceResult, tracker.lastAnnounceResult);
         stats_map.try_emplace(TR_KEY_lastAnnounceStartTime, tracker.lastAnnounceStartTime);
