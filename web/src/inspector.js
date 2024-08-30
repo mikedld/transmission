@@ -673,7 +673,7 @@ export class Inspector extends EventTarget {
       case Torrent._TrackerWaiting: {
         const timeUntilAnnounce = Math.max(
           0,
-          tracker.nextAnnounceTime - Date.now() / 1000,
+          tracker.next_announce_time - Date.now() / 1000,
         );
         return `Next announce in ${Formatter.timeInterval(timeUntilAnnounce)}`;
       }

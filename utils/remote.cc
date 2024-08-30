@@ -1624,7 +1624,7 @@ void print_trackers_impl(tr_variant::Vector const& tracker_stats)
         auto const last_scrape_timed_out = t->value_if<bool>(
             { TR_KEY_last_scrape_timed_out, TR_KEY_last_scrape_timed_out_camel });
         auto const leecher_count = t->value_if<int64_t>({ TR_KEY_leecher_count, TR_KEY_leecher_count_camel });
-        auto const next_announce_time = t->value_if<int64_t>(TR_KEY_nextAnnounceTime);
+        auto const next_announce_time = t->value_if<int64_t>({ TR_KEY_next_announce_time, TR_KEY_next_announce_time_camel });
         auto const next_scrape_time = t->value_if<int64_t>(TR_KEY_nextScrapeTime);
         auto const scrape_state = t->value_if<int64_t>(TR_KEY_scrapeState);
         auto const seeder_count = t->value_if<int64_t>(TR_KEY_seederCount);

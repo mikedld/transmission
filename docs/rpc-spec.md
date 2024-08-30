@@ -403,7 +403,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `last_scrape_time`         | number     | tr_tracker_view
 | `last_scrape_timed_out`    | boolean    | tr_tracker_view
 | `leecher_count`            | number     | tr_tracker_view
-| `nextAnnounceTime`         | number     | tr_tracker_view
+| `next_announce_time`       | number     | tr_tracker_view
 | `nextScrapeTime`           | number     | tr_tracker_view
 | `scrape`                   | string     | tr_tracker_view
 | `scrapeState`              | number     | tr_tracker_view
