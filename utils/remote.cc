@@ -1620,7 +1620,7 @@ void print_trackers_impl(tr_variant::Vector const& tracker_stats)
             { TR_KEY_last_scrape_start_time, TR_KEY_last_scrape_start_time_camel });
         auto const last_scrape_succeeded = t->value_if<bool>(
             { TR_KEY_last_scrape_succeeded, TR_KEY_last_scrape_succeeded_camel });
-        auto const last_scrape_time = t->value_if<int64_t>(TR_KEY_lastScrapeTime);
+        auto const last_scrape_time = t->value_if<int64_t>({ TR_KEY_last_scrape_time, TR_KEY_last_scrape_time_camel });
         auto const last_scrape_timed_out = t->value_if<bool>(TR_KEY_lastScrapeTimedOut);
         auto const leecher_count = t->value_if<int64_t>(TR_KEY_leecherCount);
         auto const next_announce_time = t->value_if<int64_t>(TR_KEY_nextAnnounceTime);
