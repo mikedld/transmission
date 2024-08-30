@@ -489,7 +489,7 @@ Response arguments:
 * When attempting to add a duplicate torrent, a `torrent_duplicate` object in the same form is returned, but the response's `result` value is still `success`.
 
 ### 3.5 Removing a torrent
-Method name: `torrent-remove`
+Method name: `torrent_remove`
 
 | Key | Value Type | Description
 |:--|:--|:--

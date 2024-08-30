@@ -220,7 +220,7 @@ export class Remote {
         'delete-local-data': trash,
         ids: [],
       },
-      method: 'torrent-remove',
+      method: 'torrent_remove',
     };
 
     if (torrents) {

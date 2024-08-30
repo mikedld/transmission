@@ -2338,7 +2338,7 @@ auto constexpr SyncHandlers = std::array<std::pair<std::string_view, SyncHandler
     { "session-stats"sv, sessionStats },
     { "torrent_get"sv, torrentGet },
     { "torrent_reannounce"sv, torrentReannounce },
-    { "torrent-remove"sv, torrentRemove },
+    { "torrent_remove"sv, torrentRemove },
     { "torrent_set"sv, torrentSet },
     { "torrent_set_location"sv, torrentSetLocation },
     { "torrent_start"sv, torrentStart },
