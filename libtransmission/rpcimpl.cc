@@ -442,7 +442,8 @@ namespace make_torrent_field_helpers
         stats_map.try_emplace(TR_KEY_scrape, tracker.scrape);
         stats_map.try_emplace(TR_KEY_scrape_state, tracker.scrapeState);
         stats_map.try_emplace(TR_KEY_scrape_state_camel, tracker.scrapeState);
-        stats_map.try_emplace(TR_KEY_seederCount, tracker.seederCount);
+        stats_map.try_emplace(TR_KEY_seeder_count, tracker.seederCount);
+        stats_map.try_emplace(TR_KEY_seeder_count_camel, tracker.seederCount);
         stats_map.try_emplace(TR_KEY_sitename, tracker.sitename);
         stats_map.try_emplace(TR_KEY_tier, tracker.tier);
         vec.emplace_back(std::move(stats_map));

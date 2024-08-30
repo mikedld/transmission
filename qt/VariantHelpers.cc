@@ -160,7 +160,7 @@ bool change(TrackerStat& setme, tr_variant const* value)
             HANDLE_KEY(next_announce_time_camel, next_announce_time)
             HANDLE_KEY(next_scrape_time_camel, next_scrape_time)
             HANDLE_KEY(scrape_state_camel, scrape_state)
-            HANDLE_KEY(seederCount, seeder_count)
+            HANDLE_KEY(seeder_count_camel, seeder_count)
             HANDLE_KEY(sitename, sitename)
             HANDLE_KEY(tier, tier)
 

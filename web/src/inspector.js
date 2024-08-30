@@ -802,7 +802,7 @@ export class Inspector extends EventTarget {
         element.classList.add('tier-seeders');
         setTextContent(
           element,
-          `Seeders: ${tracker.seederCount > -1 ? tracker.seederCount : na}`,
+          `Seeders: ${tracker.seeder_count > -1 ? tracker.seeder_count : na}`,
         );
         tier_div.append(element);
 
