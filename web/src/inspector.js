@@ -815,7 +815,9 @@ export class Inspector extends EventTarget {
         element.classList.add('tier-leechers');
         setTextContent(
           element,
-          `Leechers: ${tracker.leecherCount > -1 ? tracker.leecherCount : na}`,
+          `Leechers: ${
+            tracker.leecher_count > -1 ? tracker.leecher_count : na
+          }`,
         );
         tier_div.append(element);
 

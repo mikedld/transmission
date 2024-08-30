@@ -433,7 +433,8 @@ namespace make_torrent_field_helpers
         stats_map.try_emplace(TR_KEY_last_scrape_time_camel, tracker.lastScrapeTime);
         stats_map.try_emplace(TR_KEY_last_scrape_timed_out, tracker.lastScrapeTimedOut);
         stats_map.try_emplace(TR_KEY_last_scrape_timed_out_camel, tracker.lastScrapeTimedOut);
-        stats_map.try_emplace(TR_KEY_leecherCount, tracker.leecherCount);
+        stats_map.try_emplace(TR_KEY_leecher_count, tracker.leecherCount);
+        stats_map.try_emplace(TR_KEY_leecher_count_camel, tracker.leecherCount);
         stats_map.try_emplace(TR_KEY_nextAnnounceTime, tracker.nextAnnounceTime);
         stats_map.try_emplace(TR_KEY_nextScrapeTime, tracker.nextScrapeTime);
         stats_map.try_emplace(TR_KEY_scrape, tracker.scrape);

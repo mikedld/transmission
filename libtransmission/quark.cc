@@ -242,6 +242,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "last_scrape_time"sv,
     "last_scrape_timed_out"sv,
     "leecherCount"sv,
+    "leecher_count"sv,
     "leftUntilDone"sv,
     "left_until_done"sv,
     "length"sv,
@@ -675,6 +676,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_last_scrape_succeeded_camel: return TR_KEY_last_scrape_succeeded;
     case TR_KEY_last_scrape_time_camel: return TR_KEY_last_scrape_time;
     case TR_KEY_last_scrape_timed_out_camel: return TR_KEY_last_scrape_timed_out;
+    case TR_KEY_leecher_count_camel: return TR_KEY_leecher_count;
     case TR_KEY_left_until_done_camel: return TR_KEY_left_until_done;
     case TR_KEY_magnet_link_camel: return TR_KEY_magnet_link;
     case TR_KEY_manual_announce_time_camel: return TR_KEY_manual_announce_time;
