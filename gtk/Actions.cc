@@ -69,13 +69,13 @@ void toggle_pref_cb(Gio::SimpleAction& action, gpointer /*user_data*/)
     myCore->set_pref(tr_quark_new({ key.c_str(), key.size() }), !val);
 }
 
-std::array<std::string_view, 6> const pref_toggle_entries = {
-    "alt-speed-enabled"sv, //
-    "compact-view"sv, //
-    "sort-reversed"sv, //
-    "show-filterbar"sv, //
-    "show-statusbar"sv, //
-    "show-toolbar"sv, //
+std::array<tr_quark, 6> const pref_toggle_entries = {
+    TR_KEY_alt_speed_enabled, //
+    TR_KEY_compact_view, //
+    TR_KEY_sort_reversed, //
+    TR_KEY_show_filterbar, //
+    TR_KEY_show_statusbar, //
+    TR_KEY_show_toolbar, //
 };
 
 std::array<std::string_view, 29> const entries = {
@@ -148,10 +148,11 @@ Glib::RefPtr<Gio::SimpleActionGroup> gtr_actions_init(Glib::RefPtr<Gtk::Builder>
         key_to_action.try_emplace(action_name, action);
     }
 
-    for (auto const& action_name_view : pref_toggle_entries)
+    for (auto const action_name_quark : pref_toggle_entries)
     {
-        auto const action_name = Glib::ustring(std::string(action_name_view));
-        auto const action = Gio::SimpleAction::create_bool(action_name, gtr_pref_flag_get(tr_quark_new(action_name_view)));
+        auto const action_name_sv = tr_quark_get_string_view(action_name_quark);
+        auto const action_name = Glib::ustring{ std::data(action_name_sv), std::size(action_name_sv) };
+        auto const action = Gio::SimpleAction::create_bool(action_name, gtr_pref_flag_get(action_name_quark));
         action->signal_activate().connect([a = action.get(), callback_user_data](auto const& /*value*/)
                                           { toggle_pref_cb(*a, callback_user_data); });
         action_group->add_action(action);
