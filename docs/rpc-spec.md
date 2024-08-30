@@ -398,7 +398,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `last_announce_time`       | number     | tr_tracker_view
 | `last_announce_timed_out`  | boolean    | tr_tracker_view
 | `last_scrape_result`       | string     | tr_tracker_view
-| `lastScrapeStartTime`      | number     | tr_tracker_view
+| `last_scrape_start_time`   | number     | tr_tracker_view
 | `lastScrapeSucceeded`      | boolean    | tr_tracker_view
 | `lastScrapeTime`           | number     | tr_tracker_view
 | `lastScrapeTimedOut`       | boolean    | tr_tracker_view
