@@ -1358,7 +1358,7 @@ char const* torrentRenamePath(tr_session* session, tr_variant::Map const& args_i
     auto const torrents = getTorrents(session, args_in);
     if (std::size(torrents) != 1U)
     {
-        return "torrent-rename-path requires 1 torrent";
+        return "torrent_rename_path requires 1 torrent";
     }
 
     auto const oldpath = args_in.value_if<std::string_view>(TR_KEY_path).value_or(""sv);
@@ -2354,7 +2354,7 @@ auto constexpr AsyncHandlers = std::array<std::pair<std::string_view, AsyncHandl
     { "blocklist-update"sv, blocklistUpdate },
     { "port-test"sv, portTest },
     { "torrent_add"sv, torrentAdd },
-    { "torrent-rename-path"sv, torrentRenamePath },
+    { "torrent_rename_path"sv, torrentRenamePath },
 } };
 
 void noop_response_callback(tr_session* /*session*/, tr_variant&& /*response*/)

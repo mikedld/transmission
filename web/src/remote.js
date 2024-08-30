@@ -106,7 +106,7 @@ export class Remote {
         name: newname,
         path: oldpath,
       },
-      method: 'torrent-rename-path',
+      method: 'torrent_rename_path',
     };
     this.sendRequest(o, callback, context);
   }

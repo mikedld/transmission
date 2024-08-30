@@ -512,7 +512,7 @@ Request arguments:
 Response arguments: none
 
 ### 3.7 Renaming a torrent's path
-Method name: `torrent-rename-path`
+Method name: `torrent_rename_path`
 
 For more information on the use of this function, see the transmission.h
 documentation of `tr_torrentRenamePath()`. In particular, note that if this

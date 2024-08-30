@@ -94,7 +94,7 @@ TEST_F(RpcTest, tagAsync)
     EXPECT_NE(nullptr, tor);
 
     auto request_map = tr_variant::Map{ 3U };
-    request_map.try_emplace(TR_KEY_method, "torrent-rename-path");
+    request_map.try_emplace(TR_KEY_method, "torrent_rename_path");
     request_map.try_emplace(TR_KEY_tag, 12345);
 
     auto arguments_map = tr_variant::Map{ 2U };
