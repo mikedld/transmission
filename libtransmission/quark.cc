@@ -231,6 +231,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "lastScrapeTime"sv,
     "lastScrapeTimedOut"sv,
     "last_announce_peer_count"sv,
+    "last_announce_result"sv,
     "leecherCount"sv,
     "leftUntilDone"sv,
     "left_until_done"sv,
@@ -655,6 +656,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_is_uploading_to_camel: return TR_KEY_is_uploading_to;
     case TR_KEY_is_utp_camel: return TR_KEY_is_utp;
     case TR_KEY_last_announce_peer_count_camel: return TR_KEY_last_announce_peer_count;
+    case TR_KEY_last_announce_result_camel: return TR_KEY_last_announce_result;
     case TR_KEY_left_until_done_camel: return TR_KEY_left_until_done;
     case TR_KEY_magnet_link_camel: return TR_KEY_magnet_link;
     case TR_KEY_manual_announce_time_camel: return TR_KEY_manual_announce_time;

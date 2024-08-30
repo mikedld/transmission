@@ -708,7 +708,9 @@ export class Inspector extends EventTarget {
       } else {
         lastAnnounceLabel = 'Announce error';
         lastAnnounce = [
-          tracker.lastAnnounceResult ? `${tracker.lastAnnounceResult} - ` : '',
+          tracker.last_announce_result
+            ? `${tracker.last_announce_result} - `
+            : '',
           lastAnnounceTime,
         ];
       }
