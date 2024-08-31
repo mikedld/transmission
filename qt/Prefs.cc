@@ -76,7 +76,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { STATUSBAR_STATS, TR_KEY_statusbar_stats, QMetaType::QString },
     { SHOW_TRACKER_SCRAPES, TR_KEY_show_tracker_scrapes, QMetaType::Bool },
     { SHOW_BACKUP_TRACKERS, TR_KEY_show_backup_trackers, QMetaType::Bool },
-    { TOOLBAR, TR_KEY_show_toolbar, QMetaType::Bool },
+    { TOOLBAR, TR_KEY_show_toolbar_kebab, QMetaType::Bool },
     { BLOCKLIST_DATE, TR_KEY_blocklist_date, QMetaType::QDateTime },
     { BLOCKLIST_UPDATES_ENABLED, TR_KEY_blocklist_updates_enabled, QMetaType::Bool },
     { MAIN_WINDOW_LAYOUT_ORDER, TR_KEY_main_window_layout_order, QMetaType::QString },

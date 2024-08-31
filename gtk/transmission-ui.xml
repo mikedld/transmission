@@ -185,7 +185,7 @@
       </section>
       <section>
         <item>
-          <attribute name="action">win.show-toolbar</attribute>
+          <attribute name="action">win.show_toolbar</attribute>
           <attribute name="label" translatable="yes">_Toolbar</attribute>
         </item>
         <item>
