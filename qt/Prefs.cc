@@ -70,7 +70,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { ASKQUIT, TR_KEY_prompt_before_exit, QMetaType::Bool },
     { SORT_MODE, TR_KEY_sort_mode, CustomVariantType::SortModeType },
     { SORT_REVERSED, TR_KEY_sort_reversed, QMetaType::Bool },
-    { COMPACT_VIEW, TR_KEY_compact_view, QMetaType::Bool },
+    { COMPACT_VIEW, TR_KEY_compact_view_kebab, QMetaType::Bool },
     { FILTERBAR, TR_KEY_show_filterbar, QMetaType::Bool },
     { STATUSBAR, TR_KEY_show_statusbar, QMetaType::Bool },
     { STATUSBAR_STATS, TR_KEY_statusbar_stats, QMetaType::QString },

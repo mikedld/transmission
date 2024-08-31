@@ -178,7 +178,7 @@
       <attribute name="label" translatable="true">_View</attribute>
       <section>
         <item>
-          <attribute name="action">win.compact-view</attribute>
+          <attribute name="action">win.compact_view</attribute>
           <attribute name="label" translatable="yes">_Compact View</attribute>
           <attribute name="accel">&lt;alt&gt;C</attribute>
         </item>
