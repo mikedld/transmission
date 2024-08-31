@@ -246,7 +246,7 @@
       </section>
       <section>
         <item>
-          <attribute name="action">win.sort-reversed</attribute>
+          <attribute name="action">win.sort_reversed</attribute>
           <attribute name="label" translatable="yes">Re_verse Sort Order</attribute>
         </item>
       </section>
@@ -353,7 +353,7 @@
         </section>
         <section>
           <item>
-            <attribute name="action">win.sort-reversed</attribute>
+            <attribute name="action">win.sort_reversed</attribute>
             <attribute name="label" translatable="yes">Re_verse Sort Order</attribute>
           </item>
         </section>

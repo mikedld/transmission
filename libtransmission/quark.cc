@@ -456,6 +456,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "socket_address"sv,
     "sort-mode"sv,
     "sort-reversed"sv,
+    "sort_reversed"sv,
     "source"sv,
     "speed"sv,
     "speed-Bps"sv,
@@ -728,6 +729,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_seed_ratio_mode_camel: return TR_KEY_seed_ratio_mode;
     case TR_KEY_seeder_count_camel: return TR_KEY_seeder_count;
     case TR_KEY_size_when_done_camel: return TR_KEY_size_when_done;
+    case TR_KEY_sort_reversed_kebab: return TR_KEY_sort_reversed;
     case TR_KEY_start_date_camel: return TR_KEY_start_date;
     case TR_KEY_torrent_added_kebab: return TR_KEY_torrent_added;
     case TR_KEY_torrent_duplicate_kebab: return TR_KEY_torrent_duplicate;

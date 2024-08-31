@@ -457,6 +457,7 @@ enum
     TR_KEY_sleep_per_seconds_during_verify,
     TR_KEY_socket_address,
     TR_KEY_sort_mode,
+    TR_KEY_sort_reversed_kebab,
     TR_KEY_sort_reversed,
     TR_KEY_source,
     TR_KEY_speed,
