@@ -193,7 +193,7 @@
           <attribute name="label" translatable="yes">_Filterbar</attribute>
         </item>
         <item>
-          <attribute name="action">win.show-statusbar</attribute>
+          <attribute name="action">win.show_statusbar</attribute>
           <attribute name="label" translatable="yes">_Statusbar</attribute>
         </item>
       </section>

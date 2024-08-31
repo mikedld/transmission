@@ -72,7 +72,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { SORT_REVERSED, TR_KEY_sort_reversed_kebab, QMetaType::Bool },
     { COMPACT_VIEW, TR_KEY_compact_view_kebab, QMetaType::Bool },
     { FILTERBAR, TR_KEY_show_filterbar_kebab, QMetaType::Bool },
-    { STATUSBAR, TR_KEY_show_statusbar, QMetaType::Bool },
+    { STATUSBAR, TR_KEY_show_statusbar_kebab, QMetaType::Bool },
     { STATUSBAR_STATS, TR_KEY_statusbar_stats, QMetaType::QString },
     { SHOW_TRACKER_SCRAPES, TR_KEY_show_tracker_scrapes, QMetaType::Bool },
     { SHOW_BACKUP_TRACKERS, TR_KEY_show_backup_trackers, QMetaType::Bool },
