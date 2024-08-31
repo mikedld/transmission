@@ -52,7 +52,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 
  * **alt_speed_enabled:** Boolean (default = false, aka 'Turtle Mode')
    _Note: Clicking the "Turtle" in the GUI when the [scheduler](#Scheduling) is enabled, will only temporarily remove the scheduled limit until the next cycle._
- * **alt-speed-up:** Number (KB/s, default = 50)
+ * **alt_speed_up:** Number (KB/s, default = 50)
  * **alt_speed_down:** Number (KB/s, default = 50)
  * **speed-limit-down:** Number (KB/s, default = 100)
  * **speed-limit-down-enabled:** Boolean (default = false)

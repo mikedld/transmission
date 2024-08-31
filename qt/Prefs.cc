@@ -100,7 +100,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { READ_CLIPBOARD, TR_KEY_read_clipboard, QMetaType::Bool },
 
     /* libtransmission settings */
-    { ALT_SPEED_LIMIT_UP, TR_KEY_alt_speed_up, QMetaType::Int },
+    { ALT_SPEED_LIMIT_UP, TR_KEY_alt_speed_up_kebab, QMetaType::Int },
     { ALT_SPEED_LIMIT_DOWN, TR_KEY_alt_speed_down_kebab, QMetaType::Int },
     { ALT_SPEED_LIMIT_ENABLED, TR_KEY_alt_speed_enabled_kebab, QMetaType::Bool },
     { ALT_SPEED_LIMIT_TIME_BEGIN, TR_KEY_alt_speed_time_begin_kebab, QMetaType::Int },

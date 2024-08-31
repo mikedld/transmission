@@ -444,7 +444,7 @@ export class PrefsDialog extends EventTarget {
 
     input = document.createElement('input');
     input.type = 'number';
-    input.dataset.key = 'alt-speed-up';
+    input.dataset.key = 'alt_speed_up';
     input.id = makeUUID();
     label.setAttribute('for', input.id);
     root.append(input);
