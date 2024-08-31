@@ -447,6 +447,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "show-statusbar"sv,
     "show-toolbar"sv,
     "show-tracker-scrapes"sv,
+    "show_filterbar"sv,
     "sitename"sv,
     "size-bytes"sv,
     "size-units"sv,
@@ -728,6 +729,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_seed_ratio_limit_camel: return TR_KEY_seed_ratio_limit;
     case TR_KEY_seed_ratio_mode_camel: return TR_KEY_seed_ratio_mode;
     case TR_KEY_seeder_count_camel: return TR_KEY_seeder_count;
+    case TR_KEY_show_filterbar_kebab: return TR_KEY_show_filterbar;
     case TR_KEY_size_when_done_camel: return TR_KEY_size_when_done;
     case TR_KEY_sort_reversed_kebab: return TR_KEY_sort_reversed;
     case TR_KEY_start_date_camel: return TR_KEY_start_date;

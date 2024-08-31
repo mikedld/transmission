@@ -189,7 +189,7 @@
           <attribute name="label" translatable="yes">_Toolbar</attribute>
         </item>
         <item>
-          <attribute name="action">win.show-filterbar</attribute>
+          <attribute name="action">win.show_filterbar</attribute>
           <attribute name="label" translatable="yes">_Filterbar</attribute>
         </item>
         <item>
