@@ -150,7 +150,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **alt-speed-time-enabled:** Boolean (default = false)
    _Note: When enabled, this will toggle the `alt_speed_enabled` setting._
  * **alt_speed_time_begin:** Number (default = 540, in minutes from midnight, 9am)
- * **alt-speed-time-end:** Number (default = 1020, in minutes from midnight, 5pm)
+ * **alt_speed_time_end:** Number (default = 1020, in minutes from midnight, 5pm)
  * **alt_speed_time_day:** Number/bitfield (default = 127, all days)
    * Start with 0, then for each day you want the scheduler enabled, add:
      * **Sunday**: 1 (binary: `0000001`)

@@ -1865,7 +1865,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetAltSpeedBegin(session, static_cast<size_t>(*val));
     }
 
-    if (auto const val = args_in.value_if<int64_t>(TR_KEY_alt_speed_time_end))
+    if (auto const val = args_in.value_if<int64_t>({ TR_KEY_alt_speed_time_end, TR_KEY_alt_speed_time_end_kebab }); val)
     {
         tr_sessionSetAltSpeedEnd(session, static_cast<size_t>(*val));
     }
@@ -2183,7 +2183,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_alt_speed_time_day_kebab:
         return tr_sessionGetAltSpeedDay(&session);
     case TR_KEY_alt_speed_time_enabled: return tr_sessionUsesAltSpeedTime(&session);
-    case TR_KEY_alt_speed_time_end: return tr_sessionGetAltSpeedEnd(&session);
+    case TR_KEY_alt_speed_time_end:
+    case TR_KEY_alt_speed_time_end_kebab:
+        return tr_sessionGetAltSpeedEnd(&session);
     case TR_KEY_alt_speed_up: return tr_sessionGetAltSpeed_KBps(&session, TR_UP);
     case TR_KEY_anti_brute_force_enabled: return tr_sessionGetAntiBruteForceEnabled(&session);
     case TR_KEY_anti_brute_force_threshold: return tr_sessionGetAntiBruteForceThreshold(&session);

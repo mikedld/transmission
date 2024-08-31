@@ -1859,7 +1859,7 @@ void print_session(tr_variant::Map const& map)
     auto const alt_down = args->value_if<int64_t>({ TR_KEY_alt_speed_down, TR_KEY_alt_speed_down_kebab });
     auto const alt_up = args->value_if<int64_t>(TR_KEY_alt_speed_up);
     auto const alt_begin = args->value_if<int64_t>({ TR_KEY_alt_speed_time_begin, TR_KEY_alt_speed_time_begin_kebab });
-    auto const alt_end = args->value_if<int64_t>(TR_KEY_alt_speed_time_end);
+    auto const alt_end = args->value_if<int64_t>({ TR_KEY_alt_speed_time_end, TR_KEY_alt_speed_time_end_kebab });
     auto const alt_day = args->value_if<int64_t>({ TR_KEY_alt_speed_time_day, TR_KEY_alt_speed_time_day_kebab });
     auto const up_limit = args->value_if<int64_t>(TR_KEY_speed_limit_up);
     auto const down_limit = args->value_if<int64_t>(TR_KEY_speed_limit_down);
@@ -2805,7 +2805,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 977:
-                add_time(args, TR_KEY_alt_speed_time_end, optarg_sv);
+                add_time(args, TR_KEY_alt_speed_time_end_kebab, optarg_sv);
                 break;
 
             case 978:
