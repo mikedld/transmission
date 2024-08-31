@@ -502,7 +502,7 @@ export class PrefsDialog extends EventTarget {
 
     select = document.createElement('select');
     select.id = makeUUID();
-    select.dataset.key = 'alt-speed-time-day';
+    select.dataset.key = 'alt_speed_time_day';
     PrefsDialog._initDayDropDown(select);
     label.setAttribute('for', select.id);
     root.append(select);

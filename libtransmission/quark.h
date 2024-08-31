@@ -37,13 +37,14 @@ enum
     TR_KEY_alt_speed_down_kebab, /* rpc, settings (deprecated) */
     TR_KEY_alt_speed_enabled_kebab, /* rpc, settings (deprecated) */
     TR_KEY_alt_speed_time_begin_kebab, /* rpc, settings (deprecated) */
-    TR_KEY_alt_speed_time_day, /* rpc, settings */
+    TR_KEY_alt_speed_time_day_kebab, /* rpc, settings (deprecated) */
     TR_KEY_alt_speed_time_enabled, /* rpc, settings */
     TR_KEY_alt_speed_time_end, /* rpc, settings */
     TR_KEY_alt_speed_up, /* rpc, settings */
     TR_KEY_alt_speed_down, /* rpc, settings */
     TR_KEY_alt_speed_enabled, /* rpc, settings */
     TR_KEY_alt_speed_time_begin, /* rpc, settings */
+    TR_KEY_alt_speed_time_day, /* rpc, settings */
     TR_KEY_announce, /* metainfo */
     TR_KEY_announce_ip, /* metainfo, settings */
     TR_KEY_announce_ip_enabled, /* metainfo, settings */

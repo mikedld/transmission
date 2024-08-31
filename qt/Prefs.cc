@@ -106,7 +106,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { ALT_SPEED_LIMIT_TIME_BEGIN, TR_KEY_alt_speed_time_begin_kebab, QMetaType::Int },
     { ALT_SPEED_LIMIT_TIME_END, TR_KEY_alt_speed_time_end, QMetaType::Int },
     { ALT_SPEED_LIMIT_TIME_ENABLED, TR_KEY_alt_speed_time_enabled, QMetaType::Bool },
-    { ALT_SPEED_LIMIT_TIME_DAY, TR_KEY_alt_speed_time_day, QMetaType::Int },
+    { ALT_SPEED_LIMIT_TIME_DAY, TR_KEY_alt_speed_time_day_kebab, QMetaType::Int },
     { BLOCKLIST_ENABLED, TR_KEY_blocklist_enabled, QMetaType::Bool },
     { BLOCKLIST_URL, TR_KEY_blocklist_url, QMetaType::QString },
     { DEFAULT_TRACKERS, TR_KEY_default_trackers, QMetaType::QString },
