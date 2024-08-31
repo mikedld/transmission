@@ -171,6 +171,7 @@ TEST_F(RpcTest, sessionGet)
     static auto constexpr ExpectedKeys = std::array{
         TR_KEY_alt_speed_down_kebab,
         TR_KEY_alt_speed_enabled_kebab,
+        TR_KEY_alt_speed_time_begin_kebab,
         TR_KEY_alt_speed_down,
         TR_KEY_alt_speed_enabled,
         TR_KEY_alt_speed_time_begin,

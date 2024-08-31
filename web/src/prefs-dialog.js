@@ -474,7 +474,7 @@ export class PrefsDialog extends EventTarget {
 
     let select = document.createElement('select');
     select.id = makeUUID();
-    select.dataset.key = 'alt-speed-time-begin';
+    select.dataset.key = 'alt_speed_time_begin';
     PrefsDialog._initTimeDropDown(select);
     label.setAttribute('for', select.id);
     root.append(select);
