@@ -463,7 +463,7 @@ export class PrefsDialog extends EventTarget {
     const alt_download_speed_input = input;
 
     cal = PrefsDialog._createCheckAndLabel('alt-times-div', 'Scheduled times');
-    cal.check.dataset.key = 'alt-speed-time-enabled';
+    cal.check.dataset.key = 'alt_speed_time_enabled';
     root.append(cal.root);
     const alt_times_check = cal.check;
 

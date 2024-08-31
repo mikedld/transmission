@@ -1875,7 +1875,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetAltSpeedDay(session, static_cast<tr_sched_day>(*val));
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_alt_speed_time_enabled))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_alt_speed_time_enabled, TR_KEY_alt_speed_time_enabled_kebab }); val)
     {
         tr_sessionUseAltSpeedTime(session, *val);
     }
@@ -2182,7 +2182,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_alt_speed_time_day:
     case TR_KEY_alt_speed_time_day_kebab:
         return tr_sessionGetAltSpeedDay(&session);
-    case TR_KEY_alt_speed_time_enabled: return tr_sessionUsesAltSpeedTime(&session);
+    case TR_KEY_alt_speed_time_enabled:
+    case TR_KEY_alt_speed_time_enabled_kebab:
+        return tr_sessionUsesAltSpeedTime(&session);
     case TR_KEY_alt_speed_time_end:
     case TR_KEY_alt_speed_time_end_kebab:
         return tr_sessionGetAltSpeedEnd(&session);

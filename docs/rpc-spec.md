@@ -537,7 +537,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `alt_speed_enabled` | boolean | true means use the alt speeds
 | `alt_speed_time_begin` | number | when to turn on alt speeds (units: minutes after midnight)
 | `alt_speed_time_day` | number | what day(s) to turn on alt speeds (look at tr_sched_day)
-| `alt-speed-time-enabled` | boolean | true means the scheduled on/off times are used
+| `alt_speed_time_enabled` | boolean | true means the scheduled on/off times are used
 | `alt_speed_time_end` | number | when to turn off alt speeds (units: same)
 | `alt_speed_up` | number | max global upload speed (KBps)
 | `blocklist-enabled` | boolean | true means enabled

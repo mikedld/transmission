@@ -1851,7 +1851,7 @@ void print_session(tr_variant::Map const& map)
     }
 
     auto const alt_enabled = args->value_if<bool>({ TR_KEY_alt_speed_enabled, TR_KEY_alt_speed_enabled_kebab });
-    auto const alt_time_enabled = args->value_if<bool>(TR_KEY_alt_speed_time_enabled);
+    auto const alt_time_enabled = args->value_if<bool>({ TR_KEY_alt_speed_time_enabled, TR_KEY_alt_speed_time_enabled_kebab });
     auto const up_enabled = args->value_if<bool>(TR_KEY_speed_limit_up_enabled);
     auto const down_enabled = args->value_if<bool>(TR_KEY_speed_limit_down_enabled);
     auto const speed_ratio_limited = args->value_if<bool>(TR_KEY_seedRatioLimited);
@@ -2793,11 +2793,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 974:
-                args.insert_or_assign(TR_KEY_alt_speed_time_enabled, true);
+                args.insert_or_assign(TR_KEY_alt_speed_time_enabled_kebab, true);
                 break;
 
             case 975:
-                args.insert_or_assign(TR_KEY_alt_speed_time_enabled, false);
+                args.insert_or_assign(TR_KEY_alt_speed_time_enabled_kebab, false);
                 break;
 
             case 976:

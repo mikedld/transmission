@@ -147,7 +147,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **rpc-whitelist-enabled:** Boolean (default = true)
 
 #### Scheduling
- * **alt-speed-time-enabled:** Boolean (default = false)
+ * **alt_speed_time_enabled:** Boolean (default = false)
    _Note: When enabled, this will toggle the `alt_speed_enabled` setting._
  * **alt_speed_time_begin:** Number (default = 540, in minutes from midnight, 9am)
  * **alt_speed_time_end:** Number (default = 1020, in minutes from midnight, 5pm)
