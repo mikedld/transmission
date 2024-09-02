@@ -2014,7 +2014,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetIdleLimited(session, *val);
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_start_added_torrents))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_start_added_torrents, TR_KEY_start_added_torrents_kebab }); val)
     {
         tr_sessionSetPaused(session, !*val);
     }
@@ -2334,7 +2334,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_speed_limit_up_enabled:
     case TR_KEY_speed_limit_up_enabled_kebab:
         return session.is_speed_limited(TR_UP);
-    case TR_KEY_start_added_torrents: return !session.shouldPauseAddedTorrents();
+    case TR_KEY_start_added_torrents:
+    case TR_KEY_start_added_torrents_kebab:
+        return !session.shouldPauseAddedTorrents();
     case TR_KEY_tcp_enabled: return session.allowsTCP();
     case TR_KEY_trash_original_torrent_files: return session.shouldDeleteSource();
     case TR_KEY_units: return values_get_units();

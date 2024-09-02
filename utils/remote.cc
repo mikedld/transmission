@@ -1980,7 +1980,7 @@ void print_session(tr_variant::Map const& map)
 
     fmt::print("MISC\n");
 
-    if (auto b = args->value_if<bool>(TR_KEY_start_added_torrents); b)
+    if (auto b = args->value_if<bool>({ TR_KEY_start_added_torrents, TR_KEY_start_added_torrents_kebab }); b)
     {
         fmt::print("  Autostart added torrents: {:s}\n", *b ? "Yes" : "No");
     }
@@ -2905,11 +2905,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 990:
-                args.insert_or_assign(TR_KEY_start_added_torrents, false);
+                args.insert_or_assign(TR_KEY_start_added_torrents_kebab, false);
                 break;
 
             case 991:
-                args.insert_or_assign(TR_KEY_start_added_torrents, true);
+                args.insert_or_assign(TR_KEY_start_added_torrents_kebab, true);
                 break;
 
             case 992:

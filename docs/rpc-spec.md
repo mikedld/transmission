@@ -585,7 +585,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `speed_limit_down_enabled` | boolean | true means enabled
 | `speed_limit_up` | number | max global upload speed (KBps)
 | `speed_limit_up_enabled` | boolean | true means enabled
-| `start-added-torrents` | boolean | true means added torrents will be started right away
+| `start_added_torrents` | boolean | true means added torrents will be started right away
 | `trash-original-torrent-files` | boolean | true means the .torrent file of added torrents will be deleted
 | `units` | object | see below
 | `utp-enabled` | boolean | true means allow UTP

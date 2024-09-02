@@ -174,10 +174,6 @@ export class PrefsDialog extends EventTarget {
     }
   }
 
-  shouldAddedTorrentsStart() {
-    return this.data.elements.root.find('#start-added-torrents')[0].checked;
-  }
-
   static _createCheckAndLabel(id, text) {
     const root = document.createElement('div');
     root.id = id;
@@ -294,7 +290,7 @@ export class PrefsDialog extends EventTarget {
     const incomplete_dir_input = input;
 
     cal = PrefsDialog._createCheckAndLabel('autostart-div', 'Start when added');
-    cal.check.dataset.key = 'start-added-torrents';
+    cal.check.dataset.key = 'start_added_torrents';
     root.append(cal.root);
     const autostart_check = cal.check;
 
