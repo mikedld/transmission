@@ -743,7 +743,7 @@ export class PrefsDialog extends EventTarget {
     }
 
     const textarea = document.createElement('textarea');
-    textarea.dataset.key = 'default-trackers';
+    textarea.dataset.key = 'default_trackers';
     textarea.id = 'default-trackers';
     root.append(textarea);
     const default_trackers_textarea = textarea;
