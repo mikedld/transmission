@@ -383,6 +383,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "queue-stalled-minutes"sv,
     "queuePosition"sv,
     "queue_position"sv,
+    "queue_stalled_enabled"sv,
     "rateDownload"sv,
     "rateToClient"sv,
     "rateToPeer"sv,
@@ -770,6 +771,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_priority_low_kebab: return TR_KEY_priority_low;
     case TR_KEY_priority_normal_kebab: return TR_KEY_priority_normal;
     case TR_KEY_queue_position_camel: return TR_KEY_queue_position;
+    case TR_KEY_queue_stalled_enabled_kebab: return TR_KEY_queue_stalled_enabled;
     case TR_KEY_rate_download_camel: return TR_KEY_rate_download;
     case TR_KEY_rate_to_client_camel: return TR_KEY_rate_to_client;
     case TR_KEY_rate_to_peer_camel: return TR_KEY_rate_to_peer;
