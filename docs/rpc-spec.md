@@ -549,8 +549,8 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `dht_enabled` | boolean | true means allow DHT in public torrents
 | `download_dir` | string | default path to download torrents
 | `download_dir_free_space` | number |  **DEPRECATED** Use the `free-space` method instead.
-| `download-queue-enabled` | boolean | if true, limit how many torrents can be downloaded at once
-| `download-queue-size` | number | max number of torrents to download at once (see download-queue-enabled)
+| `download_queue_enabled` | boolean | if true, limit how many torrents can be downloaded at once
+| `download-queue-size` | number | max number of torrents to download at once (see `download_queue_enabled`)
 | `encryption` | string | `required`, `preferred`, `tolerated`
 | `idle-seeding-limit-enabled` | boolean | true if the seeding inactivity limit is honored by default
 | `idle-seeding-limit` | number | torrents we're seeding will be stopped if they're idle for this long

@@ -113,7 +113,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { DSPEED, TR_KEY_speed_limit_down, QMetaType::Int },
     { DSPEED_ENABLED, TR_KEY_speed_limit_down_enabled, QMetaType::Bool },
     { DOWNLOAD_DIR, TR_KEY_download_dir_kebab, QMetaType::QString },
-    { DOWNLOAD_QUEUE_ENABLED, TR_KEY_download_queue_enabled, QMetaType::Bool },
+    { DOWNLOAD_QUEUE_ENABLED, TR_KEY_download_queue_enabled_kebab, QMetaType::Bool },
     { DOWNLOAD_QUEUE_SIZE, TR_KEY_download_queue_size, QMetaType::Int },
     { ENCRYPTION, TR_KEY_encryption, QMetaType::Int },
     { IDLE_LIMIT, TR_KEY_idle_seeding_limit, QMetaType::Int },

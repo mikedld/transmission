@@ -1917,7 +1917,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetQueueSize(session, TR_DOWN, *val);
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_download_queue_enabled))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_download_queue_enabled, TR_KEY_download_queue_enabled_kebab }); val)
     {
         tr_sessionSetQueueEnabled(session, TR_DOWN, *val);
     }
@@ -2222,7 +2222,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_download_dir_free_space:
     case TR_KEY_download_dir_free_space_kebab:
         return tr_sys_path_get_capacity(session.downloadDir()).value_or(tr_sys_path_capacity{}).free;
-    case TR_KEY_download_queue_enabled: return session.queueEnabled(TR_DOWN);
+    case TR_KEY_download_queue_enabled:
+    case TR_KEY_download_queue_enabled_kebab:
+        return session.queueEnabled(TR_DOWN);
     case TR_KEY_download_queue_size: return session.queueSize(TR_DOWN);
     case TR_KEY_encryption: return getEncryptionModeString(tr_sessionGetEncryption(&session));
     case TR_KEY_idle_seeding_limit: return session.idleLimitMinutes();

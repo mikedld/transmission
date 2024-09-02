@@ -310,7 +310,7 @@ export class PrefsDialog extends EventTarget {
       'download-queue-div',
       'Download queue size:',
     );
-    cal.check.dataset.key = 'download-queue-enabled';
+    cal.check.dataset.key = 'download_queue_enabled';
     root.append(cal.root);
     const download_queue_check = cal.check;
 
