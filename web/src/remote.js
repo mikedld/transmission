@@ -17,7 +17,7 @@ export const RPC = {
   _TurtleState: 'alt_speed_enabled',
   _TurtleUpSpeedLimit: 'alt_speed_up',
   _UpSpeedLimit: 'speed-limit-up',
-  _UpSpeedLimited: 'speed-limit-up-enabled',
+  _UpSpeedLimited: 'speed_limit_up_enabled',
 };
 
 export class Remote {

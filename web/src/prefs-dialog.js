@@ -401,7 +401,7 @@ export class PrefsDialog extends EventTarget {
       'upload-speed-div',
       'Upload (kB/s):',
     );
-    cal.check.dataset.key = 'speed-limit-up-enabled';
+    cal.check.dataset.key = 'speed_limit_up_enabled';
     root.append(cal.root);
     const upload_speed_check = cal.check;
 

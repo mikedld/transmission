@@ -63,7 +63,7 @@ Now, the config file can be edited. Some settings to draw your attention to:
     # is running, you may need to reduce the max upload speed to under 80% of
     # your ISP's max upload speed.
     "speed-limit-up": 100,  # in KB/s
-    "speed-limit-up-enabled": true,
+    "speed_limit_up_enabled": true,
     ...
 }
 ```

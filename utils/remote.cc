@@ -1852,7 +1852,7 @@ void print_session(tr_variant::Map const& map)
 
     auto const alt_enabled = args->value_if<bool>({ TR_KEY_alt_speed_enabled, TR_KEY_alt_speed_enabled_kebab });
     auto const alt_time_enabled = args->value_if<bool>({ TR_KEY_alt_speed_time_enabled, TR_KEY_alt_speed_time_enabled_kebab });
-    auto const up_enabled = args->value_if<bool>(TR_KEY_speed_limit_up_enabled);
+    auto const up_enabled = args->value_if<bool>({ TR_KEY_speed_limit_up_enabled, TR_KEY_speed_limit_up_enabled_kebab });
     auto const down_enabled = args->value_if<bool>({ TR_KEY_speed_limit_down_enabled, TR_KEY_speed_limit_down_enabled_kebab });
     auto const speed_ratio_limited = args->value_if<bool>({ TR_KEY_seed_ratio_limited, TR_KEY_seed_ratio_limited_camel });
     auto const idle_seeding_limited = args->value_if<bool>(
@@ -2976,7 +2976,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 else
                 {
                     sargs->insert_or_assign(TR_KEY_speed_limit_up, numarg(optarg_sv));
-                    sargs->insert_or_assign(TR_KEY_speed_limit_up_enabled, true);
+                    sargs->insert_or_assign(TR_KEY_speed_limit_up_enabled_kebab, true);
                 }
 
                 break;
@@ -2988,7 +2988,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 }
                 else
                 {
-                    sargs->insert_or_assign(TR_KEY_speed_limit_up_enabled, false);
+                    sargs->insert_or_assign(TR_KEY_speed_limit_up_enabled_kebab, false);
                 }
 
                 break;
