@@ -570,7 +570,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `rpc_version_minimum` | number | the minimum RPC API version supported
 | `rpc_version_semver` | string | the current RPC API version in a [semver](https://semver.org)-compatible string
 | `rpc_version` | number | the current RPC API version
-| `script-torrent-added-enabled` | boolean | whether or not to call the `added` script
+| `script_torrent_added_enabled` | boolean | whether or not to call the `added` script
 | `script-torrent-added-filename` | string | filename of the script to run
 | `script-torrent-done-enabled` | boolean | whether or not to call the `done` script
 | `script-torrent-done-filename` | string | filename of the script to run
