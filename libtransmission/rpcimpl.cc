@@ -2207,7 +2207,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_cache_size_mb:
     case TR_KEY_cache_size_mb_kebab:
         return tr_sessionGetCacheLimit_MB(&session);
-    case TR_KEY_config_dir: return session.configDir();
+    case TR_KEY_config_dir:
+    case TR_KEY_config_dir_kebab:
+        return session.configDir();
     case TR_KEY_default_trackers: return session.defaultTrackersStr();
     case TR_KEY_dht_enabled: return session.allowsDHT();
     case TR_KEY_download_dir:

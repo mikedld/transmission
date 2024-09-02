@@ -88,6 +88,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "compact_view"sv,
     "complete"sv,
     "config-dir"sv,
+    "config_dir"sv,
     "cookies"sv,
     "corrupt"sv,
     "corruptEver"sv,
@@ -657,6 +658,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_client_is_interested_camel: return TR_KEY_client_is_interested;
     case TR_KEY_client_name_camel: return TR_KEY_client_name;
     case TR_KEY_compact_view_kebab: return TR_KEY_compact_view;
+    case TR_KEY_config_dir_kebab: return TR_KEY_config_dir;
     case TR_KEY_corrupt_ever_camel: return TR_KEY_corrupt_ever;
     case TR_KEY_date_created_camel: return TR_KEY_date_created;
     case TR_KEY_delete_local_data_kebab: return TR_KEY_delete_local_data;

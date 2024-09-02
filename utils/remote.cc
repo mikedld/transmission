@@ -1800,7 +1800,7 @@ void print_session(tr_variant::Map const& map)
 
     fmt::print("CONFIG\n");
 
-    if (auto sv = args->value_if<std::string_view>(TR_KEY_config_dir); sv)
+    if (auto sv = args->value_if<std::string_view>({ TR_KEY_config_dir, TR_KEY_config_dir_kebab }); sv)
     {
         fmt::print("  Configuration directory: {:s}\n", *sv);
     }
