@@ -124,7 +124,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { PEER_LIMIT_GLOBAL, TR_KEY_peer_limit_global_kebab, QMetaType::Int },
     { PEER_LIMIT_TORRENT, TR_KEY_peer_limit_per_torrent_kebab, QMetaType::Int },
     { PEER_PORT, TR_KEY_peer_port, QMetaType::Int },
-    { PEER_PORT_RANDOM_ON_START, TR_KEY_peer_port_random_on_start, QMetaType::Bool },
+    { PEER_PORT_RANDOM_ON_START, TR_KEY_peer_port_random_on_start_kebab, QMetaType::Bool },
     { PEER_PORT_RANDOM_LOW, TR_KEY_peer_port_random_low, QMetaType::Int },
     { PEER_PORT_RANDOM_HIGH, TR_KEY_peer_port_random_high, QMetaType::Int },
     { QUEUE_STALLED_MINUTES, TR_KEY_queue_stalled_minutes, QMetaType::Int },

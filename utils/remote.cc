@@ -2867,7 +2867,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 'P':
-                args.insert_or_assign(TR_KEY_peer_port_random_on_start, true);
+                args.insert_or_assign(TR_KEY_peer_port_random_on_start_kebab, true);
                 break;
 
             case 'x':

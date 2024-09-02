@@ -699,7 +699,7 @@ export class PrefsDialog extends EventTarget {
       'randomize-port',
       'Randomize port on launch',
     );
-    cal.check.dataset.key = 'peer-port-random-on-start';
+    cal.check.dataset.key = 'peer_port_random_on_start';
     root.append(cal.root);
     const random_port_check = cal.check;
 
