@@ -551,7 +551,7 @@ export class PrefsDialog extends EventTarget {
 
     input = document.createElement('input');
     input.type = 'number';
-    input.dataset.key = 'peer-limit-global';
+    input.dataset.key = 'peer_limit_global';
     input.id = makeUUID();
     label.setAttribute('for', input.id);
     root.append(input);

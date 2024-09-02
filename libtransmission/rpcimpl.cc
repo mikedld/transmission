@@ -1932,7 +1932,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         session->useIncompleteDir(*val);
     }
 
-    if (auto const val = args_in.value_if<int64_t>(TR_KEY_peer_limit_global))
+    if (auto const val = args_in.value_if<int64_t>({ TR_KEY_peer_limit_global, TR_KEY_peer_limit_global_kebab }); val)
     {
         tr_sessionSetPeerLimit(session, *val);
     }
@@ -2245,7 +2245,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_lpd_enabled:
     case TR_KEY_lpd_enabled_kebab:
         return session.allowsLPD();
-    case TR_KEY_peer_limit_global: return session.peerLimit();
+    case TR_KEY_peer_limit_global:
+    case TR_KEY_peer_limit_global_kebab:
+        return session.peerLimit();
     case TR_KEY_peer_limit_per_torrent: return session.peerLimitPerTorrent();
     case TR_KEY_peer_port: return session.advertisedPeerPort().host();
     case TR_KEY_peer_port_random_on_start: return session.isPortRandom();

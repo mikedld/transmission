@@ -121,7 +121,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { INCOMPLETE_DIR, TR_KEY_incomplete_dir_kebab, QMetaType::QString },
     { INCOMPLETE_DIR_ENABLED, TR_KEY_incomplete_dir_enabled_kebab, QMetaType::Bool },
     { MSGLEVEL, TR_KEY_message_level, QMetaType::Int },
-    { PEER_LIMIT_GLOBAL, TR_KEY_peer_limit_global, QMetaType::Int },
+    { PEER_LIMIT_GLOBAL, TR_KEY_peer_limit_global_kebab, QMetaType::Int },
     { PEER_LIMIT_TORRENT, TR_KEY_peer_limit_per_torrent, QMetaType::Int },
     { PEER_PORT, TR_KEY_peer_port, QMetaType::Int },
     { PEER_PORT_RANDOM_ON_START, TR_KEY_peer_port_random_on_start, QMetaType::Bool },

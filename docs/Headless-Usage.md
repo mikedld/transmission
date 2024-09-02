@@ -51,7 +51,7 @@ Now, the config file can be edited. Some settings to draw your attention to:
     "download_dir": "/home/youruser/Downloads",
     ...
     # Reduce the global peer limit if your router is low on memory.
-    "peer-limit-global": 32,
+    "peer_limit_global": 32,
     ...
     # For manual port forwarding. This controls the TCP and UDP bittorrent ports.
     "peer-port": 32768,
