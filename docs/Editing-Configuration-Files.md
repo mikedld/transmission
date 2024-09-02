@@ -94,7 +94,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **pidfile:** String Path to file in which daemon PID will be stored (_transmission-daemon only_)
  * **scrape-paused-torrents-enabled:** Boolean (default = true)
  * **script_torrent_added_enabled:** Boolean (default = false) Run a script when a torrent is added to Transmission. Environmental variables are passed in as detailed on the [Scripts](./Scripts.md) page.
- * **script-torrent-added-filename:** String (default = "") Path to script.
+ * **script_torrent_added_filename:** String (default = "") Path to script.
  * **script-torrent-done-enabled:** Boolean (default = false) Run a script when a torrent is done downloading. Environmental variables are passed in as detailed on the [Scripts](./Scripts.md) page.
  * **script-torrent-done-filename:** String (default = "") Path to script.
  * **script-torrent-done-seeding-enabled:** Boolean (default = false) Run a script when a torrent is done seeding. Environmental variables are passed in as detailed on the [Scripts](./Scripts.md) page.

@@ -2031,7 +2031,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
             session->useScript(script, *val);
         }
 
-        if (auto const val = args_in.value_if<std::string_view>(script_key))
+        if (auto const val = args_in.value_if<std::string_view>({ tr_quark_convert(script_key), script_key }); val)
         {
             session->setScript(script, *val);
         }
@@ -2286,7 +2286,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_script_torrent_added_enabled:
     case TR_KEY_script_torrent_added_enabled_kebab:
         return session.useScript(TR_SCRIPT_ON_TORRENT_ADDED);
-    case TR_KEY_script_torrent_added_filename: return session.script(TR_SCRIPT_ON_TORRENT_ADDED);
+    case TR_KEY_script_torrent_added_filename:
+    case TR_KEY_script_torrent_added_filename_kebab:
+        return session.script(TR_SCRIPT_ON_TORRENT_ADDED);
     case TR_KEY_script_torrent_done_enabled: return session.useScript(TR_SCRIPT_ON_TORRENT_DONE);
     case TR_KEY_script_torrent_done_filename: return session.script(TR_SCRIPT_ON_TORRENT_DONE);
     case TR_KEY_script_torrent_done_seeding_enabled: return session.useScript(TR_SCRIPT_ON_TORRENT_DONE_SEEDING);
