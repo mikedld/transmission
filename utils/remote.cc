@@ -1985,7 +1985,7 @@ void print_session(tr_variant::Map const& map)
         fmt::print("  Autostart added torrents: {:s}\n", *b ? "Yes" : "No");
     }
 
-    if (auto b = args->value_if<bool>(TR_KEY_trash_original_torrent_files); b)
+    if (auto b = args->value_if<bool>({ TR_KEY_trash_original_torrent_files, TR_KEY_trash_original_torrent_files_kebab }); b)
     {
         fmt::print("  Delete automatically added torrents: {:s}\n", *b ? "Yes" : "No");
     }
@@ -2913,11 +2913,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 992:
-                args.insert_or_assign(TR_KEY_trash_original_torrent_files, true);
+                args.insert_or_assign(TR_KEY_trash_original_torrent_files_kebab, true);
                 break;
 
             case 993:
-                args.insert_or_assign(TR_KEY_trash_original_torrent_files, false);
+                args.insert_or_assign(TR_KEY_trash_original_torrent_files_kebab, false);
                 break;
 
             default:
