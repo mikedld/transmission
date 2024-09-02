@@ -572,7 +572,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `rpc_version` | number | the current RPC API version
 | `script_torrent_added_enabled` | boolean | whether or not to call the `added` script
 | `script_torrent_added_filename` | string | filename of the script to run
-| `script-torrent-done-enabled` | boolean | whether or not to call the `done` script
+| `script_torrent_done_enabled` | boolean | whether or not to call the `done` script
 | `script-torrent-done-filename` | string | filename of the script to run
 | `script-torrent-done-seeding-enabled` | boolean | whether or not to call the `seeding-done` script
 | `script-torrent-done-seeding-filename` | string | filename of the script to run

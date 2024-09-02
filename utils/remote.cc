@@ -2761,11 +2761,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
             {
             case 800:
                 args.insert_or_assign(TR_KEY_script_torrent_done_filename, optarg_sv);
-                args.insert_or_assign(TR_KEY_script_torrent_done_enabled, true);
+                args.insert_or_assign(TR_KEY_script_torrent_done_enabled_kebab, true);
                 break;
 
             case 801:
-                args.insert_or_assign(TR_KEY_script_torrent_done_enabled, false);
+                args.insert_or_assign(TR_KEY_script_torrent_done_enabled_kebab, false);
                 break;
 
             case 802:

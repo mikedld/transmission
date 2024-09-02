@@ -2289,7 +2289,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_script_torrent_added_filename:
     case TR_KEY_script_torrent_added_filename_kebab:
         return session.script(TR_SCRIPT_ON_TORRENT_ADDED);
-    case TR_KEY_script_torrent_done_enabled: return session.useScript(TR_SCRIPT_ON_TORRENT_DONE);
+    case TR_KEY_script_torrent_done_enabled:
+    case TR_KEY_script_torrent_done_enabled_kebab:
+        return session.useScript(TR_SCRIPT_ON_TORRENT_DONE);
     case TR_KEY_script_torrent_done_filename: return session.script(TR_SCRIPT_ON_TORRENT_DONE);
     case TR_KEY_script_torrent_done_seeding_enabled: return session.useScript(TR_SCRIPT_ON_TORRENT_DONE_SEEDING);
     case TR_KEY_script_torrent_done_seeding_filename: return session.script(TR_SCRIPT_ON_TORRENT_DONE_SEEDING);

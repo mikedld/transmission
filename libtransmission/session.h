@@ -1190,7 +1190,7 @@ public:
 
     static constexpr std::array<std::tuple<tr_quark, tr_quark, TrScript>, 3> Scripts{
         { { TR_KEY_script_torrent_added_enabled_kebab, TR_KEY_script_torrent_added_filename_kebab, TR_SCRIPT_ON_TORRENT_ADDED },
-          { TR_KEY_script_torrent_done_enabled, TR_KEY_script_torrent_done_filename, TR_SCRIPT_ON_TORRENT_DONE },
+          { TR_KEY_script_torrent_done_enabled_kebab, TR_KEY_script_torrent_done_filename, TR_SCRIPT_ON_TORRENT_DONE },
           { TR_KEY_script_torrent_done_seeding_enabled,
             TR_KEY_script_torrent_done_seeding_filename,
             TR_SCRIPT_ON_TORRENT_DONE_SEEDING } }
