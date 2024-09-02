@@ -56,7 +56,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **alt_speed_down:** Number (KB/s, default = 50)
  * **speed_limit_down:** Number (KB/s, default = 100)
  * **speed_limit_down_enabled:** Boolean (default = false)
- * **speed-limit-up:** Number (KB/s, default = 100)
+ * **speed_limit_up:** Number (KB/s, default = 100)
  * **speed_limit_up_enabled:** Boolean (default = false)
  * **upload-slots-per-torrent:** Number (default = 14)
 

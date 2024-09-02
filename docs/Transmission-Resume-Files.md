@@ -22,7 +22,7 @@ The file contains the following **per-torrent** properties:
 | `bandwidth_priority` |  |
 | `progress` |  |
 | `speed-limit` |  |
-| `speed-limit-up` | Torrent upload speed limit |
+| `speed_limit_up` | Torrent upload speed limit |
 | `speed_limit_down` | Torrent download speed limit |
 | `ratio-limit` | Torrent file limit |
 | `uploaded` |  |

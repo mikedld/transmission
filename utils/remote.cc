@@ -1862,7 +1862,7 @@ void print_session(tr_variant::Map const& map)
     auto const alt_begin = args->value_if<int64_t>({ TR_KEY_alt_speed_time_begin, TR_KEY_alt_speed_time_begin_kebab });
     auto const alt_end = args->value_if<int64_t>({ TR_KEY_alt_speed_time_end, TR_KEY_alt_speed_time_end_kebab });
     auto const alt_day = args->value_if<int64_t>({ TR_KEY_alt_speed_time_day, TR_KEY_alt_speed_time_day_kebab });
-    auto const up_limit = args->value_if<int64_t>(TR_KEY_speed_limit_up);
+    auto const up_limit = args->value_if<int64_t>({ TR_KEY_speed_limit_up, TR_KEY_speed_limit_up_kebab });
     auto const down_limit = args->value_if<int64_t>({ TR_KEY_speed_limit_down, TR_KEY_speed_limit_down_kebab });
     auto const peer_limit = args->value_if<int64_t>({ TR_KEY_peer_limit_global, TR_KEY_peer_limit_global_kebab });
     auto const idle_seeding_limit = args->value_if<int64_t>({ TR_KEY_idle_seeding_limit, TR_KEY_idle_seeding_limit_kebab });
@@ -2975,7 +2975,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 }
                 else
                 {
-                    sargs->insert_or_assign(TR_KEY_speed_limit_up, numarg(optarg_sv));
+                    sargs->insert_or_assign(TR_KEY_speed_limit_up_kebab, numarg(optarg_sv));
                     sargs->insert_or_assign(TR_KEY_speed_limit_up_enabled_kebab, true);
                 }
 

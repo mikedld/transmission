@@ -16,7 +16,7 @@ export const RPC = {
   _TurtleDownSpeedLimit: 'alt_speed_down',
   _TurtleState: 'alt_speed_enabled',
   _TurtleUpSpeedLimit: 'alt_speed_up',
-  _UpSpeedLimit: 'speed-limit-up',
+  _UpSpeedLimit: 'speed_limit_up',
   _UpSpeedLimited: 'speed_limit_up_enabled',
 };
 

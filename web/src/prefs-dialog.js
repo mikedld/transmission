@@ -407,7 +407,7 @@ export class PrefsDialog extends EventTarget {
 
     let input = document.createElement('input');
     input.type = 'number';
-    input.dataset.key = 'speed-limit-up';
+    input.dataset.key = 'speed_limit_up';
     root.append(input);
     PrefsDialog._enableIfChecked(input, cal.check);
     const upload_speed_input = input;
