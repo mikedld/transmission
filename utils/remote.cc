@@ -1810,7 +1810,7 @@ void print_session(tr_variant::Map const& map)
         fmt::print("  Download directory: {:s}\n", *sv);
     }
 
-    if (auto i = args->value_if<int64_t>(TR_KEY_peer_port); i)
+    if (auto i = args->value_if<int64_t>({ TR_KEY_peer_port, TR_KEY_peer_port_kebab }); i)
     {
         fmt::print("  Listen port: {:d}\n", *i);
     }
@@ -2863,7 +2863,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 'p':
-                args.insert_or_assign(TR_KEY_peer_port, numarg(optarg_sv));
+                args.insert_or_assign(TR_KEY_peer_port_kebab, numarg(optarg_sv));
                 break;
 
             case 'P':

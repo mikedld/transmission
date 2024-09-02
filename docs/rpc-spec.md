@@ -560,7 +560,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `peer_limit_global` | number | maximum global number of peers
 | `peer_limit_per_torrent` | number | maximum global number of peers
 | `peer_port_random_on_start` | boolean | true means pick a random peer port on launch
-| `peer-port` | number | port number
+| `peer_port` | number | port number
 | `pex-enabled` | boolean | true means allow PEX in public torrents
 | `port-forwarding-enabled` | boolean | true means ask upstream router to forward the configured peer port to transmission using UPnP or NAT-PMP
 | `queue-stalled-enabled` | boolean | whether or not to consider idle torrents as stalled

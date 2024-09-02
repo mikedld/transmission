@@ -37,7 +37,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 ```json
 {
     "rpc-enabled": true,
-    "peer-port": 51413,
+    "peer_port": 51413,
     "rpc-whitelist": "127.0.0.1,192.168.*.*"
 }
 ```
@@ -116,7 +116,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **reqq:** Number (default = 2000) The number of outstanding block requests a peer is allowed to queue in the client. The higher this number, the higher the max possible upload speed towards each peer.
 
 #### Peer Port
- * **peer-port:** Number (default = 51413)
+ * **peer_port:** Number (default = 51413)
  * **peer-port-random-high:** Number (default = 65535)
  * **peer-port-random-low:** Number (default = 1024)
  * **peer_port_random_on_start:** Boolean (default = false)

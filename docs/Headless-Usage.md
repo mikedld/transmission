@@ -54,7 +54,7 @@ Now, the config file can be edited. Some settings to draw your attention to:
     "peer_limit_global": 32,
     ...
     # For manual port forwarding. This controls the TCP and UDP bittorrent ports.
-    "peer-port": 32768,
+    "peer_port": 32768,
     ...
     # Reject RPC commands from anybody except localhost. For untrusted LANs.
     "rpc-bind-address": "127.0.0.1",

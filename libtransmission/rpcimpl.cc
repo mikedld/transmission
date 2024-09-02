@@ -1973,7 +1973,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetPeerPortRandomOnStart(session, *val);
     }
 
-    if (auto const val = args_in.value_if<int64_t>(TR_KEY_peer_port))
+    if (auto const val = args_in.value_if<int64_t>({ TR_KEY_peer_port, TR_KEY_peer_port_kebab }); val)
     {
         tr_sessionSetPeerPort(session, *val);
     }
@@ -2252,7 +2252,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_peer_limit_per_torrent:
     case TR_KEY_peer_limit_per_torrent_kebab:
         return session.peerLimitPerTorrent();
-    case TR_KEY_peer_port: return session.advertisedPeerPort().host();
+    case TR_KEY_peer_port:
+    case TR_KEY_peer_port_kebab:
+        return session.advertisedPeerPort().host();
     case TR_KEY_peer_port_random_on_start:
     case TR_KEY_peer_port_random_on_start_kebab:
         return session.isPortRandom();
