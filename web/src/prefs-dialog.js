@@ -615,7 +615,7 @@ export class PrefsDialog extends EventTarget {
       'blocklist-enabled-div',
       'Enable blocklist:',
     );
-    cal.check.dataset.key = 'blocklist-enabled';
+    cal.check.dataset.key = 'blocklist_enabled';
     root.append(cal.root);
     const blocklist_enabled_check = cal.check;
 
