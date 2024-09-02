@@ -1791,7 +1791,7 @@ void print_session(tr_variant::Map const& map)
         fmt::print("  RPC version: {:d}\n", *i);
     }
 
-    if (auto i = args->value_if<int64_t>(TR_KEY_rpc_version_minimum); i)
+    if (auto i = args->value_if<int64_t>({ TR_KEY_rpc_version_minimum, TR_KEY_rpc_version_minimum_kebab }); i)
     {
         fmt::print("  RPC minimum version: {:d}\n", *i);
     }

@@ -567,7 +567,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `queue_stalled_minutes` | number | torrents that are idle for N minuets aren't counted toward seed-queue-size or `download_queue_size`
 | `rename_partial_files` | boolean | true means append `.part` to incomplete files
 | `reqq` | number | the number of outstanding block requests a peer is allowed to queue in the client
-| `rpc-version-minimum` | number | the minimum RPC API version supported
+| `rpc_version_minimum` | number | the minimum RPC API version supported
 | `rpc-version-semver` | string | the current RPC API version in a [semver](https://semver.org)-compatible string
 | `rpc-version` | number | the current RPC API version
 | `script-torrent-added-enabled` | boolean | whether or not to call the `added` script
@@ -606,7 +606,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 `rpc-version` indicates the RPC interface version supported by the RPC server.
 It is incremented when a new version of Transmission changes the RPC interface.
 
-`rpc-version-minimum` indicates the oldest API supported by the RPC server.
+`rpc_version_minimum` indicates the oldest API supported by the RPC server.
 It is changes when a new version of Transmission changes the RPC interface
 in a way that is not backwards compatible. There are no plans for this
 to be common behavior.
@@ -619,7 +619,7 @@ except:
 
 * `blocklist_size`
 * `config_dir`
-* `rpc-version-minimum`,
+* `rpc_version_minimum`,
 * `rpc-version-semver`
 * `rpc-version`
 * `session-id`
@@ -787,9 +787,9 @@ version number.
 
 Since Transmission predates the semver 1.0 spec, the previous scheme was for
 the RPC version to be a whole number and to increment it whenever a change was
-made. That is session-get's `rpc-version`. `rpc-version-minimum` lists the
+made. That is session-get's `rpc-version`. `rpc_version_minimum` lists the
 oldest version that is compatible with the current version; i.e. an app coded
-to use `rpc-version-minimum` would still work on a Transmission release running
+to use `rpc_version_minimum` would still work on a Transmission release running
 `rpc-version`.
 
 Breaking changes are denoted with a :bomb: emoji.
