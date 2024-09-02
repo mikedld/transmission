@@ -62,7 +62,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 
 #### [Blocklists](./Blocklists.md)
 
- * **blocklist-url:** String (default = https://www.example.com/blocklist)
+ * **blocklist_url:** String (default = https://www.example.com/blocklist)
  * **blocklist_enabled:** Boolean (default = false)
 
 #### [Files and Locations](./Configuration-Files.md)

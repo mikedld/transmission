@@ -622,7 +622,7 @@ export class PrefsDialog extends EventTarget {
     input = document.createElement('input');
     input.type = 'url';
     input.value = 'http://www.example.com/blocklist';
-    input.dataset.key = 'blocklist-url';
+    input.dataset.key = 'blocklist_url';
     root.append(input);
     PrefsDialog._enableIfChecked(input, cal.check);
     const blocklist_url_input = input;

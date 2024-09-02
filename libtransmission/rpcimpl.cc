@@ -1887,7 +1887,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         session->set_blocklist_enabled(*val);
     }
 
-    if (auto const val = args_in.value_if<std::string_view>(TR_KEY_blocklist_url))
+    if (auto const val = args_in.value_if<std::string_view>({ TR_KEY_blocklist_url, TR_KEY_blocklist_url_kebab }); val)
     {
         session->setBlocklistUrl(*val);
     }
@@ -2201,7 +2201,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_blocklist_size:
     case TR_KEY_blocklist_size_kebab:
         return tr_blocklistGetRuleCount(&session);
-    case TR_KEY_blocklist_url: return session.blocklistUrl();
+    case TR_KEY_blocklist_url:
+    case TR_KEY_blocklist_url_kebab:
+        return session.blocklistUrl();
     case TR_KEY_cache_size_mb: return tr_sessionGetCacheLimit_MB(&session);
     case TR_KEY_config_dir: return session.configDir();
     case TR_KEY_default_trackers: return session.defaultTrackersStr();

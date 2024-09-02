@@ -24,7 +24,7 @@ There is a third option: add the blocklist URL in settings.json (only one blockl
 settings.json snippet:
 ```json
 "blocklist_enabled": true,
-"blocklist-url": "http://www.example.com/blocklist",
+"blocklist_url": "http://www.example.com/blocklist",
 ```
 
 Manual update example:
