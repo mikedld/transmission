@@ -2278,7 +2278,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_rpc_version_minimum:
     case TR_KEY_rpc_version_minimum_kebab:
         return RpcVersionMin;
-    case TR_KEY_rpc_version_semver: return RpcVersionSemver;
+    case TR_KEY_rpc_version_semver:
+    case TR_KEY_rpc_version_semver_kebab:
+        return RpcVersionSemver;
     case TR_KEY_script_torrent_added_enabled: return session.useScript(TR_SCRIPT_ON_TORRENT_ADDED);
     case TR_KEY_script_torrent_added_filename: return session.script(TR_SCRIPT_ON_TORRENT_ADDED);
     case TR_KEY_script_torrent_done_enabled: return session.useScript(TR_SCRIPT_ON_TORRENT_DONE);

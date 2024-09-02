@@ -568,7 +568,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `rename_partial_files` | boolean | true means append `.part` to incomplete files
 | `reqq` | number | the number of outstanding block requests a peer is allowed to queue in the client
 | `rpc_version_minimum` | number | the minimum RPC API version supported
-| `rpc-version-semver` | string | the current RPC API version in a [semver](https://semver.org)-compatible string
+| `rpc_version_semver` | string | the current RPC API version in a [semver](https://semver.org)-compatible string
 | `rpc-version` | number | the current RPC API version
 | `script-torrent-added-enabled` | boolean | whether or not to call the `added` script
 | `script-torrent-added-filename` | string | filename of the script to run
@@ -620,7 +620,7 @@ except:
 * `blocklist_size`
 * `config_dir`
 * `rpc_version_minimum`,
-* `rpc-version-semver`
+* `rpc_version_semver`
 * `rpc-version`
 * `session-id`
 * `units`
@@ -781,7 +781,7 @@ A bandwidth group description object has:
 This section lists the changes that have been made to the RPC protocol.
 
 There are two ways to check for API compatibility. Since most developers know
-[semver](https://semver.org/), session-get's `rpc-version-semver` is the
+[semver](https://semver.org/), session-get's `rpc_version_semver` is the
 recommended way. That value is a semver-compatible string of the RPC protocol
 version number.
 
@@ -1032,7 +1032,7 @@ Transmission 4.0.0 (`rpc-version-semver` 5.3.0, `rpc-version`: 17)
 | `group-get` | new method
 | `torrent-get` | :warning: old arg `wanted` was implemented as an array of `0` or `1` in Transmission 3.00 and older, despite being documented as an array of booleans. Transmission 4.0.0 and 4.0.1 "fixed" this by returning an array of booleans; but in practical terms, this change caused an unannounced breaking change for any 3rd party code that expected `0` or `1`. For this reason, 4.0.2 restored the 3.00 behavior and updated this spec to match the code.
 
-Transmission 4.1.0 (`rpc-version-semver` 5.4.0, `rpc-version`: 18)
+Transmission 4.1.0 (`rpc_version_semver` 5.4.0, `rpc-version`: 18)
 | Method | Description
 |:---|:---
 | `torrent_get` | new arg `sequential_download`
