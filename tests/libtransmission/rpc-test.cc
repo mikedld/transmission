@@ -219,6 +219,7 @@ TEST_F(RpcTest, sessionGet)
         TR_KEY_lpd_enabled_kebab,
         TR_KEY_lpd_enabled,
         TR_KEY_peer_limit_global_kebab,
+        TR_KEY_peer_limit_per_torrent_kebab,
         TR_KEY_peer_limit_global,
         TR_KEY_peer_limit_per_torrent,
         TR_KEY_peer_port,

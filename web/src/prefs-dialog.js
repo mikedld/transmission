@@ -539,7 +539,7 @@ export class PrefsDialog extends EventTarget {
 
     let input = document.createElement('input');
     input.type = 'number';
-    input.dataset.key = 'peer-limit-per-torrent';
+    input.dataset.key = 'peer_limit_per_torrent';
     input.id = makeUUID();
     label.setAttribute('for', input.id);
     root.append(input);

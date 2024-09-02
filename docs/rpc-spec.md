@@ -558,7 +558,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `incomplete_dir_enabled` | boolean | true means keep torrents in `incomplete_dir` until done
 | `lpd_enabled` | boolean | true means allow Local Peer Discovery in public torrents
 | `peer_limit_global` | number | maximum global number of peers
-| `peer-limit-per-torrent` | number | maximum global number of peers
+| `peer_limit_per_torrent` | number | maximum global number of peers
 | `peer-port-random-on-start` | boolean | true means pick a random peer port on launch
 | `peer-port` | number | port number
 | `pex-enabled` | boolean | true means allow PEX in public torrents
