@@ -165,7 +165,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
      * **Weekends**: 65 (binary: `1000001`)
      * **All Days**: 127 (binary: `1111111`)
  * **idle-seeding-limit:** Number (default = 30) Stop seeding after being idle for _N_ minutes.
- * **idle-seeding-limit-enabled:** Boolean (default = false)
+ * **idle_seeding_limit_enabled:** Boolean (default = false)
  * **ratio-limit:** Number (default = 2.0)
  * **ratio-limit-enabled:**  Boolean (default = false)
 

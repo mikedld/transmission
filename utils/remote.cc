@@ -1855,7 +1855,8 @@ void print_session(tr_variant::Map const& map)
     auto const up_enabled = args->value_if<bool>(TR_KEY_speed_limit_up_enabled);
     auto const down_enabled = args->value_if<bool>(TR_KEY_speed_limit_down_enabled);
     auto const speed_ratio_limited = args->value_if<bool>(TR_KEY_seedRatioLimited);
-    auto const idle_seeding_limited = args->value_if<bool>(TR_KEY_idle_seeding_limit_enabled);
+    auto const idle_seeding_limited = args->value_if<bool>(
+        { TR_KEY_idle_seeding_limit_enabled, TR_KEY_idle_seeding_limit_enabled_kebab });
     auto const alt_down = args->value_if<int64_t>({ TR_KEY_alt_speed_down, TR_KEY_alt_speed_down_kebab });
     auto const alt_up = args->value_if<int64_t>({ TR_KEY_alt_speed_up, TR_KEY_alt_speed_up_kebab });
     auto const alt_begin = args->value_if<int64_t>({ TR_KEY_alt_speed_time_begin, TR_KEY_alt_speed_time_begin_kebab });
@@ -2896,11 +2897,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
 
             case 958:
                 args.insert_or_assign(TR_KEY_idle_seeding_limit, tr_num_parse<int64_t>(optarg_sv).value());
-                args.insert_or_assign(TR_KEY_idle_seeding_limit_enabled, true);
+                args.insert_or_assign(TR_KEY_idle_seeding_limit_enabled_kebab, true);
                 break;
 
             case 959:
-                args.insert_or_assign(TR_KEY_idle_seeding_limit_enabled, false);
+                args.insert_or_assign(TR_KEY_idle_seeding_limit_enabled_kebab, false);
                 break;
 
             case 990:

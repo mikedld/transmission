@@ -210,6 +210,7 @@ enum
     TR_KEY_idle_limit,
     TR_KEY_idle_mode,
     TR_KEY_idle_seeding_limit,
+    TR_KEY_idle_seeding_limit_enabled_kebab,
     TR_KEY_idle_seeding_limit_enabled,
     TR_KEY_ids,
     TR_KEY_incomplete,

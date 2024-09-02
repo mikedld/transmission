@@ -347,7 +347,7 @@ export class PrefsDialog extends EventTarget {
       'stop-idle-div',
       'Stop seeding if idle for N mins:',
     );
-    cal.check.dataset.key = 'idle-seeding-limit-enabled';
+    cal.check.dataset.key = 'idle_seeding_limit_enabled';
     root.append(cal.root);
     const stop_idle_check = cal.check;
 
