@@ -789,7 +789,7 @@ void Session::updateBlocklist()
     q->add(
         [this](RpcResponse const& r)
         {
-            if (auto const size = dictFind<int>(r.args.get(), TR_KEY_blocklist_size); size)
+            if (auto const size = dictFind<int>(r.args.get(), TR_KEY_blocklist_size_kebab); size)
             {
                 setBlocklistSize(*size);
             }
@@ -954,7 +954,7 @@ void Session::updateInfo(tr_variant* args_dict)
         prefs_.set(Prefs::RPC_WHITELIST, QString::fromUtf8(tr_sessionGetRPCWhitelist(session_)));
     }
 
-    if (auto const size = dictFind<int>(args_dict, TR_KEY_blocklist_size); size && *size != blocklistSize())
+    if (auto const size = dictFind<int>(args_dict, TR_KEY_blocklist_size_kebab); size && *size != blocklistSize())
     {
         setBlocklistSize(*size);
     }

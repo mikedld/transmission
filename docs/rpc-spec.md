@@ -541,7 +541,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `alt_speed_time_end` | number | when to turn off alt speeds (units: same)
 | `alt_speed_up` | number | max global upload speed (KBps)
 | `blocklist_enabled` | boolean | true means enabled
-| `blocklist-size` | number | number of rules in the blocklist
+| `blocklist_size` | number | number of rules in the blocklist
 | `blocklist-url` | string | location of the blocklist to use for `blocklist-update`
 | `cache-size-mb` | number | maximum size of the disk cache (MB)
 | `config-dir` | string | location of transmission's configuration directory
@@ -617,7 +617,7 @@ Method name: `session-set`
 Request arguments: the mutable properties from 4.1's arguments, i.e. all of them
 except:
 
-* `blocklist-size`
+* `blocklist_size`
 * `config-dir`
 * `rpc-version-minimum`,
 * `rpc-version-semver`
@@ -668,7 +668,7 @@ Method name: `blocklist-update`
 
 Request arguments: none
 
-Response arguments: a number `blocklist-size`
+Response arguments: a number `blocklist_size`
 
 ### 4.4 Port checking
 This method tests to see if your incoming peer port is accessible

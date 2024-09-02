@@ -1347,7 +1347,7 @@ void Session::blocklist_update()
             int64_t ruleCount = 0;
 
             if (!tr_variantDictFindDict(&response, TR_KEY_arguments, &args) ||
-                !tr_variantDictFindInt(args, TR_KEY_blocklist_size, &ruleCount))
+                !tr_variantDictFindInt(args, TR_KEY_blocklist_size_kebab, &ruleCount))
             {
                 ruleCount = -1;
             }

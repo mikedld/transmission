@@ -1493,7 +1493,9 @@ void onBlocklistFetched(tr_web::FetchResponse const& web_response)
     }
 
     // feed it to the session and give the client a response
-    data->args_out.try_emplace(TR_KEY_blocklist_size, tr_blocklistSetContent(session, filename));
+    auto const blocklist_size = tr_blocklistSetContent(session, filename);
+    data->args_out.try_emplace(TR_KEY_blocklist_size, blocklist_size);
+    data->args_out.try_emplace(TR_KEY_blocklist_size_kebab, blocklist_size);
     tr_sys_path_remove(filename);
     tr_idle_function_done(data, SuccessResult);
 }
@@ -2196,7 +2198,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_blocklist_enabled:
     case TR_KEY_blocklist_enabled_kebab:
         return session.blocklist_enabled();
-    case TR_KEY_blocklist_size: return tr_blocklistGetRuleCount(&session);
+    case TR_KEY_blocklist_size:
+    case TR_KEY_blocklist_size_kebab:
+        return tr_blocklistGetRuleCount(&session);
     case TR_KEY_blocklist_url: return session.blocklistUrl();
     case TR_KEY_cache_size_mb: return tr_sessionGetCacheLimit_MB(&session);
     case TR_KEY_config_dir: return session.configDir();

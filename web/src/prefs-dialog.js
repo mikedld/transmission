@@ -136,7 +136,7 @@ export class PrefsDialog extends EventTarget {
       for (const element of this.elements.root.querySelectorAll(
         `[data-key="${key}"]`,
       )) {
-        if (key === 'blocklist-size') {
+        if (key === 'blocklist_size') {
           const n = Formatter.number(value);
           element.innerHTML = `Blocklist has <span class="blocklist-size-number">${n}</span> rules`;
           setTextContent(this.elements.peers.blocklist_update_button, 'Update');
@@ -629,7 +629,7 @@ export class PrefsDialog extends EventTarget {
 
     label = document.createElement('label');
     label.textContent = 'Blocklist has {n} rules';
-    label.dataset.key = 'blocklist-size';
+    label.dataset.key = 'blocklist_size';
     label.classList.add('blocklist-size-label');
     PrefsDialog._enableIfChecked(label, cal.check);
     root.append(label);
