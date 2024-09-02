@@ -355,7 +355,7 @@ export class PrefsDialog extends EventTarget {
     input.type = 'number';
     input.min = '0.1';
     input.step = 'any';
-    input.dataset.key = 'idle-seeding-limit';
+    input.dataset.key = 'idle_seeding_limit';
     root.append(input);
     PrefsDialog._enableIfChecked(input, cal.check);
     const stop_idle_input = input;

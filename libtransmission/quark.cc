@@ -209,6 +209,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "idle-mode"sv,
     "idle-seeding-limit"sv,
     "idle-seeding-limit-enabled"sv,
+    "idle_seeding_limit"sv,
     "idle_seeding_limit_enabled"sv,
     "ids"sv,
     "incomplete"sv,
@@ -705,6 +706,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_have_unchecked_camel: return TR_KEY_have_unchecked;
     case TR_KEY_have_valid_camel: return TR_KEY_have_valid;
     case TR_KEY_honors_session_limits_camel: return TR_KEY_honors_session_limits;
+    case TR_KEY_idle_seeding_limit_kebab: return TR_KEY_idle_seeding_limit;
     case TR_KEY_idle_seeding_limit_enabled_kebab: return TR_KEY_idle_seeding_limit_enabled;
     case TR_KEY_is_backup_camel: return TR_KEY_is_backup;
     case TR_KEY_is_downloading_from_camel: return TR_KEY_is_downloading_from;

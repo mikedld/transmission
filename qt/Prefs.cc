@@ -116,7 +116,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { DOWNLOAD_QUEUE_ENABLED, TR_KEY_download_queue_enabled_kebab, QMetaType::Bool },
     { DOWNLOAD_QUEUE_SIZE, TR_KEY_download_queue_size_kebab, QMetaType::Int },
     { ENCRYPTION, TR_KEY_encryption, QMetaType::Int },
-    { IDLE_LIMIT, TR_KEY_idle_seeding_limit, QMetaType::Int },
+    { IDLE_LIMIT, TR_KEY_idle_seeding_limit_kebab, QMetaType::Int },
     { IDLE_LIMIT_ENABLED, TR_KEY_idle_seeding_limit_enabled_kebab, QMetaType::Bool },
     { INCOMPLETE_DIR, TR_KEY_incomplete_dir, QMetaType::QString },
     { INCOMPLETE_DIR_ENABLED, TR_KEY_incomplete_dir_enabled, QMetaType::Bool },

@@ -1865,7 +1865,7 @@ void print_session(tr_variant::Map const& map)
     auto const up_limit = args->value_if<int64_t>(TR_KEY_speed_limit_up);
     auto const down_limit = args->value_if<int64_t>(TR_KEY_speed_limit_down);
     auto const peer_limit = args->value_if<int64_t>(TR_KEY_peer_limit_global);
-    auto const idle_seeding_limit = args->value_if<int64_t>(TR_KEY_idle_seeding_limit);
+    auto const idle_seeding_limit = args->value_if<int64_t>({ TR_KEY_idle_seeding_limit, TR_KEY_idle_seeding_limit_kebab });
     auto const seed_ratio_limit = args->value_if<double>({ TR_KEY_seed_ratio_limit, TR_KEY_seed_ratio_limit_camel });
 
     if (alt_down && alt_enabled && alt_begin && alt_time_enabled && alt_end && alt_day && alt_up && peer_limit && down_limit &&
@@ -2896,7 +2896,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 958:
-                args.insert_or_assign(TR_KEY_idle_seeding_limit, tr_num_parse<int64_t>(optarg_sv).value());
+                args.insert_or_assign(TR_KEY_idle_seeding_limit_kebab, tr_num_parse<int64_t>(optarg_sv).value());
                 args.insert_or_assign(TR_KEY_idle_seeding_limit_enabled_kebab, true);
                 break;
 
