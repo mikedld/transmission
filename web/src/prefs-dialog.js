@@ -581,7 +581,7 @@ export class PrefsDialog extends EventTarget {
     );
     cal.check.title =
       "PEX is a tool for exchanging peer lists with the peers you're connected to.";
-    cal.check.dataset.key = 'pex-enabled';
+    cal.check.dataset.key = 'pex_enabled';
     cal.label.title = cal.check.title;
     root.append(cal.root);
     const pex_check = cal.check;

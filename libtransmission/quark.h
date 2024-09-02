@@ -347,6 +347,7 @@ enum
     TR_KEY_percent_done_camel,
     TR_KEY_percent_complete,
     TR_KEY_percent_done,
+    TR_KEY_pex_enabled_kebab,
     TR_KEY_pex_enabled,
     TR_KEY_pidfile,
     TR_KEY_piece,

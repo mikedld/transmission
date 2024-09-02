@@ -346,6 +346,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "percent_complete"sv,
     "percent_done"sv,
     "pex-enabled"sv,
+    "pex_enabled"sv,
     "pidfile"sv,
     "piece"sv,
     "piece length"sv,
@@ -759,6 +760,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_peers_sending_to_us_camel: return TR_KEY_peers_sending_to_us;
     case TR_KEY_percent_complete_camel: return TR_KEY_percent_complete;
     case TR_KEY_percent_done_camel: return TR_KEY_percent_done;
+    case TR_KEY_pex_enabled_kebab: return TR_KEY_pex_enabled;
     case TR_KEY_piece_count_camel: return TR_KEY_piece_count;
     case TR_KEY_piece_size_camel: return TR_KEY_piece_size;
     case TR_KEY_primary_mime_type_kebab: return TR_KEY_primary_mime_type;

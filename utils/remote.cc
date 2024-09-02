@@ -1835,7 +1835,7 @@ void print_session(tr_variant::Map const& map)
         fmt::print("  Local peer discovery enabled: {:s}\n", *b ? "Yes" : "No");
     }
 
-    if (auto b = args->value_if<bool>(TR_KEY_pex_enabled); b)
+    if (auto b = args->value_if<bool>({ TR_KEY_pex_enabled, TR_KEY_pex_enabled_kebab }); b)
     {
         fmt::print("  Peer exchange allowed: {:s}\n", *b ? "Yes" : "No");
     }
@@ -2871,11 +2871,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 'x':
-                args.insert_or_assign(TR_KEY_pex_enabled, true);
+                args.insert_or_assign(TR_KEY_pex_enabled_kebab, true);
                 break;
 
             case 'X':
-                args.insert_or_assign(TR_KEY_pex_enabled, false);
+                args.insert_or_assign(TR_KEY_pex_enabled_kebab, false);
                 break;
 
             case 'y':
