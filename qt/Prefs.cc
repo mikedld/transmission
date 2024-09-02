@@ -138,7 +138,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { PEX_ENABLED, TR_KEY_pex_enabled, QMetaType::Bool },
     { DHT_ENABLED, TR_KEY_dht_enabled_kebab, QMetaType::Bool },
     { UTP_ENABLED, TR_KEY_utp_enabled, QMetaType::Bool },
-    { LPD_ENABLED, TR_KEY_lpd_enabled, QMetaType::Bool },
+    { LPD_ENABLED, TR_KEY_lpd_enabled_kebab, QMetaType::Bool },
     { PORT_FORWARDING, TR_KEY_port_forwarding_enabled, QMetaType::Bool },
     { PREALLOCATION, TR_KEY_preallocation, QMetaType::Int },
     { RATIO, TR_KEY_ratio_limit, QMetaType::Double },

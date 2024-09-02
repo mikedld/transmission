@@ -272,6 +272,7 @@ enum
     TR_KEY_left_until_done,
     TR_KEY_length,
     TR_KEY_location,
+    TR_KEY_lpd_enabled_kebab,
     TR_KEY_lpd_enabled,
     TR_KEY_m,
     TR_KEY_magnet_link_camel,

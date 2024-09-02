@@ -601,7 +601,7 @@ export class PrefsDialog extends EventTarget {
       'Use LPD to find more peers',
     );
     cal.check.title = 'LPD is a tool for finding peers on your local network.';
-    cal.check.dataset.key = 'lpd-enabled';
+    cal.check.dataset.key = 'lpd_enabled';
     cal.label.title = cal.check.title;
     root.append(cal.root);
     const lpd_check = cal.check;
