@@ -200,6 +200,7 @@ TEST_F(RpcTest, sessionGet)
         TR_KEY_dht_enabled_kebab,
         TR_KEY_dht_enabled,
         TR_KEY_download_dir_kebab,
+        TR_KEY_download_dir_free_space_kebab,
         TR_KEY_download_dir,
         TR_KEY_download_dir_free_space,
         TR_KEY_download_queue_enabled,

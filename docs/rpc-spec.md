@@ -548,7 +548,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `default_trackers` | string | announce URLs, one per line, and a blank line between [tiers](https://www.bittorrent.org/beps/bep_0012.html).
 | `dht_enabled` | boolean | true means allow DHT in public torrents
 | `download_dir` | string | default path to download torrents
-| `download-dir-free-space` | number |  **DEPRECATED** Use the `free-space` method instead.
+| `download_dir_free_space` | number |  **DEPRECATED** Use the `free-space` method instead.
 | `download-queue-enabled` | boolean | if true, limit how many torrents can be downloaded at once
 | `download-queue-size` | number | max number of torrents to download at once (see download-queue-enabled)
 | `encryption` | string | `required`, `preferred`, `tolerated`
