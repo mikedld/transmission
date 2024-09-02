@@ -1993,7 +1993,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetRatioLimit(session, *val);
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_seedRatioLimited))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_seed_ratio_limited, TR_KEY_seed_ratio_limited_camel }); val)
     {
         tr_sessionSetRatioLimited(session, *val);
     }
@@ -2304,7 +2304,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_seed_ratio_limit:
     case TR_KEY_seed_ratio_limit_camel:
         return session.desiredRatio();
-    case TR_KEY_seedRatioLimited: return session.isRatioLimited();
+    case TR_KEY_seed_ratio_limited:
+    case TR_KEY_seed_ratio_limited_camel:
+        return session.isRatioLimited();
     case TR_KEY_seed_queue_enabled:
     case TR_KEY_seed_queue_enabled_kebab:
         return session.queueEnabled(TR_UP);

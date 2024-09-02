@@ -330,7 +330,7 @@ export class PrefsDialog extends EventTarget {
       'stop-ratio-div',
       'Stop seeding at ratio:',
     );
-    cal.check.dataset.key = 'seedRatioLimited';
+    cal.check.dataset.key = 'seed_ratio_limited';
     root.append(cal.root);
     const stop_ratio_check = cal.check;
 

@@ -579,7 +579,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `seed_queue_enabled` | boolean | if true, limit how many torrents can be uploaded at once
 | `seed_queue_size` | number | max number of torrents to uploaded at once (see `seed_queue_enabled`)
 | `seed_ratio_limit` | double | the default seed ratio for torrents to use
-| `seedRatioLimited` | boolean | true if `seed_ratio_limit` is honored by default
+| `seed_ratio_limited` | boolean | true if `seed_ratio_limit` is honored by default
 | `session-id` | string | the current `X-Transmission-Session-Id` value
 | `speed-limit-down-enabled` | boolean | true means enabled
 | `speed-limit-down` | number | max global download speed (KBps)

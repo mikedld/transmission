@@ -214,7 +214,7 @@ void Session::updatePref(int key)
             break;
 
         case Prefs::RATIO_ENABLED:
-            sessionSet(TR_KEY_seedRatioLimited, prefs_.variant(key));
+            sessionSet(TR_KEY_seed_ratio_limited_camel, prefs_.variant(key));
             break;
 
         case Prefs::ENCRYPTION:
@@ -932,7 +932,7 @@ void Session::updateInfo(tr_variant* args_dict)
         }
     }
 
-    if (auto const b = dictFind<bool>(args_dict, TR_KEY_seedRatioLimited); b)
+    if (auto const b = dictFind<bool>(args_dict, TR_KEY_seed_ratio_limited_camel); b)
     {
         prefs_.set(Prefs::RATIO_ENABLED, *b);
     }

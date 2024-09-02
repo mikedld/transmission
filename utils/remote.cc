@@ -1854,7 +1854,7 @@ void print_session(tr_variant::Map const& map)
     auto const alt_time_enabled = args->value_if<bool>({ TR_KEY_alt_speed_time_enabled, TR_KEY_alt_speed_time_enabled_kebab });
     auto const up_enabled = args->value_if<bool>(TR_KEY_speed_limit_up_enabled);
     auto const down_enabled = args->value_if<bool>(TR_KEY_speed_limit_down_enabled);
-    auto const speed_ratio_limited = args->value_if<bool>(TR_KEY_seedRatioLimited);
+    auto const speed_ratio_limited = args->value_if<bool>({ TR_KEY_seed_ratio_limited, TR_KEY_seed_ratio_limited_camel });
     auto const idle_seeding_limited = args->value_if<bool>(
         { TR_KEY_idle_seeding_limit_enabled, TR_KEY_idle_seeding_limit_enabled_kebab });
     auto const alt_down = args->value_if<int64_t>({ TR_KEY_alt_speed_down, TR_KEY_alt_speed_down_kebab });
@@ -2888,11 +2888,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
 
             case 953:
                 args.insert_or_assign(TR_KEY_seed_ratio_limit_camel, tr_num_parse<double>(optarg_sv).value());
-                args.insert_or_assign(TR_KEY_seedRatioLimited, true);
+                args.insert_or_assign(TR_KEY_seed_ratio_limited_camel, true);
                 break;
 
             case 954:
-                args.insert_or_assign(TR_KEY_seedRatioLimited, false);
+                args.insert_or_assign(TR_KEY_seed_ratio_limited_camel, false);
                 break;
 
             case 958:
