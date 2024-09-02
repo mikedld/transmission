@@ -1842,7 +1842,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         return "incomplete torrents directory path is not absolute";
     }
 
-    if (auto const val = args_in.value_if<int64_t>(TR_KEY_cache_size_mb))
+    if (auto const val = args_in.value_if<int64_t>({ TR_KEY_cache_size_mb, TR_KEY_cache_size_mb_kebab }); val)
     {
         tr_sessionSetCacheLimit_MB(session, *val);
     }
@@ -2204,7 +2204,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_blocklist_url:
     case TR_KEY_blocklist_url_kebab:
         return session.blocklistUrl();
-    case TR_KEY_cache_size_mb: return tr_sessionGetCacheLimit_MB(&session);
+    case TR_KEY_cache_size_mb:
+    case TR_KEY_cache_size_mb_kebab:
+        return tr_sessionGetCacheLimit_MB(&session);
     case TR_KEY_config_dir: return session.configDir();
     case TR_KEY_default_trackers: return session.defaultTrackersStr();
     case TR_KEY_dht_enabled: return session.allowsDHT();

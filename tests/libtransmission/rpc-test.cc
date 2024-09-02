@@ -191,6 +191,7 @@ TEST_F(RpcTest, sessionGet)
         TR_KEY_blocklist_enabled,
         TR_KEY_blocklist_size,
         TR_KEY_blocklist_url,
+        TR_KEY_cache_size_mb_kebab,
         TR_KEY_cache_size_mb,
         TR_KEY_config_dir,
         TR_KEY_default_trackers,

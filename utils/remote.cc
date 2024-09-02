@@ -1845,7 +1845,7 @@ void print_session(tr_variant::Map const& map)
         fmt::print("  Encryption: {:s}\n", *sv);
     }
 
-    if (auto i = args->value_if<int64_t>(TR_KEY_cache_size_mb); i)
+    if (auto i = args->value_if<int64_t>({ TR_KEY_cache_size_mb, TR_KEY_cache_size_mb_kebab }); i)
     {
         fmt::print("  Maximum memory cache size: {:s}\n", Memory{ *i, Memory::Units::MBytes }.to_string());
     }
@@ -2822,7 +2822,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 'e':
-                args.insert_or_assign(TR_KEY_cache_size_mb, tr_num_parse<int64_t>(optarg_sv).value());
+                args.insert_or_assign(TR_KEY_cache_size_mb_kebab, tr_num_parse<int64_t>(optarg_sv).value());
                 break;
 
             case 910:
