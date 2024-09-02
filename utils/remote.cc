@@ -1786,7 +1786,7 @@ void print_session(tr_variant::Map const& map)
         fmt::print("  Daemon version: {:s}\n", *sv);
     }
 
-    if (auto i = args->value_if<int64_t>(TR_KEY_rpc_version); i)
+    if (auto i = args->value_if<int64_t>({ TR_KEY_rpc_version, TR_KEY_rpc_version_kebab }); i)
     {
         fmt::print("  RPC version: {:d}\n", *i);
     }

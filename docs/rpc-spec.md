@@ -1,5 +1,5 @@
 > [!IMPORTANT] 
-> Since `4.1.0` (`rpc-version` 18), Transmission has switched to snake_case for all RPC strings.
+> Since `4.1.0` (`rpc_version` 18), Transmission has switched to snake_case for all RPC strings.
 > Transmission used to use a mix of kebab-case and camelCase. Those are still available for backward compatibility,
 > but they are deprecated and will be removed in `5.0.0`.
 > 
@@ -569,7 +569,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `reqq` | number | the number of outstanding block requests a peer is allowed to queue in the client
 | `rpc_version_minimum` | number | the minimum RPC API version supported
 | `rpc_version_semver` | string | the current RPC API version in a [semver](https://semver.org)-compatible string
-| `rpc-version` | number | the current RPC API version
+| `rpc_version` | number | the current RPC API version
 | `script-torrent-added-enabled` | boolean | whether or not to call the `added` script
 | `script-torrent-added-filename` | string | filename of the script to run
 | `script-torrent-done-enabled` | boolean | whether or not to call the `done` script
@@ -603,7 +603,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `memory-units` | array  | 4 strings: KB/s, MB/s, GB/s, TB/s
 | `memory-bytes` | number | number of bytes in a KB (1000 for kB; 1024 for KiB)
 
-`rpc-version` indicates the RPC interface version supported by the RPC server.
+`rpc_version` indicates the RPC interface version supported by the RPC server.
 It is incremented when a new version of Transmission changes the RPC interface.
 
 `rpc_version_minimum` indicates the oldest API supported by the RPC server.
@@ -621,7 +621,7 @@ except:
 * `config_dir`
 * `rpc_version_minimum`,
 * `rpc_version_semver`
-* `rpc-version`
+* `rpc_version`
 * `session-id`
 * `units`
 * `version`
@@ -787,10 +787,10 @@ version number.
 
 Since Transmission predates the semver 1.0 spec, the previous scheme was for
 the RPC version to be a whole number and to increment it whenever a change was
-made. That is session-get's `rpc-version`. `rpc_version_minimum` lists the
+made. That is session-get's `rpc_version`. `rpc_version_minimum` lists the
 oldest version that is compatible with the current version; i.e. an app coded
 to use `rpc_version_minimum` would still work on a Transmission release running
-`rpc-version`.
+`rpc_version`.
 
 Breaking changes are denoted with a :bomb: emoji.
 
@@ -1032,7 +1032,7 @@ Transmission 4.0.0 (`rpc-version-semver` 5.3.0, `rpc-version`: 17)
 | `group-get` | new method
 | `torrent-get` | :warning: old arg `wanted` was implemented as an array of `0` or `1` in Transmission 3.00 and older, despite being documented as an array of booleans. Transmission 4.0.0 and 4.0.1 "fixed" this by returning an array of booleans; but in practical terms, this change caused an unannounced breaking change for any 3rd party code that expected `0` or `1`. For this reason, 4.0.2 restored the 3.00 behavior and updated this spec to match the code.
 
-Transmission 4.1.0 (`rpc_version_semver` 5.4.0, `rpc-version`: 18)
+Transmission 4.1.0 (`rpc_version_semver` 5.4.0, `rpc_version`: 18)
 | Method | Description
 |:---|:---
 | `torrent_get` | new arg `sequential_download`
