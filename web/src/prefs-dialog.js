@@ -288,7 +288,7 @@ export class PrefsDialog extends EventTarget {
 
     input = document.createElement('input');
     input.type = 'text';
-    input.dataset.key = 'incomplete-dir';
+    input.dataset.key = 'incomplete_dir';
     root.append(input);
     PrefsDialog._enableIfChecked(input, cal.check);
     const incomplete_dir_input = input;

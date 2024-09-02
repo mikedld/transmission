@@ -68,8 +68,8 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 #### [Files and Locations](./Configuration-Files.md)
 
  * **download_dir:** String (default = [default locations](Configuration-Files.md#Locations))
- * **incomplete-dir:** String (default = [default locations](Configuration-Files.md#Locations)) Directory to keep files in until torrent is complete.
- * **incomplete_dir_enabled:** Boolean (default = false) When enabled, new torrents will download the files to **incomplete-dir**. When complete, the files will be moved to `download_dir`.
+ * **incomplete_dir:** String (default = [default locations](Configuration-Files.md#Locations)) Directory to keep files in until torrent is complete.
+ * **incomplete_dir_enabled:** Boolean (default = false) When enabled, new torrents will download the files to `incomplete_dir`. When complete, the files will be moved to `download_dir`.
  * **preallocation:** Number (0 = Off, 1 = Fast, 2 = Full (slower but reduces disk fragmentation), default = 1)
  * **rename-partial-files:** Boolean (default = true) Postfix partially downloaded files with ".part".
  * **start-added-torrents:** Boolean (default = true) Start torrents as soon as they are added.

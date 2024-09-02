@@ -2814,7 +2814,7 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 'c':
-                args.insert_or_assign(TR_KEY_incomplete_dir, optarg_sv);
+                args.insert_or_assign(TR_KEY_incomplete_dir_kebab, optarg_sv);
                 args.insert_or_assign(TR_KEY_incomplete_dir_enabled_kebab, true);
                 break;
 

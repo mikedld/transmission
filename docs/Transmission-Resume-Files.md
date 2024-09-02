@@ -13,7 +13,7 @@ The file contains the following **per-torrent** properties:
 | `destination` | Download directory |
 | `dnd` | Do not download file integer list (one item per file in torrent) 0=download, 1=dnd |
 | `downloaded` | Total non-corrupt bytes downloaded |
-| `incomplete-dir` | Location of incomplete torrent files |
+| `incomplete_dir` | Location of incomplete torrent files |
 | `max-peers` | Maximum number of connected peers |
 | `paused` | true if torrent is paused |
 | `peers2` | IPv4 peers |

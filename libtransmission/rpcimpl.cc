@@ -1836,7 +1836,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         return "download directory path is not absolute";
     }
 
-    auto const incomplete_dir = args_in.value_if<std::string_view>(TR_KEY_incomplete_dir);
+    auto const incomplete_dir = args_in.value_if<std::string_view>({ TR_KEY_incomplete_dir, TR_KEY_incomplete_dir_kebab });
     if (incomplete_dir && tr_sys_path_is_relative(*incomplete_dir))
     {
         return "incomplete torrents directory path is not absolute";
@@ -2236,7 +2236,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_idle_seeding_limit_enabled:
     case TR_KEY_idle_seeding_limit_enabled_kebab:
         return session.isIdleLimited();
-    case TR_KEY_incomplete_dir: return session.incompleteDir();
+    case TR_KEY_incomplete_dir:
+    case TR_KEY_incomplete_dir_kebab:
+        return session.incompleteDir();
     case TR_KEY_incomplete_dir_enabled:
     case TR_KEY_incomplete_dir_enabled_kebab:
         return session.useIncompleteDir();

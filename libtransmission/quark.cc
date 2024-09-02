@@ -215,6 +215,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "incomplete"sv,
     "incomplete-dir"sv,
     "incomplete-dir-enabled"sv,
+    "incomplete_dir"sv,
     "incomplete_dir_enabled"sv,
     "info"sv,
     "inhibit-desktop-hibernation"sv,
@@ -709,6 +710,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_honors_session_limits_camel: return TR_KEY_honors_session_limits;
     case TR_KEY_idle_seeding_limit_kebab: return TR_KEY_idle_seeding_limit;
     case TR_KEY_idle_seeding_limit_enabled_kebab: return TR_KEY_idle_seeding_limit_enabled;
+    case TR_KEY_incomplete_dir_kebab: return TR_KEY_incomplete_dir;
     case TR_KEY_incomplete_dir_enabled_kebab: return TR_KEY_incomplete_dir_enabled;
     case TR_KEY_is_backup_camel: return TR_KEY_is_backup;
     case TR_KEY_is_downloading_from_camel: return TR_KEY_is_downloading_from;
