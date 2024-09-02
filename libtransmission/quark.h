@@ -417,6 +417,7 @@ enum
     TR_KEY_remote_session_requres_authentication,
     TR_KEY_remote_session_username,
     TR_KEY_removed,
+    TR_KEY_rename_partial_files_kebab,
     TR_KEY_rename_partial_files,
     TR_KEY_reqq,
     TR_KEY_result,

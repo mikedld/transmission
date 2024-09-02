@@ -416,6 +416,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "remote-session-username"sv,
     "removed"sv,
     "rename-partial-files"sv,
+    "rename_partial_files"sv,
     "reqq"sv,
     "result"sv,
     "rpc-authentication-required"sv,
@@ -779,6 +780,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_rate_to_peer_camel: return TR_KEY_rate_to_peer;
     case TR_KEY_rate_upload_camel: return TR_KEY_rate_upload;
     case TR_KEY_recheck_progress_camel: return TR_KEY_recheck_progress;
+    case TR_KEY_rename_partial_files_kebab: return TR_KEY_rename_partial_files;
     case TR_KEY_seconds_downloading_camel: return TR_KEY_seconds_downloading;
     case TR_KEY_scrape_state_camel: return TR_KEY_scrape_state;
     case TR_KEY_seconds_seeding_camel: return TR_KEY_seconds_seeding;

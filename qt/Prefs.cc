@@ -143,7 +143,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { PREALLOCATION, TR_KEY_preallocation, QMetaType::Int },
     { RATIO, TR_KEY_ratio_limit, QMetaType::Double },
     { RATIO_ENABLED, TR_KEY_ratio_limit_enabled, QMetaType::Bool },
-    { RENAME_PARTIAL_FILES, TR_KEY_rename_partial_files, QMetaType::Bool },
+    { RENAME_PARTIAL_FILES, TR_KEY_rename_partial_files_kebab, QMetaType::Bool },
     { RPC_AUTH_REQUIRED, TR_KEY_rpc_authentication_required, QMetaType::Bool },
     { RPC_ENABLED, TR_KEY_rpc_enabled, QMetaType::Bool },
     { RPC_PASSWORD, TR_KEY_rpc_password, QMetaType::QString },

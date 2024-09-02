@@ -302,7 +302,7 @@ export class PrefsDialog extends EventTarget {
       'suffix-div',
       `Append "part" to incomplete files' names`,
     );
-    cal.check.dataset.key = 'rename-partial-files';
+    cal.check.dataset.key = 'rename_partial_files';
     root.append(cal.root);
     const suffix_check = cal.check;
 

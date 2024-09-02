@@ -1983,7 +1983,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetPortForwardingEnabled(session, *val);
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_rename_partial_files))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_rename_partial_files, TR_KEY_rename_partial_files_kebab }); val)
     {
         tr_sessionSetIncompleteFileNamingEnabled(session, *val);
     }
@@ -2270,7 +2270,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_queue_stalled_minutes:
     case TR_KEY_queue_stalled_minutes_kebab:
         return session.queueStalledMinutes();
-    case TR_KEY_rename_partial_files: return session.isIncompleteFileNamingEnabled();
+    case TR_KEY_rename_partial_files:
+    case TR_KEY_rename_partial_files_kebab:
+        return session.isIncompleteFileNamingEnabled();
     case TR_KEY_reqq: return session.reqq();
     case TR_KEY_rpc_version: return RpcVersion;
     case TR_KEY_rpc_version_minimum: return RpcVersionMin;

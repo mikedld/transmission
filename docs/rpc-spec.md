@@ -565,7 +565,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `port_forwarding_enabled` | boolean | true means ask upstream router to forward the configured peer port to transmission using UPnP or NAT-PMP
 | `queue_stalled_enabled` | boolean | whether or not to consider idle torrents as stalled
 | `queue_stalled_minutes` | number | torrents that are idle for N minuets aren't counted toward seed-queue-size or `download_queue_size`
-| `rename-partial-files` | boolean | true means append `.part` to incomplete files
+| `rename_partial_files` | boolean | true means append `.part` to incomplete files
 | `reqq` | number | the number of outstanding block requests a peer is allowed to queue in the client
 | `rpc-version-minimum` | number | the minimum RPC API version supported
 | `rpc-version-semver` | string | the current RPC API version in a [semver](https://semver.org)-compatible string
