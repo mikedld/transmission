@@ -964,7 +964,7 @@ void Session::updateInfo(tr_variant* args_dict)
         session_version_ = *str;
     }
 
-    if (auto const str = dictFind<QString>(args_dict, TR_KEY_session_id); str)
+    if (auto const str = dictFind<QString>(args_dict, TR_KEY_session_id_kebab); str)
     {
         session_id_ = *str;
         is_definitely_local_session_ = tr_session_id::is_local(session_id_.toUtf8().constData());

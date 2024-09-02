@@ -2313,7 +2313,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_seed_queue_size:
     case TR_KEY_seed_queue_size_kebab:
         return session.queueSize(TR_UP);
-    case TR_KEY_session_id: return session.sessionId();
+    case TR_KEY_session_id:
+    case TR_KEY_session_id_kebab:
+        return session.sessionId();
     case TR_KEY_speed_limit_down: return session.speed_limit(TR_DOWN).count(Speed::Units::KByps);
     case TR_KEY_speed_limit_down_enabled: return session.is_speed_limited(TR_DOWN);
     case TR_KEY_speed_limit_up: return session.speed_limit(TR_UP).count(Speed::Units::KByps);

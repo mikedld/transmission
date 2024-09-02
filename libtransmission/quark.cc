@@ -480,6 +480,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "session-count"sv,
     "session-id"sv,
     "sessionCount"sv,
+    "session_id"sv,
     "show-backup-trackers"sv,
     "show-extra-peer-details"sv,
     "show-filterbar"sv,
@@ -813,6 +814,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_seed_ratio_limited_camel: return TR_KEY_seed_ratio_limited;
     case TR_KEY_seed_ratio_mode_camel: return TR_KEY_seed_ratio_mode;
     case TR_KEY_seeder_count_camel: return TR_KEY_seeder_count;
+    case TR_KEY_session_id_kebab: return TR_KEY_session_id;
     case TR_KEY_show_filterbar_kebab: return TR_KEY_show_filterbar;
     case TR_KEY_show_statusbar_kebab: return TR_KEY_show_statusbar;
     case TR_KEY_show_toolbar_kebab: return TR_KEY_show_toolbar;

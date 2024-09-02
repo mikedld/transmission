@@ -53,7 +53,7 @@
 
 struct evbuffer;
 
-/* session-id is used to make cross-site request forgery attacks difficult.
+/* session_id is used to make cross-site request forgery attacks difficult.
  * Don't disable this feature unless you really know what you're doing!
  * https://en.wikipedia.org/wiki/Cross-site_request_forgery
  * https://shiflett.org/articles/cross-site-request-forgeries
@@ -548,9 +548,10 @@ void handle_request(struct evhttp_request* req, void* arg)
         {
             auto const session_id = std::string{ server->session->sessionId() };
             auto const tmp = fmt::format(
-                "<p>Your request had an invalid session-id header.</p>"
+                "<p>Your request had an invalid session_id header.</p>"
                 "<p>To fix this, follow these steps:"
-                "<ol><li> When reading a response, get its X-Transmission-Session-Id header and remember it"
+                "<ol><li> When reading a response, get its " TR_RPC_SESSION_ID_HEADER
+                " header and remember it"
                 "<li> Add the updated header to your outgoing requests"
                 "<li> When you get this 409 error message, resend your request with the updated header"
                 "</ol></p>"
