@@ -564,7 +564,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `pex_enabled` | boolean | true means allow PEX in public torrents
 | `port_forwarding_enabled` | boolean | true means ask upstream router to forward the configured peer port to transmission using UPnP or NAT-PMP
 | `queue_stalled_enabled` | boolean | whether or not to consider idle torrents as stalled
-| `queue_stalled_minutes` | number | torrents that are idle for N minuets aren't counted toward seed-queue-size or `download_queue_size`
+| `queue_stalled_minutes` | number | torrents that are idle for N minuets aren't counted toward `seed_queue_size` or `download_queue_size`
 | `rename_partial_files` | boolean | true means append `.part` to incomplete files
 | `reqq` | number | the number of outstanding block requests a peer is allowed to queue in the client
 | `rpc_version_minimum` | number | the minimum RPC API version supported
@@ -577,7 +577,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `script_torrent_done_seeding_enabled` | boolean | whether or not to call the `seeding_done` script
 | `script_torrent_done_seeding_filename` | string | filename of the script to run
 | `seed_queue_enabled` | boolean | if true, limit how many torrents can be uploaded at once
-| `seed-queue-size` | number | max number of torrents to uploaded at once (see `seed_queue_enabled`)
+| `seed_queue_size` | number | max number of torrents to uploaded at once (see `seed_queue_enabled`)
 | `seed_ratio_limit` | double | the default seed ratio for torrents to use
 | `seedRatioLimited` | boolean | true if `seed_ratio_limit` is honored by default
 | `session-id` | string | the current `X-Transmission-Session-Id` value

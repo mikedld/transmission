@@ -2019,7 +2019,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetQueueEnabled(session, TR_UP, *val);
     }
 
-    if (auto const val = args_in.value_if<int64_t>(TR_KEY_seed_queue_size))
+    if (auto const val = args_in.value_if<int64_t>({ TR_KEY_seed_queue_size, TR_KEY_seed_queue_size_kebab }); val)
     {
         tr_sessionSetQueueSize(session, TR_UP, *val);
     }
@@ -2308,7 +2308,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_seed_queue_enabled:
     case TR_KEY_seed_queue_enabled_kebab:
         return session.queueEnabled(TR_UP);
-    case TR_KEY_seed_queue_size: return session.queueSize(TR_UP);
+    case TR_KEY_seed_queue_size:
+    case TR_KEY_seed_queue_size_kebab:
+        return session.queueSize(TR_UP);
     case TR_KEY_session_id: return session.sessionId();
     case TR_KEY_speed_limit_down: return session.speed_limit(TR_DOWN).count(Speed::Units::KByps);
     case TR_KEY_speed_limit_down_enabled: return session.is_speed_limited(TR_DOWN);

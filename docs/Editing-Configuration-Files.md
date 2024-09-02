@@ -125,10 +125,10 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 #### Queuing
  * **download_queue_enabled:** Boolean (default = true) When true, Transmission will only download `download_queue_size` non-stalled torrents at once.
  * **download_queue_size:** Number (default = 5) See `download_queue_enabled`.
- * **queue_stalled_enabled:** Boolean (default = true) When true, torrents that have not shared data for `queue_stalled_minutes` are treated as 'stalled' and are not counted against the `download_queue_size` and `seed-queue-size` limits.
+ * **queue_stalled_enabled:** Boolean (default = true) When true, torrents that have not shared data for `queue_stalled_minutes` are treated as 'stalled' and are not counted against the `download_queue_size` and `seed_queue_size` limits.
  * **queue_stalled_minutes:** Number (default = 30) See `queue_stalled_enabled`.
- * **seed_queue_enabled:** Boolean (default = false) When true. Transmission will only seed `seed-queue-size` non-stalled torrents at once.
- * **seed-queue-size:** Number (default = 10) See `seed_queue_enabled`.
+ * **seed_queue_enabled:** Boolean (default = false) When true. Transmission will only seed `seed_queue_size` non-stalled torrents at once.
+ * **seed_queue_size:** Number (default = 10) See `seed_queue_enabled`.
 
 #### [RPC](rpc-spec.md)
  * **anti-brute-force-enabled:**: Boolean (default = false) Enable a very basic brute force protection for the RPC server. See "anti-brute-force-threshold" below.
