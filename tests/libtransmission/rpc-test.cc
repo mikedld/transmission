@@ -255,6 +255,7 @@ TEST_F(RpcTest, sessionGet)
         TR_KEY_script_torrent_done_filename,
         TR_KEY_script_torrent_done_seeding_enabled,
         TR_KEY_script_torrent_done_seeding_filename,
+        TR_KEY_seed_queue_enabled_kebab,
         TR_KEY_seed_ratio_limit_camel,
         TR_KEY_seed_queue_enabled,
         TR_KEY_seed_queue_size,

@@ -576,8 +576,8 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `script_torrent_done_filename` | string | filename of the script to run
 | `script_torrent_done_seeding_enabled` | boolean | whether or not to call the `seeding_done` script
 | `script_torrent_done_seeding_filename` | string | filename of the script to run
-| `seed-queue-enabled` | boolean | if true, limit how many torrents can be uploaded at once
-| `seed-queue-size` | number | max number of torrents to uploaded at once (see seed-queue-enabled)
+| `seed_queue_enabled` | boolean | if true, limit how many torrents can be uploaded at once
+| `seed-queue-size` | number | max number of torrents to uploaded at once (see `seed_queue_enabled`)
 | `seed_ratio_limit` | double | the default seed ratio for torrents to use
 | `seedRatioLimited` | boolean | true if `seed_ratio_limit` is honored by default
 | `session-id` | string | the current `X-Transmission-Session-Id` value
