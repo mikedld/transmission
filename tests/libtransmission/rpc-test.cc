@@ -231,6 +231,7 @@ TEST_F(RpcTest, sessionGet)
         TR_KEY_port_forwarding_enabled_kebab,
         TR_KEY_port_forwarding_enabled,
         TR_KEY_queue_stalled_enabled_kebab,
+        TR_KEY_queue_stalled_minutes_kebab,
         TR_KEY_queue_stalled_enabled,
         TR_KEY_queue_stalled_minutes,
         TR_KEY_rename_partial_files,
