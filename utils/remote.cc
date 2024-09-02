@@ -1815,7 +1815,7 @@ void print_session(tr_variant::Map const& map)
         fmt::print("  Listen port: {:d}\n", *i);
     }
 
-    if (auto b = args->value_if<bool>(TR_KEY_port_forwarding_enabled); b)
+    if (auto b = args->value_if<bool>({ TR_KEY_port_forwarding_enabled, TR_KEY_port_forwarding_enabled_kebab }); b)
     {
         fmt::print("  Port forwarding enabled: {:s}\n", *b ? "Yes" : "No");
     }
@@ -2839,11 +2839,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 'm':
-                args.insert_or_assign(TR_KEY_port_forwarding_enabled, true);
+                args.insert_or_assign(TR_KEY_port_forwarding_enabled_kebab, true);
                 break;
 
             case 'M':
-                args.insert_or_assign(TR_KEY_port_forwarding_enabled, false);
+                args.insert_or_assign(TR_KEY_port_forwarding_enabled_kebab, false);
                 break;
 
             case 'o':

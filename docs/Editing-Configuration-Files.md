@@ -120,7 +120,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **peer-port-random-high:** Number (default = 65535)
  * **peer-port-random-low:** Number (default = 1024)
  * **peer_port_random_on_start:** Boolean (default = false)
- * **port-forwarding-enabled:** Boolean (default = true) Enable [UPnP](https://en.wikipedia.org/wiki/Universal_Plug_and_Play) or [NAT-PMP](https://en.wikipedia.org/wiki/NAT_Port_Mapping_Protocol).
+ * **port_forwarding_enabled:** Boolean (default = true) Enable [UPnP](https://en.wikipedia.org/wiki/Universal_Plug_and_Play) or [NAT-PMP](https://en.wikipedia.org/wiki/NAT_Port_Mapping_Protocol).
 
 #### Queuing
  * **download_queue_enabled:** Boolean (default = true) When true, Transmission will only download `download_queue_size` non-stalled torrents at once.

@@ -107,7 +107,7 @@ export class PrefsDialog extends EventTarget {
   }
 
   _onMaybePortChanged(key) {
-    if (key === 'peer_port' || key === 'port-forwarding-enabled') {
+    if (key === 'peer_port' || key === 'port_forwarding_enabled') {
       this._checkPort();
     }
   }
@@ -707,7 +707,7 @@ export class PrefsDialog extends EventTarget {
       'port-forwarding',
       'Use port forwarding from my router',
     );
-    cal.check.dataset.key = 'port-forwarding-enabled';
+    cal.check.dataset.key = 'port_forwarding_enabled';
     root.append(cal.root);
     const port_forwarding_check = cal.check;
 

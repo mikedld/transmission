@@ -1978,7 +1978,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetPeerPort(session, *val);
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_port_forwarding_enabled))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_port_forwarding_enabled, TR_KEY_port_forwarding_enabled_kebab }); val)
     {
         tr_sessionSetPortForwardingEnabled(session, *val);
     }
@@ -2261,7 +2261,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_pex_enabled:
     case TR_KEY_pex_enabled_kebab:
         return session.allows_pex();
-    case TR_KEY_port_forwarding_enabled: return tr_sessionIsPortForwardingEnabled(&session);
+    case TR_KEY_port_forwarding_enabled:
+    case TR_KEY_port_forwarding_enabled_kebab:
+        return tr_sessionIsPortForwardingEnabled(&session);
     case TR_KEY_queue_stalled_enabled: return session.queueStalledEnabled();
     case TR_KEY_queue_stalled_minutes: return session.queueStalledMinutes();
     case TR_KEY_rename_partial_files: return session.isIncompleteFileNamingEnabled();

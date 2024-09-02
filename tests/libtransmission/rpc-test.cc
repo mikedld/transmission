@@ -228,6 +228,7 @@ TEST_F(RpcTest, sessionGet)
         TR_KEY_peer_port_random_on_start,
         TR_KEY_pex_enabled_kebab,
         TR_KEY_pex_enabled,
+        TR_KEY_port_forwarding_enabled_kebab,
         TR_KEY_port_forwarding_enabled,
         TR_KEY_queue_stalled_enabled,
         TR_KEY_queue_stalled_minutes,

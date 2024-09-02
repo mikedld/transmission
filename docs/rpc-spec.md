@@ -562,7 +562,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `peer_port_random_on_start` | boolean | true means pick a random peer port on launch
 | `peer_port` | number | port number
 | `pex_enabled` | boolean | true means allow PEX in public torrents
-| `port-forwarding-enabled` | boolean | true means ask upstream router to forward the configured peer port to transmission using UPnP or NAT-PMP
+| `port_forwarding_enabled` | boolean | true means ask upstream router to forward the configured peer port to transmission using UPnP or NAT-PMP
 | `queue-stalled-enabled` | boolean | whether or not to consider idle torrents as stalled
 | `queue-stalled-minutes` | number | torrents that are idle for N minuets aren't counted toward seed-queue-size or `download_queue_size`
 | `rename-partial-files` | boolean | true means append `.part` to incomplete files
