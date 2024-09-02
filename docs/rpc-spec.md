@@ -588,7 +588,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `start_added_torrents` | boolean | true means added torrents will be started right away
 | `trash_original_torrent_files` | boolean | true means the .torrent file of added torrents will be deleted
 | `units` | object | see below
-| `utp-enabled` | boolean | true means allow UTP
+| `utp_enabled` | boolean | true means allow UTP
 | `version` | string | long version string `$version ($revision)`
 
 

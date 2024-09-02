@@ -591,6 +591,7 @@ enum
     TR_KEY_ut_metadata,
     TR_KEY_ut_pex,
     TR_KEY_ut_recommend,
+    TR_KEY_utp_enabled_kebab,
     TR_KEY_utp_enabled,
     TR_KEY_v,
     TR_KEY_version,

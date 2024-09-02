@@ -1962,7 +1962,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetDHTEnabled(session, *val);
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_utp_enabled))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_utp_enabled, TR_KEY_utp_enabled_kebab }); val)
     {
         tr_sessionSetUTPEnabled(session, *val);
     }
@@ -2344,7 +2344,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_trash_original_torrent_files_kebab:
         return session.shouldDeleteSource();
     case TR_KEY_units: return values_get_units();
-    case TR_KEY_utp_enabled: return session.allowsUTP();
+    case TR_KEY_utp_enabled:
+    case TR_KEY_utp_enabled_kebab:
+        return session.allowsUTP();
     case TR_KEY_version: return LONG_VERSION_STRING;
     default: return tr_variant{};
     }

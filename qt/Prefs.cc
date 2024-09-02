@@ -137,7 +137,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { TRASH_ORIGINAL, TR_KEY_trash_original_torrent_files_kebab, QMetaType::Bool },
     { PEX_ENABLED, TR_KEY_pex_enabled_kebab, QMetaType::Bool },
     { DHT_ENABLED, TR_KEY_dht_enabled_kebab, QMetaType::Bool },
-    { UTP_ENABLED, TR_KEY_utp_enabled, QMetaType::Bool },
+    { UTP_ENABLED, TR_KEY_utp_enabled_kebab, QMetaType::Bool },
     { LPD_ENABLED, TR_KEY_lpd_enabled_kebab, QMetaType::Bool },
     { PORT_FORWARDING, TR_KEY_port_forwarding_enabled_kebab, QMetaType::Bool },
     { PREALLOCATION, TR_KEY_preallocation, QMetaType::Int },

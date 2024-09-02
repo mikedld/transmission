@@ -716,7 +716,7 @@ export class PrefsDialog extends EventTarget {
       'utp-enabled',
       'Enable uTP for peer communication',
     );
-    cal.check.dataset.key = 'utp-enabled';
+    cal.check.dataset.key = 'utp_enabled';
     root.append(cal.root);
     const utp_check = cal.check;
 
