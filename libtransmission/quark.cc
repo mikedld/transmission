@@ -112,6 +112,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "details-window-height"sv,
     "details-window-width"sv,
     "dht-enabled"sv,
+    "dht_enabled"sv,
     "dnd"sv,
     "done-date"sv,
     "doneDate"sv,
@@ -665,6 +666,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_default_trackers_kebab: return TR_KEY_default_trackers;
     case TR_KEY_delete_local_data_kebab: return TR_KEY_delete_local_data;
     case TR_KEY_desired_available_camel: return TR_KEY_desired_available;
+    case TR_KEY_dht_enabled_kebab: return TR_KEY_dht_enabled;
     case TR_KEY_done_date_camel:
     case TR_KEY_done_date_kebab:
         return TR_KEY_done_date;

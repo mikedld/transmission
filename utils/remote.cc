@@ -1825,7 +1825,7 @@ void print_session(tr_variant::Map const& map)
         fmt::print("  µTP enabled: {:s}\n", *b ? "Yes" : "No");
     }
 
-    if (auto b = args->value_if<bool>(TR_KEY_dht_enabled); b)
+    if (auto b = args->value_if<bool>({ TR_KEY_dht_enabled, TR_KEY_dht_enabled_kebab }); b)
     {
         fmt::print("  Distributed hash table enabled: {:s}\n", *b ? "Yes" : "No");
     }
@@ -2846,11 +2846,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
                 break;
 
             case 'o':
-                args.insert_or_assign(TR_KEY_dht_enabled, true);
+                args.insert_or_assign(TR_KEY_dht_enabled_kebab, true);
                 break;
 
             case 'O':
-                args.insert_or_assign(TR_KEY_dht_enabled, false);
+                args.insert_or_assign(TR_KEY_dht_enabled_kebab, false);
                 break;
 
             case 830:

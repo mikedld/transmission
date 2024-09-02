@@ -1952,7 +1952,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetPexEnabled(session, *val);
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_dht_enabled))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_dht_enabled, TR_KEY_dht_enabled_kebab }); val)
     {
         tr_sessionSetDHTEnabled(session, *val);
     }
@@ -2213,7 +2213,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_default_trackers:
     case TR_KEY_default_trackers_kebab:
         return session.defaultTrackersStr();
-    case TR_KEY_dht_enabled: return session.allowsDHT();
+    case TR_KEY_dht_enabled:
+    case TR_KEY_dht_enabled_kebab:
+        return session.allowsDHT();
     case TR_KEY_download_dir:
     case TR_KEY_download_dir_kebab:
         return session.downloadDir();

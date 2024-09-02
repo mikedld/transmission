@@ -546,7 +546,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `cache_size_mb` | number | maximum size of the disk cache (MB)
 | `config_dir` | string | location of transmission's configuration directory
 | `default_trackers` | string | announce URLs, one per line, and a blank line between [tiers](https://www.bittorrent.org/beps/bep_0012.html).
-| `dht-enabled` | boolean | true means allow DHT in public torrents
+| `dht_enabled` | boolean | true means allow DHT in public torrents
 | `download_dir` | string | default path to download torrents
 | `download-dir-free-space` | number |  **DEPRECATED** Use the `free-space` method instead.
 | `download-queue-enabled` | boolean | if true, limit how many torrents can be downloaded at once

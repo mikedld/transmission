@@ -591,7 +591,7 @@ export class PrefsDialog extends EventTarget {
       'Use DHT to find more peers',
     );
     cal.check.title = 'DHT is a tool for finding peers without a tracker.';
-    cal.check.dataset.key = 'dht-enabled';
+    cal.check.dataset.key = 'dht_enabled';
     cal.label.title = cal.check.title;
     root.append(cal.root);
     const dht_check = cal.check;
