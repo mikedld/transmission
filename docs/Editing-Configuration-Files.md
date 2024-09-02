@@ -123,9 +123,9 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **port-forwarding-enabled:** Boolean (default = true) Enable [UPnP](https://en.wikipedia.org/wiki/Universal_Plug_and_Play) or [NAT-PMP](https://en.wikipedia.org/wiki/NAT_Port_Mapping_Protocol).
 
 #### Queuing
- * **download_queue_enabled:** Boolean (default = true) When true, Transmission will only download `download-queue-size` non-stalled torrents at once.
- * **download-queue-size:** Number (default = 5) See `download_queue_enabled`.
- * **queue-stalled-enabled:** Boolean (default = true) When true, torrents that have not shared data for `queue-stalled-minutes` are treated as 'stalled' and are not counted against the `download-queue-size` and `seed-queue-size` limits.
+ * **download_queue_enabled:** Boolean (default = true) When true, Transmission will only download `download_queue_size` non-stalled torrents at once.
+ * **download_queue_size:** Number (default = 5) See `download_queue_enabled`.
+ * **queue-stalled-enabled:** Boolean (default = true) When true, torrents that have not shared data for `queue-stalled-minutes` are treated as 'stalled' and are not counted against the `download_queue_size` and `seed-queue-size` limits.
  * **queue-stalled-minutes:** Number (default = 30) See queue-stalled-enabled.
  * **seed-queue-enabled:** Boolean (default = false) When true. Transmission will only seed `seed-queue-size` non-stalled torrents at once.
  * **seed-queue-size:** Number (default = 10) See seed-queue-enabled.

@@ -316,7 +316,7 @@ export class PrefsDialog extends EventTarget {
 
     input = document.createElement('input');
     input.type = 'number';
-    input.dataset.key = 'download-queue-size';
+    input.dataset.key = 'download_queue_size';
     root.append(input);
     PrefsDialog._enableIfChecked(input, cal.check);
     const download_queue_input = input;

@@ -550,7 +550,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `download_dir` | string | default path to download torrents
 | `download_dir_free_space` | number |  **DEPRECATED** Use the `free-space` method instead.
 | `download_queue_enabled` | boolean | if true, limit how many torrents can be downloaded at once
-| `download-queue-size` | number | max number of torrents to download at once (see `download_queue_enabled`)
+| `download_queue_size` | number | max number of torrents to download at once (see `download_queue_enabled`)
 | `encryption` | string | `required`, `preferred`, `tolerated`
 | `idle-seeding-limit-enabled` | boolean | true if the seeding inactivity limit is honored by default
 | `idle-seeding-limit` | number | torrents we're seeding will be stopped if they're idle for this long
@@ -564,7 +564,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `pex-enabled` | boolean | true means allow PEX in public torrents
 | `port-forwarding-enabled` | boolean | true means ask upstream router to forward the configured peer port to transmission using UPnP or NAT-PMP
 | `queue-stalled-enabled` | boolean | whether or not to consider idle torrents as stalled
-| `queue-stalled-minutes` | number | torrents that are idle for N minuets aren't counted toward seed-queue-size or download-queue-size
+| `queue-stalled-minutes` | number | torrents that are idle for N minuets aren't counted toward seed-queue-size or `download_queue_size`
 | `rename-partial-files` | boolean | true means append `.part` to incomplete files
 | `reqq` | number | the number of outstanding block requests a peer is allowed to queue in the client
 | `rpc-version-minimum` | number | the minimum RPC API version supported
