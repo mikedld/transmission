@@ -2770,11 +2770,11 @@ int process_args(char const* rpcurl, int argc, char const* const* argv, RemoteCo
 
             case 802:
                 args.insert_or_assign(TR_KEY_script_torrent_done_seeding_filename, optarg_sv);
-                args.insert_or_assign(TR_KEY_script_torrent_done_seeding_enabled, true);
+                args.insert_or_assign(TR_KEY_script_torrent_done_seeding_enabled_kebab, true);
                 break;
 
             case 803:
-                args.insert_or_assign(TR_KEY_script_torrent_done_seeding_enabled, false);
+                args.insert_or_assign(TR_KEY_script_torrent_done_seeding_enabled_kebab, false);
                 break;
 
             case 970:

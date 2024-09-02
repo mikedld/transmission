@@ -97,7 +97,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **script_torrent_added_filename:** String (default = "") Path to script.
  * **script_torrent_done_enabled:** Boolean (default = false) Run a script when a torrent is done downloading. Environmental variables are passed in as detailed on the [Scripts](./Scripts.md) page.
  * **script_torrent_done_filename:** String (default = "") Path to script.
- * **script-torrent-done-seeding-enabled:** Boolean (default = false) Run a script when a torrent is done seeding. Environmental variables are passed in as detailed on the [Scripts](./Scripts.md) page.
+ * **script_torrent_done_seeding_enabled:** Boolean (default = false) Run a script when a torrent is done seeding. Environmental variables are passed in as detailed on the [Scripts](./Scripts.md) page.
  * **script-torrent-done-seeding-filename:** String (default = "") Path to script.
  * **start_paused**: Boolean (default = false) Pause the torrents when daemon starts. _Note: transmission-daemon only._
  * **tcp-enabled:** Boolean (default = true) Optionally disable TCP connection to other peers. Never disable TCP when you also disable µTP, because then your client would not be able to communicate. Disabling TCP might also break webseeds. Unless you have a good reason, you should not set this to false.
