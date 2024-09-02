@@ -416,7 +416,7 @@ export class PrefsDialog extends EventTarget {
       'download-speed-div',
       'Download (kB/s):',
     );
-    cal.check.dataset.key = 'speed-limit-down-enabled';
+    cal.check.dataset.key = 'speed_limit_down_enabled';
     root.append(cal.root);
     const download_speed_check = cal.check;
 
