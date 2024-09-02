@@ -248,6 +248,7 @@ TEST_F(RpcTest, sessionGet)
         TR_KEY_script_torrent_done_enabled_kebab,
         TR_KEY_script_torrent_done_filename_kebab,
         TR_KEY_script_torrent_done_seeding_enabled_kebab,
+        TR_KEY_script_torrent_done_seeding_filename_kebab,
         TR_KEY_script_torrent_added_enabled,
         TR_KEY_script_torrent_added_filename,
         TR_KEY_script_torrent_done_enabled,

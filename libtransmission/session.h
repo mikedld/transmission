@@ -1192,7 +1192,7 @@ public:
         { { TR_KEY_script_torrent_added_enabled_kebab, TR_KEY_script_torrent_added_filename_kebab, TR_SCRIPT_ON_TORRENT_ADDED },
           { TR_KEY_script_torrent_done_enabled_kebab, TR_KEY_script_torrent_done_filename_kebab, TR_SCRIPT_ON_TORRENT_DONE },
           { TR_KEY_script_torrent_done_seeding_enabled_kebab,
-            TR_KEY_script_torrent_done_seeding_filename,
+            TR_KEY_script_torrent_done_seeding_filename_kebab,
             TR_SCRIPT_ON_TORRENT_DONE_SEEDING } }
     };
 

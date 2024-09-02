@@ -575,7 +575,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `script_torrent_done_enabled` | boolean | whether or not to call the `done` script
 | `script_torrent_done_filename` | string | filename of the script to run
 | `script_torrent_done_seeding_enabled` | boolean | whether or not to call the `seeding_done` script
-| `script-torrent-done-seeding-filename` | string | filename of the script to run
+| `script_torrent_done_seeding_filename` | string | filename of the script to run
 | `seed-queue-enabled` | boolean | if true, limit how many torrents can be uploaded at once
 | `seed-queue-size` | number | max number of torrents to uploaded at once (see seed-queue-enabled)
 | `seed_ratio_limit` | double | the default seed ratio for torrents to use
