@@ -129,7 +129,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { PEER_PORT_RANDOM_HIGH, TR_KEY_peer_port_random_high, QMetaType::Int },
     { QUEUE_STALLED_MINUTES, TR_KEY_queue_stalled_minutes_kebab, QMetaType::Int },
     { SCRIPT_TORRENT_DONE_ENABLED, TR_KEY_script_torrent_done_enabled_kebab, QMetaType::Bool },
-    { SCRIPT_TORRENT_DONE_FILENAME, TR_KEY_script_torrent_done_filename, QMetaType::QString },
+    { SCRIPT_TORRENT_DONE_FILENAME, TR_KEY_script_torrent_done_filename_kebab, QMetaType::QString },
     { SCRIPT_TORRENT_DONE_SEEDING_ENABLED, TR_KEY_script_torrent_done_seeding_enabled, QMetaType::Bool },
     { SCRIPT_TORRENT_DONE_SEEDING_FILENAME, TR_KEY_script_torrent_done_seeding_filename, QMetaType::QString },
     { SOCKET_TOS, TR_KEY_peer_socket_tos, QMetaType::QString },
