@@ -110,7 +110,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { BLOCKLIST_ENABLED, TR_KEY_blocklist_enabled_kebab, QMetaType::Bool },
     { BLOCKLIST_URL, TR_KEY_blocklist_url_kebab, QMetaType::QString },
     { DEFAULT_TRACKERS, TR_KEY_default_trackers_kebab, QMetaType::QString },
-    { DSPEED, TR_KEY_speed_limit_down, QMetaType::Int },
+    { DSPEED, TR_KEY_speed_limit_down_kebab, QMetaType::Int },
     { DSPEED_ENABLED, TR_KEY_speed_limit_down_enabled_kebab, QMetaType::Bool },
     { DOWNLOAD_DIR, TR_KEY_download_dir_kebab, QMetaType::QString },
     { DOWNLOAD_QUEUE_ENABLED, TR_KEY_download_queue_enabled_kebab, QMetaType::Bool },

@@ -6,7 +6,7 @@ import { AlertDialog } from './alert-dialog.js';
 
 export const RPC = {
   _DaemonVersion: 'version',
-  _DownSpeedLimit: 'speed-limit-down',
+  _DownSpeedLimit: 'speed_limit_down',
   _DownSpeedLimited: 'speed_limit_down_enabled',
   _QueueMoveBottom: 'queue-move-bottom',
   _QueueMoveDown: 'queue-move-down',

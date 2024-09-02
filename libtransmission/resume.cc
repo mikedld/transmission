@@ -296,7 +296,8 @@ auto load_speed_limits(tr_variant::Map const& map, tr_torrent* tor)
         ret = tr_resume::Speedlimit;
     }
 
-    if (auto const* child = map.find_if<tr_variant::Map>(TR_KEY_speed_limit_down); child != nullptr)
+    if (auto const* child = map.find_if<tr_variant::Map>({ TR_KEY_speed_limit_down, TR_KEY_speed_limit_down_kebab });
+        child != nullptr)
     {
         load_single_speed_limit(*child, TR_DOWN, tor);
         ret = tr_resume::Speedlimit;

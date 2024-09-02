@@ -54,7 +54,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
    _Note: Clicking the "Turtle" in the GUI when the [scheduler](#Scheduling) is enabled, will only temporarily remove the scheduled limit until the next cycle._
  * **alt_speed_up:** Number (KB/s, default = 50)
  * **alt_speed_down:** Number (KB/s, default = 50)
- * **speed-limit-down:** Number (KB/s, default = 100)
+ * **speed_limit_down:** Number (KB/s, default = 100)
  * **speed_limit_down_enabled:** Boolean (default = false)
  * **speed-limit-up:** Number (KB/s, default = 100)
  * **speed-limit-up-enabled:** Boolean (default = false)

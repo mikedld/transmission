@@ -422,7 +422,7 @@ export class PrefsDialog extends EventTarget {
 
     input = document.createElement('input');
     input.type = 'number';
-    input.dataset.key = 'speed-limit-down';
+    input.dataset.key = 'speed_limit_down';
     root.append(input);
     PrefsDialog._enableIfChecked(input, cal.check);
     const download_speed_input = input;

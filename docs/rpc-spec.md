@@ -581,7 +581,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `seed_ratio_limit` | double | the default seed ratio for torrents to use
 | `seed_ratio_limited` | boolean | true if `seed_ratio_limit` is honored by default
 | `session_id` | string | the current `X-Transmission-Session-Id` value
-| `speed-limit-down` | number | max global download speed (KBps)
+| `speed_limit_down` | number | max global download speed (KBps)
 | `speed_limit_down_enabled` | boolean | true means enabled
 | `speed-limit-up-enabled` | boolean | true means enabled
 | `speed-limit-up` | number | max global upload speed (KBps)
@@ -745,7 +745,7 @@ Request parameters:
 |:--|:--|:--
 | `honors_session_limits` | boolean  | true if session upload limits are honored
 | `name` | string | Bandwidth group name
-| `speed-limit-down` | number | max global download speed (KBps)
+| `speed_limit_down` | number | max global download speed (KBps)
 | `speed_limit_down_enabled` | boolean | true means enabled
 | `speed-limit-up-enabled` | boolean | true means enabled
 | `speed-limit-up` | number | max global upload speed (KBps)
@@ -772,7 +772,7 @@ A bandwidth group description object has:
 |:--|:--|:--
 | `honors_session_limits` | boolean  | true if session upload limits are honored
 | `name` | string | Bandwidth group name
-| `speed-limit-down` | number | max global download speed (KBps)
+| `speed_limit_down` | number | max global download speed (KBps)
 | `speed_limit_down_enabled` | boolean | true means enabled
 | `speed-limit-up-enabled` | boolean | true means enabled
 | `speed-limit-up` | number | max global upload speed (KBps)
