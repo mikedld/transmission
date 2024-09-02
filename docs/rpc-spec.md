@@ -554,8 +554,8 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `encryption` | string | `required`, `preferred`, `tolerated`
 | `idle_seeding_limit` | number | torrents we're seeding will be stopped if they're idle for this long
 | `idle_seeding_limit_enabled` | boolean | true if the seeding inactivity limit is honored by default
-| `incomplete-dir-enabled` | boolean | true means keep torrents in incomplete-dir until done
 | `incomplete-dir` | string | path for incomplete torrents, when enabled
+| `incomplete_dir_enabled` | boolean | true means keep torrents in incomplete-dir until done
 | `lpd-enabled` | boolean | true means allow Local Peer Discovery in public torrents
 | `peer-limit-global` | number | maximum global number of peers
 | `peer-limit-per-torrent` | number | maximum global number of peers

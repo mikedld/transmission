@@ -1927,7 +1927,7 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         session->setIncompleteDir(*incomplete_dir);
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_incomplete_dir_enabled))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_incomplete_dir_enabled, TR_KEY_incomplete_dir_enabled_kebab }); val)
     {
         session->useIncompleteDir(*val);
     }
@@ -2237,7 +2237,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_idle_seeding_limit_enabled_kebab:
         return session.isIdleLimited();
     case TR_KEY_incomplete_dir: return session.incompleteDir();
-    case TR_KEY_incomplete_dir_enabled: return session.useIncompleteDir();
+    case TR_KEY_incomplete_dir_enabled:
+    case TR_KEY_incomplete_dir_enabled_kebab:
+        return session.useIncompleteDir();
     case TR_KEY_lpd_enabled: return session.allowsLPD();
     case TR_KEY_peer_limit_global: return session.peerLimit();
     case TR_KEY_peer_limit_per_torrent: return session.peerLimitPerTorrent();

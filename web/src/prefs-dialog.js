@@ -281,7 +281,7 @@ export class PrefsDialog extends EventTarget {
     );
     cal.check.title =
       'Separate folder to temporarily store downloads until they are complete.';
-    cal.check.dataset.key = 'incomplete-dir-enabled';
+    cal.check.dataset.key = 'incomplete_dir_enabled';
     cal.label.title = cal.check.title;
     root.append(cal.root);
     const incomplete_dir_check = cal.check;
