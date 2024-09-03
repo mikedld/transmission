@@ -526,6 +526,7 @@ enum
     TR_KEY_status,
     TR_KEY_statusbar_stats,
     TR_KEY_tag,
+    TR_KEY_tcp_enabled_kebab,
     TR_KEY_tcp_enabled,
     TR_KEY_tier,
     TR_KEY_time_checked,
