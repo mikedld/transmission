@@ -597,7 +597,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--
-| `speed-units`  | array  | 4 strings: KB/s, MB/s, GB/s, TB/s
+| `speed_units`  | array  | 4 strings: KB/s, MB/s, GB/s, TB/s
 | `speed-bytes`  | number | number of bytes in a KB (1000 for kB; 1024 for KiB)
 | `size-units`   | array  | 4 strings: KB/s, MB/s, GB/s, TB/s
 | `size-bytes`   | number | number of bytes in a KB (1000 for kB; 1024 for KiB)

@@ -515,6 +515,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "speed_limit_down_enabled"sv,
     "speed_limit_up"sv,
     "speed_limit_up_enabled"sv,
+    "speed_units"sv,
     "start-added-torrents"sv,
     "start-minimized"sv,
     "startDate"sv,
@@ -832,6 +833,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_speed_limit_down_enabled_kebab: return TR_KEY_speed_limit_down_enabled;
     case TR_KEY_speed_limit_up_kebab: return TR_KEY_speed_limit_up;
     case TR_KEY_speed_limit_up_enabled_kebab: return TR_KEY_speed_limit_up_enabled;
+    case TR_KEY_speed_units_kebab: return TR_KEY_speed_units;
     case TR_KEY_start_added_torrents_kebab: return TR_KEY_start_added_torrents;
     case TR_KEY_start_date_camel: return TR_KEY_start_date;
     case TR_KEY_tcp_enabled_kebab: return TR_KEY_tcp_enabled;

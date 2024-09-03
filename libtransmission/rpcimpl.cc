@@ -2174,6 +2174,7 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     units_map.try_emplace(TR_KEY_size_units, make_units_vec(Storage::units()));
     units_map.try_emplace(TR_KEY_speed_bytes, Speed::units().base());
     units_map.try_emplace(TR_KEY_speed_units, make_units_vec(Speed::units()));
+    units_map.try_emplace(TR_KEY_speed_units_kebab, make_units_vec(Speed::units()));
     return tr_variant{ std::move(units_map) };
 }
 
