@@ -151,8 +151,8 @@ export class Remote {
       method: 'free-space',
     };
     this.sendRequest(o, (response) => {
-      const arguments_ = response['arguments'];
-      callback.call(context, arguments_.path, arguments_['size-bytes']);
+      const arguments_ = response.arguments;
+      callback.call(context, arguments_.path, arguments_.size_bytes);
     });
   }
 
