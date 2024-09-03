@@ -316,6 +316,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "path.utf-8"sv,
     "paused"sv,
     "pausedTorrentCount"sv,
+    "paused_torrent_count"sv,
     "peer-congestion-algorithm"sv,
     "peer-limit"sv,
     "peer-limit-global"sv,
@@ -784,6 +785,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_metadata_percent_complete_camel: return TR_KEY_metadata_percent_complete;
     case TR_KEY_next_announce_time_camel: return TR_KEY_next_announce_time;
     case TR_KEY_next_scrape_time_camel: return TR_KEY_next_scrape_time;
+    case TR_KEY_paused_torrent_count_camel: return TR_KEY_paused_torrent_count;
     case TR_KEY_peer_is_choked_camel: return TR_KEY_peer_is_choked;
     case TR_KEY_peer_is_interested_camel: return TR_KEY_peer_is_interested;
     case TR_KEY_peer_limit_kebab: return TR_KEY_peer_limit;
