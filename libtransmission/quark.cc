@@ -586,6 +586,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "upload_limited"sv,
     "upload_only"sv,
     "upload_ratio"sv,
+    "upload_speed"sv,
     "uploaded"sv,
     "uploaded-bytes"sv,
     "uploadedBytes"sv,
@@ -871,6 +872,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_upload_limit_camel: return TR_KEY_upload_limit;
     case TR_KEY_upload_limited_camel: return TR_KEY_upload_limited;
     case TR_KEY_upload_ratio_camel: return TR_KEY_upload_ratio;
+    case TR_KEY_upload_speed_camel: return TR_KEY_upload_speed;
     case TR_KEY_uploaded_ever_camel: return TR_KEY_uploaded_ever;
     case TR_KEY_utp_enabled_kebab: return TR_KEY_utp_enabled;
     case TR_KEY_webseeds_sending_to_us_camel: return TR_KEY_webseeds_sending_to_us;

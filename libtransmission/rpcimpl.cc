@@ -2132,7 +2132,8 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     args_out.try_emplace(TR_KEY_paused_torrent_count_camel, total - n_running);
     args_out.try_emplace(TR_KEY_torrent_count, total);
     args_out.try_emplace(TR_KEY_torrent_count_camel, total);
-    args_out.try_emplace(TR_KEY_uploadSpeed, session->piece_speed(TR_UP).base_quantity());
+    args_out.try_emplace(TR_KEY_upload_speed, session->piece_speed(TR_UP).base_quantity());
+    args_out.try_emplace(TR_KEY_upload_speed_camel, session->piece_speed(TR_UP).base_quantity());
 
     return nullptr;
 }
