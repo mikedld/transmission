@@ -601,7 +601,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `speed_bytes`  | number | number of bytes in a KB (1000 for kB; 1024 for KiB)
 | `size_units`   | array  | 4 strings: KB/s, MB/s, GB/s, TB/s
 | `size_bytes`   | number | number of bytes in a KB (1000 for kB; 1024 for KiB)
-| `memory-units` | array  | 4 strings: KB/s, MB/s, GB/s, TB/s
+| `memory_units` | array  | 4 strings: KB/s, MB/s, GB/s, TB/s
 | `memory-bytes` | number | number of bytes in a KB (1000 for kB; 1024 for KiB)
 
 `rpc_version` indicates the RPC interface version supported by the RPC server.
