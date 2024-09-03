@@ -69,7 +69,7 @@ TEST_F(RpcTest, list)
 TEST_F(RpcTest, tagSync)
 {
     auto request_map = tr_variant::Map{ 2U };
-    request_map.try_emplace(TR_KEY_method, "session-stats");
+    request_map.try_emplace(TR_KEY_method, "session_stats");
     request_map.try_emplace(TR_KEY_tag, 12345);
 
     auto response = tr_variant{};

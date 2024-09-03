@@ -121,7 +121,7 @@ export class Remote {
 
   loadDaemonStats(callback, context) {
     const o = {
-      method: 'session-stats',
+      method: 'session_stats',
     };
     this.sendRequest(o, callback, context);
   }
