@@ -2169,6 +2169,7 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
 
     auto units_map = tr_variant::Map{ 6U };
     units_map.try_emplace(TR_KEY_memory_bytes, Memory::units().base());
+    units_map.try_emplace(TR_KEY_memory_bytes_kebab, Memory::units().base());
     units_map.try_emplace(TR_KEY_memory_units, make_units_vec(Memory::units()));
     units_map.try_emplace(TR_KEY_memory_units_kebab, make_units_vec(Memory::units()));
     units_map.try_emplace(TR_KEY_size_bytes, Storage::units().base());
