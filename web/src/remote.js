@@ -84,7 +84,7 @@ export class Remote {
   // TODO: return a Promise
   loadDaemonPrefs(callback, context) {
     const o = {
-      method: 'session-get',
+      method: 'session_get',
     };
     this.sendRequest(o, callback, context);
   }

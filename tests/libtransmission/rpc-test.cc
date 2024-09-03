@@ -156,7 +156,7 @@ TEST_F(RpcTest, sessionGet)
 
     auto request = tr_variant{};
     tr_variantInitDict(&request, 1);
-    tr_variantDictAddStrView(&request, TR_KEY_method, "session-get");
+    tr_variantDictAddStrView(&request, TR_KEY_method, "session_get");
     auto response = tr_variant{};
     tr_rpc_request_exec(
         session_,
