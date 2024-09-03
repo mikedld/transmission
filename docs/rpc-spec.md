@@ -613,7 +613,7 @@ in a way that is not backwards compatible. There are no plans for this
 to be common behavior.
 
 #### 4.1.1 Mutators
-Method name: `session-set`
+Method name: `session_set`
 
 Request arguments: the mutable properties from 4.1's arguments, i.e. all of them
 except:

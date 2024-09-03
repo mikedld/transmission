@@ -266,7 +266,7 @@ export class Remote {
   savePrefs(arguments_) {
     const o = {
       arguments: arguments_,
-      method: 'session-set',
+      method: 'session_set',
     };
     this.sendRequest(o, () => {
       this._controller.loadDaemonPrefs();
