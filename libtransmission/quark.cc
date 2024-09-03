@@ -99,6 +99,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "creation date"sv,
     "creator"sv,
     "cumulative-stats"sv,
+    "cumulative_stats"sv,
     "current-stats"sv,
     "date"sv,
     "dateCreated"sv,
@@ -712,6 +713,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_compact_view_kebab: return TR_KEY_compact_view;
     case TR_KEY_config_dir_kebab: return TR_KEY_config_dir;
     case TR_KEY_corrupt_ever_camel: return TR_KEY_corrupt_ever;
+    case TR_KEY_cumulative_stats_kebab: return TR_KEY_cumulative_stats;
     case TR_KEY_date_created_camel: return TR_KEY_date_created;
     case TR_KEY_default_trackers_kebab: return TR_KEY_default_trackers;
     case TR_KEY_delete_local_data_kebab: return TR_KEY_delete_local_data;

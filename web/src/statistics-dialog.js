@@ -58,7 +58,7 @@ export class StatisticsDialog extends EventTarget {
       fmt.timeInterval(s.secondsActive),
     );
 
-    s = stats['cumulative-stats'];
+    s = stats.cumulative_stats;
     ratio = Utils.ratio(s.uploadedBytes, s.downloadedBytes);
     setTextContent(this.elements.total.up, fmt.size(s.uploadedBytes));
     setTextContent(this.elements.total.down, fmt.size(s.downloadedBytes));

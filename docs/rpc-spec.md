@@ -652,7 +652,7 @@ Response arguments:
 | `paused_torrent_count`     | number
 | `torrent_count`            | number
 | `upload_speed`             | number
-| `cumulative-stats`         | stats object (see below)
+| `cumulative_stats`         | stats object (see below)
 | `current-stats`            | stats object (see below)
 
 A stats object contains:

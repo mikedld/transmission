@@ -849,7 +849,7 @@ void Session::updateStats(tr_variant* dict)
         updateStats(var, &stats_);
     }
 
-    if (tr_variant* var = nullptr; tr_variantDictFindDict(dict, TR_KEY_cumulative_stats, &var))
+    if (tr_variant* var = nullptr; tr_variantDictFindDict(dict, TR_KEY_cumulative_stats_kebab, &var))
     {
         updateStats(var, &cumulative_stats_);
     }

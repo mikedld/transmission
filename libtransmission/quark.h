@@ -100,6 +100,7 @@ enum
     TR_KEY_created_by_utf_8,
     TR_KEY_creation_date,
     TR_KEY_creator,
+    TR_KEY_cumulative_stats_kebab,
     TR_KEY_cumulative_stats,
     TR_KEY_current_stats,
     TR_KEY_date,
