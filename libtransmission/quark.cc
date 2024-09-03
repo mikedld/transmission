@@ -21,6 +21,7 @@ namespace
 auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     ""sv,
     "activeTorrentCount"sv,
+    "active_torrent_count"sv,
     "activity-date"sv,
     "activityDate"sv,
     "activity_date"sv,
@@ -678,6 +679,7 @@ tr_quark tr_quark_convert(tr_quark q)
     // clang-format off
     switch (q)
     {
+    case TR_KEY_active_torrent_count_camel: return TR_KEY_active_torrent_count;
     case TR_KEY_activity_date_camel:
     case TR_KEY_activity_date_kebab:
         return TR_KEY_activity_date;

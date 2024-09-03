@@ -22,7 +22,8 @@ using tr_quark = size_t;
 enum
 {
     TR_KEY_NONE, /* represented as an empty string */
-    TR_KEY_activeTorrentCount, /* rpc */
+    TR_KEY_active_torrent_count_camel, /* rpc (deprecated) */
+    TR_KEY_active_torrent_count, /* rpc */
     TR_KEY_activity_date_kebab, /* resume file (legacy) */
     TR_KEY_activity_date_camel, /* rpc (deprecated) */
     TR_KEY_activity_date, /* rpc, resume file */

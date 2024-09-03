@@ -2122,7 +2122,8 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
         [](auto const* tor) { return tor->is_running(); });
 
     args_out.reserve(std::size(args_out) + 7U);
-    args_out.try_emplace(TR_KEY_activeTorrentCount, n_running);
+    args_out.try_emplace(TR_KEY_active_torrent_count, n_running);
+    args_out.try_emplace(TR_KEY_active_torrent_count_camel, n_running);
     args_out.try_emplace(TR_KEY_cumulative_stats, make_stats_map(session->stats().cumulative()));
     args_out.try_emplace(TR_KEY_current_stats, make_stats_map(session->stats().current()));
     args_out.try_emplace(TR_KEY_downloadSpeed, session->piece_speed(TR_DOWN).base_quantity());
