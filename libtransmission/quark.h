@@ -227,7 +227,7 @@ enum
     TR_KEY_incomplete_dir_enabled,
     TR_KEY_info,
     TR_KEY_inhibit_desktop_hibernation,
-    TR_KEY_ipProtocol,
+    TR_KEY_ip_protocol,
     TR_KEY_ipv4,
     TR_KEY_ipv6,
     TR_KEY_is_backup_camel,

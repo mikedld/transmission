@@ -94,7 +94,7 @@ void Session::portTest(Session::PortTestIpProtocol const ip_protocol)
     port_test_pending_[ip_protocol] = true;
 
     auto args = tr_variant::make_map(1U);
-    tr_variantDictAddStrView(&args, TR_KEY_ipProtocol, IpStr[ip_protocol]);
+    tr_variantDictAddStrView(&args, TR_KEY_ip_protocol, IpStr[ip_protocol]);
 
     auto const response_func = [this, ip_protocol](RpcResponse const& r)
     {

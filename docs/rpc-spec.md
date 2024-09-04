@@ -678,8 +678,8 @@ from the outside world.
 
 Method name: `port_test`
 
-Request arguments: an optional argument `ipProtocol`.
-`ipProtocol` is a string specifying the IP protocol version to be used for the port test.
+Request arguments: an optional argument `ip_protocol`.
+`ip_protocol` is a string specifying the IP protocol version to be used for the port test.
 Set to `ipv4` to check IPv4, or set to `ipv6` to check IPv6.
 For backwards compatibility, it is allowed to omit this argument to get the behaviour before Transmission `4.1.0`,
 which is to check whichever IP protocol the OS happened to use to connect to our port test service,
@@ -690,7 +690,7 @@ Response arguments:
 | Key | Value Type | Description
 | :-- | :-- | :--
 | `port-is-open` | boolean | true if port is open, false if port is closed
-| `ipProtocol` | string | `ipv4` if the test was carried out on IPv4, `ipv6` if the test was carried out on IPv6, unset if it cannot be determined
+| `ip_protocol` | string | `ipv4` if the test was carried out on IPv4, `ipv6` if the test was carried out on IPv6, unset if it cannot be determined
 
 ### 4.5 Session shutdown
 This method tells the transmission session to shut down.
@@ -1041,4 +1041,4 @@ Transmission 4.1.0 (`rpc_version_semver` 5.4.0, `rpc_version`: 18)
 | `torrent_set` | new arg `sequential_download`
 | `torrent_get` | new arg `files.begin_piece`
 | `torrent_get` | new arg `files.end_piece`
-| `port_test` | new arg `ipProtocol`
+| `port_test` | new arg `ip_protocol`

@@ -56,12 +56,12 @@ export class PrefsDialog extends EventTarget {
     }
   }
 
-  _onPortChecked(ipProtocol, response) {
+  _onPortChecked(ip_protocol, response) {
     if (this.closed) {
       return;
     }
 
-    const element = this.elements.network.port_status_label[ipProtocol];
+    const element = this.elements.network.port_status_label[ip_protocol];
     const is_open = response.arguments['port-is-open'] || false;
     element.dataset.open = is_open;
     if ('port-is-open' in response.arguments) {

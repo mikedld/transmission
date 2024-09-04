@@ -1277,7 +1277,7 @@ void Session::port_test(PortTestIpProtocol const ip_protocol)
     auto const tag = nextTag++;
 
     auto arguments_map = tr_variant::Map{ 1U };
-    arguments_map.try_emplace(TR_KEY_ipProtocol, tr_variant::unmanaged_string(IpStr[ip_protocol]));
+    arguments_map.try_emplace(TR_KEY_ip_protocol, tr_variant::unmanaged_string(IpStr[ip_protocol]));
 
     auto request_map = tr_variant::Map{ 3U };
     request_map.try_emplace(TR_KEY_method, tr_variant::unmanaged_string("port-test"sv));

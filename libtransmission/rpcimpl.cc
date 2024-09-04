@@ -1375,9 +1375,9 @@ void onPortTested(tr_web::FetchResponse const& web_response)
     auto* data = static_cast<tr_rpc_idle_data*>(user_data);
 
     if (auto const addr = tr_address::from_string(primary_ip);
-        data->args_out.find_if<std::string_view>(TR_KEY_ipProtocol) == nullptr && addr && addr->is_valid())
+        data->args_out.find_if<std::string_view>(TR_KEY_ip_protocol) == nullptr && addr && addr->is_valid())
     {
-        data->args_out.try_emplace(TR_KEY_ipProtocol, addr->is_ipv4() ? "ipv4"sv : "ipv6"sv);
+        data->args_out.try_emplace(TR_KEY_ip_protocol, addr->is_ipv4() ? "ipv4"sv : "ipv6"sv);
     }
 
     if (status != 200)
@@ -1404,17 +1404,17 @@ char const* portTest(tr_session* session, tr_variant::Map const& args_in, struct
     auto options = tr_web::FetchOptions{ url, onPortTested, idle_data };
     options.timeout_secs = TimeoutSecs;
 
-    if (auto const val = args_in.value_if<std::string_view>(TR_KEY_ipProtocol))
+    if (auto const val = args_in.value_if<std::string_view>(TR_KEY_ip_protocol); val)
     {
         if (*val == "ipv4"sv)
         {
             options.ip_proto = tr_web::FetchOptions::IPProtocol::V4;
-            idle_data->args_out.try_emplace(TR_KEY_ipProtocol, "ipv4"sv);
+            idle_data->args_out.try_emplace(TR_KEY_ip_protocol, "ipv4"sv);
         }
         else if (*val == "ipv6"sv)
         {
             options.ip_proto = tr_web::FetchOptions::IPProtocol::V6;
-            idle_data->args_out.try_emplace(TR_KEY_ipProtocol, "ipv6"sv);
+            idle_data->args_out.try_emplace(TR_KEY_ip_protocol, "ipv6"sv);
         }
         else
         {
