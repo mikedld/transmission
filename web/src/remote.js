@@ -94,7 +94,7 @@ export class Remote {
       arguments: {
         ipProtocol,
       },
-      method: 'port-test',
+      method: 'port_test',
     };
     this.sendRequest(o, callback, context);
   }
