@@ -738,8 +738,8 @@ Response arguments:
 | `total_size` | number | the total capacity, in bytes, of that directory
 
 ### 4.8 Bandwidth groups
-#### 4.8.1 Bandwidth group mutator: `group-set`
-Method name: `group-set`
+#### 4.8.1 Bandwidth group mutator: `group_set`
+Method name: `group_set`
 
 Request parameters:
 

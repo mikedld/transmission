@@ -2463,7 +2463,7 @@ using SyncHandler = char const* (*)(tr_session*, tr_variant::Map const&, tr_vari
 auto constexpr SyncHandlers = std::array<std::pair<std::string_view, SyncHandler>, 20U>{ {
     { "free_space"sv, freeSpace },
     { "group-get"sv, groupGet },
-    { "group-set"sv, groupSet },
+    { "group_set"sv, groupSet },
     { "queue_move_bottom"sv, queueMoveBottom },
     { "queue_move_down"sv, queueMoveDown },
     { "queue_move_top"sv, queueMoveTop },
