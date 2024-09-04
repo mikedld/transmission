@@ -824,7 +824,7 @@ void Session::updateStats(tr_variant* args_dict, tr_session_stats* stats)
         stats->downloadedBytes = *value;
     }
 
-    if (auto const value = dictFind<uint64_t>(args_dict, TR_KEY_filesAdded); value)
+    if (auto const value = dictFind<uint64_t>(args_dict, TR_KEY_files_added_camel); value)
     {
         stats->filesAdded = *value;
     }
