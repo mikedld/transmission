@@ -2002,7 +2002,7 @@ void print_session_stats(tr_variant::Map const& map)
     if (auto* d = args->find_if<tr_variant::Map>({ TR_KEY_current_stats, TR_KEY_current_stats_kebab }); d != nullptr)
     {
         auto const up = d->value_if<int64_t>({ TR_KEY_uploaded_bytes, TR_KEY_uploaded_bytes_camel });
-        auto const down = d->value_if<int64_t>(TR_KEY_downloadedBytes);
+        auto const down = d->value_if<int64_t>({ TR_KEY_downloaded_bytes, TR_KEY_downloaded_bytes_camel });
         auto const secs = d->value_if<int64_t>(TR_KEY_secondsActive);
 
         if (up && down && secs)
@@ -2018,7 +2018,7 @@ void print_session_stats(tr_variant::Map const& map)
     if (auto* d = args->find_if<tr_variant::Map>({ TR_KEY_cumulative_stats, TR_KEY_cumulative_stats_kebab }); d != nullptr)
     {
         auto const up = d->value_if<int64_t>({ TR_KEY_uploaded_bytes, TR_KEY_uploaded_bytes_camel });
-        auto const down = d->value_if<int64_t>(TR_KEY_downloadedBytes);
+        auto const down = d->value_if<int64_t>({ TR_KEY_downloaded_bytes, TR_KEY_downloaded_bytes_camel });
         auto const secs = d->value_if<int64_t>(TR_KEY_secondsActive);
         auto const sessions = d->value_if<int64_t>(TR_KEY_sessionCount);
 

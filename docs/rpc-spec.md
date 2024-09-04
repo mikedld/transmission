@@ -660,7 +660,7 @@ A stats object contains:
 | Key | Value Type | transmission.h source
 |:--|:--|:--
 | `uploaded_bytes`   | number     | tr_session_stats
-| `downloadedBytes`  | number     | tr_session_stats
+| `downloaded_bytes` | number     | tr_session_stats
 | `filesAdded`       | number     | tr_session_stats
 | `sessionCount`     | number     | tr_session_stats
 | `secondsActive`    | number     | tr_session_stats

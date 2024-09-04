@@ -62,7 +62,7 @@ tr_session_stats tr_stats::load_old_stats(std::string_view config_dir)
 
     auto ret = tr_session_stats{};
 
-    load({ TR_KEY_downloaded_bytes }, ret.downloadedBytes);
+    load({ TR_KEY_downloaded_bytes, TR_KEY_downloaded_bytes_kebab }, ret.downloadedBytes);
     load({ TR_KEY_files_added }, ret.filesAdded);
     load({ TR_KEY_seconds_active }, ret.secondsActive);
     load({ TR_KEY_session_count }, ret.sessionCount);
