@@ -2467,7 +2467,7 @@ auto constexpr SyncHandlers = std::array<std::pair<std::string_view, SyncHandler
     { "queue-move-bottom"sv, queueMoveBottom },
     { "queue-move-down"sv, queueMoveDown },
     { "queue_move_top"sv, queueMoveTop },
-    { "queue-move-up"sv, queueMoveUp },
+    { "queue_move_up"sv, queueMoveUp },
     { "session_close"sv, sessionClose },
     { "session_get"sv, sessionGet },
     { "session_set"sv, sessionSet },

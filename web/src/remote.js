@@ -11,7 +11,7 @@ export const RPC = {
   _QueueMoveBottom: 'queue-move-bottom',
   _QueueMoveDown: 'queue-move-down',
   _QueueMoveTop: 'queue_move_top',
-  _QueueMoveUp: 'queue-move-up',
+  _QueueMoveUp: 'queue_move_up',
   _Root: '../rpc',
   _TurtleDownSpeedLimit: 'alt_speed_down',
   _TurtleState: 'alt_speed_enabled',
