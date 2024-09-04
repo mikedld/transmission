@@ -704,7 +704,7 @@ Response arguments: none
 ### 4.6 Queue movement requests
 | Method name | transmission.h source
 |:--|:--
-| `queue-move-top` | tr_torrentQueueMoveTop()
+| `queue_move_top` | tr_torrentQueueMoveTop()
 | `queue-move-up` | tr_torrentQueueMoveUp()
 | `queue-move-down` | tr_torrentQueueMoveDown()
 | `queue-move-bottom` | tr_torrentQueueMoveBottom()
