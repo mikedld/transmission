@@ -695,7 +695,7 @@ Response arguments:
 ### 4.5 Session shutdown
 This method tells the transmission session to shut down.
 
-Method name: `session-close`
+Method name: `session_close`
 
 Request arguments: none
 
