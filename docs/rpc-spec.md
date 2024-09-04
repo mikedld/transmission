@@ -662,8 +662,8 @@ A stats object contains:
 | `uploaded_bytes`   | number     | tr_session_stats
 | `downloaded_bytes` | number     | tr_session_stats
 | `files_added`      | number     | tr_session_stats
-| `sessionCount`     | number     | tr_session_stats
 | `secondsActive`    | number     | tr_session_stats
+| `session_count`    | number     | tr_session_stats
 
 ### 4.3 Blocklist
 Method name: `blocklist-update`

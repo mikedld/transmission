@@ -829,7 +829,7 @@ void Session::updateStats(tr_variant* args_dict, tr_session_stats* stats)
         stats->filesAdded = *value;
     }
 
-    if (auto const value = dictFind<uint64_t>(args_dict, TR_KEY_sessionCount); value)
+    if (auto const value = dictFind<uint64_t>(args_dict, TR_KEY_session_count_camel); value)
     {
         stats->sessionCount = *value;
     }

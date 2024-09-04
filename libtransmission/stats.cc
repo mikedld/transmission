@@ -65,7 +65,7 @@ tr_session_stats tr_stats::load_old_stats(std::string_view config_dir)
     load({ TR_KEY_downloaded_bytes, TR_KEY_downloaded_bytes_kebab }, ret.downloadedBytes);
     load({ TR_KEY_files_added, TR_KEY_files_added_kebab }, ret.filesAdded);
     load({ TR_KEY_seconds_active }, ret.secondsActive);
-    load({ TR_KEY_session_count }, ret.sessionCount);
+    load({ TR_KEY_session_count, TR_KEY_session_count_kebab }, ret.sessionCount);
     load({ TR_KEY_uploaded_bytes, TR_KEY_uploaded_bytes_kebab }, ret.uploadedBytes);
 
     return ret;
