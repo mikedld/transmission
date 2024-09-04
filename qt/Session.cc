@@ -834,7 +834,7 @@ void Session::updateStats(tr_variant* args_dict, tr_session_stats* stats)
         stats->sessionCount = *value;
     }
 
-    if (auto const value = dictFind<uint64_t>(args_dict, TR_KEY_secondsActive); value)
+    if (auto const value = dictFind<uint64_t>(args_dict, TR_KEY_seconds_active_camel); value)
     {
         stats->secondsActive = *value;
     }

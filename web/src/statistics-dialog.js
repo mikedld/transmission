@@ -55,7 +55,7 @@ export class StatisticsDialog extends EventTarget {
     this.elements.session.ratio.innerHTML = fmt.ratioString(ratio);
     setTextContent(
       this.elements.session.time,
-      fmt.timeInterval(s.secondsActive),
+      fmt.timeInterval(s.seconds_active),
     );
 
     s = stats.cumulative_stats;
@@ -63,7 +63,10 @@ export class StatisticsDialog extends EventTarget {
     setTextContent(this.elements.total.up, fmt.size(s.uploaded_bytes));
     setTextContent(this.elements.total.down, fmt.size(s.downloaded_bytes));
     this.elements.total.ratio.innerHTML = fmt.ratioString(ratio);
-    setTextContent(this.elements.total.time, fmt.timeInterval(s.secondsActive));
+    setTextContent(
+      this.elements.total.time,
+      fmt.timeInterval(s.seconds_active),
+    );
   }
 
   static _create() {
