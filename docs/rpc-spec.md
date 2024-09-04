@@ -548,7 +548,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `default_trackers` | string | announce URLs, one per line, and a blank line between [tiers](https://www.bittorrent.org/beps/bep_0012.html).
 | `dht_enabled` | boolean | true means allow DHT in public torrents
 | `download_dir` | string | default path to download torrents
-| `download_dir_free_space` | number |  **DEPRECATED** Use the `free-space` method instead.
+| `download_dir_free_space` | number |  **DEPRECATED** Use the `free_space` method instead.
 | `download_queue_enabled` | boolean | if true, limit how many torrents can be downloaded at once
 | `download_queue_size` | number | max number of torrents to download at once (see `download_queue_enabled`)
 | `encryption` | string | `required`, `preferred`, `tolerated`
@@ -721,7 +721,7 @@ Response arguments: none
 This method tests how much free space is available in a
 client-specified folder.
 
-Method name: `free-space`
+Method name: `free_space`
 
 Request arguments:
 

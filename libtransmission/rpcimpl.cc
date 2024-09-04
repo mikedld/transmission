@@ -2461,7 +2461,7 @@ char const* sessionClose(tr_session* session, tr_variant::Map const& /*args_in*/
 using SyncHandler = char const* (*)(tr_session*, tr_variant::Map const&, tr_variant::Map&);
 
 auto constexpr SyncHandlers = std::array<std::pair<std::string_view, SyncHandler>, 20U>{ {
-    { "free-space"sv, freeSpace },
+    { "free_space"sv, freeSpace },
     { "group-get"sv, groupGet },
     { "group-set"sv, groupSet },
     { "queue_move_bottom"sv, queueMoveBottom },

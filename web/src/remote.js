@@ -148,7 +148,7 @@ export class Remote {
       arguments: {
         path: dir,
       },
-      method: 'free-space',
+      method: 'free_space',
     };
     this.sendRequest(o, (response) => {
       const arguments_ = response.arguments;
