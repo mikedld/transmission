@@ -9,7 +9,7 @@ export const RPC = {
   _DownSpeedLimit: 'speed_limit_down',
   _DownSpeedLimited: 'speed_limit_down_enabled',
   _QueueMoveBottom: 'queue-move-bottom',
-  _QueueMoveDown: 'queue-move-down',
+  _QueueMoveDown: 'queue_move_down',
   _QueueMoveTop: 'queue_move_top',
   _QueueMoveUp: 'queue_move_up',
   _Root: '../rpc',
