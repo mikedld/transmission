@@ -2486,7 +2486,7 @@ auto constexpr SyncHandlers = std::array<std::pair<std::string_view, SyncHandler
 using AsyncHandler = char const* (*)(tr_session*, tr_variant::Map const&, tr_rpc_idle_data*);
 
 auto constexpr AsyncHandlers = std::array<std::pair<std::string_view, AsyncHandler>, 4U>{ {
-    { "blocklist-update"sv, blocklistUpdate },
+    { "blocklist_update"sv, blocklistUpdate },
     { "port-test"sv, portTest },
     { "torrent_add"sv, torrentAdd },
     { "torrent_rename_path"sv, torrentRenamePath },

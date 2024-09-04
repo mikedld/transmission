@@ -274,7 +274,7 @@ export class Remote {
   }
   updateBlocklist() {
     const o = {
-      method: 'blocklist-update',
+      method: 'blocklist_update',
     };
     this.sendRequest(o, () => {
       this._controller.loadDaemonPrefs();

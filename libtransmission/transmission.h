@@ -717,11 +717,11 @@ void tr_blocklistSetEnabled(tr_session* session, bool is_enabled);
 char const* tr_blocklistGetURL(tr_session const* session);
 
 /** @brief The blocklist that gets updated when an RPC client
-           invokes the "blocklist-update" method */
+           invokes the "blocklist_update" method */
 void tr_blocklistSetURL(tr_session* session, char const* url);
 
 /** @brief the file in the $config/blocklists/ directory that's
-           used by `tr_blocklistSetContent()` and "blocklist-update" */
+           used by `tr_blocklistSetContent()` and "blocklist_update" */
 #define DEFAULT_BLOCKLIST_FILENAME "blocklist.bin"
 
 /** @} */
