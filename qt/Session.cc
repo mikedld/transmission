@@ -814,7 +814,7 @@ RpcResponseFuture Session::exec(std::string_view method, tr_variant* args)
 
 void Session::updateStats(tr_variant* args_dict, tr_session_stats* stats)
 {
-    if (auto const value = dictFind<uint64_t>(args_dict, TR_KEY_uploadedBytes); value)
+    if (auto const value = dictFind<uint64_t>(args_dict, TR_KEY_uploaded_bytes_camel); value)
     {
         stats->uploadedBytes = *value;
     }
