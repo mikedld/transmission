@@ -8,7 +8,7 @@ export const RPC = {
   _DaemonVersion: 'version',
   _DownSpeedLimit: 'speed_limit_down',
   _DownSpeedLimited: 'speed_limit_down_enabled',
-  _QueueMoveBottom: 'queue-move-bottom',
+  _QueueMoveBottom: 'queue_move_bottom',
   _QueueMoveDown: 'queue_move_down',
   _QueueMoveTop: 'queue_move_top',
   _QueueMoveUp: 'queue_move_up',

@@ -707,7 +707,7 @@ Response arguments: none
 | `queue_move_top` | tr_torrentQueueMoveTop()
 | `queue_move_up` | tr_torrentQueueMoveUp()
 | `queue_move_down` | tr_torrentQueueMoveDown()
-| `queue-move-bottom` | tr_torrentQueueMoveBottom()
+| `queue_move_bottom` | tr_torrentQueueMoveBottom()
 
 Request arguments:
 
