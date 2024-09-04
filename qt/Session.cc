@@ -844,7 +844,7 @@ void Session::updateStats(tr_variant* args_dict, tr_session_stats* stats)
 
 void Session::updateStats(tr_variant* dict)
 {
-    if (tr_variant* var = nullptr; tr_variantDictFindDict(dict, TR_KEY_current_stats, &var))
+    if (tr_variant* var = nullptr; tr_variantDictFindDict(dict, TR_KEY_current_stats_kebab, &var))
     {
         updateStats(var, &stats_);
     }

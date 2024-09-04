@@ -1999,7 +1999,7 @@ void print_session_stats(tr_variant::Map const& map)
         return;
     }
 
-    if (auto* d = args->find_if<tr_variant::Map>(TR_KEY_current_stats); d != nullptr)
+    if (auto* d = args->find_if<tr_variant::Map>({ TR_KEY_current_stats, TR_KEY_current_stats_kebab }); d != nullptr)
     {
         auto const up = d->value_if<int64_t>(TR_KEY_uploadedBytes);
         auto const down = d->value_if<int64_t>(TR_KEY_downloadedBytes);

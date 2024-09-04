@@ -48,7 +48,7 @@ export class StatisticsDialog extends EventTarget {
     console.log(stats);
     const fmt = Formatter;
 
-    let s = stats['current-stats'];
+    let s = stats.current_stats;
     let ratio = Utils.ratio(s.uploadedBytes, s.downloadedBytes);
     setTextContent(this.elements.session.up, fmt.size(s.uploadedBytes));
     setTextContent(this.elements.session.down, fmt.size(s.downloadedBytes));
