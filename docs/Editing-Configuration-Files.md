@@ -46,7 +46,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 #### IP Announce
 
  * **announce_ip:** String (default = "") Alternative IP address to announce to the tracker.
- * **announce-ip-enabled:** Boolean (default = false) When enabled `announce_ip` value is used instead of the client's address visible to the tracker for announcement requests.
+ * **announce_ip_enabled:** Boolean (default = false) When enabled `announce_ip` value is used instead of the client's address visible to the tracker for announcement requests.
 
 #### Bandwidth
 
