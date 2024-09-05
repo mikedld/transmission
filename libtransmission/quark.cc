@@ -65,6 +65,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "begin_piece"sv,
     "bind-address-ipv4"sv,
     "bind-address-ipv6"sv,
+    "bind_address_ipv4"sv,
     "bitfield"sv,
     "blocklist-date"sv,
     "blocklist-enabled"sv,
@@ -716,6 +717,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_bandwidth_priority_camel:
     case TR_KEY_bandwidth_priority_kebab:
         return TR_KEY_bandwidth_priority;
+    case TR_KEY_bind_address_ipv4_kebab: return TR_KEY_bind_address_ipv4;
     case TR_KEY_blocklist_enabled_kebab: return TR_KEY_blocklist_enabled;
     case TR_KEY_blocklist_size_kebab: return TR_KEY_blocklist_size;
     case TR_KEY_blocklist_url_kebab: return TR_KEY_blocklist_url;
