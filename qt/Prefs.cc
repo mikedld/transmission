@@ -61,7 +61,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     PrefItem{ OPTIONS_PROMPT, TR_KEY_show_options_window, QMetaType::Bool },
     { OPEN_DIALOG_FOLDER, TR_KEY_open_dialog_dir, QMetaType::QString },
     { INHIBIT_HIBERNATION, TR_KEY_inhibit_desktop_hibernation, QMetaType::Bool },
-    { DIR_WATCH, TR_KEY_watch_dir, QMetaType::QString },
+    { DIR_WATCH, TR_KEY_watch_dir_kebab, QMetaType::QString },
     { DIR_WATCH_ENABLED, TR_KEY_watch_dir_enabled_kebab, QMetaType::Bool },
     { SHOW_TRAY_ICON, TR_KEY_show_notification_area_icon, QMetaType::Bool },
     { START_MINIMIZED, TR_KEY_start_minimized, QMetaType::Bool },
