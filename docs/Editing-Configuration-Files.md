@@ -73,7 +73,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **preallocation:** Number (0 = Off, 1 = Fast, 2 = Full (slower but reduces disk fragmentation), default = 1)
  * **rename_partial_files:** Boolean (default = true) Postfix partially downloaded files with ".part".
  * **start_added_torrents:** Boolean (default = true) Start torrents as soon as they are added.
- * **trash-can-enabled:** Boolean (default = true) Whether to move the torrents to the system's trashcan or unlink them right away upon deletion from Transmission.
+ * **trash_can_enabled:** Boolean (default = true) Whether to move the torrents to the system's trashcan or unlink them right away upon deletion from Transmission.
    _Note: transmission-gtk only._
  * **trash_original_torrent_files:** Boolean (default = false) Delete torrents added from the watch directory.
  * **umask:** String (default = "022") Sets Transmission's file mode creation mask. See [the umask(2) manpage](https://man7.org/linux/man-pages/man2/umask.2.html) for more information.
