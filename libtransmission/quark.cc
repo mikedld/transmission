@@ -373,7 +373,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "port-is-open"sv,
     "port_forwarding_enabled"sv,
     "preallocation"sv,
-    "preferred-transport"sv,
+    "preferred_transport"sv,
     "primary-mime-type"sv,
     "primary_mime_type"sv,
     "priorities"sv,
