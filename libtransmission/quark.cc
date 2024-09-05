@@ -299,6 +299,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "memory_bytes"sv,
     "memory_units"sv,
     "message-level"sv,
+    "message_level"sv,
     "metadataPercentComplete"sv,
     "metadata_percent_complete"sv,
     "metadata_size"sv,
@@ -804,6 +805,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_max_connected_peers_camel: return TR_KEY_max_connected_peers;
     case TR_KEY_memory_bytes_kebab: return TR_KEY_memory_bytes;
     case TR_KEY_memory_units_kebab: return TR_KEY_memory_units;
+    case TR_KEY_message_level_kebab: return TR_KEY_message_level;
     case TR_KEY_metadata_percent_complete_camel: return TR_KEY_metadata_percent_complete;
     case TR_KEY_next_announce_time_camel: return TR_KEY_next_announce_time;
     case TR_KEY_next_scrape_time_camel: return TR_KEY_next_scrape_time;
