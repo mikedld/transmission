@@ -78,8 +78,8 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **trash_original_torrent_files:** Boolean (default = false) Delete torrents added from the watch directory.
  * **umask:** String (default = "022") Sets Transmission's file mode creation mask. See [the umask(2) manpage](https://man7.org/linux/man-pages/man2/umask.2.html) for more information.
  * **watch-dir:** String
- * **watch-dir-enabled:** Boolean (default = false) Watch a directory for torrent files and add them to Transmission.
-   _Note: When **watch-dir-enabled** is true, only the transmission-daemon, transmission-gtk, and transmission-qt applications will monitor **watch-dir** for new .torrent files and automatically load them._
+ * **watch_dir_enabled:** Boolean (default = false) Watch a directory for torrent files and add them to Transmission.
+   _Note: When `watch_dir_enabled` is true, only the transmission-daemon, transmission-gtk, and transmission-qt applications will monitor **watch-dir** for new .torrent files and automatically load them._
  * **watch-dir-force-generic**: Boolean (default = false) Force to use a watch directory implementation that does not rely on OS-specific mechanisms. Useful when your watch directory is on a network location, such as CIFS or NFS.
    _Note: transmission-daemon only._
 
