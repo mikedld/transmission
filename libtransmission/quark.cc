@@ -590,6 +590,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "upload_limited"sv,
     "upload_only"sv,
     "upload_ratio"sv,
+    "upload_slots_per_torrent"sv,
     "upload_speed"sv,
     "uploaded"sv,
     "uploaded-bytes"sv,
@@ -892,6 +893,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_trash_original_torrent_files_kebab: return TR_KEY_trash_original_torrent_files;
     case TR_KEY_upload_limit_camel: return TR_KEY_upload_limit;
     case TR_KEY_upload_limited_camel: return TR_KEY_upload_limited;
+    case TR_KEY_upload_slots_per_torrent_kebab: return TR_KEY_upload_slots_per_torrent;
     case TR_KEY_upload_ratio_camel: return TR_KEY_upload_ratio;
     case TR_KEY_upload_speed_camel: return TR_KEY_upload_speed;
     case TR_KEY_uploaded_bytes_camel:
