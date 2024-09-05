@@ -448,6 +448,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "scrape"sv,
     "scrape-paused-torrents-enabled"sv,
     "scrapeState"sv,
+    "scrape_paused_torrents_enabled"sv,
     "scrape_state"sv,
     "script-torrent-added-enabled"sv,
     "script-torrent-added-filename"sv,
@@ -844,6 +845,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_rpc_version_minimum_kebab: return TR_KEY_rpc_version_minimum;
     case TR_KEY_rpc_version_semver_kebab: return TR_KEY_rpc_version_semver;
     case TR_KEY_seconds_downloading_camel: return TR_KEY_seconds_downloading;
+    case TR_KEY_scrape_paused_torrents_enabled_kebab: return TR_KEY_scrape_paused_torrents_enabled;
     case TR_KEY_scrape_state_camel: return TR_KEY_scrape_state;
     case TR_KEY_script_torrent_added_enabled_kebab: return TR_KEY_script_torrent_added_enabled;
     case TR_KEY_script_torrent_added_filename_kebab: return TR_KEY_script_torrent_added_filename;
