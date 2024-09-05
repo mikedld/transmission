@@ -80,7 +80,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **watch-dir:** String
  * **watch_dir_enabled:** Boolean (default = false) Watch a directory for torrent files and add them to Transmission.
    _Note: When `watch_dir_enabled` is true, only the transmission-daemon, transmission-gtk, and transmission-qt applications will monitor **watch-dir** for new .torrent files and automatically load them._
- * **watch-dir-force-generic**: Boolean (default = false) Force to use a watch directory implementation that does not rely on OS-specific mechanisms. Useful when your watch directory is on a network location, such as CIFS or NFS.
+ * **watch_dir_force_generic**: Boolean (default = false) Force to use a watch directory implementation that does not rely on OS-specific mechanisms. Useful when your watch directory is on a network location, such as CIFS or NFS.
    _Note: transmission-daemon only._
 
 #### Misc
