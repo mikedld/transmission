@@ -510,7 +510,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "size_bytes"sv,
     "size_units"sv,
     "size_when_done"sv,
-    "sleep-per-seconds-during-verify"sv,
+    "sleep_per_seconds_during_verify"sv,
     "socket_address"sv,
     "sort-mode"sv,
     "sort-reversed"sv,

@@ -104,7 +104,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **torrent_added_verify_mode:** String ("fast", "full", default: "fast") Whether newly-added torrents' local data should be fully verified when added, or wait and verify them on-demand later. See [#2626](https://github.com/transmission/transmission/pull/2626) for more discussion.
  * **utp_enabled:** Boolean (default = true) Enable [Micro Transport Protocol (µTP)](https://en.wikipedia.org/wiki/Micro_Transport_Protocol)
  * **preferred_transport:** String ("utp" = Prefer µTP, "tcp" = Prefer TCP; default = "utp") Choose your preferred transport protocol (has no effect if one of them is disabled).
- * **sleep-per-seconds-during-verify:** Number (default = 100) Controls the duration in milliseconds for which the verification process will pause to reduce disk I/O pressure.
+ * **sleep_per_seconds_during_verify:** Number (default = 100) Controls the duration in milliseconds for which the verification process will pause to reduce disk I/O pressure.
 
 #### Peers
  * **bind-address-ipv4:** String (default = "") Where to listen for peer connections. When no valid IPv4 address is provided, Transmission will bind to "0.0.0.0".
