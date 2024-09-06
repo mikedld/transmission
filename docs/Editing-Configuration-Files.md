@@ -117,7 +117,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 
 #### Peer Port
  * **peer_port:** Number (default = 51413)
- * **peer-port-random-high:** Number (default = 65535)
+ * **peer_port_random_high:** Number (default = 65535)
  * **peer-port-random-low:** Number (default = 1024)
  * **peer_port_random_on_start:** Boolean (default = false)
  * **port_forwarding_enabled:** Boolean (default = true) Enable [UPnP](https://en.wikipedia.org/wiki/Universal_Plug_and_Play) or [NAT-PMP](https://en.wikipedia.org/wiki/NAT_Port_Mapping_Protocol).

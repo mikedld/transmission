@@ -344,6 +344,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "peer_limit_global"sv,
     "peer_limit_per_torrent"sv,
     "peer_port"sv,
+    "peer_port_random_high"sv,
     "peer_port_random_on_start"sv,
     "peer_socket_tos"sv,
     "peers"sv,
@@ -825,6 +826,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_peer_limit_global_kebab: return TR_KEY_peer_limit_global;
     case TR_KEY_peer_limit_per_torrent_kebab: return TR_KEY_peer_limit_per_torrent;
     case TR_KEY_peer_port_kebab: return TR_KEY_peer_port;
+    case TR_KEY_peer_port_random_high_kebab: return TR_KEY_peer_port_random_high;
     case TR_KEY_peer_port_random_on_start_kebab: return TR_KEY_peer_port_random_on_start;
     case TR_KEY_peer_socket_tos_kebab: return TR_KEY_peer_socket_tos;
     case TR_KEY_peers_connected_camel: return TR_KEY_peers_connected;
