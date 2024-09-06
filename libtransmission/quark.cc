@@ -58,6 +58,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "anti-brute-force-enabled"sv,
     "anti-brute-force-threshold"sv,
     "anti_brute_force_enabled"sv,
+    "anti_brute_force_threshold"sv,
     "arguments"sv,
     "availability"sv,
     "bandwidth-priority"sv,
@@ -741,6 +742,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_announce_ip_enabled_kebab: return TR_KEY_announce_ip_enabled;
     case TR_KEY_announce_state_camel: return TR_KEY_announce_state;
     case TR_KEY_anti_brute_force_enabled_kebab: return TR_KEY_anti_brute_force_enabled;
+    case TR_KEY_anti_brute_force_threshold_kebab: return TR_KEY_anti_brute_force_threshold;
     case TR_KEY_bandwidth_priority_camel:
     case TR_KEY_bandwidth_priority_kebab:
         return TR_KEY_bandwidth_priority;

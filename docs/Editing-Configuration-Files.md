@@ -131,8 +131,8 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **seed_queue_size:** Number (default = 10) See `seed_queue_enabled`.
 
 #### [RPC](rpc-spec.md)
- * **anti_brute_force_enabled:**: Boolean (default = false) Enable a very basic brute force protection for the RPC server. See "anti-brute-force-threshold" below.
- * **anti-brute-force-threshold:**: Number (default = 100) After this amount of failed authentication attempts is surpassed, the RPC server will deny any further authentication attempts until it is restarted. This is not tracked per IP but in total.
+ * **anti_brute_force_enabled:**: Boolean (default = false) Enable a very basic brute force protection for the RPC server. See `anti_brute_force_threshold` below.
+ * **anti_brute_force_threshold:**: Number (default = 100) After this amount of failed authentication attempts is surpassed, the RPC server will deny any further authentication attempts until it is restarted. This is not tracked per IP but in total.
  * **rpc_authentication_required:** Boolean (default = false)
  * **rpc_bind_address:** String (default = "0.0.0.0") Where to listen for RPC connections
  * **rpc_enabled:** Boolean (default = true \[transmission-daemon\], false \[others\])
