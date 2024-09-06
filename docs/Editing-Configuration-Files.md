@@ -109,7 +109,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 #### Peers
  * **bind_address_ipv4:** String (default = "") Where to listen for peer connections. When no valid IPv4 address is provided, Transmission will bind to "0.0.0.0".
  * **bind_address_ipv6:** String (default = "") Where to listen for peer connections. When no valid IPv6 address is provided, Transmission will try to bind to your default global IPv6 address. If that didn't work, then Transmission will bind to "::".
- * **peer-congestion-algorithm:** String. This is documented on https://www.pps.jussieu.fr/~jch/software/bittorrent/tcp-congestion-control.html.
+ * **peer_congestion_algorithm:** String. This is documented on https://www.pps.jussieu.fr/~jch/software/bittorrent/tcp-congestion-control.html.
  * **peer_limit_global:** Number (default = 200)
  * **peer_limit_per_torrent:** Number (default = 50)
  * **peer-socket-tos:** String (default = "le") Set the [DiffServ](https://en.wikipedia.org/wiki/Differentiated_services) parameter for outgoing packets. Allowed values are lowercase DSCP names. See the `tr_tos_t` class from `libtransmission/net.h` for the exact list of possible values.

@@ -337,6 +337,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "peer-socket-tos"sv,
     "peerIsChoked"sv,
     "peerIsInterested"sv,
+    "peer_congestion_algorithm"sv,
     "peer_is_choked"sv,
     "peer_is_interested"sv,
     "peer_limit"sv,
@@ -816,6 +817,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_next_announce_time_camel: return TR_KEY_next_announce_time;
     case TR_KEY_next_scrape_time_camel: return TR_KEY_next_scrape_time;
     case TR_KEY_paused_torrent_count_camel: return TR_KEY_paused_torrent_count;
+    case TR_KEY_peer_congestion_algorithm_kebab: return TR_KEY_peer_congestion_algorithm;
     case TR_KEY_peer_is_choked_camel: return TR_KEY_peer_is_choked;
     case TR_KEY_peer_is_interested_camel: return TR_KEY_peer_is_interested;
     case TR_KEY_peer_limit_kebab: return TR_KEY_peer_limit;
