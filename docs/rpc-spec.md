@@ -540,6 +540,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `alt_speed_time_enabled` | boolean | true means the scheduled on/off times are used
 | `alt_speed_time_end` | number | when to turn off alt speeds (units: same)
 | `alt_speed_up` | number | max global upload speed (KBps)
+| `anti_brute_force_enabled` | boolean | true means to enable a basic brute force protection for RPC server
 | `blocklist_enabled` | boolean | true means enabled
 | `blocklist_size` | number | number of rules in the blocklist
 | `blocklist_url` | string | location of the blocklist to use for `blocklist_update`

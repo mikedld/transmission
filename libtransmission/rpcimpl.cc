@@ -2091,7 +2091,8 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetAntiBruteForceThreshold(session, static_cast<int>(*val));
     }
 
-    if (auto const val = args_in.value_if<bool>(TR_KEY_anti_brute_force_enabled))
+    if (auto const val = args_in.value_if<bool>({ TR_KEY_anti_brute_force_enabled, TR_KEY_anti_brute_force_enabled_kebab });
+        val)
     {
         tr_sessionSetAntiBruteForceEnabled(session, *val);
     }
@@ -2221,7 +2222,9 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_alt_speed_up:
     case TR_KEY_alt_speed_up_kebab:
         return tr_sessionGetAltSpeed_KBps(&session, TR_UP);
-    case TR_KEY_anti_brute_force_enabled: return tr_sessionGetAntiBruteForceEnabled(&session);
+    case TR_KEY_anti_brute_force_enabled:
+    case TR_KEY_anti_brute_force_enabled_kebab:
+        return tr_sessionGetAntiBruteForceEnabled(&session);
     case TR_KEY_anti_brute_force_threshold: return tr_sessionGetAntiBruteForceThreshold(&session);
     case TR_KEY_blocklist_enabled:
     case TR_KEY_blocklist_enabled_kebab:

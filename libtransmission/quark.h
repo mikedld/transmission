@@ -57,8 +57,9 @@ enum
     TR_KEY_announce_ip, /* settings */
     TR_KEY_announce_ip_enabled, /* settings */
     TR_KEY_announce_state, /* rpc */
-    TR_KEY_anti_brute_force_enabled, /* rpc */
+    TR_KEY_anti_brute_force_enabled_kebab, /* rpc, settings (deprecated) */
     TR_KEY_anti_brute_force_threshold, /* rpc */
+    TR_KEY_anti_brute_force_enabled, /* rpc, settings */
     TR_KEY_arguments, /* rpc */
     TR_KEY_availability, // rpc
     TR_KEY_bandwidth_priority_kebab,
