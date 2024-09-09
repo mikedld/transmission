@@ -63,7 +63,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { INHIBIT_HIBERNATION, TR_KEY_inhibit_desktop_hibernation_kebab, QMetaType::Bool },
     { DIR_WATCH, TR_KEY_watch_dir_kebab, QMetaType::QString },
     { DIR_WATCH_ENABLED, TR_KEY_watch_dir_enabled_kebab, QMetaType::Bool },
-    { SHOW_TRAY_ICON, TR_KEY_show_notification_area_icon, QMetaType::Bool },
+    { SHOW_TRAY_ICON, TR_KEY_show_notification_area_icon_kebab, QMetaType::Bool },
     { START_MINIMIZED, TR_KEY_start_minimized, QMetaType::Bool },
     { SHOW_NOTIFICATION_ON_ADD, TR_KEY_torrent_added_notification_enabled, QMetaType::Bool },
     { SHOW_NOTIFICATION_ON_COMPLETE, TR_KEY_torrent_complete_notification_enabled, QMetaType::Bool },
