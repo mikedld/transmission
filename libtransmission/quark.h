@@ -231,6 +231,7 @@ enum
     TR_KEY_incomplete_dir,
     TR_KEY_incomplete_dir_enabled,
     TR_KEY_info,
+    TR_KEY_inhibit_desktop_hibernation_kebab,
     TR_KEY_inhibit_desktop_hibernation,
     TR_KEY_ip_protocol,
     TR_KEY_ipv4,
