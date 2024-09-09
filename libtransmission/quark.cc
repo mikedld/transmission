@@ -522,6 +522,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "show-toolbar"sv,
     "show-tracker-scrapes"sv,
     "show_filterbar"sv,
+    "show_options_window"sv,
     "show_statusbar"sv,
     "show_toolbar"sv,
     "sitename"sv,
@@ -913,6 +914,7 @@ tr_quark tr_quark_convert(tr_quark q)
         return TR_KEY_session_count;
     case TR_KEY_session_id_kebab: return TR_KEY_session_id;
     case TR_KEY_show_filterbar_kebab: return TR_KEY_show_filterbar;
+    case TR_KEY_show_options_window_kebab: return TR_KEY_show_options_window;
     case TR_KEY_show_statusbar_kebab: return TR_KEY_show_statusbar;
     case TR_KEY_show_toolbar_kebab: return TR_KEY_show_toolbar;
     case TR_KEY_size_bytes_kebab: return TR_KEY_size_bytes;
