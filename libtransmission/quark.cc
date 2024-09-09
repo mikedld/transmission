@@ -411,6 +411,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "ratio-limit"sv,
     "ratio-limit-enabled"sv,
     "ratio-mode"sv,
+    "ratio_limit_enabled"sv,
     "read-clipboard"sv,
     "recent-download-dir-1"sv,
     "recent-download-dir-2"sv,
@@ -866,6 +867,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_rate_to_client_camel: return TR_KEY_rate_to_client;
     case TR_KEY_rate_to_peer_camel: return TR_KEY_rate_to_peer;
     case TR_KEY_rate_upload_camel: return TR_KEY_rate_upload;
+    case TR_KEY_ratio_limit_enabled_kebab: return TR_KEY_ratio_limit_enabled;
     case TR_KEY_recheck_progress_camel: return TR_KEY_recheck_progress;
     case TR_KEY_rename_partial_files_kebab: return TR_KEY_rename_partial_files;
     case TR_KEY_rpc_authentication_required_kebab: return TR_KEY_rpc_authentication_required;

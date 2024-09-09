@@ -167,7 +167,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **idle_seeding_limit:** Number (default = 30) Stop seeding after being idle for _N_ minutes.
  * **idle_seeding_limit_enabled:** Boolean (default = false)
  * **ratio-limit:** Number (default = 2.0)
- * **ratio-limit-enabled:**  Boolean (default = false)
+ * **ratio_limit_enabled:**  Boolean (default = false)
 
 ### Legacy Options
 Only keys that differ from above are listed here. These options have been replaced in newer versions of Transmission.
