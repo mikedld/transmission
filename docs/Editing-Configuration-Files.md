@@ -38,7 +38,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 {
     "rpc_enabled": true,
     "peer_port": 51413,
-    "rpc-whitelist": "127.0.0.1,192.168.*.*"
+    "rpc_whitelist": "127.0.0.1,192.168.*.*"
 }
 ```
 
@@ -143,7 +143,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **rpc_socket_mode:** String UNIX filesystem mode for the RPC UNIX socket (default: 0750; used when `rpc_bind_address` is a UNIX socket)
  * **rpc_url:** String (default = /transmission/. Added in v2.2)
  * **rpc_username:** String
- * **rpc-whitelist:** String (Comma-delimited list of IP addresses. Wildcards allowed using '\*'. Example: "127.0.0.\*,192.168.\*.\*", Default:  "127.0.0.1")
+ * **rpc_whitelist:** String (Comma-delimited list of IP addresses. Wildcards allowed using '\*'. Example: "127.0.0.\*,192.168.\*.\*", Default:  "127.0.0.1")
  * **rpc-whitelist-enabled:** Boolean (default = true)
 
 #### Scheduling

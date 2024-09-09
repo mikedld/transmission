@@ -150,7 +150,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { RPC_PORT, TR_KEY_rpc_port_kebab, QMetaType::Int },
     { RPC_USERNAME, TR_KEY_rpc_username_kebab, QMetaType::QString },
     { RPC_WHITELIST_ENABLED, TR_KEY_rpc_whitelist_enabled, QMetaType::Bool },
-    { RPC_WHITELIST, TR_KEY_rpc_whitelist, QMetaType::QString },
+    { RPC_WHITELIST, TR_KEY_rpc_whitelist_kebab, QMetaType::QString },
     { USPEED_ENABLED, TR_KEY_speed_limit_up_enabled_kebab, QMetaType::Bool },
     { USPEED, TR_KEY_speed_limit_up_kebab, QMetaType::Int },
     { UPLOAD_SLOTS_PER_TORRENT, TR_KEY_upload_slots_per_torrent_kebab, QMetaType::Int },
