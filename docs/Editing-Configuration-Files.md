@@ -140,7 +140,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **rpc_host_whitelist_enabled:** Boolean (default = true. Added in v2.93)
  * **rpc_password:** String. You can enter this in as plaintext when Transmission is not running, and then Transmission will salt the value on startup and re-save the salted version as a security measure. **Note:** Transmission treats passwords starting with the character `{` as salted, so when you first create your password, the plaintext password you enter must not begin with `{`.
  * **rpc_port:** Number (default = 9091)
- * **rpc-socket-mode:** String UNIX filesystem mode for the RPC UNIX socket (default: 0750; used when `rpc_bind_address` is a UNIX socket)
+ * **rpc_socket_mode:** String UNIX filesystem mode for the RPC UNIX socket (default: 0750; used when `rpc_bind_address` is a UNIX socket)
  * **rpc-url:** String (default = /transmission/. Added in v2.2)
  * **rpc-username:** String
  * **rpc-whitelist:** String (Comma-delimited list of IP addresses. Wildcards allowed using '\*'. Example: "127.0.0.\*,192.168.\*.\*", Default:  "127.0.0.1")
