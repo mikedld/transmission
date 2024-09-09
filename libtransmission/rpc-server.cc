@@ -537,7 +537,7 @@ void handle_request(struct evhttp_request* req, void* arg)
                 "<li>Enable password authentication, then any hostname is allowed.</li>"
                 "<li>Add the hostname you want to use to the whitelist in settings.</li>"
                 "</ul></p>"
-                "<p>If you're editing settings.json, see the 'rpc-host-whitelist' and 'rpc-host-whitelist-enabled' entries.</p>"
+                "<p>If you're editing settings.json, see the 'rpc_host_whitelist' and 'rpc-host-whitelist-enabled' entries.</p>"
                 "<p>This requirement has been added to help prevent "
                 "<a href=\"https://en.wikipedia.org/wiki/DNS_rebinding\">DNS Rebinding</a> "
                 "attacks.</p>";
