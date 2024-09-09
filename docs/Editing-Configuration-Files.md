@@ -133,7 +133,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 #### [RPC](rpc-spec.md)
  * **anti_brute_force_enabled:**: Boolean (default = false) Enable a very basic brute force protection for the RPC server. See "anti-brute-force-threshold" below.
  * **anti-brute-force-threshold:**: Number (default = 100) After this amount of failed authentication attempts is surpassed, the RPC server will deny any further authentication attempts until it is restarted. This is not tracked per IP but in total.
- * **rpc-authentication-required:** Boolean (default = false)
+ * **rpc_authentication_required:** Boolean (default = false)
  * **rpc-bind-address:** String (default = "0.0.0.0") Where to listen for RPC connections
  * **rpc-enabled:** Boolean (default = true \[transmission-daemon\], false \[others\])
  * **rpc-host-whitelist:** String (Comma-delimited list of domain names. Wildcards allowed using '\*'. Example: "*.foo.org,example.com", Default: "", Always allowed: "localhost", "localhost.", all the IP addresses. Added in v2.93)
