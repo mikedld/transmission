@@ -144,7 +144,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **rpc_url:** String (default = /transmission/. Added in v2.2)
  * **rpc_username:** String
  * **rpc_whitelist:** String (Comma-delimited list of IP addresses. Wildcards allowed using '\*'. Example: "127.0.0.\*,192.168.\*.\*", Default:  "127.0.0.1")
- * **rpc-whitelist-enabled:** Boolean (default = true)
+ * **rpc_whitelist_enabled:** Boolean (default = true)
 
 #### Scheduling
  * **alt_speed_time_enabled:** Boolean (default = false)
