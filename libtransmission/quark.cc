@@ -457,6 +457,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "rpc_password"sv,
     "rpc_port"sv,
     "rpc_socket_mode"sv,
+    "rpc_url"sv,
     "rpc_version"sv,
     "rpc_version_minimum"sv,
     "rpc_version_semver"sv,
@@ -872,6 +873,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_rpc_password_kebab: return TR_KEY_rpc_password;
     case TR_KEY_rpc_port_kebab: return TR_KEY_rpc_port;
     case TR_KEY_rpc_socket_mode_kebab: return TR_KEY_rpc_socket_mode;
+    case TR_KEY_rpc_url_kebab: return TR_KEY_rpc_url;
     case TR_KEY_rpc_version_kebab: return TR_KEY_rpc_version;
     case TR_KEY_rpc_version_minimum_kebab: return TR_KEY_rpc_version_minimum;
     case TR_KEY_rpc_version_semver_kebab: return TR_KEY_rpc_version_semver;
