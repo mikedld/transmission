@@ -24,7 +24,7 @@ The file contains the following **per-torrent** properties:
 | `speed-limit` |  |
 | `speed_limit_up` | Torrent upload speed limit |
 | `speed_limit_down` | Torrent download speed limit |
-| `ratio-limit` | Torrent file limit |
+| `ratio_limit` | Torrent file limit |
 | `uploaded` |  |
 | `speed` |  |
 | `use-global-speed-limit` |  |

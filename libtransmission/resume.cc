@@ -309,13 +309,13 @@ auto load_speed_limits(tr_variant::Map const& map, tr_torrent* tor)
 
 tr_resume::fields_t load_ratio_limits(tr_variant::Map const& map, tr_torrent* tor)
 {
-    auto const* const d = map.find_if<tr_variant::Map>(TR_KEY_ratio_limit);
+    auto const* const d = map.find_if<tr_variant::Map>({ TR_KEY_ratio_limit, TR_KEY_ratio_limit_kebab });
     if (d == nullptr)
     {
         return {};
     }
 
-    if (auto const dratio = d->value_if<double>(TR_KEY_ratio_limit); dratio)
+    if (auto const dratio = d->value_if<double>({ TR_KEY_ratio_limit, TR_KEY_ratio_limit_kebab }); dratio)
     {
         tor->set_seed_ratio(*dratio);
     }
