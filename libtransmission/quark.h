@@ -322,6 +322,7 @@ enum
     TR_KEY_next_scrape_time,
     TR_KEY_nodes,
     TR_KEY_nodes6,
+    TR_KEY_open_dialog_dir_kebab,
     TR_KEY_open_dialog_dir,
     TR_KEY_p,
     TR_KEY_path,

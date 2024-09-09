@@ -321,6 +321,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "nodes"sv,
     "nodes6"sv,
     "open-dialog-dir"sv,
+    "open_dialog_dir"sv,
     "p"sv,
     "path"sv,
     "path.utf-8"sv,
@@ -836,6 +837,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_metadata_percent_complete_camel: return TR_KEY_metadata_percent_complete;
     case TR_KEY_next_announce_time_camel: return TR_KEY_next_announce_time;
     case TR_KEY_next_scrape_time_camel: return TR_KEY_next_scrape_time;
+    case TR_KEY_open_dialog_dir_kebab: return TR_KEY_open_dialog_dir;
     case TR_KEY_paused_torrent_count_camel: return TR_KEY_paused_torrent_count;
     case TR_KEY_peer_congestion_algorithm_kebab: return TR_KEY_peer_congestion_algorithm;
     case TR_KEY_peer_is_choked_camel: return TR_KEY_peer_is_choked;

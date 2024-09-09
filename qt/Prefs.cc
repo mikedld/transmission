@@ -59,7 +59,7 @@ void ensureSoundCommandIsAList(tr_variant* dict)
 std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     /* gui settings */
     PrefItem{ OPTIONS_PROMPT, TR_KEY_show_options_window_kebab, QMetaType::Bool },
-    { OPEN_DIALOG_FOLDER, TR_KEY_open_dialog_dir, QMetaType::QString },
+    { OPEN_DIALOG_FOLDER, TR_KEY_open_dialog_dir_kebab, QMetaType::QString },
     { INHIBIT_HIBERNATION, TR_KEY_inhibit_desktop_hibernation, QMetaType::Bool },
     { DIR_WATCH, TR_KEY_watch_dir_kebab, QMetaType::QString },
     { DIR_WATCH_ENABLED, TR_KEY_watch_dir_enabled_kebab, QMetaType::Bool },
