@@ -105,7 +105,7 @@ content, `localhost` and `localhost.` domain names as well as all the IP
 addresses are always implicitly allowed.
 
 For more information on configuration, see settings.json documentation for
-`rpc-host-whitelist-enabled` and `rpc_host_whitelist` keys.
+`rpc_host_whitelist_enabled` and `rpc_host_whitelist` keys.
 
 #### 2.3.3 Authentication
 Enabling authentication is an optional security feature that can be enabled
