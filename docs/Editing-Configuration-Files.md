@@ -134,13 +134,13 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **anti_brute_force_enabled:**: Boolean (default = false) Enable a very basic brute force protection for the RPC server. See "anti-brute-force-threshold" below.
  * **anti-brute-force-threshold:**: Number (default = 100) After this amount of failed authentication attempts is surpassed, the RPC server will deny any further authentication attempts until it is restarted. This is not tracked per IP but in total.
  * **rpc_authentication_required:** Boolean (default = false)
- * **rpc-bind-address:** String (default = "0.0.0.0") Where to listen for RPC connections
+ * **rpc_bind_address:** String (default = "0.0.0.0") Where to listen for RPC connections
  * **rpc-enabled:** Boolean (default = true \[transmission-daemon\], false \[others\])
  * **rpc-host-whitelist:** String (Comma-delimited list of domain names. Wildcards allowed using '\*'. Example: "*.foo.org,example.com", Default: "", Always allowed: "localhost", "localhost.", all the IP addresses. Added in v2.93)
  * **rpc-host-whitelist-enabled:** Boolean (default = true. Added in v2.93)
  * **rpc-password:** String. You can enter this in as plaintext when Transmission is not running, and then Transmission will salt the value on startup and re-save the salted version as a security measure. **Note:** Transmission treats passwords starting with the character `{` as salted, so when you first create your password, the plaintext password you enter must not begin with `{`.
  * **rpc-port:** Number (default = 9091)
- * **rpc-socket-mode:** String UNIX filesystem mode for the RPC UNIX socket (default: 0750; used when `rpc-bind-address` is a UNIX socket)
+ * **rpc-socket-mode:** String UNIX filesystem mode for the RPC UNIX socket (default: 0750; used when `rpc_bind_address` is a UNIX socket)
  * **rpc-url:** String (default = /transmission/. Added in v2.2)
  * **rpc-username:** String
  * **rpc-whitelist:** String (Comma-delimited list of IP addresses. Wildcards allowed using '\*'. Example: "127.0.0.\*,192.168.\*.\*", Default:  "127.0.0.1")

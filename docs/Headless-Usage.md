@@ -57,7 +57,7 @@ Now, the config file can be edited. Some settings to draw your attention to:
     "peer_port": 32768,
     ...
     # Reject RPC commands from anybody except localhost. For untrusted LANs.
-    "rpc-bind-address": "127.0.0.1",
+    "rpc_bind_address": "127.0.0.1",
     ...
     # If there are problems with other internet applications while bittorrent
     # is running, you may need to reduce the max upload speed to under 80% of

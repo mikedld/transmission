@@ -450,6 +450,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "rpc-whitelist"sv,
     "rpc-whitelist-enabled"sv,
     "rpc_authentication_required"sv,
+    "rpc_bind_address"sv,
     "rpc_version"sv,
     "rpc_version_minimum"sv,
     "rpc_version_semver"sv,
@@ -858,6 +859,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_recheck_progress_camel: return TR_KEY_recheck_progress;
     case TR_KEY_rename_partial_files_kebab: return TR_KEY_rename_partial_files;
     case TR_KEY_rpc_authentication_required_kebab: return TR_KEY_rpc_authentication_required;
+    case TR_KEY_rpc_bind_address_kebab: return TR_KEY_rpc_bind_address;
     case TR_KEY_rpc_version_kebab: return TR_KEY_rpc_version;
     case TR_KEY_rpc_version_minimum_kebab: return TR_KEY_rpc_version_minimum;
     case TR_KEY_rpc_version_semver_kebab: return TR_KEY_rpc_version_semver;
