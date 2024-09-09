@@ -36,7 +36,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 
 ```json
 {
-    "rpc-enabled": true,
+    "rpc_enabled": true,
     "peer_port": 51413,
     "rpc-whitelist": "127.0.0.1,192.168.*.*"
 }
@@ -135,7 +135,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **anti-brute-force-threshold:**: Number (default = 100) After this amount of failed authentication attempts is surpassed, the RPC server will deny any further authentication attempts until it is restarted. This is not tracked per IP but in total.
  * **rpc_authentication_required:** Boolean (default = false)
  * **rpc_bind_address:** String (default = "0.0.0.0") Where to listen for RPC connections
- * **rpc-enabled:** Boolean (default = true \[transmission-daemon\], false \[others\])
+ * **rpc_enabled:** Boolean (default = true \[transmission-daemon\], false \[others\])
  * **rpc-host-whitelist:** String (Comma-delimited list of domain names. Wildcards allowed using '\*'. Example: "*.foo.org,example.com", Default: "", Always allowed: "localhost", "localhost.", all the IP addresses. Added in v2.93)
  * **rpc-host-whitelist-enabled:** Boolean (default = true. Added in v2.93)
  * **rpc-password:** String. You can enter this in as plaintext when Transmission is not running, and then Transmission will salt the value on startup and re-save the salted version as a security measure. **Note:** Transmission treats passwords starting with the character `{` as salted, so when you first create your password, the plaintext password you enter must not begin with `{`.
