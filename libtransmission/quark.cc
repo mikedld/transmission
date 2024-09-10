@@ -296,6 +296,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "main-window-width"sv,
     "main-window-x"sv,
     "main-window-y"sv,
+    "main_window_layout_order"sv,
     "manualAnnounceTime"sv,
     "manual_announce_time"sv,
     "max-peers"sv,
@@ -846,6 +847,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_left_until_done_camel: return TR_KEY_left_until_done;
     case TR_KEY_lpd_enabled_kebab: return TR_KEY_lpd_enabled;
     case TR_KEY_magnet_link_camel: return TR_KEY_magnet_link;
+    case TR_KEY_main_window_layout_order_kebab: return TR_KEY_main_window_layout_order;
     case TR_KEY_manual_announce_time_camel: return TR_KEY_manual_announce_time;
     case TR_KEY_max_connected_peers_camel: return TR_KEY_max_connected_peers;
     case TR_KEY_memory_bytes_kebab: return TR_KEY_memory_bytes;
