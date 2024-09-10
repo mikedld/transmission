@@ -78,6 +78,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "blocklist_date"sv,
     "blocklist_enabled"sv,
     "blocklist_size"sv,
+    "blocklist_updates_enabled"sv,
     "blocklist_url"sv,
     "blocks"sv,
     "bytesCompleted"sv,
@@ -758,6 +759,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_blocklist_date_kebab: return TR_KEY_blocklist_date;
     case TR_KEY_blocklist_enabled_kebab: return TR_KEY_blocklist_enabled;
     case TR_KEY_blocklist_size_kebab: return TR_KEY_blocklist_size;
+    case TR_KEY_blocklist_updates_enabled_kebab: return TR_KEY_blocklist_updates_enabled;
     case TR_KEY_blocklist_url_kebab: return TR_KEY_blocklist_url;
     case TR_KEY_bytes_completed_camel: return TR_KEY_bytes_completed;
     case TR_KEY_cache_size_mb_kebab: return TR_KEY_cache_size_mb;

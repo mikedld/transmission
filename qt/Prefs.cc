@@ -78,7 +78,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { SHOW_BACKUP_TRACKERS, TR_KEY_show_backup_trackers_kebab, QMetaType::Bool },
     { TOOLBAR, TR_KEY_show_toolbar_kebab, QMetaType::Bool },
     { BLOCKLIST_DATE, TR_KEY_blocklist_date_kebab, QMetaType::QDateTime },
-    { BLOCKLIST_UPDATES_ENABLED, TR_KEY_blocklist_updates_enabled, QMetaType::Bool },
+    { BLOCKLIST_UPDATES_ENABLED, TR_KEY_blocklist_updates_enabled_kebab, QMetaType::Bool },
     { MAIN_WINDOW_LAYOUT_ORDER, TR_KEY_main_window_layout_order, QMetaType::QString },
     { MAIN_WINDOW_HEIGHT, TR_KEY_main_window_height, QMetaType::Int },
     { MAIN_WINDOW_WIDTH, TR_KEY_main_window_width, QMetaType::Int },
