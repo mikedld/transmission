@@ -184,6 +184,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "filter-mode"sv,
     "filter-text"sv,
     "filter-trackers"sv,
+    "filter_mode"sv,
     "flagStr"sv,
     "flag_str"sv,
     "flags"sv,
@@ -808,6 +809,7 @@ tr_quark tr_quark_convert(tr_quark q)
         return TR_KEY_files_added;
     case TR_KEY_files_unwanted_kebab: return TR_KEY_files_unwanted;
     case TR_KEY_files_wanted_kebab: return TR_KEY_files_wanted;
+    case TR_KEY_filter_mode_kebab: return TR_KEY_filter_mode;
     case TR_KEY_flag_str_camel: return TR_KEY_flag_str;
     case TR_KEY_from_cache_camel: return TR_KEY_from_cache;
     case TR_KEY_from_dht_camel: return TR_KEY_from_dht;
