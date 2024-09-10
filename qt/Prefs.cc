@@ -68,7 +68,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { SHOW_NOTIFICATION_ON_ADD, TR_KEY_torrent_added_notification_enabled_kebab, QMetaType::Bool },
     { SHOW_NOTIFICATION_ON_COMPLETE, TR_KEY_torrent_complete_notification_enabled_kebab, QMetaType::Bool },
     { ASKQUIT, TR_KEY_prompt_before_exit_kebab, QMetaType::Bool },
-    { SORT_MODE, TR_KEY_sort_mode, CustomVariantType::SortModeType },
+    { SORT_MODE, TR_KEY_sort_mode_kebab, CustomVariantType::SortModeType },
     { SORT_REVERSED, TR_KEY_sort_reversed_kebab, QMetaType::Bool },
     { COMPACT_VIEW, TR_KEY_compact_view_kebab, QMetaType::Bool },
     { FILTERBAR, TR_KEY_show_filterbar_kebab, QMetaType::Bool },
