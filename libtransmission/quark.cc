@@ -397,6 +397,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "private"sv,
     "progress"sv,
     "prompt-before-exit"sv,
+    "prompt_before_exit"sv,
     "queue-stalled-enabled"sv,
     "queue-stalled-minutes"sv,
     "queuePosition"sv,
@@ -872,6 +873,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_priority_high_kebab: return TR_KEY_priority_high;
     case TR_KEY_priority_low_kebab: return TR_KEY_priority_low;
     case TR_KEY_priority_normal_kebab: return TR_KEY_priority_normal;
+    case TR_KEY_prompt_before_exit_kebab: return TR_KEY_prompt_before_exit;
     case TR_KEY_queue_position_camel: return TR_KEY_queue_position;
     case TR_KEY_queue_stalled_enabled_kebab: return TR_KEY_queue_stalled_enabled;
     case TR_KEY_queue_stalled_minutes_kebab: return TR_KEY_queue_stalled_minutes;

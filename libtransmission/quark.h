@@ -398,6 +398,7 @@ enum
     TR_KEY_priority_normal,
     TR_KEY_private,
     TR_KEY_progress,
+    TR_KEY_prompt_before_exit_kebab,
     TR_KEY_prompt_before_exit,
     TR_KEY_queue_stalled_enabled_kebab,
     TR_KEY_queue_stalled_minutes_kebab,
