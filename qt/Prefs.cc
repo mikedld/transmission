@@ -81,7 +81,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { BLOCKLIST_UPDATES_ENABLED, TR_KEY_blocklist_updates_enabled_kebab, QMetaType::Bool },
     { MAIN_WINDOW_LAYOUT_ORDER, TR_KEY_main_window_layout_order_kebab, QMetaType::QString },
     { MAIN_WINDOW_HEIGHT, TR_KEY_main_window_height_kebab, QMetaType::Int },
-    { MAIN_WINDOW_WIDTH, TR_KEY_main_window_width, QMetaType::Int },
+    { MAIN_WINDOW_WIDTH, TR_KEY_main_window_width_kebab, QMetaType::Int },
     { MAIN_WINDOW_X, TR_KEY_main_window_x, QMetaType::Int },
     { MAIN_WINDOW_Y, TR_KEY_main_window_y, QMetaType::Int },
     { FILTER_MODE, TR_KEY_filter_mode, CustomVariantType::FilterModeType },
