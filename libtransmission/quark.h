@@ -568,6 +568,7 @@ enum
     TR_KEY_start_minimized,
     TR_KEY_start_paused,
     TR_KEY_status,
+    TR_KEY_statusbar_stats_kebab,
     TR_KEY_statusbar_stats,
     TR_KEY_tag,
     TR_KEY_tcp_enabled_kebab,
