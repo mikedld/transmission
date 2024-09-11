@@ -96,7 +96,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { SESSION_REMOTE_USERNAME, TR_KEY_remote_session_username_kebab, QMetaType::QString },
     { COMPLETE_SOUND_COMMAND, TR_KEY_torrent_complete_sound_command_kebab, QMetaType::QStringList },
     { COMPLETE_SOUND_ENABLED, TR_KEY_torrent_complete_sound_enabled_kebab, QMetaType::Bool },
-    { USER_HAS_GIVEN_INFORMED_CONSENT, TR_KEY_user_has_given_informed_consent, QMetaType::Bool },
+    { USER_HAS_GIVEN_INFORMED_CONSENT, TR_KEY_user_has_given_informed_consent_kebab, QMetaType::Bool },
     { READ_CLIPBOARD, TR_KEY_read_clipboard, QMetaType::Bool },
 
     /* libtransmission settings */
