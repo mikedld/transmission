@@ -554,6 +554,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "show_options_window"sv,
     "show_statusbar"sv,
     "show_toolbar"sv,
+    "show_tracker_scrapes"sv,
     "sitename"sv,
     "size-bytes"sv,
     "size-units"sv,
@@ -983,6 +984,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_show_options_window_kebab: return TR_KEY_show_options_window;
     case TR_KEY_show_statusbar_kebab: return TR_KEY_show_statusbar;
     case TR_KEY_show_toolbar_kebab: return TR_KEY_show_toolbar;
+    case TR_KEY_show_tracker_scrapes_kebab: return TR_KEY_show_tracker_scrapes;
     case TR_KEY_size_bytes_kebab: return TR_KEY_size_bytes;
     case TR_KEY_size_units_kebab: return TR_KEY_size_units;
     case TR_KEY_size_when_done_camel: return TR_KEY_size_when_done;
