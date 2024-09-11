@@ -451,6 +451,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "remote_session_password"sv,
     "remote_session_port"sv,
     "remote_session_requres_authentication"sv,
+    "remote_session_username"sv,
     "removed"sv,
     "rename-partial-files"sv,
     "rename_partial_files"sv,
@@ -920,6 +921,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_remote_session_password_kebab: return TR_KEY_remote_session_password;
     case TR_KEY_remote_session_port_kebab: return TR_KEY_remote_session_port;
     case TR_KEY_remote_session_requres_authentication_kebab: return TR_KEY_remote_session_requres_authentication;
+    case TR_KEY_remote_session_username_kebab: return TR_KEY_remote_session_username;
     case TR_KEY_rename_partial_files_kebab: return TR_KEY_rename_partial_files;
     case TR_KEY_rpc_authentication_required_kebab: return TR_KEY_rpc_authentication_required;
     case TR_KEY_rpc_bind_address_kebab: return TR_KEY_rpc_bind_address;
