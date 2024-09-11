@@ -312,6 +312,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "max-peers"sv,
     "maxConnectedPeers"sv,
     "max_connected_peers"sv,
+    "max_peers"sv,
     "memory-bytes"sv,
     "memory-units"sv,
     "memory_bytes"sv,
@@ -883,6 +884,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_main_window_y_kebab: return TR_KEY_main_window_y;
     case TR_KEY_manual_announce_time_camel: return TR_KEY_manual_announce_time;
     case TR_KEY_max_connected_peers_camel: return TR_KEY_max_connected_peers;
+    case TR_KEY_max_peers_kebab: return TR_KEY_max_peers;
     case TR_KEY_memory_bytes_kebab: return TR_KEY_memory_bytes;
     case TR_KEY_memory_units_kebab: return TR_KEY_memory_units;
     case TR_KEY_message_level_kebab: return TR_KEY_message_level;
