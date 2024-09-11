@@ -611,6 +611,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "torrent_added_verify_mode"sv,
     "torrent_complete_notification_enabled"sv,
     "torrent_complete_sound_command"sv,
+    "torrent_complete_sound_enabled"sv,
     "torrent_count"sv,
     "torrent_duplicate"sv,
     "torrent_file"sv,
@@ -992,6 +993,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_torrent_added_verify_mode_kebab: return TR_KEY_torrent_added_verify_mode;
     case TR_KEY_torrent_complete_notification_enabled_kebab: return TR_KEY_torrent_complete_notification_enabled;
     case TR_KEY_torrent_complete_sound_command_kebab: return TR_KEY_torrent_complete_sound_command;
+    case TR_KEY_torrent_complete_sound_enabled_kebab: return TR_KEY_torrent_complete_sound_enabled;
     case TR_KEY_torrent_count_camel: return TR_KEY_torrent_count;
     case TR_KEY_torrent_duplicate_kebab: return TR_KEY_torrent_duplicate;
     case TR_KEY_torrent_file_camel: return TR_KEY_torrent_file;
