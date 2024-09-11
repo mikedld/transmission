@@ -90,7 +90,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { SESSION_IS_REMOTE, TR_KEY_remote_session_enabled_kebab, QMetaType::Bool },
     { SESSION_REMOTE_HOST, TR_KEY_remote_session_host_kebab, QMetaType::QString },
     { SESSION_REMOTE_HTTPS, TR_KEY_remote_session_https_kebab, QMetaType::Bool },
-    { SESSION_REMOTE_PASSWORD, TR_KEY_remote_session_password, QMetaType::QString },
+    { SESSION_REMOTE_PASSWORD, TR_KEY_remote_session_password_kebab, QMetaType::QString },
     { SESSION_REMOTE_PORT, TR_KEY_remote_session_port, QMetaType::Int },
     { SESSION_REMOTE_AUTH, TR_KEY_remote_session_requres_authentication, QMetaType::Bool },
     { SESSION_REMOTE_USERNAME, TR_KEY_remote_session_username, QMetaType::QString },
