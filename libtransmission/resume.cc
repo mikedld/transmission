@@ -341,7 +341,7 @@ tr_resume::fields_t load_idle_limits(tr_variant::Map const& map, tr_torrent* tor
         tor->set_idle_limit_minutes(*imin);
     }
 
-    if (auto const i = d->value_if<int64_t>(TR_KEY_idle_mode); i)
+    if (auto const i = d->value_if<int64_t>({ TR_KEY_idle_mode, TR_KEY_idle_mode_kebab }); i)
     {
         tor->set_idle_limit_mode(static_cast<tr_idlelimit>(*i));
     }
