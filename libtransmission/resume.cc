@@ -74,7 +74,7 @@ auto load_peers(tr_variant::Map const& map, tr_torrent* tor)
         ret = tr_resume::Peers;
     }
 
-    if (auto const* l = map.find_if<tr_variant::Vector>(TR_KEY_peers2_6); l != nullptr)
+    if (auto const* l = map.find_if<tr_variant::Vector>({ TR_KEY_peers2_6, TR_KEY_peers2_6_kebab }); l != nullptr)
     {
         auto const num_added = add_peers(tor, *l);
         tr_logAddTraceTor(tor, fmt::format("Loaded {} IPv6 peers from resume file", num_added));

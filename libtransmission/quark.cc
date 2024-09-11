@@ -369,6 +369,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "peers"sv,
     "peers2"sv,
     "peers2-6"sv,
+    "peers2_6"sv,
     "peersConnected"sv,
     "peersFrom"sv,
     "peersGettingFromUs"sv,
@@ -904,6 +905,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_peer_port_random_low_kebab: return TR_KEY_peer_port_random_low;
     case TR_KEY_peer_port_random_on_start_kebab: return TR_KEY_peer_port_random_on_start;
     case TR_KEY_peer_socket_tos_kebab: return TR_KEY_peer_socket_tos;
+    case TR_KEY_peers2_6_kebab: return TR_KEY_peers2_6;
     case TR_KEY_peers_connected_camel: return TR_KEY_peers_connected;
     case TR_KEY_peers_from_camel: return TR_KEY_peers_from;
     case TR_KEY_peers_getting_from_us_camel: return TR_KEY_peers_getting_from_us;
