@@ -86,7 +86,7 @@ std::array<Prefs::PrefItem, Prefs::PREFS_COUNT> const Prefs::Items{
     { MAIN_WINDOW_Y, TR_KEY_main_window_y_kebab, QMetaType::Int },
     { FILTER_MODE, TR_KEY_filter_mode_kebab, CustomVariantType::FilterModeType },
     { FILTER_TRACKERS, TR_KEY_filter_trackers_kebab, QMetaType::QString },
-    { FILTER_TEXT, TR_KEY_filter_text, QMetaType::QString },
+    { FILTER_TEXT, TR_KEY_filter_text_kebab, QMetaType::QString },
     { SESSION_IS_REMOTE, TR_KEY_remote_session_enabled, QMetaType::Bool },
     { SESSION_REMOTE_HOST, TR_KEY_remote_session_host, QMetaType::QString },
     { SESSION_REMOTE_HTTPS, TR_KEY_remote_session_https, QMetaType::Bool },
