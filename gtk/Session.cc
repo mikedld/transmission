@@ -1294,7 +1294,7 @@ void Session::port_test(PortTestIpProtocol const ip_protocol)
             auto status = std::optional<bool>{};
             if (tr_variant* args = nullptr; tr_variantDictFindDict(&response, TR_KEY_arguments, &args))
             {
-                if (auto result = bool{}; tr_variantDictFindBool(args, TR_KEY_port_is_open, &result))
+                if (auto result = bool{}; tr_variantDictFindBool(args, TR_KEY_port_is_open_kebab, &result))
                 {
                     status = result;
                 }

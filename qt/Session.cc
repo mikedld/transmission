@@ -103,7 +103,7 @@ void Session::portTest(Session::PortTestIpProtocol const ip_protocol)
         // If for whatever reason the status optional is empty here,
         // then something must have gone wrong with the port test,
         // so the UI should show the "error" state
-        emit portTested(dictFind<bool>(r.args.get(), TR_KEY_port_is_open), ip_protocol);
+        emit portTested(dictFind<bool>(r.args.get(), TR_KEY_port_is_open_kebab), ip_protocol);
     };
 
     auto* q = new RpcQueue{};

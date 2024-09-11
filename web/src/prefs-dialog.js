@@ -62,9 +62,9 @@ export class PrefsDialog extends EventTarget {
     }
 
     const element = this.elements.network.port_status_label[ip_protocol];
-    const is_open = response.arguments['port-is-open'] || false;
+    const is_open = response.arguments.port_is_open || false;
     element.dataset.open = is_open;
-    if ('port-is-open' in response.arguments) {
+    if ('port_is_open' in response.arguments) {
       setTextContent(element, is_open ? 'Open' : 'Closed');
     } else {
       setTextContent(element, 'Error');

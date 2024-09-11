@@ -1480,7 +1480,7 @@ void print_port_test(tr_variant::Map const& map)
         return;
     }
 
-    if (auto is_open = args->value_if<bool>(TR_KEY_port_is_open); is_open)
+    if (auto is_open = args->value_if<bool>({ TR_KEY_port_is_open, TR_KEY_port_is_open_kebab }); is_open)
     {
         fmt::print("Port is open: {:s}\n", *is_open ? "Yes" : "No");
     }

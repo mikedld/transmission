@@ -395,6 +395,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "port-forwarding-enabled"sv,
     "port-is-open"sv,
     "port_forwarding_enabled"sv,
+    "port_is_open"sv,
     "preallocation"sv,
     "preferred_transport"sv,
     "primary-mime-type"sv,
@@ -910,6 +911,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_piece_count_camel: return TR_KEY_piece_count;
     case TR_KEY_piece_size_camel: return TR_KEY_piece_size;
     case TR_KEY_port_forwarding_enabled_kebab: return TR_KEY_port_forwarding_enabled;
+    case TR_KEY_port_is_open_kebab: return TR_KEY_port_is_open;
     case TR_KEY_primary_mime_type_kebab: return TR_KEY_primary_mime_type;
     case TR_KEY_priority_high_kebab: return TR_KEY_priority_high;
     case TR_KEY_priority_low_kebab: return TR_KEY_priority_low;

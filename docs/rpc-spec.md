@@ -690,7 +690,7 @@ Response arguments:
 
 | Key | Value Type | Description
 | :-- | :-- | :--
-| `port-is-open` | boolean | true if port is open, false if port is closed
+| `port_is_open` | boolean | true if port is open, false if port is closed
 | `ip_protocol` | string | `ipv4` if the test was carried out on IPv4, `ipv6` if the test was carried out on IPv6, unset if it cannot be determined
 
 ### 4.5 Session shutdown

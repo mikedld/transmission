@@ -1391,7 +1391,9 @@ void onPortTested(tr_web::FetchResponse const& web_response)
         return;
     }
 
-    data->args_out.try_emplace(TR_KEY_port_is_open, tr_strv_starts_with(body, '1'));
+    auto const port_is_open = tr_strv_starts_with(body, '1');
+    data->args_out.try_emplace(TR_KEY_port_is_open, port_is_open);
+    data->args_out.try_emplace(TR_KEY_port_is_open_kebab, port_is_open);
     tr_idle_function_done(data, SuccessResult);
 }
 
