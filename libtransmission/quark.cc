@@ -302,6 +302,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "main-window-x"sv,
     "main-window-y"sv,
     "main_window_height"sv,
+    "main_window_is_maximized"sv,
     "main_window_layout_order"sv,
     "main_window_width"sv,
     "main_window_x"sv,
@@ -873,6 +874,7 @@ tr_quark tr_quark_convert(tr_quark q)
     case TR_KEY_lpd_enabled_kebab: return TR_KEY_lpd_enabled;
     case TR_KEY_magnet_link_camel: return TR_KEY_magnet_link;
     case TR_KEY_main_window_height_kebab: return TR_KEY_main_window_height;
+    case TR_KEY_main_window_is_maximized_kebab: return TR_KEY_main_window_is_maximized;
     case TR_KEY_main_window_layout_order_kebab: return TR_KEY_main_window_layout_order;
     case TR_KEY_main_window_width_kebab: return TR_KEY_main_window_width;
     case TR_KEY_main_window_x_kebab: return TR_KEY_main_window_x;
