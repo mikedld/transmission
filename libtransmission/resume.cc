@@ -320,7 +320,7 @@ tr_resume::fields_t load_ratio_limits(tr_variant::Map const& map, tr_torrent* to
         tor->set_seed_ratio(*dratio);
     }
 
-    if (auto const i = d->value_if<int64_t>(TR_KEY_ratio_mode); i)
+    if (auto const i = d->value_if<int64_t>({ TR_KEY_ratio_mode, TR_KEY_ratio_mode_kebab }); i)
     {
         tor->set_seed_ratio_mode(static_cast<tr_ratiolimit>(*i));
     }

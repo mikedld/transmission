@@ -33,7 +33,7 @@ The file contains the following **per-torrent** properties:
 | `down-mode` |  |
 | `up-speed` |  |
 | `up-mode` |  |
-| `ratio-mode` |  |
+| `ratio_mode` |  |
 | `mtimes` |  |
 | `bitfield` |  |
 
