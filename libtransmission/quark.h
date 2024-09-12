@@ -14,10 +14,6 @@ using tr_quark = size_t;
 
 /*
  * Predefined Quarks.
- *
- * TODO: it would be nice to clean up all the naming inconsistencies
- * between RPC and settings. This will be a mess and we shouldn't be
- * in a hurry to do it.
  */
 enum
 {
