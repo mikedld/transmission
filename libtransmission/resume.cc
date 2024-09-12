@@ -280,7 +280,7 @@ void load_single_speed_limit(tr_variant::Map const& map, tr_direction dir, tr_to
         tor->use_speed_limit(dir, *b);
     }
 
-    if (auto const b = map.value_if<bool>(TR_KEY_use_global_speed_limit); b)
+    if (auto const b = map.value_if<bool>({ TR_KEY_use_global_speed_limit, TR_KEY_use_global_speed_limit_kebab }); b)
     {
         tr_torrentUseSessionLimits(tor, *b);
     }
