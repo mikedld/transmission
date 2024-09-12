@@ -28,7 +28,7 @@ The file contains the following **per-torrent** properties:
 | `uploaded` |  |
 | `speed` |  |
 | `use_global_speed_limit` |  |
-| `use-speed-limit` |  |
+| `use_speed_limit` |  |
 | `down-speed` |  |
 | `down-mode` |  |
 | `up-speed` |  |

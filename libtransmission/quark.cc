@@ -673,6 +673,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "use-global-speed-limit"sv,
     "use-speed-limit"sv,
     "use_global_speed_limit"sv,
+    "use_speed_limit"sv,
     "user-has-given-informed-consent"sv,
     "user_has_given_informed_consent"sv,
     "ut_comment"sv,
@@ -1048,6 +1049,7 @@ tr_quark tr_quark_convert(tr_quark q)
         return TR_KEY_uploaded_bytes;
     case TR_KEY_uploaded_ever_camel: return TR_KEY_uploaded_ever;
     case TR_KEY_use_global_speed_limit_kebab: return TR_KEY_use_global_speed_limit;
+    case TR_KEY_use_speed_limit_kebab: return TR_KEY_use_speed_limit;
     case TR_KEY_user_has_given_informed_consent_kebab: return TR_KEY_user_has_given_informed_consent;
     case TR_KEY_utp_enabled_kebab: return TR_KEY_utp_enabled;
     case TR_KEY_watch_dir_kebab: return TR_KEY_watch_dir;
