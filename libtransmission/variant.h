@@ -219,7 +219,7 @@ public:
 
     [[nodiscard]] static auto make_raw(void const* value, size_t n_bytes)
     {
-        return tr_variant{ std::string{ static_cast<char const*>(value), n_bytes } };
+        return tr_variant{ std::string_view{ reinterpret_cast<char const*>(value), n_bytes } };
     }
 
     template<typename CharSpan>
