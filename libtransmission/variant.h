@@ -225,7 +225,7 @@ public:
     template<typename CharSpan>
     [[nodiscard]] static auto make_raw(CharSpan const& value)
     {
-        static_assert(sizeof(CharSpan::value_type) == 1U);
+        static_assert(sizeof(typename CharSpan::value_type) == 1U);
         return make_raw(std::data(value), std::size(value));
     }
 
