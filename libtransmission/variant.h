@@ -30,15 +30,16 @@
 struct tr_variant
 {
 public:
-    enum Type : size_t
+    enum Type : uint8_t
     {
-        NoneIndex = 0,
-        BoolIndex = 1,
-        IntIndex = 2,
-        DoubleIndex = 3,
-        StringIndex = 4,
-        VectorIndex = 5,
-        MapIndex = 6
+        NoneIndex,
+        NullIndex,
+        BoolIndex,
+        IntIndex,
+        DoubleIndex,
+        StringIndex,
+        VectorIndex,
+        MapIndex
     };
 
     using Vector = std::vector<tr_variant>;
@@ -219,13 +220,13 @@ public:
 
     [[nodiscard]] static auto make_raw(void const* value, size_t n_bytes)
     {
-        return tr_variant{ std::string{ static_cast<char const*>(value), n_bytes } };
+        return tr_variant{ std::string_view{ reinterpret_cast<char const*>(value), n_bytes } };
     }
 
     template<typename CharSpan>
     [[nodiscard]] static auto make_raw(CharSpan const& value)
     {
-        static_assert(sizeof(CharSpan::value_type) == 1U);
+        static_assert(sizeof(typename CharSpan::value_type) == 1U);
         return make_raw(std::data(value), std::size(value));
     }
 
@@ -239,7 +240,11 @@ public:
     template<typename Val>
     tr_variant& operator=(Val value)
     {
-        if constexpr (std::is_same_v<Val, std::string_view>)
+        if constexpr (std::is_same_v<Val, std::nullptr_t>)
+        {
+            val_.emplace<std::nullptr_t>(value);
+        }
+        else if constexpr (std::is_same_v<Val, std::string_view>)
         {
             val_.emplace<StringHolder>(std::string{ value });
         }
@@ -392,6 +397,7 @@ private:
     public:
         explicit Merge(tr_variant& tgt);
         void operator()(std::monostate const& src);
+        void operator()(std::nullptr_t const& src);
         void operator()(bool const& src);
         void operator()(int64_t const& src);
         void operator()(double const& src);
@@ -403,7 +409,7 @@ private:
         tr_variant& tgt_;
     };
 
-    std::variant<std::monostate, bool, int64_t, double, StringHolder, Vector, Map> val_;
+    std::variant<std::monostate, std::nullptr_t, bool, int64_t, double, StringHolder, Vector, Map> val_;
 };
 
 template<>
@@ -567,6 +573,7 @@ private:
 
     struct WalkFuncs
     {
+        void (*null_func)(tr_variant const& var, std::nullptr_t val, void* user_data);
         void (*int_func)(tr_variant const& var, int64_t val, void* user_data);
         void (*bool_func)(tr_variant const& var, bool val, void* user_data);
         void (*double_func)(tr_variant const& var, double val, void* user_data);

@@ -208,6 +208,10 @@ void tr_variant::Merge::operator()(std::monostate const& src)
 {
     tgt_ = src;
 }
+void tr_variant::Merge::operator()(std::nullptr_t const& src)
+{
+    tgt_ = src;
+}
 void tr_variant::Merge::operator()(bool const& src)
 {
     tgt_ = src;
@@ -761,6 +765,10 @@ void tr_variant_serde::walk(tr_variant const& top, WalkFuncs const& walk_funcs, 
 
         switch (variant_index(v))
         {
+        case tr_variant::NullIndex:
+            walk_funcs.null_func(*v, nullptr, user_data);
+            break;
+
         case tr_variant::BoolIndex:
             walk_funcs.bool_func(*v, *v->get_if<tr_variant::BoolIndex>(), user_data);
             break;

@@ -277,6 +277,11 @@ namespace to_string_helpers
 {
 using OutBuf = libtransmission::StackBuffer<1024U * 8U, std::byte>;
 
+void saveNullFunc(tr_variant const& /*var*/, std::nullptr_t /*val*/, void* vout)
+{
+    static_cast<OutBuf*>(vout)->add("0:"sv);
+}
+
 void saveIntFunc(tr_variant const& /*var*/, int64_t const val, void* vout)
 {
     auto out = static_cast<OutBuf*>(vout);
@@ -338,6 +343,7 @@ std::string tr_variant_serde::to_benc_string(tr_variant const& var)
     using namespace to_string_helpers;
 
     static auto constexpr Funcs = WalkFuncs{
+        saveNullFunc, //
         saveIntFunc, //
         saveBoolFunc, //
         saveRealFunc, //
