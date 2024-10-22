@@ -368,14 +368,14 @@ std::string tr_variant_serde::to_json_string(tr_variant const& var) const
     using namespace to_string_helpers;
 
     static auto constexpr Funcs = WalkFuncs{
-        jsonNullFunc, //
-        jsonIntFunc, //
-        jsonBoolFunc, //
-        jsonRealFunc, //
-        jsonStringFunc, //
-        jsonDictBeginFunc, //
-        jsonListBeginFunc, //
-        jsonContainerEndFunc, //
+        .null_func = jsonNullFunc,
+        .int_func = jsonIntFunc,
+        .bool_func = jsonBoolFunc,
+        .double_func = jsonRealFunc,
+        .string_func = jsonStringFunc,
+        .dict_begin_func = jsonDictBeginFunc,
+        .list_begin_func = jsonListBeginFunc,
+        .container_end_func = jsonContainerEndFunc,
     };
 
     auto out = std::string{};

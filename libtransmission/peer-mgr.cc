@@ -75,12 +75,12 @@ private:
             return {};
         }
 
-        auto info = TorrentInfo{};
-        info.info_hash = tor->info_hash();
-        info.client_peer_id = tor->peer_id();
-        info.id = tor->id();
-        info.is_done = tor->is_done();
-        return info;
+        return TorrentInfo{
+            .info_hash = tor->info_hash(),
+            .client_peer_id = tor->peer_id(),
+            .id = tor->id(),
+            .is_done = tor->is_done(),
+        };
     }
 
 public:
