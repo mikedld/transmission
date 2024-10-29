@@ -796,7 +796,7 @@ void tr_torrentRemoveInSessionThread(
             tor->is_deleting_ = false;
 
             tor->error().set_local_error(fmt::format(
-                _("Couldn't remove all torrent files: {error} ({error_code})"),
+                fmt::runtime(_("Couldn't remove all torrent files: {error} ({error_code})")),
                 fmt::arg("error", error.message()),
                 fmt::arg("error_code", error.code())));
             tr_torrentStop(tor);
