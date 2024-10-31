@@ -1,10 +1,6 @@
 /** @type {import('stylelint').Config} */
 export default {
   extends: ['stylelint-config-sass-guidelines'],
-  plugins: [
-    '@primer/stylelint-config/plugins/no-undefined-vars',
-    '@primer/stylelint-config/plugins/no-unused-vars',
-  ],
   rules: {
     '@stylistic/function-parentheses-space-inside': 'never-single-line',
     'block-no-empty': true,
@@ -21,8 +17,8 @@ export default {
     'no-duplicate-selectors': null,
     'no-empty-source': true,
     'no-invalid-double-slash-comments': true,
-    'primer/no-undefined-vars': true,
-    'primer/no-unused-vars': true,
+    'no-unknown-custom-properties': true,
+    // TODO: add back rule for unused variables?
     'property-no-unknown': true,
     'property-no-vendor-prefix': null,
     'scss/at-rule-no-unknown': true,
