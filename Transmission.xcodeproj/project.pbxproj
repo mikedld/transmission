@@ -455,6 +455,7 @@
 		ED5E0EA02CD3147B0071433B /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55869925257074EC00F77A43 /* libcurl.tbd */; };
 		ED5E0EA22CD314FE0071433B /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = ED5E0EA12CD314FE0071433B /* style.css */; };
 		ED5E0EFA2CD315720071433B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED5E0EF72CD315720071433B /* Localizable.strings */; };
+		ED5E0F0F2CD31BC20071433B /* NSStringAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DE5CC9C0980656F00BE280E /* NSStringAdditions.mm */; };
 		ED67FB422B70FCE400D8A037 /* settings.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED67FB402B70FCE400D8A037 /* settings.cc */; };
 		ED67FB432B70FCE400D8A037 /* settings.h in Headers */ = {isa = PBXBuildFile; fileRef = ED67FB412B70FCE400D8A037 /* settings.h */; };
 		ED86936F2ADAE34D00342B1A /* DefaultAppHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED86936E2ADAE34D00342B1A /* DefaultAppHelper.mm */; };
@@ -3613,6 +3614,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED5E0F0F2CD31BC20071433B /* NSStringAdditions.mm in Sources */,
 				ED5E0E9C2CD30E8F0071433B /* PreviewProvider.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
