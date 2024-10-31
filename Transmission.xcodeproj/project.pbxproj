@@ -451,6 +451,8 @@
 		ED5E0E7E2CD30B180071433B /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED5E0E7D2CD30B180071433B /* Quartz.framework */; };
 		ED5E0E8D2CD30B180071433B /* QuickLookExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = ED5E0E7C2CD30B180071433B /* QuickLookExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		ED5E0E9C2CD30E8F0071433B /* PreviewProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED5E0E962CD30E8F0071433B /* PreviewProvider.mm */; };
+		ED5E0E9D2CD3134B0071433B /* libtransmission.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18389709DEC0030047D688 /* libtransmission.a */; };
+		ED5E0EA02CD3147B0071433B /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55869925257074EC00F77A43 /* libcurl.tbd */; };
 		ED67FB422B70FCE400D8A037 /* settings.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED67FB402B70FCE400D8A037 /* settings.cc */; };
 		ED67FB432B70FCE400D8A037 /* settings.h in Headers */ = {isa = PBXBuildFile; fileRef = ED67FB412B70FCE400D8A037 /* settings.h */; };
 		ED86936F2ADAE34D00342B1A /* DefaultAppHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED86936E2ADAE34D00342B1A /* DefaultAppHelper.mm */; };
@@ -597,6 +599,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = ED5E0E7B2CD30B180071433B;
 			remoteInfo = QuickLookExtension;
+		};
+		ED5E0E9E2CD3134B0071433B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D18389609DEC0030047D688;
+			remoteInfo = libtransmission;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1594,6 +1603,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED5E0E7E2CD30B180071433B /* Quartz.framework in Frameworks */,
+				ED5E0E9D2CD3134B0071433B /* libtransmission.a in Frameworks */,
+				ED5E0EA02CD3147B0071433B /* libcurl.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2959,6 +2970,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				ED5E0E9F2CD3134B0071433B /* PBXTargetDependency */,
 			);
 			name = QuickLookExtension;
 			packageProductDependencies = (
@@ -3675,6 +3687,11 @@
 			isa = PBXTargetDependency;
 			target = ED5E0E7B2CD30B180071433B /* QuickLookExtension */;
 			targetProxy = ED5E0E8B2CD30B180071433B /* PBXContainerItemProxy */;
+		};
+		ED5E0E9F2CD3134B0071433B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D18389609DEC0030047D688 /* libtransmission */;
+			targetProxy = ED5E0E9E2CD3134B0071433B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -5226,6 +5243,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					.,
+				);
 				INFOPLIST_FILE = macosx/QuickLookExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = QuickLookExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 The Transmission Project. All rights reserved.";
@@ -5236,9 +5257,19 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(inherited)",
+					"-fmodules",
+					"-fcxx-modules",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.m0k.transmission.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"third-party/fmt/include",
+					"third-party/small/include",
+				);
 			};
 			name = Debug;
 		};
@@ -5249,6 +5280,10 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					.,
+				);
 				INFOPLIST_FILE = macosx/QuickLookExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = QuickLookExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 The Transmission Project. All rights reserved.";
@@ -5259,9 +5294,19 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(inherited)",
+					"-fmodules",
+					"-fcxx-modules",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.m0k.transmission.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"third-party/fmt/include",
+					"third-party/small/include",
+				);
 			};
 			name = "Release - Debug";
 		};
@@ -5272,6 +5317,10 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					.,
+				);
 				INFOPLIST_FILE = macosx/QuickLookExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = QuickLookExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 The Transmission Project. All rights reserved.";
@@ -5282,9 +5331,19 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(inherited)",
+					"-fmodules",
+					"-fcxx-modules",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.m0k.transmission.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"third-party/fmt/include",
+					"third-party/small/include",
+				);
 			};
 			name = Release;
 		};
