@@ -1,5 +1,5 @@
 //
-//  PreviewProvider.m
+//  PreviewProvider.mm
 //  QuickLookExtension
 //
 //  Created by Dzmitry Neviadomski on 18.10.24.
@@ -53,7 +53,8 @@ NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableD
     if (!allImgProps[iconFileName])
     {
         UTType* type;
-        if ([fileExtension isEqualToString:@"'fldr'"]) {
+        if ([fileExtension isEqualToString:@"'fldr'"])
+        {
             type = UTTypeFolder;
         }
         else
@@ -69,7 +70,7 @@ NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableD
         [renderedIcon unlockFocus];
 
         NSData* iconData = renderedIcon.TIFFRepresentation;
-        
+
         QLPreviewReplyAttachment* imageAttachment = [[QLPreviewReplyAttachment alloc] initWithData:iconData contentType:UTTypePNG];
 
         allImgProps[iconFileName] = imageAttachment;
@@ -101,30 +102,34 @@ NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableD
  
  */
 
-- (void)providePreviewForFileRequest:(QLFilePreviewRequest *)request completionHandler:(void (^)(QLPreviewReply * _Nullable reply, NSError * _Nullable error))handler
+- (void)providePreviewForFileRequest:(QLFilePreviewRequest*)request
+                   completionHandler:(void (^)(QLPreviewReply* _Nullable reply, NSError* _Nullable error))handler
 {
     //You can create a QLPreviewReply in several ways, depending on the format of the data you want to return.
     //To return NSData of a supported content type:
-    
+
     UTType* contentType = UTTypeHTML; //replace with your data type
-    
-    QLPreviewReply* reply = [[QLPreviewReply alloc] initWithDataOfContentType:contentType contentSize:CGSizeMake(1200, 800) dataCreationBlock:^NSData * _Nullable(QLPreviewReply * _Nonnull replyToUpdate, NSError *__autoreleasing  _Nullable * _Nullable error) {
-        
-        //setting the stringEncoding for text and html data is optional and defaults to NSUTF8StringEncoding
-        replyToUpdate.stringEncoding = NSUTF8StringEncoding;
-        
-        NSString* previewHTML = [self generateHTMLPreviewFor:request.fileURL andReply:replyToUpdate];
-        
-        //initialize your data here
-        return [previewHTML dataUsingEncoding:NSUTF8StringEncoding];
-    }];
-    
+
+    QLPreviewReply* reply = [[QLPreviewReply alloc]
+        initWithDataOfContentType:contentType
+                      contentSize:CGSizeMake(1200, 800)
+                dataCreationBlock:^NSData* _Nullable(QLPreviewReply* _Nonnull replyToUpdate, NSError* __autoreleasing _Nullable* _Nullable error) {
+                    //setting the stringEncoding for text and html data is optional and defaults to NSUTF8StringEncoding
+                    replyToUpdate.stringEncoding = NSUTF8StringEncoding;
+
+                    NSString* previewHTML = [self generateHTMLPreviewFor:request.fileURL andReply:replyToUpdate];
+
+                    //initialize your data here
+                    return [previewHTML dataUsingEncoding:NSUTF8StringEncoding];
+                }];
+
     //You can also create a QLPreviewReply with a fileURL of a supported file type, by drawing directly into a bitmap context, or by providing a PDFDocument.
-    
+
     handler(reply, nil);
 }
 
-- (NSString*)generateHTMLPreviewFor:(NSURL*)url andReply:(QLPreviewReply * _Nonnull)replyToUpdate {
+- (NSString*)generateHTMLPreviewFor:(NSURL*)url andReply:(QLPreviewReply* _Nonnull)replyToUpdate
+{
     ++counter;
     //try to parse the torrent file
     auto metainfo = tr_torrent_metainfo{};
@@ -325,11 +330,10 @@ NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableD
     }
 
     [htmlString appendString:@"</body></html>"];
-    
+
     replyToUpdate.attachments = allImgProps;
-    
+
     return htmlString;
 }
 
 @end
-

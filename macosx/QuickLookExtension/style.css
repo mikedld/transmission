@@ -39,28 +39,28 @@ td:last-child {
 }
 
 td {
-    color: rgb(80,80,80);
-    text-align: left;
-    max-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  color: rgb(80,80,80);
+  text-align: left;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 td:nth-child(1) {
-    max-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 td:nth-child(2) {
-    text-align: right;
-    width: 80px;
+  text-align: right;
+  width: 80px;
 }
 
 td.grey {
-    color: rgb(133,133,133);
+  color: rgb(133,133,133);
 }
 
 td:hover, td.grey:hover {
