@@ -1,0 +1,27 @@
+/* quicklook file header */
+"%lu Files" = "%lu Arquivos";
+
+/* quicklook file count */
+"%lu files" = "%lu arquivos";
+
+/* quicklook tracker header */
+"%lu Trackers" = "%lu Rastreadores";
+
+/* quicklook web seed header */
+"%lu Web Seeds" = "%lu Semeadores da Web";
+
+/* quicklook tracker header */
+"1 Tracker" = "1 Rastreador";
+
+/* quicklook web seed header */
+"1 Web Seed" = "1 Semeador Web";
+
+/* quicklook creation info */
+"Created on %@" = "Criado em %@";
+
+/* quicklook creation info */
+"Created on %@ with %@" = "Criado em %1$@ com %2$@";
+
+/* quicklook creation info */
+"Created with %@" = "Criado com %@";
+

@@ -1,0 +1,27 @@
+/* quicklook file header */
+"%lu Files" = "%lu filer";
+
+/* quicklook file count */
+"%lu files" = "%lu filer";
+
+/* quicklook tracker header */
+"%lu Trackers" = "%lu spårare";
+
+/* quicklook web seed header */
+"%lu Web Seeds" = "%lu webbdistributioner";
+
+/* quicklook tracker header */
+"1 Tracker" = "1 spårare";
+
+/* quicklook web seed header */
+"1 Web Seed" = "1 webbdistribution";
+
+/* quicklook creation info */
+"Created on %@" = "Skapades den %@";
+
+/* quicklook creation info */
+"Created on %@ with %@" = "Skapades den %1$@ med %2$@";
+
+/* quicklook creation info */
+"Created with %@" = "Skapades med %@";
+

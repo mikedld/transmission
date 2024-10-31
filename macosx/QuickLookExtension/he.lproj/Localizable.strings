@@ -1,0 +1,27 @@
+/* quicklook file header */
+"%lu Files" = "%lu קבצים";
+
+/* quicklook file count */
+"%lu files" = "%lu קבצים";
+
+/* quicklook tracker header */
+"%lu Trackers" = "%lu עוקבים";
+
+/* quicklook web seed header */
+"%lu Web Seeds" = "%lu זורעי רשת";
+
+/* quicklook tracker header */
+"1 Tracker" = "עוקב אחד";
+
+/* quicklook web seed header */
+"1 Web Seed" = "זורע רשת אחד";
+
+/* quicklook creation info */
+"Created on %@" = "נוצר ב־%@";
+
+/* quicklook creation info */
+"Created on %@ with %@" = "נוצר ב־%1$@ עם %2$@";
+
+/* quicklook creation info */
+"Created with %@" = "נוצר עם %@";
+
