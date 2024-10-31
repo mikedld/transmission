@@ -1,0 +1,94 @@
+:root {
+  color-scheme: light dark;
+}
+
+html {
+  color: rgb(0,0,0);
+  font-family: -apple-system, BlinkMacSystemFont, system-ui;
+  text-align: left;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+th {
+  color: rgb(50,50,50);
+  font-weight: 500;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background: rgb(244,245,245);
+}
+
+tr:hover, tr:nth-child(even):hover {
+  accent-color: auto;
+  background: AccentColor;
+}
+
+td:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+td:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+td {
+    color: rgb(80,80,80);
+    text-align: left;
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td:nth-child(1) {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td:nth-child(2) {
+    text-align: right;
+    width: 80px;
+}
+
+td.grey {
+    color: rgb(133,133,133);
+}
+
+td:hover, td.grey:hover {
+  accent-color: auto;
+  color: AccentColorText;
+}
+
+
+img.icon {
+  margin-right: 8px;
+  margin-left: 8px;
+  vertical-align: text-bottom;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+      color: rgb(255,255,255);
+    }
+
+    th {
+      color: rgb(200,200,200);
+    }
+
+    tr:nth-child(even) {
+      background: rgb(50,50,50);
+    }
+
+    td {
+      color: rgb(175,175,175);
+    }
+}

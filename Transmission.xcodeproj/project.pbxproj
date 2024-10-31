@@ -453,6 +453,7 @@
 		ED5E0E9C2CD30E8F0071433B /* PreviewProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED5E0E962CD30E8F0071433B /* PreviewProvider.mm */; };
 		ED5E0E9D2CD3134B0071433B /* libtransmission.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D18389709DEC0030047D688 /* libtransmission.a */; };
 		ED5E0EA02CD3147B0071433B /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55869925257074EC00F77A43 /* libcurl.tbd */; };
+		ED5E0EA22CD314FE0071433B /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = ED5E0EA12CD314FE0071433B /* style.css */; };
 		ED67FB422B70FCE400D8A037 /* settings.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED67FB402B70FCE400D8A037 /* settings.cc */; };
 		ED67FB432B70FCE400D8A037 /* settings.h in Headers */ = {isa = PBXBuildFile; fileRef = ED67FB412B70FCE400D8A037 /* settings.h */; };
 		ED86936F2ADAE34D00342B1A /* DefaultAppHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED86936E2ADAE34D00342B1A /* DefaultAppHelper.mm */; };
@@ -1400,6 +1401,7 @@
 		ED5E0E952CD30E8F0071433B /* PreviewProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreviewProvider.h; sourceTree = "<group>"; };
 		ED5E0E962CD30E8F0071433B /* PreviewProvider.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PreviewProvider.mm; sourceTree = "<group>"; };
 		ED5E0E972CD30E8F0071433B /* QuickLookExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickLookExtension.entitlements; sourceTree = "<group>"; };
+		ED5E0EA12CD314FE0071433B /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		ED67FB402B70FCE400D8A037 /* settings.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = settings.cc; sourceTree = "<group>"; };
 		ED67FB412B70FCE400D8A037 /* settings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = settings.h; sourceTree = "<group>"; };
 		ED86936D2ADAE34D00342B1A /* DefaultAppHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultAppHelper.h; sourceTree = "<group>"; };
@@ -2414,6 +2416,7 @@
 		ED5E0E992CD30E8F0071433B /* QuickLookExtension */ = {
 			isa = PBXGroup;
 			children = (
+				ED5E0EA12CD314FE0071433B /* style.css */,
 				ED5E0E942CD30E8F0071433B /* Info.plist */,
 				ED5E0E952CD30E8F0071433B /* PreviewProvider.h */,
 				ED5E0E962CD30E8F0071433B /* PreviewProvider.mm */,
@@ -3114,6 +3117,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED5E0EA22CD314FE0071433B /* style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
