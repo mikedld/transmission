@@ -28,6 +28,7 @@ add_link_options(
     # equivalent of XCODE_ATTRIBUTE_DEAD_CODE_STRIPPING YES for this directory
     $<$<LINK_LANGUAGE:C,CXX>:-dead_strip>)
 
+add_subdirectory(QuickLookExtension)
 add_subdirectory(QuickLookPlugin)
 add_subdirectory(VDKQueue)
 
