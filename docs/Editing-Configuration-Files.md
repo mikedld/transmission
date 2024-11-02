@@ -63,6 +63,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **rename-partial-files:** Boolean (default = true) Postfix partially downloaded files with ".part".
  * **start-added-torrents:** Boolean (default = true) Start torrents as soon as they are added.
  * **trash-can-enabled:** Boolean (default = true) Whether to move the torrents to the system's trashcan or unlink them right away upon deletion from Transmission.
+   _Note: transmission-gtk only._
  * **trash-original-torrent-files:** Boolean (default = false) Delete torrents added from the watch directory.
  * **umask:** String (default = "022") Sets Transmission's file mode creation mask. See [the umask(2) manpage](https://man7.org/linux/man-pages/man2/umask.2.html) for more information.
  * **watch-dir:** String
@@ -77,7 +78,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **dht-enabled:** Boolean (default = true) Enable [Distributed Hash Table (DHT)](https://wiki.theory.org/BitTorrentSpecification#Distributed_Hash_Table).
  * **encryption:** Number (0 = Prefer unencrypted connections, 1 = Prefer encrypted connections, 2 = Require encrypted connections; default = 1) [Encryption](https://wiki.vuze.com/w/Message_Stream_Encryption) preference. Encryption may help get around some ISP filtering, but at the cost of slightly higher CPU use.
  * **lpd-enabled:** Boolean (default = false) Enable [Local Peer Discovery (LPD)](https://en.wikipedia.org/wiki/Local_Peer_Discovery).
- * **message-level:** Number (0 = None, 1 = Critical, 2 = Error, 3 = Warn, 4 = Info, 5 = Debug, 6 = Trace; default = 2) Set verbosity of Transmission's log messages.
+ * **message-level:** Number (0 = None, 1 = Critical, 2 = Error, 3 = Warn, 4 = Info, 5 = Debug, 6 = Trace; default = 4) Set verbosity of Transmission's log messages.
  * **pex-enabled:** Boolean (default = true) Enable [Peer Exchange (PEX)](https://en.wikipedia.org/wiki/Peer_exchange).
  * **pidfile:** String Path to file in which daemon PID will be stored (_transmission-daemon only_)
  * **scrape-paused-torrents-enabled:** Boolean (default = true)
@@ -100,7 +101,8 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **peer-congestion-algorithm:** String. This is documented on https://www.pps.jussieu.fr/~jch/software/bittorrent/tcp-congestion-control.html.
  * **peer-limit-global:** Number (default = 200)
  * **peer-limit-per-torrent:** Number (default = 50)
- * **peer-socket-tos:** String (default = "default") Set the [Type-Of-Service (TOS)](https://en.wikipedia.org/wiki/Type_of_Service) parameter for outgoing TCP packets. Possible values are "default", "lowcost", "throughput", "lowdelay" and "reliability". The value "lowcost" is recommended if you're using a smart router, and shouldn't harm in any case.
+ * **peer-socket-tos:** String (default = "le") Set the [DiffServ](https://en.wikipedia.org/wiki/Differentiated_services) parameter for outgoing packets. Allowed values are lowercase DSCP names. See the `tr_tos_t` class from `libtransmission/net.h` for the exact list of possible values.
+ * **reqq:** Number (default = 2000) The number of outstanding block requests a peer is allowed to queue in the client. The higher this number, the higher the max possible upload speed towards each peer.
 
 #### Peer Port
  * **peer-port:** Number (default = 51413)

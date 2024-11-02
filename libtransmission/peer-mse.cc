@@ -14,6 +14,7 @@
 #include "libtransmission/crypto-utils.h" // tr_sha1
 #include "libtransmission/peer-mse.h"
 #include "libtransmission/tr-arc4.h"
+#include "libtransmission/tr-assert.h"
 #include "libtransmission/tr-macros.h" // tr_sha1_digest_t
 
 using namespace std::literals;
@@ -77,18 +78,13 @@ namespace tr_message_stream_encryption
     return tr_rand_obj<DH::private_key_bigend_t>();
 }
 
-[[nodiscard]] auto generatePublicKey(DH::private_key_bigend_t const& private_key) noexcept
-{
-    auto const private_key_wi = wi::import_bits<wi::private_key_t>(private_key);
-    auto const public_key_wi = math::wide_integer::powm(wi::generator, private_key_wi, wi::prime);
-    return wi::export_bits(public_key_wi);
-}
-
 DH::key_bigend_t DH::publicKey() noexcept
 {
     if (public_key_ == key_bigend_t{})
     {
-        public_key_ = generatePublicKey(private_key_);
+        auto const private_key_wi = wi::import_bits<wi::private_key_t>(private_key_);
+        auto const public_key_wi = math::wide_integer::powm(wi::generator, private_key_wi, wi::prime);
+        public_key_ = wi::export_bits(public_key_wi);
     }
 
     return public_key_;

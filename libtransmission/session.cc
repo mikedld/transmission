@@ -35,7 +35,7 @@
 #include "libtransmission/cache.h"
 #include "libtransmission/crypto-utils.h"
 #include "libtransmission/file.h"
-#include "libtransmission/global-ip-cache.h"
+#include "libtransmission/ip-cache.h"
 #include "libtransmission/interned-string.h"
 #include "libtransmission/log.h"
 #include "libtransmission/net.h"
@@ -200,7 +200,7 @@ tr_peer_id_t tr_peerIdInit()
         total += val;
         *it++ = Pool[val];
     }
-    int const val = total % std::size(Pool) != 0 ? std::size(Pool) - total % std::size(Pool) : 0;
+    int const val = total % std::size(Pool) != 0 ? std::size(Pool) - (total % std::size(Pool)) : 0;
     *it = Pool[val];
 
     return peer_id;
@@ -436,7 +436,7 @@ tr_address tr_session::bind_address(tr_address_type type) const noexcept
     {
         // if user provided an address, use it.
         // otherwise, use any_ipv4 (0.0.0.0).
-        return global_ip_cache_->bind_addr(type);
+        return ip_cache_.bind_addr(type);
     }
 
     if (type == TR_AF_INET6)
@@ -783,11 +783,11 @@ void tr_session::setSettings(tr_session::Settings&& settings_in, bool force)
 
     if (auto const& val = new_settings.bind_address_ipv4; force || val != old_settings.bind_address_ipv4)
     {
-        global_ip_cache_->update_addr(TR_AF_INET);
+        ip_cache_.update_addr(TR_AF_INET);
     }
     if (auto const& val = new_settings.bind_address_ipv6; force || val != old_settings.bind_address_ipv6)
     {
-        global_ip_cache_->update_addr(TR_AF_INET6);
+        ip_cache_.update_addr(TR_AF_INET6);
     }
 
     if (auto const& val = new_settings.default_trackers_str; force || val != old_settings.default_trackers_str)
@@ -1372,7 +1372,7 @@ void tr_session::closeImplPart1(std::promise<void>* closed_promise, std::chrono:
     // ...since global_ip_cache_ relies on web_ to update global addresses,
     // we tell it to stop updating before web_ starts to refuse new requests.
     // But we keep it intact for now, so that udp_core_ can continue.
-    this->global_ip_cache_->try_shutdown();
+    this->ip_cache_.try_shutdown();
     // ...and now that those are done, tell web_ that we're shutting
     // down soon. This leaves the `event=stopped` going but refuses any
     // new tasks.
@@ -1391,7 +1391,7 @@ void tr_session::closeImplPart2(std::promise<void>* closed_promise, std::chrono:
     // all the &event=stopped tracker announces.
     // also wait for all ip cache updates to finish so that web_ can
     // safely destruct.
-    if ((!web_->is_idle() || !announcer_udp_->is_idle() || !global_ip_cache_->try_shutdown()) &&
+    if ((!web_->is_idle() || !announcer_udp_->is_idle() || !ip_cache_.try_shutdown()) &&
         std::chrono::steady_clock::now() < deadline)
     {
         announcer_->upkeep();

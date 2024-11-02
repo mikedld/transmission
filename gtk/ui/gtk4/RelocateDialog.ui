@@ -14,68 +14,68 @@
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkLabel" id="set_location_section_label">
-                <property name="hexpand">1</property>
-                <property name="label" translatable="1">Location</property>
-                <property name="xalign">0</property>
-                <attributes>
-                  <attribute name="weight" value="bold"></attribute>
-                </attributes>
-              </object>
-            </child>
-            <child>
-              <object class="GtkGrid" id="set_location_section_layout">
-                <property name="margin-start">18</property>
-                <property name="row-spacing">6</property>
-                <property name="column-spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="new_location_label">
-                    <property name="halign">start</property>
-                    <property name="label" translatable="1">Torrent _location:</property>
-                    <property name="use-underline">1</property>
-                    <property name="mnemonic-widget">new_location_button</property>
-                    <property name="xalign">0</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">0</property>
-                    </layout>
+              <object class="GtkFrame">
+                <child type="label">
+                  <object class="GtkLabel" id="set_location_section_label">
+                    <property name="label" translatable="1">Location</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
                   </object>
                 </child>
                 <child>
-                  <object class="gtkmm__CustomObject_10PathButton" id="new_location_button">
-                    <property name="hexpand">1</property>
-                    <property name="action">select-folder</property>
-                    <property name="title" translatable="1"></property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">0</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="move_data_radio">
-                    <property name="label" translatable="1">_Move from the current folder</property>
-                    <property name="valign">center</property>
-                    <property name="use-underline">1</property>
-                    <property name="active">1</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">1</property>
-                      <property name="column-span">2</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="find_data_radio">
-                    <property name="label" translatable="1">Local data is _already there</property>
-                    <property name="valign">center</property>
-                    <property name="use-underline">1</property>
-                    <property name="group">move_data_radio</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">2</property>
-                      <property name="column-span">2</property>
-                    </layout>
+                  <object class="GtkGrid" id="set_location_section_layout">
+                    <property name="row-spacing">6</property>
+                    <property name="column-spacing">12</property>
+                    <child>
+                      <object class="GtkLabel" id="new_location_label">
+                        <property name="halign">start</property>
+                        <property name="label" translatable="1">Torrent _location:</property>
+                        <property name="use-underline">1</property>
+                        <property name="mnemonic-widget">new_location_button</property>
+                        <property name="xalign">0</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="gtkmm__CustomObject_10PathButton" id="new_location_button">
+                        <property name="hexpand">1</property>
+                        <property name="action">select-folder</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="move_data_radio">
+                        <property name="label" translatable="1">_Move from the current folder</property>
+                        <property name="valign">center</property>
+                        <property name="use-underline">1</property>
+                        <property name="active">1</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="find_data_radio">
+                        <property name="label" translatable="1">Local data is _already there</property>
+                        <property name="valign">center</property>
+                        <property name="use-underline">1</property>
+                        <property name="group">move_data_radio</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

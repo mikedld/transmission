@@ -103,6 +103,7 @@ export class Inspector extends EventTarget {
 
     append_section_title('Details');
     rows = [
+      ['name', 'Name:'],
       ['size', 'Size:'],
       ['location', 'Location:'],
       ['hash', 'Hash:'],
@@ -292,7 +293,7 @@ export class Inspector extends EventTarget {
       const d =
         100 *
         (sizeWhenDone ? (sizeWhenDone - leftUntilDone) / sizeWhenDone : 1);
-      string = fmt.percentString(d);
+      string = fmt.percentString(d, 1);
 
       if (unverified) {
         string = `${fmt.size(verified)} of ${fmt.size(
@@ -319,11 +320,11 @@ export class Inspector extends EventTarget {
         (accumulator, t) => t.getHave() + t.getDesiredAvailable(),
         0,
       );
-      string = `${fmt.percentString((100 * available) / sizeWhenDone)}%`;
+      string = `${fmt.percentString((100 * available) / sizeWhenDone, 1)}%`;
     }
     setTextContent(e.info.availability, fmt.stringSanitizer(string));
 
-    //  downloaded
+    // downloaded
     if (torrents.length === 0) {
       string = none;
     } else {
@@ -366,7 +367,7 @@ export class Inspector extends EventTarget {
     if (torrents.length === 0) {
       string = none;
     } else if (torrents.every((t) => t.isStopped())) {
-      string = stateString; // paused || finished}
+      string = stateString;
     } else {
       const get = (t) => t.getStartDate();
       const first = get(torrents[0]);
@@ -420,6 +421,14 @@ export class Inspector extends EventTarget {
       string = torrents.every((t) => get(t) === first) ? first : mixed;
     }
     setTextContent(e.info.error, string || none);
+
+    // torrent name
+    if (torrents.length === 1) {
+      string = torrents[0].getName();
+    } else {
+      string = torrents.length > 0 ? mixed : none;
+    }
+    setTextContent(e.info.name, string);
 
     // size
     if (torrents.length === 0) {
@@ -861,7 +870,6 @@ export class Inspector extends EventTarget {
         break;
       default:
         command = 'priority-normal';
-        break;
     }
 
     this._changeFileCommand(indices, command);

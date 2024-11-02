@@ -12,10 +12,7 @@
 {
     [super awakeFromNib];
 
-    if (@available(macOS 11.0, *))
-    {
-        self.toolbarStyle = NSWindowToolbarStylePreference;
-    }
+    self.toolbarStyle = NSWindowToolbarStylePreference;
 }
 
 - (void)keyDown:(NSEvent*)event

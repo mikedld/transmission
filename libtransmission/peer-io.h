@@ -39,11 +39,12 @@ namespace libtransmission::test
 class HandshakeTest;
 } // namespace libtransmission::test
 
-enum ReadState
+enum class ReadState : uint8_t
 {
-    READ_NOW,
-    READ_LATER,
-    READ_ERR
+    Now,
+    Later,
+    Break,
+    Err
 };
 
 enum tr_preferred_transport : uint8_t
@@ -67,7 +68,7 @@ public:
         tr_session* session_in,
         tr_sha1_digest_t const* info_hash,
         bool is_incoming,
-        bool is_seed,
+        bool client_is_seed,
         tr_bandwidth* parent_bandwidth);
 
     ~tr_peerIo();
@@ -77,7 +78,7 @@ public:
         tr_bandwidth* parent,
         tr_socket_address const& socket_address,
         tr_sha1_digest_t const& info_hash,
-        bool is_seed,
+        bool client_is_seed,
         bool utp);
 
     static std::shared_ptr<tr_peerIo> new_incoming(tr_session* session, tr_bandwidth* parent, tr_peer_socket socket);
@@ -255,11 +256,6 @@ public:
 
     ///
 
-    [[nodiscard]] constexpr auto supports_utp() const noexcept
-    {
-        return utp_supported_;
-    }
-
     [[nodiscard]] constexpr auto is_incoming() const noexcept
     {
         return is_incoming_;
@@ -289,14 +285,14 @@ public:
 
     void decrypt_init(bool is_incoming, DH const& dh, tr_sha1_digest_t const& info_hash)
     {
-        decrypt_remain_len_.reset();
+        n_decrypt_remain_.reset();
         filter_.decrypt_init(is_incoming, dh, info_hash);
     }
 
     TR_CONSTEXPR20 void decrypt_disable(size_t decrypt_len = 0U) noexcept
     {
         // optionally decrypt decrypt_len more bytes before disabling decryption
-        decrypt_remain_len_ = decrypt_len;
+        n_decrypt_remain_ = decrypt_len;
     }
 
     void encrypt_init(bool is_incoming, DH const& dh, tr_sha1_digest_t const& info_hash)
@@ -328,9 +324,9 @@ private:
 
     friend class libtransmission::test::HandshakeTest;
 
-    [[nodiscard]] constexpr auto is_seed() const noexcept
+    [[nodiscard]] constexpr auto client_is_seed() const noexcept
     {
-        return is_seed_;
+        return client_is_seed_;
     }
 
     void call_error_callback(tr_error const& error)
@@ -370,7 +366,7 @@ private:
         bool is_seed);
 
     Filter filter_;
-    std::optional<size_t> decrypt_remain_len_;
+    std::optional<size_t> n_decrypt_remain_;
 
     std::deque<std::pair<size_t /*n_bytes*/, bool /*is_piece_data*/>> outbuf_info_;
 
@@ -397,10 +393,9 @@ private:
 
     tr_priority_t priority_ = TR_PRI_NORMAL;
 
-    bool const is_seed_;
+    bool const client_is_seed_;
     bool const is_incoming_;
 
-    bool utp_supported_ = false;
     bool dht_supported_ = false;
     bool extended_protocol_supported_ = false;
     bool fast_extension_supported_ = false;

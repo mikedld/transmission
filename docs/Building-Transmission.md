@@ -3,8 +3,8 @@ The source code for both official and nightly releases can be found on our [down
 
 ## On macOS ##
 Software prerequisites:
- * macOS 10.14.4 or newer
- * Xcode 11.3.1 or newer
+ * macOS 11.0 or newer
+ * Xcode 12.5.1 or newer
 
 Building the project on Mac requires the source to be retrieved from GitHub. Pre-packaged source code will not compile.
 ```bash

@@ -82,3 +82,16 @@ row .tr-list-item.tr-transfer-idle progressbar progress {
 row:not(:selected) .tr-list-item.tr-error label {
     color: @tr_error_color;
 }
+
+frame,
+frame border {
+    border-style: none;
+}
+
+frame > grid {
+    margin: 6px 0 0 18px;
+}
+
+frame + frame {
+    margin-top: 6px;
+}

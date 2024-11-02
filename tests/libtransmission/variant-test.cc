@@ -535,3 +535,33 @@ TEST_F(VariantTest, variantFromBufFuzz)
         (void)json_serde.inplace().parse(buf);
     }
 }
+
+TEST_F(VariantTest, serdeEnd)
+{
+    static auto constexpr TestsJson = std::array{
+        std::tuple{ R"({ "json1": 1 }{ "json2": 2 })"sv, '{', 14U },
+        std::tuple{ R"({ "json1": 1 })"sv, '\0', 14U },
+    };
+    static auto constexpr TestsBenc = std::array{
+        std::tuple{ "d5:benc1i1eed5:benc2i2ee"sv, 'd', 12U },
+        std::tuple{ "d5:benc1i1ee"sv, '\0', 12U },
+    };
+
+    for (auto [in, c, pos] : TestsJson)
+    {
+        auto json_serde = tr_variant_serde::json().inplace();
+        auto json_var = json_serde.parse(in).value_or(tr_variant{});
+        EXPECT_TRUE(json_var.holds_alternative<tr_variant::Map>()) << json_serde.error_;
+        EXPECT_EQ(*json_serde.end(), c);
+        EXPECT_EQ(json_serde.end() - std::data(in), pos);
+    }
+
+    for (auto [in, c, pos] : TestsBenc)
+    {
+        auto benc_serde = tr_variant_serde::benc().inplace();
+        auto benc_var = benc_serde.parse(in).value_or(tr_variant{});
+        EXPECT_TRUE(benc_var.holds_alternative<tr_variant::Map>()) << benc_serde.error_;
+        EXPECT_EQ(*benc_serde.end(), c);
+        EXPECT_EQ(benc_serde.end() - std::data(in), pos);
+    }
+}

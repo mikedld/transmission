@@ -148,7 +148,25 @@ public:
             return { vec_.emplace_back(key, tr_variant{ std::forward<Val>(val) }).second, true };
         }
 
+        template<typename Val>
+        std::pair<tr_variant&, bool> insert_or_assign(tr_quark const key, Val&& val)
+        {
+            auto res = try_emplace(key, std::forward<Val>(val));
+            if (!res.second)
+            {
+                res.first = std::forward<Val>(val);
+            }
+            return res;
+        }
+
         // --- custom functions
+
+        template<typename Type>
+        [[nodiscard]] TR_CONSTEXPR20 auto find_if(tr_quark const key) noexcept
+        {
+            auto const iter = find(key);
+            return iter != end() ? iter->second.get_if<Type>() : nullptr;
+        }
 
         template<typename Type>
         [[nodiscard]] TR_CONSTEXPR20 auto find_if(tr_quark const key) const noexcept

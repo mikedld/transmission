@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
 <interface domain="transmission-gtk">
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkDialog" id="EditTrackersDialog">
@@ -58,82 +57,80 @@
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkLabel" id="urls_section_title">
+              <object class="GtkFrame">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Tracker Announce URLs</property>
-                <property name="xalign">0</property>
-                <attributes>
-                  <attribute name="weight" value="bold"/>
-                </attributes>
+                <child type="label">
+                  <object class="GtkLabel" id="urls_section_label">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Tracker Announce URLs</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkGrid" id="urls_section_layout">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="row-spacing">6</property>
+                    <property name="column-spacing">12</property>
+                    <child>
+                      <object class="GtkLabel" id="urls_section_top_comment_label">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes"><![CDATA[To add a backup URL, add it on the next line after a primary URL.
+To add a new primary URL, add it after a blank line.]]></property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                        <property name="width">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow" id="urls_view_scroll">
+                        <property name="width-request">500</property>
+                        <property name="height-request">166</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="shadow-type">in</property>
+                        <child>
+                          <object class="GtkTextView" id="urls_view">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="accepts-tab">False</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
+                        <property name="width">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="urls_section_bottom_comment_label">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Also see Default Public Trackers in Edit &gt; Preferences &gt; Network</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">2</property>
+                        <property name="width">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <!-- n-columns=2 n-rows=3 -->
-              <object class="GtkGrid" id="urls_section_layout">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="margin-start">18</property>
-                <property name="row-spacing">6</property>
-                <property name="column-spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="urls_section_top_comment_label">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">To add a backup URL, add it on the next line after a primary URL.
-To add a new primary URL, add it after a blank line.</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                    <property name="width">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkScrolledWindow" id="urls_view_scroll">
-                    <property name="width-request">500</property>
-                    <property name="height-request">166</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="shadow-type">in</property>
-                    <child>
-                      <object class="GtkTextView" id="urls_view">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="accepts-tab">False</property>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
-                    <property name="width">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="urls_section_bottom_comment_label">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Also see Default Public Trackers in Edit &gt; Preferences &gt; Network</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">2</property>
-                    <property name="width">2</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
               </packing>
             </child>
           </object>

@@ -34,6 +34,7 @@ export class FileRow extends EventTarget {
     const fmt = Formatter;
     const c = `${fmt.size(have)} of ${fmt.size(size)} (${fmt.percentString(
       pct,
+      1,
     )}%)`;
     setTextContent(this.elements.progress, c);
   }

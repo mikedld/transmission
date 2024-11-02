@@ -85,8 +85,19 @@ void PathButton::paintEvent(QPaintEvent* /*event*/)
         text_width -= style()->pixelMetric(QStyle::PM_MenuButtonIndicator, &option, this);
     }
 
-    QFileInfo const path_info(path_);
-    option.text = path_.isEmpty() ? tr("(None)") : (path_info.fileName().isEmpty() ? path_ : path_info.fileName());
+    if (path_.isEmpty())
+    {
+        option.text = tr("(None)");
+    }
+    else if (auto const info = QFileInfo{ path_ }; !info.fileName().isEmpty())
+    {
+        option.text = info.fileName();
+    }
+    else
+    {
+        option.text = path_;
+    }
+
     option.text = fontMetrics().elidedText(option.text, Qt::ElideMiddle, text_width);
 
     painter.drawComplexControl(QStyle::CC_ToolButton, option);

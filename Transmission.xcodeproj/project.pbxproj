@@ -456,8 +456,8 @@
 		ED8A16412735A8AA000D61F9 /* peer-mgr-wishlist.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8A163D2735A8AA000D61F9 /* peer-mgr-wishlist.h */; };
 		ED8A16422735A8AA000D61F9 /* peer-mgr-wishlist.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED8A163E2735A8AA000D61F9 /* peer-mgr-wishlist.cc */; };
 		ED9862972B979AA2002F3035 /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED9862962B979AA2002F3035 /* Utils.mm */; };
-		EDBAAC8C29E486BC00D9495F /* global-ip-cache.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAAC8B29E486BC00D9495F /* global-ip-cache.h */; };
-		EDBAAC8E29E486C200D9495F /* global-ip-cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = EDBAAC8D29E486C200D9495F /* global-ip-cache.cc */; };
+		EDBAAC8C29E486BC00D9495F /* ip-cache.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAAC8B29E486BC00D9495F /* ip-cache.h */; };
+		EDBAAC8E29E486C200D9495F /* ip-cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = EDBAAC8D29E486C200D9495F /* ip-cache.cc */; };
 		EDBDFA9E25AFCCA60093D9C1 /* evutil_time.c in Sources */ = {isa = PBXBuildFile; fileRef = EDBDFA9D25AFCCA60093D9C1 /* evutil_time.c */; };
 		F11545ACA7C4D7A464F703AB /* block-info.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A044CBD8C049AFCBD4DB411 /* block-info.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F63480631E1D7274005B9E09 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F63480621E1D7274005B9E09 /* Images.xcassets */; };
@@ -1376,8 +1376,8 @@
 		ED8A163E2735A8AA000D61F9 /* peer-mgr-wishlist.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "peer-mgr-wishlist.cc"; sourceTree = "<group>"; };
 		ED9862952B979AA2002F3035 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		ED9862962B979AA2002F3035 /* Utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Utils.mm; sourceTree = "<group>"; };
-		EDBAAC8B29E486BC00D9495F /* global-ip-cache.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = "global-ip-cache.h"; sourceTree = "<group>"; };
-		EDBAAC8D29E486C200D9495F /* global-ip-cache.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "global-ip-cache.cc"; sourceTree = "<group>"; };
+		EDBAAC8B29E486BC00D9495F /* ip-cache.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = "ip-cache.h"; sourceTree = "<group>"; };
+		EDBAAC8D29E486C200D9495F /* ip-cache.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ip-cache.cc"; sourceTree = "<group>"; };
 		EDBDFA9D25AFCCA60093D9C1 /* evutil_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evutil_time.c; sourceTree = "<group>"; };
 		F63480621E1D7274005B9E09 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Images/Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1838,14 +1838,14 @@
 				C1077A4C183EB29600634C22 /* file-posix.cc */,
 				C1305EB8186A134000F03351 /* file.cc */,
 				C1077A4D183EB29600634C22 /* file.h */,
-				EDBAAC8D29E486C200D9495F /* global-ip-cache.cc */,
-				EDBAAC8B29E486BC00D9495F /* global-ip-cache.h */,
 				4D36BA630CA2F00800A63CA5 /* handshake.cc */,
 				4D36BA640CA2F00800A63CA5 /* handshake.h */,
 				A209EE5B1144B51E002B02D1 /* history.h */,
 				BEFC1E160C07861A00B0BB3C /* inout.cc */,
 				BEFC1E150C07861A00B0BB3C /* inout.h */,
 				E23B55A5FC3B557F7746D511 /* interned-string.h */,
+				EDBAAC8D29E486C200D9495F /* ip-cache.cc */,
+				EDBAAC8B29E486BC00D9495F /* ip-cache.h */,
 				A2AF23C616B44FA0003BC59E /* log.cc */,
 				A2AF23C716B44FA0003BC59E /* log.h */,
 				4D80185710BBC0B0008A4AF2 /* magnet-metainfo.cc */,
@@ -2443,7 +2443,7 @@
 				CAB35C64252F6F5E00552A55 /* mime-types.h in Headers */,
 				2856E0656A49F2665D69E760 /* benc.h in Headers */,
 				E975121263DD973CAF4AEBA0 /* timer.h in Headers */,
-				EDBAAC8C29E486BC00D9495F /* global-ip-cache.h in Headers */,
+				EDBAAC8C29E486BC00D9495F /* ip-cache.h in Headers */,
 				E975121263DD973CAF4AEBA2 /* timer-ev.h in Headers */,
 				C1077A4F183EB29600634C22 /* error.h in Headers */,
 				A2679295130E00A000CB7464 /* tr-utp.h in Headers */,
@@ -3158,7 +3158,7 @@
 			files = (
 				BEFC1E2B0C07861A00B0BB3C /* utils.cc in Sources */,
 				A2AAB65F0DE0CF6200E04DDA /* rpcimpl.cc in Sources */,
-				EDBAAC8E29E486C200D9495F /* global-ip-cache.cc in Sources */,
+				EDBAAC8E29E486C200D9495F /* ip-cache.cc in Sources */,
 				BEFC1E2D0C07861A00B0BB3C /* port-forwarding-upnp.cc in Sources */,
 				A2AAB65C0DE0CF6200E04DDA /* rpc-server.cc in Sources */,
 				ED8A16402735A8AA000D61F9 /* peer-mgr-active-requests.cc in Sources */,
@@ -4170,7 +4170,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = libtransmission/version.h;
 				INFOPLIST_PREPROCESS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14.6;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -4374,7 +4374,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = libtransmission/version.h;
 				INFOPLIST_PREPROCESS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14.6;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DFMT_HEADER_ONLY",
@@ -4478,7 +4478,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = libtransmission/version.h;
 				INFOPLIST_PREPROCESS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14.6;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",

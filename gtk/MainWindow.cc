@@ -887,7 +887,7 @@ void MainWindow::set_busy(bool isBusy)
     if (get_realized())
     {
 #if GTKMM_CHECK_VERSION(4, 0, 0)
-        auto const cursor = isBusy ? Gdk::Cursor::create("wait") : Glib::RefPtr<Gdk::Cursor>();
+        auto const cursor = isBusy ? Gdk::Cursor::create(Glib::ustring("wait")) : Glib::RefPtr<Gdk::Cursor>();
         set_cursor(cursor);
 #else
         auto const display = get_display();

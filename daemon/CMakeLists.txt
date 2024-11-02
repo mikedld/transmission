@@ -56,6 +56,6 @@ foreach(P daemon)
     if (WITH_SYSTEMD)
         install(
             FILES ${TR_NAME}-${P}.service
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}/systemd/system)
+            DESTINATION lib/systemd/system)
     endif()
 endforeach()

@@ -242,8 +242,8 @@ std::optional<tr_sha256_digest_t> tr_sha256_from_string(std::string_view hex)
 // fallback implementation in case the system crypto library's RNG fails
 void tr_rand_buffer_std(void* buffer, size_t length)
 {
-    thread_local auto gen = std::mt19937{ std::random_device{}() };
-    thread_local auto dist = std::uniform_int_distribution<unsigned long long>{};
+    static thread_local auto gen = std::mt19937{ std::random_device{}() };
+    static thread_local auto dist = std::uniform_int_distribution<unsigned long long>{};
 
     for (auto *walk = static_cast<uint8_t*>(buffer), *end = walk + length; walk < end;)
     {

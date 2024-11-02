@@ -90,7 +90,11 @@ ItemLayout::ItemLayout(
 
 QSize TrackerDelegate::sizeHint(QStyleOptionViewItem const& option, TrackerInfo const& info) const
 {
-    ItemLayout const layout{ getText(info), true, option.direction, QPoint{ 0, 0 }, option.rect.width() - Margin.width() * 2 };
+    ItemLayout const layout{ getText(info),
+                             true,
+                             option.direction,
+                             QPoint{ 0, 0 },
+                             option.rect.width() - (Margin.width() * 2) };
     return layout.size() + Margin * 2;
 }
 

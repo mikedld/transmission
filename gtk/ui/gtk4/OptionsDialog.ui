@@ -135,7 +135,7 @@
                 <property name="label">...</property>
                 <property name="xalign">0</property>
                 <attributes>
-                  <attribute name="style" value="italic"></attribute>
+                  <attribute name="style" value="italic"/>
                 </attributes>
                 <layout>
                   <property name="column">1</property>

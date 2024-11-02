@@ -48,8 +48,8 @@ std::string toString(std::array<std::byte, N> const& array)
 
 TEST(Crypto, DH)
 {
-    auto a = tr_message_stream_encryption::DH{};
-    auto b = tr_message_stream_encryption::DH{};
+    auto a = tr_message_stream_encryption::DH{ tr_message_stream_encryption::DH::randomPrivateKey() };
+    auto b = tr_message_stream_encryption::DH{ tr_message_stream_encryption::DH::randomPrivateKey() };
 
     a.setPeerPublicKey(b.publicKey());
     b.setPeerPublicKey(a.publicKey());
@@ -57,7 +57,7 @@ TEST(Crypto, DH)
     EXPECT_EQ(a.secret(), b.secret());
     EXPECT_EQ(96U, std::size(a.secret()));
 
-    auto c = tr_message_stream_encryption::DH{};
+    auto c = tr_message_stream_encryption::DH{ tr_message_stream_encryption::DH::randomPrivateKey() };
     c.setPeerPublicKey(b.publicKey());
     EXPECT_NE(a.secret(), c.secret());
     EXPECT_NE(toString(a.secret()), toString(c.secret()));
@@ -65,8 +65,8 @@ TEST(Crypto, DH)
 
 TEST(Crypto, encryptDecrypt)
 {
-    auto a_dh = tr_message_stream_encryption::DH{};
-    auto b_dh = tr_message_stream_encryption::DH{};
+    auto a_dh = tr_message_stream_encryption::DH{ tr_message_stream_encryption::DH::randomPrivateKey() };
+    auto b_dh = tr_message_stream_encryption::DH{ tr_message_stream_encryption::DH::randomPrivateKey() };
 
     a_dh.setPeerPublicKey(b_dh.publicKey());
     b_dh.setPeerPublicKey(a_dh.publicKey());

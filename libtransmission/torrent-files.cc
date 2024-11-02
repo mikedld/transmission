@@ -198,7 +198,7 @@ bool tr_torrent_files::move(
         }
 
         tr_logAddTrace(fmt::format("Moving file #{:d} to '{:s}'", i, old_path, path), parent_name);
-        if (!tr_file_move(old_path, path, error))
+        if (!tr_file_move(old_path, path, true, error))
         {
             err = true;
             break;
@@ -233,7 +233,8 @@ bool tr_torrent_files::move(
  * 2. If there are nontorrent files, don't delete them...
  * 3. ...unless the other files are "junk", such as .DS_Store
  */
-void tr_torrent_files::remove(std::string_view parent_in, std::string_view tmpdir_prefix, FileFunc const& func) const
+void tr_torrent_files::remove(std::string_view parent_in, std::string_view tmpdir_prefix, FileFunc const& func, tr_error* error)
+    const
 {
     auto const parent = tr_pathbuf{ parent_in };
 
@@ -243,9 +244,12 @@ void tr_torrent_files::remove(std::string_view parent_in, std::string_view tmpdi
         return;
     }
 
-    // make a tmpdir
+    // try to make a tmpdir
     auto tmpdir = tr_pathbuf{ parent, '/', tmpdir_prefix, "__XXXXXX"sv };
-    tr_sys_dir_create_temp(std::data(tmpdir));
+    if (!tr_sys_dir_create_temp(std::data(tmpdir), error))
+    {
+        return;
+    }
 
     // move the local data to the tmpdir
     auto const paths = std::array<std::string_view, 1>{ parent.sv() };
@@ -253,7 +257,11 @@ void tr_torrent_files::remove(std::string_view parent_in, std::string_view tmpdi
     {
         if (auto const found = find(idx, std::data(paths), std::size(paths)); found)
         {
-            tr_file_move(found->filename(), tr_pathbuf{ tmpdir, '/', found->subpath() });
+            // if moving a file fails, give up and let the error propagate
+            if (!tr_file_move(found->filename(), tr_pathbuf{ tmpdir, '/', found->subpath() }, false, error))
+            {
+                return;
+            }
         }
     }
 

@@ -250,9 +250,10 @@ static NSTimeInterval const kUpdateSeconds = 0.75;
         auto const file_string = std::string{ currentMessage->file };
         NSString* file = [(@(file_string.c_str())).lastPathComponent stringByAppendingFormat:@":%ld", currentMessage->line];
 
+        auto const secs_since_1970 = std::chrono::system_clock::to_time_t(currentMessage->when);
         NSDictionary* message = @{
             @"Message" : @(currentMessage->message.c_str()),
-            @"Date" : [NSDate dateWithTimeIntervalSince1970:currentMessage->when],
+            @"Date" : [NSDate dateWithTimeIntervalSince1970:secs_since_1970],
             @"Index" : @(currentIndex++), //more accurate when sorting by date
             @"Level" : @(currentMessage->level),
             @"Name" : name,

@@ -22,8 +22,6 @@
   --logo-size: 64px;
   --pauseresume-size: 20px;
   --popup-top: 51px; // TODO: ugly that this is hardcoded
-  --progressbar-border: 1px;
-  --progressbar-height: 20px;
   --toolbar-height: 50px;
 
   /* colors related to torrent status */
@@ -108,10 +106,16 @@
     --color-fg-selected: var(--dark-mode-white);
     --color-fg-tertiary: var(--grey-500);
     --color-fg-warn: var(--dark-mode-black);
+    --color-progressbar-fg-1: #edefff;
+    --color-progressbar-fg-2: #edefff;
+    --color-progressbar-fg-3: #edefff;
     --color-progressbar-paused: var(--grey-500);
     --color-progressbar-seed-1: var(--green-100);
     --color-progressbar-seed-2: var(--green-400);
     --color-progressbar-seed-paused: var(--grey-500);
+    --progress-bar-shadow-1: 1px 1px #000;
+    --progress-bar-shadow-2: 1px 1px #000;
+    --progress-bar-shadow-3: 1px 1px #000;
 
     .contrast-more {
       --color-bg-even: var(--black);
@@ -133,6 +137,9 @@
       --color-fg-tabs: var(--white);
       --color-fg-tertiary: var(--white);
       --color-fg-warn: var(--black);
+      --color-progressbar-fg-1: #fff;
+      --color-progressbar-fg-2: #fff;
+      --color-progressbar-fg-3: #000;
       --color-progressbar-background-2: var(--white);
       --color-progressbar-magnet: var(--yellow-300);
       --color-progressbar-paused: var(--grey-500);
@@ -142,6 +149,7 @@
       --color-progressbar-seed-paused: var(--grey-500);
       --color-progressbar-verify: var(--yellow-300);
       --color-toolbar-background: var(--black);
+      --progress-bar-shadow-3: 0;
     }
   }
   @media (prefers-color-scheme: light) {
@@ -165,6 +173,9 @@
     --color-fg-selected: var(--nice-grey);
     --color-fg-tertiary: var(--grey-500);
     --color-fg-warn: #cf212e;
+    --color-progressbar-fg-1: #303030;
+    --color-progressbar-fg-2: #edefff;
+    --color-progressbar-fg-3: #edefff;
     --color-progressbar-leech: var(--blue-100);
     --color-progressbar-magnet: var(--yellow-300);
     --color-progressbar-paused: var(--grey-200);
@@ -173,6 +184,9 @@
     --color-progressbar-seed-2: var(--green-300);
     --color-progressbar-seed-paused: var(--grey-200);
     --color-progressbar-verify: var(--yellow-300);
+    --progress-bar-shadow-1: 0;
+    --progress-bar-shadow-2: 1px 1px #000;
+    --progress-bar-shadow-3: 1px 1px #000;
 
     .contrast-more {
       --color-bg-even: var(--white);
@@ -195,6 +209,9 @@
       --color-fg-tertiary: var(--black);
       --color-fg-warn: var(--white);
       --color-progressbar-background-2: var(--white);
+      --color-progressbar-fg-1: #fff;
+      --color-progressbar-fg-2: #fff;
+      --color-progressbar-fg-3: #000;
       --color-progressbar-leech: var(--blue-200);
       --color-progressbar-magnet: var(--yellow-300);
       --color-progressbar-paused: var(--grey-500);
@@ -204,6 +221,8 @@
       --color-progressbar-seed-paused: var(--grey-500);
       --color-progressbar-verify: var(--yellow-300);
       --color-toolbar-background: var(--white);
+      --progress-bar-shadow-1: 1px 1px #000;
+      --progress-bar-shadow-3: 0;
     }
   }
 }
@@ -619,6 +638,10 @@ a {
     &.paused {
       color: var(--color-fg-disabled);
 
+      &:not(.selected) .torrent-progress-bar {
+        color: var(--color-fg-primary);
+      }
+
       .icon {
         background-color: var(--color-fg-disabled);
       }
@@ -666,12 +689,11 @@ a {
   }
 
   .torrent-progress-bar {
-    background-repeat: no-repeat;
-    border-color: var(--color-border-starkest);
+    font-size: 14px;
+    position: relative;
+    border: 1px solid var(--color-border-starkest);
     border-radius: 3px;
-    border-style: solid;
-    border-width: 1px;
-    height: calc(var(--progressbar-height) - var(--progressbar-border) * 2);
+    height: 18px;
 
     &.full {
       flex-grow: 1;
@@ -684,73 +706,91 @@ a {
     }
 
     &.leech {
-      &.queued {
-        background: linear-gradient(
-            to right,
-            var(--color-progressbar-queued) 0,
-            var(--color-progressbar-queued) var(--progress, 30%),
-            transparent var(--progress, 30%)
-          ),
-          no-repeat;
+      &.queued::before {
+        background: var(--color-progressbar-queued);
       }
 
-      background: linear-gradient(
-          to right,
-          var(--color-progressbar-leech) 0,
-          var(--color-progressbar-leech) var(--progress, 30%),
-          transparent var(--progress, 30%)
-        ),
-        no-repeat;
+      &::before {
+        background: var(--color-progressbar-leech);
+        color: var(--color-progressbar-fg-2);
+        text-shadow: var(--progress-bar-shadow-2);
+      }
     }
 
-    &.magnet {
-      background: linear-gradient(
-          to right,
-          var(--color-progressbar-magnet) 0,
-          var(--color-progressbar-magnet) var(--progress, 30%),
-          transparent var(--progress, 30%)
-        ),
-        no-repeat;
+    &.magnet::before {
+      background: var(--color-progressbar-magnet);
+      color: #000;
     }
 
     &.seed {
-      &.paused {
-        background-color: var(--color-progressbar-seed-paused);
+      &.paused::before {
+        background: var(--color-progressbar-seed-paused);
+        color: var(--color-progressbar-fg-1);
+        text-shadow: var(--progress-bar-shadow-1);
       }
 
       &:not(.paused) {
-        background: linear-gradient(
-            to right,
-            var(--color-progressbar-seed-1) 0,
-            var(--color-progressbar-seed-1) var(--progress, 30%),
-            var(--color-progressbar-seed-2) var(--progress, 30%)
-          ),
-          no-repeat;
+        &::before {
+          background: var(--color-progressbar-seed-1);
+          color: var(--color-progressbar-fg-2);
+          text-shadow: var(--progress-bar-shadow-2);
+        }
+
+        &::after {
+          background: var(--color-progressbar-seed-2);
+          color: var(--color-progressbar-fg-3);
+          text-shadow: var(--progress-bar-shadow-3);
+        }
       }
 
-      &.queued {
-        background-color: var(--color-progressbar-seed-paused);
+      &.queued::before {
+        background-color: var(--color-progressbar-seed-1);
+      }
+
+      &::before {
+        background-color: var(--color-progressbar-seed-1);
+        color: var(--color-progressbar-fg-2);
+        text-shadow: var(--progress-bar-shadow-2);
       }
     }
 
-    &.verify {
-      background: linear-gradient(
-          to right,
-          var(--color-progressbar-verify) 0,
-          var(--color-progressbar-verify) var(--progress, 30%),
-          transparent var(--progress, 30%)
-        ),
-        no-repeat;
+    &.verify::before {
+      background: var(--color-progressbar-verify);
+      color: #000;
     }
 
-    &.paused {
-      background: linear-gradient(
-          to right,
-          var(--color-progressbar-paused) 0,
-          var(--color-progressbar-paused) var(--progress, 30%),
-          transparent var(--progress, 30%)
-        ),
-        no-repeat;
+    &.paused::before {
+      background: var(--color-progressbar-paused);
+      color: var(--color-progressbar-fg-1);
+      text-shadow: var(--progress-bar-shadow-1);
+    }
+
+    &::before,
+    &::after {
+      content: attr(data-progress);
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      border-radius: 2px;
+      text-align: center;
+    }
+
+    &::before {
+      clip-path: polygon(
+        0 0,
+        var(--progress, 30%) 0,
+        var(--progress, 30%) 100%,
+        0 100%
+      );
+    }
+
+    &::after {
+      clip-path: polygon(
+        var(--progress, 30%) 0,
+        100% 0,
+        100% 100%,
+        var(--progress, 30%) 100%
+      );
     }
   }
 }
@@ -1057,9 +1097,7 @@ a {
     cursor: pointer;
     font-size: 14px;
     grid-area: name;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
 
   .inspector-torrent-file-list-entry.skip
@@ -1556,6 +1594,7 @@ dialog {
   display: flex;
   font-size: 1.2em;
   font-weight: bold;
+  overflow-wrap: anywhere;
 }
 
 .dialog-logo {
@@ -1684,6 +1723,10 @@ dialog {
   legend {
     font-weight: bolder;
     margin-bottom: 4px;
+  }
+
+  span {
+    overflow-wrap: anywhere;
   }
 }
 

@@ -14,256 +14,252 @@
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkLabel" id="files_section_label">
-                <property name="hexpand">1</property>
-                <property name="label" translatable="1">Files</property>
-                <property name="xalign">0</property>
-                <attributes>
-                  <attribute name="weight" value="bold"></attribute>
-                </attributes>
-              </object>
-            </child>
-            <child>
-              <object class="GtkGrid" id="files_section_layout">
-                <property name="margin-start">18</property>
-                <property name="row-spacing">6</property>
-                <property name="column-spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="destination_label">
-                    <property name="label" translatable="1">Sa_ve to:</property>
-                    <property name="use-underline">1</property>
-                    <property name="mnemonic-widget">destination_button</property>
-                    <property name="xalign">0</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">0</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="gtkmm__CustomObject_10PathButton" id="destination_button">
-                    <property name="hexpand">1</property>
-                    <property name="action">select-folder</property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">0</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="source_folder_radio">
-                    <property name="label" translatable="1">Source F_older:</property>
-                    <property name="valign">center</property>
-                    <property name="use-underline">1</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">1</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="gtkmm__CustomObject_10PathButton" id="source_folder_button">
-                    <property name="sensitive" bind-source="source_folder_radio" bind-property="active" bind-flags="sync-create">0</property>
-                    <property name="hexpand">1</property>
-                    <property name="action">select-folder</property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">1</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="source_file_radio">
-                    <property name="label" translatable="1">Source _File:</property>
-                    <property name="valign">center</property>
-                    <property name="use-underline">1</property>
-                    <property name="active">1</property>
-                    <property name="group">source_folder_radio</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">2</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="gtkmm__CustomObject_10PathButton" id="source_file_button">
-                    <property name="sensitive" bind-source="source_file_radio" bind-property="active" bind-flags="sync-create">0</property>
-                    <property name="hexpand">1</property>
-                    <property name="title" translatable="1"></property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">2</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="source_size_label">
-                    <property name="hexpand">1</property>
-                    <property name="label" translatable="1">No source selected</property>
-                    <property name="xalign">0</property>
+              <object class="GtkFrame">
+                <child type="label">
+                  <object class="GtkLabel" id="files_section_label">
+                    <property name="label" translatable="1">Files</property>
                     <attributes>
-                      <attribute name="style" value="italic"></attribute>
+                      <attribute name="weight" value="bold"/>
                     </attributes>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">3</property>
-                    </layout>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="piece_size_label">
-                    <property name="label" translatable="1">Piece size:</property>
-                    <property name="use-underline">1</property>
-                    <property name="mnemonic-widget">piece_size_scale</property>
-                    <property name="xalign">0</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">4</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkScale" id="piece_size_scale">
-                    <property name="focusable">1</property>
-                    <property name="hexpand">1</property>
-                    <property name="digits">0</property>
-                    <property name="value-pos">left</property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">4</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkFixed" id="properties_section_spacer">
-                <property name="height-request">6</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="properties_section_label">
-                <property name="hexpand">1</property>
-                <property name="label" translatable="1">Properties</property>
-                <property name="xalign">0</property>
-                <attributes>
-                  <attribute name="weight" value="bold"></attribute>
-                </attributes>
-              </object>
-            </child>
-            <child>
-              <object class="GtkGrid" id="properties_section_layout">
-                <property name="margin-start">18</property>
-                <property name="row-spacing">6</property>
-                <property name="column-spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="trackers_label">
-                    <property name="valign">start</property>
-                    <property name="label" translatable="1">_Trackers:</property>
-                    <property name="use-underline">1</property>
-                    <property name="mnemonic-widget">trackers_view</property>
-                    <property name="xalign">0</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">0</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkBox" id="trackers_layout">
-                    <property name="hexpand">1</property>
-                    <property name="vexpand">1</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">3</property>
+                  <object class="GtkGrid" id="files_section_layout">
+                    <property name="row-spacing">6</property>
+                    <property name="column-spacing">12</property>
                     <child>
-                      <object class="GtkScrolledWindow" id="trackers_view_scroll">
-                        <property name="height-request">80</property>
+                      <object class="GtkLabel" id="destination_label">
+                        <property name="label" translatable="1">Sa_ve to:</property>
+                        <property name="use-underline">1</property>
+                        <property name="mnemonic-widget">destination_button</property>
+                        <property name="xalign">0</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="gtkmm__CustomObject_10PathButton" id="destination_button">
+                        <property name="hexpand">1</property>
+                        <property name="action">select-folder</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="source_folder_radio">
+                        <property name="label" translatable="1">Source F_older:</property>
+                        <property name="valign">center</property>
+                        <property name="use-underline">1</property>
+                        <property name="active">1</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="gtkmm__CustomObject_10PathButton" id="source_folder_button">
+                        <property name="sensitive" bind-source="source_folder_radio" bind-property="active" bind-flags="sync-create">0</property>
+                        <property name="hexpand">1</property>
+                        <property name="action">select-folder</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="source_file_radio">
+                        <property name="label" translatable="1">Source _File:</property>
+                        <property name="valign">center</property>
+                        <property name="use-underline">1</property>
+                        <property name="group">source_folder_radio</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="gtkmm__CustomObject_10PathButton" id="source_file_button">
+                        <property name="sensitive" bind-source="source_file_radio" bind-property="active" bind-flags="sync-create">0</property>
+                        <property name="hexpand">1</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="source_size_label">
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="1">No source selected</property>
+                        <property name="xalign">0</property>
+                        <attributes>
+                          <attribute name="style" value="italic"/>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="piece_size_label">
+                        <property name="label" translatable="1">Piece size:</property>
+                        <property name="use-underline">1</property>
+                        <property name="mnemonic-widget">piece_size_scale</property>
+                        <property name="xalign">0</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkScale" id="piece_size_scale">
                         <property name="focusable">1</property>
                         <property name="hexpand">1</property>
-                        <property name="vexpand">1</property>
-                        <property name="has-frame">1</property>
-                        <property name="child">
-                          <object class="GtkTextView" id="trackers_view">
-                            <property name="focusable">1</property>
-                            <property name="accepts-tab">0</property>
-                          </object>
-                        </property>
+                        <property name="digits">0</property>
+                        <property name="value-pos">left</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">4</property>
+                        </layout>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="trackers_description_label">
-                        <property name="hexpand">1</property>
-                        <property name="label" translatable="1">To add a backup URL, add it on the next line after a primary URL.
-To add a new primary URL, add it after a blank line.</property>
+                      <placeholder/>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame">
+                <child type="label">
+                  <object class="GtkLabel" id="properties_section_label">
+                    <property name="label" translatable="1">Properties</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkGrid" id="properties_section_layout">
+                    <property name="row-spacing">6</property>
+                    <property name="column-spacing">12</property>
+                    <child>
+                      <object class="GtkLabel" id="trackers_label">
+                        <property name="valign">start</property>
+                        <property name="label" translatable="1">_Trackers:</property>
+                        <property name="use-underline">1</property>
+                        <property name="mnemonic-widget">trackers_view</property>
                         <property name="xalign">0</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
                       </object>
                     </child>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">0</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="comment_check">
-                    <property name="label" translatable="1">Co_mment:</property>
-                    <property name="focusable">1</property>
-                    <property name="valign">center</property>
-                    <property name="use-underline">1</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">1</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="comment_entry">
-                    <property name="sensitive" bind-source="comment_check" bind-property="active" bind-flags="sync-create">0</property>
-                    <property name="focusable">1</property>
-                    <property name="hexpand">1</property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">1</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="source_check">
-                    <property name="label" translatable="1">_Source:</property>
-                    <property name="focusable">1</property>
-                    <property name="valign">center</property>
-                    <property name="use-underline">1</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">2</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="source_entry">
-                    <property name="sensitive" bind-source="source_check" bind-property="active" bind-flags="sync-create">0</property>
-                    <property name="focusable">1</property>
-                    <property name="hexpand">1</property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">2</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="private_check">
-                    <property name="label" translatable="1">_Private torrent</property>
-                    <property name="focusable">1</property>
-                    <property name="valign">center</property>
-                    <property name="use-underline">1</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">3</property>
-                      <property name="column-span">2</property>
-                    </layout>
+                    <child>
+                      <object class="GtkBox" id="trackers_layout">
+                        <property name="hexpand">1</property>
+                        <property name="vexpand">1</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">3</property>
+                        <child>
+                          <object class="GtkScrolledWindow" id="trackers_view_scroll">
+                            <property name="height-request">80</property>
+                            <property name="focusable">1</property>
+                            <property name="hexpand">1</property>
+                            <property name="vexpand">1</property>
+                            <property name="has-frame">1</property>
+                            <property name="child">
+                              <object class="GtkTextView" id="trackers_view">
+                                <property name="focusable">1</property>
+                                <property name="accepts-tab">0</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="trackers_description_label">
+                            <property name="hexpand">1</property>
+                            <property name="label" translatable="1"><![CDATA[To add a backup URL, add it on the next line after a primary URL.
+To add a new primary URL, add it after a blank line.]]></property>
+                            <property name="xalign">0</property>
+                          </object>
+                        </child>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="comment_check">
+                        <property name="label" translatable="1">Co_mment:</property>
+                        <property name="focusable">1</property>
+                        <property name="valign">center</property>
+                        <property name="use-underline">1</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="comment_entry">
+                        <property name="sensitive" bind-source="comment_check" bind-property="active" bind-flags="sync-create">0</property>
+                        <property name="focusable">1</property>
+                        <property name="hexpand">1</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="source_check">
+                        <property name="label" translatable="1">_Source:</property>
+                        <property name="focusable">1</property>
+                        <property name="valign">center</property>
+                        <property name="use-underline">1</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="source_entry">
+                        <property name="sensitive" bind-source="source_check" bind-property="active" bind-flags="sync-create">0</property>
+                        <property name="focusable">1</property>
+                        <property name="hexpand">1</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="private_check">
+                        <property name="label" translatable="1">_Private torrent</property>
+                        <property name="focusable">1</property>
+                        <property name="valign">center</property>
+                        <property name="use-underline">1</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">3</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

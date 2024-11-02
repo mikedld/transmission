@@ -114,28 +114,13 @@ public:
     explicit TorrentHash(tr_sha1_digest_t const& data)
         : data_{ data }
     {
+        auto const hashstr = tr_sha1_to_string(data_);
+        data_str_ = QString::fromUtf8(std::data(hashstr), std::size(hashstr));
     }
 
-    explicit TorrentHash(char const* str)
+    explicit TorrentHash(std::string_view const str)
+        : TorrentHash{ tr_sha1_from_string(str).value_or(tr_sha1_digest_t{}) }
     {
-        if (auto const hash = tr_sha1_from_string(str != nullptr ? str : ""); hash)
-        {
-            data_ = *hash;
-
-            auto const tmpstr = tr_sha1_to_string(data_);
-            data_str_ = QString::fromUtf8(std::data(tmpstr), std::size(tmpstr));
-        }
-    }
-
-    explicit TorrentHash(QString const& str)
-    {
-        if (auto const hash = tr_sha1_from_string(str.toStdString()); hash)
-        {
-            data_ = *hash;
-
-            auto const tmpstr = tr_sha1_to_string(data_);
-            data_str_ = QString::fromUtf8(std::data(tmpstr), std::size(tmpstr));
-        }
     }
 
     [[nodiscard]] TR_CONSTEXPR20 auto operator==(TorrentHash const& that) const

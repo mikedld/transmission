@@ -7,8 +7,8 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkBox" id="toolbar">
-            <property name="css-classes">toolbar
-horizontal</property>
+            <property name="css-classes"><![CDATA[toolbar
+horizontal]]></property>
             <property name="can-focus">1</property>
             <child>
               <object class="GtkButton" id="open_file_button">

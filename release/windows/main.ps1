@@ -10,7 +10,7 @@ Param(
     [string] $BuildArch,
 
     [Parameter()]
-    [ValidateSet('All', 'Deps', 'App')]
+    [ValidateSet('All', 'CoreDeps', 'Deps', 'App')]
     [string] $BuildPart = 'All',
 
     [Parameter()]
@@ -258,14 +258,23 @@ if (-not $SourceDir) {
 if ($Mode -eq 'DepsHash') {
     Import-Script Toolchain
 
-    $Names = @(
-        Invoke-Build Expat -CacheArchiveNameOnly
-        Invoke-Build DBus -CacheArchiveNameOnly
-        Invoke-Build Zlib -CacheArchiveNameOnly
-        Invoke-Build OpenSsl -CacheArchiveNameOnly
-        Invoke-Build Curl -CacheArchiveNameOnly
-        Invoke-Build Qt$UseQtVersion -CacheArchiveNameOnly
-    )
+    $Names = @()
+
+    if (@('All', 'CoreDeps', 'Deps') -contains $BuildPart) {
+        $Names = $Names + @(
+            Invoke-Build Zlib -CacheArchiveNameOnly
+            Invoke-Build OpenSsl -CacheArchiveNameOnly
+            Invoke-Build Curl -CacheArchiveNameOnly
+        )
+    }
+
+    if (@('All', 'Deps') -contains $BuildPart) {
+        $Names = $Names + @(
+            Invoke-Build Expat -CacheArchiveNameOnly
+            Invoke-Build DBus -CacheArchiveNameOnly
+            Invoke-Build Qt$UseQtVersion -CacheArchiveNameOnly
+        )
+    }
 
     Write-Output (Get-StringHash ($Names -join ':'))
 }
@@ -285,12 +294,15 @@ if ($Mode -eq 'Build') {
         $Env:CMAKE_CXX_COMPILER_LAUNCHER = ''
     }
 
-    if (@('All', 'Deps') -contains $BuildPart) {
-        Invoke-Build Expat
-        Invoke-Build DBus
+    if (@('All', 'CoreDeps', 'Deps') -contains $BuildPart) {
         Invoke-Build Zlib
         Invoke-Build OpenSsl
         Invoke-Build Curl
+    }
+
+    if (@('All', 'Deps') -contains $BuildPart) {
+        Invoke-Build Expat
+        Invoke-Build DBus
         Invoke-Build Qt$UseQtVersion
     }
 

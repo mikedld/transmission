@@ -89,7 +89,7 @@ struct json_to_variant_handler : public rapidjson::BaseReaderHandler<>
 
     bool String(Ch const* const str, rapidjson::SizeType const len, bool const copy)
     {
-        *get_leaf() = copy ? tr_variant{ std::string{ str, len } } : tr_variant::unmanaged_string({ str, len });
+        *get_leaf() = copy ? tr_variant{ std::string_view{ str, len } } : tr_variant::unmanaged_string({ str, len });
         return true;
     }
 
@@ -216,7 +216,13 @@ std::optional<tr_variant> tr_variant_serde::parse_json(std::string_view input)
     auto ms = rapidjson::MemoryStream{ begin, size };
     auto eis = rapidjson::AutoUTFInputStream<unsigned, rapidjson::MemoryStream>{ ms };
     auto reader = rapidjson::GenericReader<rapidjson::AutoUTF<unsigned>, rapidjson::UTF8<char>>{};
-    reader.Parse(eis, handler);
+    reader.Parse<rapidjson::kParseStopWhenDoneFlag>(eis, handler);
+
+    // Due to the nature of how AutoUTFInputStream works, when AutoUTFInputStream
+    // is used with MemoryStream, the read cursor position is always 1 ahead of
+    // the current character (unless the end of stream is reached).
+    auto const pos = eis.Peek() == '\0' ? eis.Tell() : eis.Tell() - 1U;
+    end_ = begin + pos;
 
     if (!reader.HasParseError())
     {
@@ -229,13 +235,12 @@ std::optional<tr_variant> tr_variant_serde::parse_json(std::string_view input)
     }
     else
     {
-        auto const err_offset = reader.GetErrorOffset();
         error_.set(
             EILSEQ,
             fmt::format(
                 _("Couldn't parse JSON at position {position} '{text}': {error} ({error_code})"),
-                fmt::arg("position", err_offset),
-                fmt::arg("text", std::string_view{ begin + err_offset, std::min(size_t{ 16U }, size - err_offset) }),
+                fmt::arg("position", pos),
+                fmt::arg("text", std::string_view{ begin + pos, std::min(size_t{ 16U }, size - pos) }),
                 fmt::arg("error", rapidjson::GetParseError_En(err_code)),
                 fmt::arg("error_code", static_cast<std::underlying_type_t<decltype(err_code)>>(err_code))));
     }

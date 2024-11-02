@@ -1128,22 +1128,11 @@ TEST_F(FileTest, fileOpen)
     tr_sys_path_remove(path1);
     createFileWithContents(path1, "test");
 
-    /* Pointer is at the end of file */
+    /* File gets truncated */
     auto info = tr_sys_path_get_info(path1, TR_SYS_PATH_NO_FOLLOW);
     EXPECT_TRUE(info.has_value());
     assert(info.has_value());
     EXPECT_EQ(4U, info->size);
-    fd = tr_sys_file_open(path1, TR_SYS_FILE_WRITE | TR_SYS_FILE_APPEND, 0600, &error);
-    EXPECT_NE(TR_BAD_SYS_FILE, fd);
-    EXPECT_FALSE(error) << error;
-    tr_sys_file_write(fd, "s", 1, nullptr); /* On *NIX, pointer is positioned on each write but not initially */
-    tr_sys_file_close(fd);
-
-    /* File gets truncated */
-    info = tr_sys_path_get_info(path1, TR_SYS_PATH_NO_FOLLOW);
-    EXPECT_TRUE(info.has_value());
-    assert(info.has_value());
-    EXPECT_EQ(5U, info->size);
     fd = tr_sys_file_open(path1, TR_SYS_FILE_WRITE | TR_SYS_FILE_TRUNCATE, 0600, &error);
     EXPECT_NE(TR_BAD_SYS_FILE, fd);
     EXPECT_FALSE(error) << error;

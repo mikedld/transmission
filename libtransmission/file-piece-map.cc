@@ -44,9 +44,13 @@ void tr_file_piece_map::reset(tr_block_info const& block_info, uint64_t const* c
     for (tr_file_index_t i = 0U; i < n_files; ++i)
     {
         auto const file_size = file_sizes[i];
+
         auto const begin_byte = offset;
-        auto const begin_piece = block_info.byte_loc(begin_byte).piece;
         auto end_byte = tr_byte_index_t{};
+
+        // N.B. If the last file in the torrent is 0 bytes, and the torrent size is a multiple of piece size,
+        // then the computed piece index will be past-the-end. We handle this with std::min.
+        auto const begin_piece = std::min(block_info.byte_loc(begin_byte).piece, block_info.piece_count() - 1U);
         auto end_piece = tr_piece_index_t{};
 
         edge_pieces.insert(begin_piece);
@@ -63,7 +67,6 @@ void tr_file_piece_map::reset(tr_block_info const& block_info, uint64_t const* c
         else
         {
             end_byte = begin_byte;
-            // TODO(ckerr): should end_piece == begin_piece, same as _bytes are?
             end_piece = begin_piece + 1U;
         }
         file_bytes_[i] = byte_span_t{ begin_byte, end_byte };

@@ -21,6 +21,8 @@
 #include <string_view>
 #include <utility>
 
+#include <small/vector.hpp>
+
 #include "libtransmission/transmission.h"
 
 #include "libtransmission/peer-mse.h" // tr_message_stream_encryption::DH
@@ -82,6 +84,11 @@ public:
 
     tr_handshake(Mediator* mediator, std::shared_ptr<tr_peerIo> peer_io, tr_encryption_mode mode_in, DoneFunc on_done);
 
+    ~tr_handshake()
+    {
+        maybe_recycle_dh();
+    }
+
 private:
     enum class State : uint8_t
     {
@@ -127,7 +134,10 @@ private:
     ReadState done(bool is_connected)
     {
         peer_io_->clear_callbacks();
-        return fire_done(is_connected) ? READ_LATER : READ_ERR;
+
+        // The responding client of a handshake usually starts sending BT messages immediately after
+        // the handshake, so we need to return ReadState::Break to ensure those messages are processed.
+        return fire_done(is_connected) ? ReadState::Break : ReadState::Err;
     }
 
     [[nodiscard]] auto is_incoming() const noexcept
@@ -168,7 +178,7 @@ private:
     template<size_t PadMax>
     void send_public_key_and_pad(tr_peerIo* io)
     {
-        auto const public_key = dh_.publicKey();
+        auto const public_key = get_dh().publicKey();
         auto outbuf = std::array<std::byte, std::size(public_key) + PadMax>{};
         auto const data = std::data(outbuf);
         auto walk = data;
@@ -255,34 +265,41 @@ private:
     ///
 
     static constexpr auto DhPoolMaxSize = size_t{ 32 };
-    static inline auto dh_pool_size = size_t{};
-    static inline auto dh_pool = std::array<tr_message_stream_encryption::DH, DhPoolMaxSize>{};
+    static inline auto dh_pool = small::max_size_vector<DH, DhPoolMaxSize>{};
     static inline auto dh_pool_mutex = std::mutex{};
 
-    [[nodiscard]] static DH get_dh(Mediator* mediator)
+    [[nodiscard]] static std::optional<DH> pop_dh_pool()
     {
         auto lock = std::unique_lock(dh_pool_mutex);
 
-        if (dh_pool_size > 0U)
+        if (std::empty(dh_pool))
         {
-            auto dh = DH{};
-            std::swap(dh, dh_pool[dh_pool_size - 1U]);
-            --dh_pool_size;
-            return dh;
+            return {};
         }
 
-        return DH{ mediator->private_key() };
+        auto dh = std::move(dh_pool.back());
+        dh_pool.pop_back();
+        return dh;
     }
 
-    static void add_dh(DH dh)
+    static void push_dh_pool(DH dh)
     {
         auto lock = std::unique_lock(dh_pool_mutex);
 
-        if (dh_pool_size < std::size(dh_pool))
+        if (std::size(dh_pool) < dh_pool.max_size())
         {
-            dh_pool[dh_pool_size] = dh;
-            ++dh_pool_size;
+            dh_pool.emplace_back(std::move(dh));
         }
+    }
+
+    [[nodiscard]] DH& get_dh()
+    {
+        if (!dh_)
+        {
+            dh_.emplace(pop_dh_pool().value_or(DH{ mediator_->private_key() }));
+        }
+
+        return *dh_;
     }
 
     void maybe_recycle_dh()
@@ -294,14 +311,16 @@ private:
             return;
         }
 
-        auto dh = DH{};
-        std::swap(dh_, dh);
-        add_dh(dh);
+        if (dh_)
+        {
+            push_dh_pool(std::move(*dh_));
+            dh_.reset();
+        }
     }
 
     ///
 
-    DH dh_{};
+    std::optional<DH> dh_{};
 
     DoneFunc on_done_;
 

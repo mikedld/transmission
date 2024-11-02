@@ -292,7 +292,7 @@ void tr_bitfield::set_raw(uint8_t const* raw, size_t byte_count)
     // ensure any excess bits at the end of the array are set to '0'.
     if (byte_count == getBytesNeededSafe(bit_count_))
     {
-        auto const excess_bit_count = byte_count * 8 - bit_count_;
+        auto const excess_bit_count = (byte_count * 8) - bit_count_;
 
         TR_ASSERT(excess_bit_count <= 7);
 

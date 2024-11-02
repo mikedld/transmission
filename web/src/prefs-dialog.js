@@ -15,7 +15,7 @@ import {
 export class PrefsDialog extends EventTarget {
   static _initTimeDropDown(e) {
     for (let index = 0; index < 24 * 4; ++index) {
-      const hour = Number.parseInt(index / 4, 10);
+      const hour = index / 4;
       const mins = (index % 4) * 15;
       const value = index * 15;
       const content = `${hour}:${mins || '00'}`;

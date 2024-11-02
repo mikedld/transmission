@@ -154,16 +154,12 @@ void onAnnounceDone(tr_web::FetchResponse const& web_response)
         }
         else if (got_all_responses)
         {
-            auto const* response_used = &response;
-
             // All requests have been answered, but none were successful.
             // Choose the one that went further to report.
-            if (data->previous_response && !response.did_connect && !response.did_timeout)
+            if (data->previous_response)
             {
-                response_used = &*data->previous_response;
+                data->on_response(response.did_connect || response.did_timeout ? response : *data->previous_response);
             }
-
-            data->on_response(*response_used);
         }
         else
         {

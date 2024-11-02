@@ -37,6 +37,7 @@
 #include <fmt/ostream.h>
 
 #include <array>
+#include <chrono>
 #include <fstream>
 #include <memory>
 #include <utility>
@@ -201,11 +202,12 @@ void MessageLogWindow::Impl::level_combo_changed_cb(Gtk::ComboBox* combo_box)
 
 namespace
 {
+using std::chrono::system_clock;
 
 /* similar to asctime, but is utf8-clean */
-Glib::ustring gtr_asctime(time_t t)
+Glib::ustring gtr_asctime(system_clock::time_point t)
 {
-    return Glib::DateTime::create_now_local(t).format("%a %b %e %T %Y"); /* ctime equiv */
+    return Glib::DateTime::create_now_local(system_clock::to_time_t(t)).format("%a %b %e %T %Y"); /* ctime equiv */
 }
 
 } // namespace
@@ -324,7 +326,7 @@ void renderText(
 void renderTime(Gtk::CellRendererText* renderer, Gtk::TreeModel::const_iterator const& iter)
 {
     auto const* const node = iter->get_value(message_log_cols.tr_msg);
-    renderer->property_text() = Glib::DateTime::create_now_local(node->when).format("%T");
+    renderer->property_text() = Glib::DateTime::create_now_local(std::chrono::system_clock::to_time_t(node->when)).format("%T");
     setForegroundColor(renderer, node->level);
 }
 

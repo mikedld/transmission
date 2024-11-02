@@ -226,7 +226,7 @@ foreach(ICON ${PUBLIC_ICONS})
     string(REGEX REPLACE ${ICON_NAME_REGEX} "\\1/\\3/\\2" ICON_DIR ${ICON})
     string(REGEX REPLACE ${ICON_NAME_REGEX} "\\4" ICON_NAME ${ICON})
     install(
-        FILES icons/${ICON}
+        FILES ${SOURCE_ICONS_DIR}/${ICON}
         DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/${ICON_DIR}/
         RENAME ${ICON_NAME})
 endforeach()

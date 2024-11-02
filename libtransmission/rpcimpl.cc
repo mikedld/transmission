@@ -248,7 +248,7 @@ char const* torrentRemove(tr_session* session, tr_variant::Map const& args_in, t
     {
         if (auto const status = session->rpcNotify(type, tor); (status & TR_RPC_NOREMOVE) == 0)
         {
-            tr_torrentRemove(tor, delete_flag, nullptr, nullptr);
+            tr_torrentRemove(tor, delete_flag, nullptr, nullptr, nullptr, nullptr);
         }
     }
 
@@ -1695,6 +1695,11 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetPeerLimitPerTorrent(session, *val);
     }
 
+    if (auto const val = args_in.value_if<int64_t>(TR_KEY_reqq); val && val > 0)
+    {
+        session->set_reqq(*val);
+    }
+
     if (auto const val = args_in.value_if<bool>(TR_KEY_pex_enabled))
     {
         tr_sessionSetPexEnabled(session, *val);
@@ -1955,6 +1960,7 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_queue_stalled_enabled: return session.queueStalledEnabled();
     case TR_KEY_queue_stalled_minutes: return session.queueStalledMinutes();
     case TR_KEY_rename_partial_files: return session.isIncompleteFileNamingEnabled();
+    case TR_KEY_reqq: return session.reqq();
     case TR_KEY_rpc_version: return RpcVersion;
     case TR_KEY_rpc_version_minimum: return RpcVersionMin;
     case TR_KEY_rpc_version_semver: return RpcVersionSemver;

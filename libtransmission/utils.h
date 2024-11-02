@@ -63,7 +63,12 @@ std::optional<std::locale> tr_locale_set_global(std::locale const& locale) noexc
 
 bool tr_file_read(std::string_view filename, std::vector<char>& contents, tr_error* error = nullptr);
 
-bool tr_file_move(std::string_view oldpath, std::string_view newpath, tr_error* error = nullptr);
+/**
+ * Tries to move a file by renaming, and [optionally] if that fails, by copying.
+ *
+ * Creates the destination directory if it doesn't exist.
+ */
+bool tr_file_move(std::string_view oldpath, std::string_view newpath, bool allow_copy, tr_error* error = nullptr);
 
 bool tr_file_save(std::string_view filename, std::string_view contents, tr_error* error = nullptr);
 
@@ -251,7 +256,7 @@ template<typename T, std::enable_if_t<std::is_floating_point_v<T>, bool> = true>
 
 /** @param ratio    the ratio to convert to a string
     @param infinity the string representation of "infinity" */
-[[nodiscard]] std::string tr_strratio(double ratio, char const* infinity);
+[[nodiscard]] std::string tr_strratio(double ratio, std::string_view infinity);
 
 // ---
 

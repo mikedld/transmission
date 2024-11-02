@@ -40,7 +40,7 @@ bool change(Speed& setme, tr_variant const* value)
 bool change(TorrentHash& setme, tr_variant const* value)
 {
     auto const hash_string = getValue<std::string_view>(value);
-    return hash_string && change(setme, TorrentHash(hash_string->data()));
+    return hash_string && change(setme, TorrentHash{ *hash_string });
 }
 
 bool change(Peer& setme, tr_variant const* value)

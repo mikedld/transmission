@@ -42,8 +42,8 @@
 #include "libtransmission/bandwidth.h"
 #include "libtransmission/blocklist.h"
 #include "libtransmission/cache.h"
-#include "libtransmission/global-ip-cache.h"
 #include "libtransmission/interned-string.h"
+#include "libtransmission/ip-cache.h"
 #include "libtransmission/log.h" // for tr_log_level
 #include "libtransmission/net.h" // for tr_port, tr_tos_t
 #include "libtransmission/open-files.h"
@@ -290,10 +290,10 @@ private:
         tr_session& session_;
     };
 
-    class GlobalIPCacheMediator final : public tr_global_ip_cache::Mediator
+    class IPCacheMediator final : public tr_ip_cache::Mediator
     {
     public:
-        explicit GlobalIPCacheMediator(tr_session& session) noexcept
+        explicit IPCacheMediator(tr_session& session) noexcept
             : session_{ session }
         {
         }
@@ -373,7 +373,7 @@ public:
         bool download_queue_enabled = true;
         bool idle_seeding_limit_enabled = false;
         bool incomplete_dir_enabled = false;
-        bool is_incomplete_file_naming_enabled = false;
+        bool is_incomplete_file_naming_enabled = true;
         bool lpd_enabled = true;
         bool peer_port_random_on_start = false;
         bool pex_enabled = true;
@@ -398,6 +398,7 @@ public:
         size_t peer_limit_global = TR_DEFAULT_PEER_LIMIT_GLOBAL;
         size_t peer_limit_per_torrent = TR_DEFAULT_PEER_LIMIT_TORRENT;
         size_t queue_stalled_minutes = 30U;
+        size_t reqq = 2000U;
         size_t seed_queue_size = 10U;
         size_t speed_limit_down = 100U;
         size_t speed_limit_up = 100U;
@@ -465,6 +466,7 @@ public:
                 { TR_KEY_ratio_limit, &ratio_limit },
                 { TR_KEY_ratio_limit_enabled, &ratio_limit_enabled },
                 { TR_KEY_rename_partial_files, &is_incomplete_file_naming_enabled },
+                { TR_KEY_reqq, &reqq },
                 { TR_KEY_scrape_paused_torrents_enabled, &should_scrape_paused_torrents },
                 { TR_KEY_script_torrent_added_enabled, &script_torrent_added_enabled },
                 { TR_KEY_script_torrent_added_filename, &script_torrent_added_filename },
@@ -691,6 +693,16 @@ public:
     [[nodiscard]] constexpr auto peerLimitPerTorrent() const noexcept
     {
         return settings().peer_limit_per_torrent;
+    }
+
+    [[nodiscard]] constexpr auto reqq() const noexcept
+    {
+        return settings().reqq;
+    }
+
+    constexpr void set_reqq(size_t reqq) noexcept
+    {
+        settings_.reqq = reqq;
     }
 
     // bandwidth
@@ -960,7 +972,7 @@ public:
     [[nodiscard]] bool has_ip_protocol(tr_address_type type) const noexcept
     {
         TR_ASSERT(tr_address::is_valid(type));
-        return global_ip_cache_->has_ip_protocol(type);
+        return ip_cache_.has_ip_protocol(type);
     }
 
     [[nodiscard]] tr_address bind_address(tr_address_type type) const noexcept;
@@ -968,18 +980,18 @@ public:
     [[nodiscard]] std::optional<tr_address> global_address(tr_address_type type) const noexcept
     {
         TR_ASSERT(tr_address::is_valid(type));
-        return global_ip_cache_->global_addr(type);
+        return ip_cache_.global_addr(type);
     }
 
     bool set_global_address(tr_address const& addr) noexcept
     {
-        return global_ip_cache_->set_global_addr(addr.type, addr);
+        return ip_cache_.set_global_addr(addr.type, addr);
     }
 
     [[nodiscard]] std::optional<tr_address> global_source_address(tr_address_type type) const noexcept
     {
         TR_ASSERT(tr_address::is_valid(type));
-        return global_ip_cache_->global_source_addr(type);
+        return ip_cache_.global_source_addr(type);
     }
 
     [[nodiscard]] auto speed_limit(tr_direction const dir) const noexcept
@@ -1290,8 +1302,8 @@ private:
     tr_torrents torrents_;
 
     // depends-on: settings_, session_thread_, timer_maker_, web_
-    GlobalIPCacheMediator global_ip_cache_mediator_{ *this };
-    std::unique_ptr<tr_global_ip_cache> global_ip_cache_ = tr_global_ip_cache::create(global_ip_cache_mediator_);
+    IPCacheMediator ip_cache_mediator_{ *this };
+    tr_ip_cache ip_cache_{ ip_cache_mediator_ };
 
     // depends-on: settings_, session_thread_, torrents_, global_ip_cache (via tr_session::bind_address())
     WebMediator web_mediator_{ this };

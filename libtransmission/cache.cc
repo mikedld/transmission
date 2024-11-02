@@ -48,16 +48,15 @@ std::pair<Cache::CIter, Cache::CIter> Cache::find_biggest_span(CIter const begin
     for (auto span_begin = begin; span_begin < end;)
     {
         auto span_end = find_span_end(span_begin, end);
-        auto const len = std::distance(span_begin, span_end);
 
-        if (len > biggest_len)
+        if (auto const len = std::distance(span_begin, span_end); len > biggest_len)
         {
             biggest_begin = span_begin;
             biggest_end = span_end;
             biggest_len = len;
         }
 
-        std::advance(span_begin, len);
+        span_begin = span_end;
     }
 
     return { biggest_begin, biggest_end };

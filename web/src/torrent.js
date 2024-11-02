@@ -280,7 +280,7 @@ export class Torrent extends EventTarget {
     return this.getDownloadSpeed() + this.getUploadSpeed();
   }
   getPercentDoneStr() {
-    return Formatter.percentString(100 * this.getPercentDone());
+    return Formatter.percentString(100 * this.getPercentDone(), 1);
   }
   getPercentDone() {
     return this.fields.percentDone;

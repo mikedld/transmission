@@ -47,7 +47,7 @@
                   </lookup>
                 </binding>
                 <attributes>
-                  <attribute name="weight" value="bold"></attribute>
+                  <attribute name="weight" value="bold"/>
                 </attributes>
               </object>
             </child>

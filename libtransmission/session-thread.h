@@ -11,7 +11,6 @@
 
 #include <functional>
 #include <memory>
-#include <tuple>
 #include <utility>
 
 struct event_base;

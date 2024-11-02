@@ -1,0 +1,61 @@
+name: Prepare Win32 build dependencies
+inputs:
+  arch:
+    description: Architecture (x86, x64)
+    required: true
+  type:
+    description: Type (CoreDeps, Deps)
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Get Build Tools
+      shell: pwsh
+      run: |
+        $DepsPrefix = (Join-Path (Get-Item .).Root.Name "${{ inputs.arch }}-prefix")
+        "DEPS_PREFIX=${DepsPrefix}" | Out-File $Env:GITHUB_ENV -Append
+        (Join-Path $DepsPrefix bin) | Out-File $Env:GITHUB_PATH -Append
+
+        choco install `
+          jom `
+          nasm `
+          nodejs
+        & "C:\Program Files\OpenSSL\unins000.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- | Out-Host
+        (Join-Path $Env:ProgramFiles NASM) | Out-File $Env:GITHUB_PATH -Append
+        (Join-Path (Get-Item -Path "${Env:ProgramFiles(x86)}\WiX Toolset v3.*")[0].FullName bin) | Out-File $Env:GITHUB_PATH -Append
+
+        Install-Module -Name Pscx -RequiredVersion 4.0.0-beta4 -AllowPrerelease -Force
+    - name: Get Cache Key
+      id: cache-key
+      shell: pwsh
+      run: |
+        try {
+            $DepsHash = & (Join-Path . src release windows main.ps1) -Mode DepsHash -BuildArch ${{ inputs.arch }} -BuildPart ${{ inputs.type }}
+            "hash=${DepsHash}" | Out-File $Env:GITHUB_OUTPUT -Append
+        } catch {
+            Write-Error ("{1}{0}{2}{0}{3}" -f [Environment]::NewLine, $_.ToString(), $_.InvocationInfo.PositionMessage, $_.ScriptStackTrace) -ErrorAction Continue
+            exit 1
+        }
+    - name: Restore Cache
+      uses: actions/cache/restore@v4
+      id: restore-cache
+      with:
+        path: ${{ env.DEPS_PREFIX }}
+        key: ${{ github.job }}-${{ inputs.arch }}-${{ steps.cache-key.outputs.hash }}
+    - name: Build Dependencies
+      if: steps.restore-cache.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        try {
+            & (Join-Path . src release windows main.ps1) -Mode Build -BuildArch ${{ inputs.arch }} -BuildPart ${{ inputs.type }}
+        } catch {
+            Write-Error ("{1}{0}{2}{0}{3}" -f [Environment]::NewLine, $_.ToString(), $_.InvocationInfo.PositionMessage, $_.ScriptStackTrace) -ErrorAction Continue
+            exit 1
+        }
+    - name: Save Cache
+      if: steps.restore-cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      id: cache
+      with:
+        path: ${{ env.DEPS_PREFIX }}
+        key: ${{ github.job }}-${{ inputs.arch }}-${{ steps.cache-key.outputs.hash }}

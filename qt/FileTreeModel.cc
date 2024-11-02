@@ -516,7 +516,7 @@ void FileTreeModel::twiddlePriority(QModelIndexList const& indices)
 
     for (int i = TR_PRI_LOW; i <= TR_PRI_HIGH; ++i)
     {
-        if (priority_indices.count(i) != 0U)
+        if (priority_indices.contains(i))
         {
             setPriority(priority_indices[i], i);
         }

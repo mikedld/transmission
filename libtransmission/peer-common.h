@@ -215,6 +215,8 @@ struct tr_peer
     {
     }
 
+    virtual void ban() = 0;
+
     tr_session* const session;
 
     tr_swarm* const swarm;
@@ -228,9 +230,6 @@ struct tr_peer
 
     // whether or not this peer sent us any given block
     tr_bitfield blame;
-
-    // whether or not we should free this peer soon.
-    bool do_purge = false;
 
     // how many bad pieces this piece has contributed to
     uint8_t strikes = 0;

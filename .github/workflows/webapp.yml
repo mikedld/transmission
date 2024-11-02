@@ -111,6 +111,7 @@ jobs:
           echo
           echo Please undo your changes to these files:
           git diff --exit-code --name-only --merge-base "origin/$GITHUB_BASE_REF" -- \
+              web/package.json.buildonly \
               web/public_html/transmission-app.css \
               web/public_html/transmission-app.css.LEGAL.txt \
               web/public_html/transmission-app.css.map \
@@ -140,6 +141,7 @@ jobs:
           set -e # abort if any command fails
           npm --prefix web ci
           npm --prefix web run build
+          npm --prefix web run generate-buildonly
           git diff --name-only
           git add --update web
       - name: Create pull request

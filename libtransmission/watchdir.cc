@@ -46,7 +46,7 @@ namespace
 
     auto error = tr_error{};
     auto const info = tr_sys_path_get_info(path, 0, &error);
-    if (error && !TR_ERROR_IS_ENOENT(error.code()))
+    if (error && !tr_error_is_enoent(error.code()))
     {
         tr_logAddWarn(fmt::format(
             _("Skipping '{path}': {error} ({error_code})"),

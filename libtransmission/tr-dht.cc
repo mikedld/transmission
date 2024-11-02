@@ -90,6 +90,7 @@ extern "C"
 
     int dht_sendto(int sockfd, void const* buf, int len, int flags, struct sockaddr const* to, int tolen)
     {
+        // NOLINTNEXTLINE(readability-redundant-casting)
         return static_cast<int>(sendto(sockfd, static_cast<char const*>(buf), len, flags, to, tolen));
     }
 

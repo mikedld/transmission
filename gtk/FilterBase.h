@@ -20,13 +20,16 @@
 template<typename T>
 class FilterBase : public IF_GTKMM4(Gtk::Filter, Glib::Object)
 {
-public:
 #if !GTKMM_CHECK_VERSION(4, 0, 0)
-    enum class Change : uint8_t{
+public:
+    // clang-format off
+    enum class Change : uint8_t
+    {
         DIFFERENT,
         LESS_STRICT,
         MORE_STRICT,
     };
+    // clang-format on
 #endif
 
 public:

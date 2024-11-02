@@ -14,20 +14,32 @@
 #define ERROR_DIRECTORY_NOT_SUPPORTED 336
 #endif
 
-#define TR_ERROR_IS_ENOENT(code) ((code) == ERROR_FILE_NOT_FOUND || (code) == ERROR_PATH_NOT_FOUND)
-#define TR_ERROR_IS_ENOSPC(code) ((code) == ERROR_DISK_FULL)
-
 #define TR_ERROR_EINVAL ERROR_INVALID_PARAMETER
 #define TR_ERROR_EISDIR ERROR_DIRECTORY_NOT_SUPPORTED
 
 #else /* _WIN32 */
 
-#include <errno.h>
-
-#define TR_ERROR_IS_ENOENT(code) ((code) == ENOENT)
-#define TR_ERROR_IS_ENOSPC(code) ((code) == ENOSPC)
+#include <cerrno>
 
 #define TR_ERROR_EINVAL EINVAL
 #define TR_ERROR_EISDIR EISDIR
 
 #endif /* _WIN32 */
+
+constexpr inline bool tr_error_is_enoent(int code) noexcept
+{
+#ifdef _WIN32
+    return code == ERROR_FILE_NOT_FOUND || code == ERROR_PATH_NOT_FOUND;
+#else
+    return code == ENOENT;
+#endif
+}
+
+constexpr inline bool tr_error_is_enospc(int code) noexcept
+{
+#ifdef _WIN32
+    return code == ERROR_DISK_FULL;
+#else
+    return code == ENOSPC;
+#endif
+}

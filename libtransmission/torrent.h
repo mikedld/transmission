@@ -76,6 +76,7 @@ struct tr_torrent
         void load_date_done(time_t when) noexcept;
         void load_download_dir(std::string_view dir) noexcept;
         void load_incomplete_dir(std::string_view dir) noexcept;
+        void load_queue_position(size_t pos) noexcept;
         void load_seconds_downloading_before_current_start(time_t when) noexcept;
         void load_seconds_seeding_before_current_start(time_t when) noexcept;
         void load_start_when_stable(bool val) noexcept;
@@ -327,7 +328,8 @@ struct tr_torrent
 
     [[nodiscard]] auto has_file(tr_file_index_t file) const
     {
-        return completion_.has_blocks(block_span_for_file(file));
+        auto const span = byte_span_for_file(file);
+        return completion_.count_has_bytes_in_span(span) == span.end - span.begin;
     }
 
     [[nodiscard]] auto has_piece(tr_piece_index_t piece) const
@@ -831,7 +833,6 @@ struct tr_torrent
         {
             if (auto const latest = std::max(date_started_, date_active_); latest != 0)
             {
-                TR_ASSERT(now >= latest);
                 return static_cast<size_t>(std::max(now - latest, time_t{ 0 }));
             }
         }
@@ -961,7 +962,7 @@ struct tr_torrent
     libtransmission::SimpleObservable<tr_torrent*> got_metainfo_;
     libtransmission::SimpleObservable<tr_torrent*> started_;
     libtransmission::SimpleObservable<tr_torrent*> stopped_;
-    libtransmission::SimpleObservable<tr_torrent*> swarm_is_all_seeds_;
+    libtransmission::SimpleObservable<tr_torrent*> swarm_is_all_upload_only_;
     libtransmission::SimpleObservable<tr_torrent*, tr_file_index_t const*, tr_file_index_t, tr_priority_t> priority_changed_;
     libtransmission::SimpleObservable<tr_torrent*, bool> sequential_download_changed_;
 
@@ -984,7 +985,20 @@ private:
     friend tr_torrent* tr_torrentNew(tr_ctor* ctor, tr_torrent** setme_duplicate_of);
     friend uint64_t tr_torrentGetBytesLeftToAllocate(tr_torrent const* tor);
     friend void tr_torrentFreeInSessionThread(tr_torrent* tor);
-    friend void tr_torrentRemove(tr_torrent* tor, bool delete_flag, tr_fileFunc delete_func, void* user_data);
+    friend void tr_torrentRemoveInSessionThread(
+        tr_torrent* tor,
+        bool delete_flag,
+        tr_fileFunc delete_func,
+        void* delete_user_data,
+        tr_torrent_remove_done_func callback,
+        void* callback_user_data);
+    friend void tr_torrentRemove(
+        tr_torrent* tor,
+        bool delete_flag,
+        tr_fileFunc delete_func,
+        void* delete_user_data,
+        tr_torrent_remove_done_func callback,
+        void* callback_user_data);
     friend void tr_torrentSetDownloadDir(tr_torrent* tor, char const* path);
     friend void tr_torrentSetPriority(tr_torrent* tor, tr_priority_t priority);
     friend void tr_torrentStart(tr_torrent* tor);
@@ -1081,7 +1095,7 @@ private:
             {
                 n_secs += date_done_ - date_started_;
             }
-            else if (date_done_ == 0)
+            else if (date_done_ == time_t{})
             {
                 n_secs += now - date_started_;
             }
@@ -1100,7 +1114,7 @@ private:
             {
                 n_secs += now - date_done_;
             }
-            else if (date_done_ != 0)
+            else if (date_done_ != time_t{})
             {
                 n_secs += now - date_started_;
             }
@@ -1211,7 +1225,7 @@ private:
     // must be called after the torrent's announce list changes.
     void on_announce_list_changed();
 
-    [[nodiscard]] TR_CONSTEXPR20 auto byte_span_for_file(tr_file_index_t file) const
+    [[nodiscard]] TR_CONSTEXPR20 tr_byte_span_t byte_span_for_file(tr_file_index_t file) const
     {
         return fpm_.byte_span_for_file(file);
     }

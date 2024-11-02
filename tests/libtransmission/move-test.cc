@@ -135,7 +135,7 @@ TEST_P(IncompleteDirTest, incompleteDir)
     }
 
     // cleanup
-    tr_torrentRemove(tor, true, nullptr, nullptr);
+    tr_torrentRemove(tor, true, nullptr, nullptr, nullptr, nullptr);
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -189,7 +189,7 @@ TEST_F(MoveTest, setLocation)
     }
 
     // cleanup
-    tr_torrentRemove(tor, true, nullptr, nullptr);
+    tr_torrentRemove(tor, true, nullptr, nullptr, nullptr, nullptr);
 }
 
 } // namespace libtransmission::test

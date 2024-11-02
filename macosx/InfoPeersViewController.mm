@@ -353,7 +353,7 @@ static NSString* const kWebSeedAnimationId = @"webSeed";
 
         if ([ident isEqualToString:@"Encryption"])
         {
-            return [peer[@"Encryption"] boolValue] ? [NSImage systemSymbol:@"lock.fill" withFallback:@"Lock"] : nil;
+            return [peer[@"Encryption"] boolValue] ? [NSImage imageWithSystemSymbolName:@"lock.fill" accessibilityDescription:nil] : nil;
         }
         else if ([ident isEqualToString:@"Client"])
         {

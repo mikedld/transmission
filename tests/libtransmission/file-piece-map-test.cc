@@ -22,7 +22,7 @@ class FilePieceMapTest : public ::testing::Test
 {
 protected:
     static constexpr size_t PieceSize{ tr_block_info::BlockSize };
-    static constexpr size_t TotalSize{ 10 * PieceSize + 1 };
+    static constexpr size_t TotalSize{ 10 * PieceSize };
     tr_block_info const block_info_{ TotalSize, PieceSize };
 
     static constexpr std::array<uint64_t, 17> FileSizes{
@@ -38,12 +38,12 @@ protected:
         8U,
         7U,
         6U,
-        (3U * PieceSize + PieceSize / 2U + 1U - 10U - 9U - 8U - 7U - 6U), // [offset 5.75P +10+9+8+7+6] ends end-of-torrent
+        (3U * PieceSize + PieceSize / 2U - 10U - 9U - 8U - 7U - 6U), // [offset 5.75P +10+9+8+7+6] ends end-of-torrent
         0U, // [offset 10P+1] zero-sized files at the end-of-torrent
         0U,
         0U,
         0U,
-        // sum is 10P + 1 == TotalSize
+        // sum is 10P == TotalSize
     };
 
     void SetUp() override
@@ -54,7 +54,7 @@ protected:
                 FileSizes[14] + FileSizes[15] + FileSizes[16] ==
             TotalSize);
 
-        EXPECT_EQ(11U, block_info_.piece_count());
+        EXPECT_EQ(10U, block_info_.piece_count());
         EXPECT_EQ(PieceSize, block_info_.piece_size());
         EXPECT_EQ(TotalSize, block_info_.total_size());
         EXPECT_EQ(TotalSize, std::accumulate(std::begin(FileSizes), std::end(FileSizes), uint64_t{ 0 }));
@@ -93,8 +93,8 @@ TEST_F(FilePieceMapTest, fileOffset)
 TEST_F(FilePieceMapTest, pieceSpan)
 {
     // Note to reviewers: it's easy to see a nonexistent fencepost error here.
-    // Remember everything is zero-indexed, so the 11 valid pieces are [0..10]
-    // and that last piece #10 has one byte in it. Piece #11 is the 'end' iterator position.
+    // Remember everything is zero-indexed, so the 9 valid pieces are [0..10).
+    // Piece #10 is the 'end' iterator position.
     auto constexpr ExpectedPieceSpans = std::array<tr_file_piece_map::piece_span_t, 17>{ {
         { 0U, 5U },
         { 5U, 6U },
@@ -108,11 +108,11 @@ TEST_F(FilePieceMapTest, pieceSpan)
         { 6U, 7U },
         { 6U, 7U },
         { 6U, 7U },
-        { 6U, 11U },
-        { 10U, 11U },
-        { 10U, 11U },
-        { 10U, 11U },
-        { 10U, 11U },
+        { 6U, 10U },
+        { 9U, 10U },
+        { 9U, 10U },
+        { 9U, 10U },
+        { 9U, 10U },
     } };
     EXPECT_EQ(std::size(FileSizes), std::size(ExpectedPieceSpans));
 
@@ -187,8 +187,8 @@ TEST_F(FilePieceMapTest, priorities)
 
     // This file shares a piece with another file.
     // If _either_ is set to high, the piece's priority should be high.
-    // file #5: byte [500..550) piece [5, 6)
-    // file #6: byte [550..650) piece [5, 7)
+    // file #5: byte [5P, 5.5P) piece [5, 6)
+    // file #6: byte [5.5P, 6.5P) piece [5, 7)
     //
     // first test setting file #5...
     pri = TR_PRI_HIGH;
@@ -224,7 +224,7 @@ TEST_F(FilePieceMapTest, priorities)
 
     // Raise the priority of a small 1-piece file.
     // Since it's the highest priority in the piece, piecePriority() should return its value.
-    // file #8: byte [650, 659) piece [6, 7)
+    // file #8: byte [6.5P+10, 6.5P+19) piece [6, 7)
     pri = TR_PRI_NORMAL;
     file_priorities.set(8U, pri);
     expected_file_priorities[8] = pri;
@@ -233,7 +233,7 @@ TEST_F(FilePieceMapTest, priorities)
     compare_to_expected();
     // Raise the priority of another small 1-piece file in the same piece.
     // Since _it_ now has the highest priority in the piece, piecePriority should return _its_ value.
-    // file #9: byte [659, 667) piece [6, 7)
+    // file #9: byte [6.5P+19, 6.5P+27) piece [6, 7)
     pri = TR_PRI_HIGH;
     file_priorities.set(9U, pri);
     expected_file_priorities[9] = pri;
@@ -259,7 +259,7 @@ TEST_F(FilePieceMapTest, priorities)
     // other does no real harm. Let's KISS.
     //
     // Check that even zero-sized files can change a piece's priority
-    // file #1: byte [500, 500) piece [5, 6)
+    // file #1: byte [5P, 5P) piece [5, 6)
     pri = TR_PRI_HIGH;
     file_priorities.set(1U, pri);
     expected_file_priorities[1] = pri;
@@ -267,10 +267,10 @@ TEST_F(FilePieceMapTest, priorities)
     mark_file_endpoints_as_high_priority();
     compare_to_expected();
     // Check that zero-sized files at the end of a torrent change the last piece's priority.
-    // file #16 byte [1001, 1001) piece [10, 11)
+    // file #16 byte [10P, 10P) piece [9, 10)
     file_priorities.set(16U, pri);
     expected_file_priorities[16] = pri;
-    expected_piece_priorities[10] = pri;
+    expected_piece_priorities[9] = pri;
     mark_file_endpoints_as_high_priority();
     compare_to_expected();
 
@@ -332,12 +332,12 @@ TEST_F(FilePieceMapTest, wanted)
 
     // now test when a piece has >1 file.
     // if *any* file in that piece is wanted, then we want the piece too.
-    // file #1: byte [100..100) piece [5, 6) (zero-byte file)
-    // file #2: byte [100..100) piece [5, 6) (zero-byte file)
-    // file #3: byte [100..100) piece [5, 6) (zero-byte file)
-    // file #4: byte [100..100) piece [5, 6) (zero-byte file)
-    // file #5: byte [500..550) piece [5, 6)
-    // file #6: byte [550..650) piece [5, 7)
+    // file #1: byte [5P, 5P) piece [5, 6) (zero-byte file)
+    // file #2: byte [5P, 5P) piece [5, 6) (zero-byte file)
+    // file #3: byte [5P, 5P) piece [5, 6) (zero-byte file)
+    // file #4: byte [5P, 5P) piece [5, 6) (zero-byte file)
+    // file #5: byte [5P, 5.5P) piece [5, 6)
+    // file #6: byte [5.5P, 6.5P) piece [5, 7)
     //
     // first test setting file #5...
     files_wanted.set(5U, false);
@@ -386,16 +386,16 @@ TEST_F(FilePieceMapTest, wanted)
     // the code for a stupid use case, so let's KISS.
     //
     // Check that even zero-sized files can change a file's 'wanted' state
-    // file #1: byte [500, 500) piece [5, 6)
+    // file #1: byte [5P, 5P) piece [5, 6)
     files_wanted.set(1U, true);
     expected_files_wanted.set(1U);
     expected_pieces_wanted.set(5U);
     compare_to_expected();
     // Check that zero-sized files at the end of a torrent change the last piece's state.
-    // file #16 byte [1001, 1001) piece [10, 11)
+    // file #16 byte [10P, 10P) piece [9, 10)
     files_wanted.set(16U, true);
     expected_files_wanted.set(16U);
-    expected_pieces_wanted.set(10U);
+    expected_pieces_wanted.set(9U);
     compare_to_expected();
 
     // test the batch API

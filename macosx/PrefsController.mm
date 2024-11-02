@@ -302,7 +302,7 @@ static NSString* const kWebUIURLFormat = @"http://localhost:%ld/";
     if ([ident isEqualToString:ToolbarTabGeneral])
     {
         item.label = NSLocalizedString(@"General", "Preferences -> toolbar item title");
-        item.image = [NSImage systemSymbol:@"gearshape" withFallback:NSImageNamePreferencesGeneral];
+        item.image = [NSImage imageWithSystemSymbolName:@"gearshape" accessibilityDescription:nil];
         item.target = self;
         item.action = @selector(setPrefView:);
         item.autovalidates = NO;
@@ -310,7 +310,7 @@ static NSString* const kWebUIURLFormat = @"http://localhost:%ld/";
     else if ([ident isEqualToString:ToolbarTabTransfers])
     {
         item.label = NSLocalizedString(@"Transfers", "Preferences -> toolbar item title");
-        item.image = [NSImage systemSymbol:@"arrow.up.arrow.down" withFallback:@"Transfers"];
+        item.image = [NSImage imageWithSystemSymbolName:@"arrow.up.arrow.down" accessibilityDescription:nil];
         item.target = self;
         item.action = @selector(setPrefView:);
         item.autovalidates = NO;
@@ -318,7 +318,7 @@ static NSString* const kWebUIURLFormat = @"http://localhost:%ld/";
     else if ([ident isEqualToString:ToolbarTabGroups])
     {
         item.label = NSLocalizedString(@"Groups", "Preferences -> toolbar item title");
-        item.image = [NSImage systemSymbol:@"pin" withFallback:@"Groups"];
+        item.image = [NSImage imageWithSystemSymbolName:@"pin" accessibilityDescription:nil];
         item.target = self;
         item.action = @selector(setPrefView:);
         item.autovalidates = NO;
@@ -326,7 +326,7 @@ static NSString* const kWebUIURLFormat = @"http://localhost:%ld/";
     else if ([ident isEqualToString:ToolbarTabBandwidth])
     {
         item.label = NSLocalizedString(@"Bandwidth", "Preferences -> toolbar item title");
-        item.image = [NSImage systemSymbol:@"speedometer" withFallback:@"Bandwidth"];
+        item.image = [NSImage imageWithSystemSymbolName:@"speedometer" accessibilityDescription:nil];
         item.target = self;
         item.action = @selector(setPrefView:);
         item.autovalidates = NO;
@@ -334,7 +334,7 @@ static NSString* const kWebUIURLFormat = @"http://localhost:%ld/";
     else if ([ident isEqualToString:ToolbarTabPeers])
     {
         item.label = NSLocalizedString(@"Peers", "Preferences -> toolbar item title");
-        item.image = [NSImage systemSymbol:@"person.2" withFallback:NSImageNameUserGroup];
+        item.image = [NSImage imageWithSystemSymbolName:@"person.2" accessibilityDescription:nil];
         item.target = self;
         item.action = @selector(setPrefView:);
         item.autovalidates = NO;
@@ -342,7 +342,7 @@ static NSString* const kWebUIURLFormat = @"http://localhost:%ld/";
     else if ([ident isEqualToString:ToolbarTabNetwork])
     {
         item.label = NSLocalizedString(@"Network", "Preferences -> toolbar item title");
-        item.image = [NSImage systemSymbol:@"network" withFallback:NSImageNameNetwork];
+        item.image = [NSImage imageWithSystemSymbolName:@"network" accessibilityDescription:nil];
         item.target = self;
         item.action = @selector(setPrefView:);
         item.autovalidates = NO;
@@ -350,7 +350,7 @@ static NSString* const kWebUIURLFormat = @"http://localhost:%ld/";
     else if ([ident isEqualToString:ToolbarTabRemote])
     {
         item.label = NSLocalizedString(@"Remote", "Preferences -> toolbar item title");
-        item.image = [NSImage systemSymbol:@"antenna.radiowaves.left.and.right" withFallback:@"Remote"];
+        item.image = [NSImage imageWithSystemSymbolName:@"antenna.radiowaves.left.and.right" accessibilityDescription:nil];
         item.target = self;
         item.action = @selector(setPrefView:);
         item.autovalidates = NO;

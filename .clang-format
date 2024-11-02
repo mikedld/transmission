@@ -35,7 +35,7 @@ ReflowComments: false
 SortIncludes: Never
 SpaceAfterCStyleCast: false
 SpacesBeforeTrailingComments: 1
-SpacesInAngles: false
+SpacesInAngles: Never
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
@@ -46,24 +46,18 @@ Language: Cpp
 Standard: c++17
 
 AccessModifierOffset: -4
-AllowAllConstructorInitializersOnNextLine: false
+PackConstructorInitializers: Never
 AlwaysBreakAfterReturnType: None
 AlwaysBreakTemplateDeclarations: Yes
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ConstructorInitializerIndentWidth: 4
 FixNamespaceComments: true
 IndentGotoLabels: false
 KeepEmptyLinesAtTheStartOfBlocks: false
 QualifierAlignment: Right
-SortUsingDeclarations: true
+SortUsingDeclarations: true # Since clang-format 16, the equivalent value is LexicographicNumeric
 SpaceAfterTemplateKeyword: false
-StatementMacros:
-- TR_DEFINE_QUARK
-WhitespaceSensitiveMacros:
-- API_HEADER
-- API_HEADER_CRYPT
 ---
 Language: ObjC
 

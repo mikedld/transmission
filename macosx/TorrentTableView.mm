@@ -82,10 +82,7 @@ static NSTimeInterval const kToggleProgressSeconds = 0.175;
 
         _piecesBarPercent = [_fDefaults boolForKey:@"PiecesBar"] ? 1.0 : 0.0;
 
-        if (@available(macOS 11.0, *))
-        {
-            self.style = NSTableViewStyleFullWidth;
-        }
+        self.style = NSTableViewStyleFullWidth;
     }
 
     return self;

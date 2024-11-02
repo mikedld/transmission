@@ -419,8 +419,10 @@ QString TorrentDelegate::statusString(Torrent const& tor)
 QSize TorrentDelegate::sizeHint(QStyleOptionViewItem const& option, Torrent const& tor) const
 {
     auto const m = margin(*QApplication::style());
-    auto const layout = ItemLayout{ tor.name(),  progressString(tor), statusString(tor), QIcon{},
-                                    option.font, option.direction,    QPoint{ 0, 0 },    option.rect.width() - m.width() * 2 };
+    auto const layout = ItemLayout{
+        tor.name(),  progressString(tor), statusString(tor), QIcon{},
+        option.font, option.direction,    QPoint{ 0, 0 },    option.rect.width() - (m.width() * 2)
+    };
     return layout.size() + m * 2;
 }
 
@@ -481,8 +483,8 @@ void TorrentDelegate::setProgressBarPercentDone(QStyleOptionViewItem const& opti
         progress_bar_style_.direction = option.direction;
         progress_bar_style_.progress = static_cast<int>(
             progress_bar_style_.minimum +
-            (is_magnet ? tor.metadataPercentDone() : tor.percentDone()) *
-                (progress_bar_style_.maximum - progress_bar_style_.minimum));
+            ((is_magnet ? tor.metadataPercentDone() : tor.percentDone()) *
+             (progress_bar_style_.maximum - progress_bar_style_.minimum)));
     }
 }
 

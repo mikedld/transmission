@@ -101,10 +101,19 @@ int cond_wait(void* vcond, void* vlock, struct timeval const* tv)
     return success == std::cv_status::timeout ? 1 : 0;
 }
 
+#if defined(_WIN32) && defined(__clang_analyzer__)
+// See https://github.com/llvm/llvm-project/issues/98823
+#define WORKAROUND_CLANG_TIDY_GH98823
+#endif
+
 unsigned long thread_current_id()
 {
+#ifndef WORKAROUND_CLANG_TIDY_GH98823
     thread_local auto const hashed = std::hash<std::thread::id>()(std::this_thread::get_id());
     return hashed;
+#else
+    return 0;
+#endif
 }
 
 void init_evthreads_once()

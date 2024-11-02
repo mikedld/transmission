@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
 <interface domain="transmission-gtk">
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkDialog" id="OptionsDialog">
@@ -54,7 +53,6 @@
           </packing>
         </child>
         <child>
-          <!-- n-columns=2 n-rows=8 -->
           <object class="GtkGrid" id="dialog_content_layout">
             <property name="visible">True</property>
             <property name="can-focus">False</property>

@@ -129,6 +129,9 @@ All torrents are used if the `ids` argument is omitted.
 2. a list of torrent id numbers, SHA1 hash strings, or both
 3. a string, `recently-active`, for recently-active torrents
 
+Note that integer torrent ids are not stable across Transmission daemon
+restarts. Use torrent hashes if you need stable ids.
+
 Response arguments: none
 
 ### 3.2 Torrent mutator: `torrent-set`
@@ -297,8 +300,9 @@ The 'source' column here corresponds to the data structure there.
 | `beginPiece` | number | tr_file_view
 | `endPiece` | number | tr_file_view
 
+Files are returned in the order they are laid out in the torrent. References to "file indices" throughout this specification should be interpreted as the position of the file within this ordering, with the first file bearing index 0.
 
-`fileStats`: a file's non-constant properties. An array of `tr_info.filecount` objects, each containing:
+`fileStats`: a file's non-constant properties. An array of `tr_info.filecount` objects, in the same order as `files`, each containing:
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--
@@ -371,8 +375,8 @@ The 'source' column here corresponds to the data structure there.
 
 | Key | Value Type | transmission.h source
 |:--|:--|:--
-| `announceState`           | number     | tr_tracker_view
 | `announce`                | string     | tr_tracker_view
+| `announceState`           | number     | tr_tracker_view
 | `downloadCount`           | number     | tr_tracker_view
 | `hasAnnounced`            | boolean    | tr_tracker_view
 | `hasScraped`              | boolean    | tr_tracker_view
@@ -393,8 +397,8 @@ The 'source' column here corresponds to the data structure there.
 | `leecherCount`            | number     | tr_tracker_view
 | `nextAnnounceTime`        | number     | tr_tracker_view
 | `nextScrapeTime`          | number     | tr_tracker_view
-| `scrapeState`             | number     | tr_tracker_view
 | `scrape`                  | string     | tr_tracker_view
+| `scrapeState`             | number     | tr_tracker_view
 | `seederCount`             | number     | tr_tracker_view
 | `sitename`                | string     | tr_tracker_view
 | `tier`                    | number     | tr_tracker_view
@@ -554,6 +558,7 @@ Response arguments: `path`, `name`, and `id`, holding the torrent ID integer
 | `queue-stalled-enabled` | boolean | whether or not to consider idle torrents as stalled
 | `queue-stalled-minutes` | number | torrents that are idle for N minuets aren't counted toward seed-queue-size or download-queue-size
 | `rename-partial-files` | boolean | true means append `.part` to incomplete files
+| `reqq` | number | the number of outstanding block requests a peer is allowed to queue in the client
 | `rpc-version-minimum` | number | the minimum RPC API version supported
 | `rpc-version-semver` | string | the current RPC API version in a [semver](https://semver.org)-compatible string
 | `rpc-version` | number | the current RPC API version

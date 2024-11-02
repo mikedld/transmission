@@ -201,9 +201,7 @@ public:
 
     ~tr_webseed_impl() override
     {
-        // flag all the pending tasks as dead
-        std::for_each(std::begin(tasks), std::end(tasks), [](auto* task) { task->dead = true; });
-        tasks.clear();
+        stop();
     }
 
     [[nodiscard]] Speed get_piece_speed(uint64_t now, tr_direction dir) const override
@@ -248,6 +246,21 @@ public:
         return have_;
     }
 
+    void stop()
+    {
+        idle_timer_->stop();
+
+        // flag all the pending tasks as dead
+        std::for_each(std::begin(tasks), std::end(tasks), [](auto* task) { task->dead = true; });
+        tasks.clear();
+    }
+
+    void ban() override
+    {
+        is_banned_ = true;
+        stop();
+    }
+
     void got_piece_data(uint32_t n_bytes)
     {
         bandwidth_.notify_bandwidth_consumed(TR_DOWN, n_bytes, true, tr_time_msec());
@@ -265,7 +278,7 @@ public:
 
     void request_blocks(tr_block_span_t const* block_spans, size_t n_spans) override
     {
-        if (!tor.is_running() || tor.is_done())
+        if (is_banned_ || !tor.is_running() || tor.is_done())
         {
             return;
         }
@@ -282,6 +295,11 @@ public:
 
     void on_idle()
     {
+        if (is_banned_)
+        {
+            return;
+        }
+
         auto const [max_spans, max_blocks] = max_available_reqs();
         if (max_spans == 0 || max_blocks == 0)
         {
@@ -344,6 +362,8 @@ private:
 
     tr_peer_callback_webseed const callback_;
     void* const callback_data_;
+
+    bool is_banned_ = false;
 };
 
 // ---

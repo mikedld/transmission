@@ -95,6 +95,16 @@ public:
         return is_active_[direction];
     }
 
+    [[nodiscard]] constexpr auto is_disconnecting() const noexcept
+    {
+        return is_disconnecting_;
+    }
+
+    constexpr void disconnect_soon() noexcept
+    {
+        is_disconnecting_ = true;
+    }
+
     [[nodiscard]] virtual tr_socket_address socket_address() const = 0;
 
     virtual void set_choke(bool peer_is_choked) = 0;
@@ -172,6 +182,9 @@ private:
 
     // whether or not the peer has indicated it will download from us
     bool peer_is_interested_ = false;
+
+    // whether or not we should free this peer soon.
+    bool is_disconnecting_ = false;
 };
 
 /* @} */

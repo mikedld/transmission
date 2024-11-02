@@ -8,7 +8,7 @@ if(POLICY CMP0114)
 endif()
 
 # Value should follow latest stable Xcode's RECOMMENDED_MACOSX_DEPLOYMENT_TARGET
-set(MACOS_SUPPORT_MINIMUM 10.14.6)
+set(MACOS_SUPPORT_MINIMUM 11.0)
 
 # The value of this variable should be set prior to the first project() command invocation.
 # See: https://cmake.org/cmake/help/latest/variable/CMAKE_OSX_DEPLOYMENT_TARGET.html
@@ -71,7 +71,7 @@ option(ENABLE_NLS "Enable native language support" ON)
 option(INSTALL_DOC "Build/install documentation" ON)
 option(INSTALL_LIB "Install the library" OFF)
 tr_auto_option(ENABLE_DEPRECATED "Allow deprecated API use of upstream packages, e.g. GTK" AUTO)
-tr_auto_option(RUN_CLANG_TIDY "Run clang-tidy on the code" OFF)
+tr_auto_option(RUN_CLANG_TIDY "Run clang-tidy on the code" AUTO)
 tr_auto_option(USE_SYSTEM_EVENT2 "Use system event2 library" AUTO)
 tr_auto_option(USE_SYSTEM_DEFLATE "Use system deflate library" AUTO)
 tr_auto_option(USE_SYSTEM_DHT "Use system dht library" AUTO)
@@ -233,6 +233,8 @@ if(WIN32)
 endif()
 
 set(CMAKE_FOLDER "${TR_THIRD_PARTY_DIR_NAME}")
+
+set(SOURCE_ICONS_DIR "${PROJECT_SOURCE_DIR}/icons")
 
 find_package(FastFloat)
 find_package(Fmt)
@@ -759,19 +761,20 @@ else()
     endif()
 endif()
 
-if(RUN_CLANG_TIDY STREQUAL "AUTO")
-    if(DEFINED ENV{LGTM_SRC} OR DEFINED ENV{APPVEYOR}) # skip clang-tidy on LGTM/appveyor
-        set(RUN_CLANG_TIDY OFF)
-    else()
-        set(RUN_CLANG_TIDY ON)
-    endif()
+if(RUN_CLANG_TIDY STREQUAL "AUTO" AND (DEFINED ENV{LGTM_SRC} OR DEFINED ENV{APPVEYOR})) # skip clang-tidy on LGTM/appveyor
+    set(RUN_CLANG_TIDY OFF)
 endif()
 
 if(RUN_CLANG_TIDY)
+    tr_get_required_flag(RUN_CLANG_TIDY CLANG_TIDY_IS_REQUIRED)
+
     message(STATUS "Looking for clang-tidy")
     find_program(CLANG_TIDY clang-tidy)
     if(CLANG_TIDY STREQUAL "CLANG_TIDY-NOTFOUND")
         message(STATUS "Looking for clang-tidy - not found")
+        if(CLANG_TIDY_IS_REQUIRED)
+            message(FATAL_ERROR "clang-tidy is required but wasn't found")
+        endif()
     else()
         message(STATUS "Looking for clang-tidy - found")
         set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY}")

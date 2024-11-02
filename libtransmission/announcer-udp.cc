@@ -361,14 +361,12 @@ struct tau_tracker
 
         if (action == TAU_ACTION_CONNECT)
         {
-            connection_id[ip_protocol] = buf.to_uint64();
+            auto& conn_id = connection_id[ip_protocol];
+            conn_id = buf.to_uint64();
             connection_expiration_time[ip_protocol] = tr_time() + TauConnectionTtlSecs;
             logdbg(
                 log_name(),
-                fmt::format(
-                    "Got a new {} connection ID from tracker: {}",
-                    tr_ip_protocol_to_sv(ip_protocol),
-                    connection_id[ip_protocol]));
+                fmt::format("Got a new {} connection ID from tracker: {}", tr_ip_protocol_to_sv(ip_protocol), conn_id));
         }
         else if (action == TAU_ACTION_ERROR)
         {
@@ -406,10 +404,10 @@ struct tau_tracker
         for (ipp_t ipp = 0; ipp < NUM_TR_AF_INET_TYPES; ++ipp)
         {
             // update the addr if our lookup is past its shelf date
-            if (!addr_pending_dns_[ipp] && addr_expires_at_[ipp] <= now)
+            if (auto& dns = addr_pending_dns_[ipp]; !dns && addr_expires_at_[ipp] <= now)
             {
                 addr_[ipp].reset();
-                addr_pending_dns_[ipp] = std::async(
+                dns = std::async(
                     std::launch::async,
                     [this](tr_address_type ip_protocol) { return lookup(ip_protocol); },
                     static_cast<tr_address_type>(ipp));
@@ -425,6 +423,7 @@ struct tau_tracker
         for (ipp_t ipp = 0; ipp < NUM_TR_AF_INET_TYPES; ++ipp)
         {
             auto const ipp_enum = static_cast<tr_address_type>(ipp);
+            auto& conn_at = connecting_at[ipp];
             logtrace(
                 log_name(),
                 fmt::format(
@@ -433,26 +432,24 @@ struct tau_tracker
                     is_connected(ipp_enum, now),
                     connection_expiration_time[ipp],
                     now,
-                    connecting_at[ipp]));
+                    conn_at));
 
             // also need a valid connection ID...
-            if (auto const& addr = addr_[ipp]; addr && !is_connected(ipp_enum, now) && connecting_at[ipp] == 0)
+            if (auto const& addr = addr_[ipp]; addr && !is_connected(ipp_enum, now) && conn_at == 0)
             {
                 TR_ASSERT(addr->first.ss_family == tr_ip_protocol_to_af(ipp_enum));
+                auto& conn_transc_id = connection_transaction_id[ipp];
 
-                connecting_at[ipp] = now;
-                connection_transaction_id[ipp] = tau_transaction_new();
+                conn_at = now;
+                conn_transc_id = tau_transaction_new();
                 logtrace(
                     log_name(),
-                    fmt::format(
-                        "Trying to connect {}. Transaction ID is {}",
-                        tr_ip_protocol_to_sv(ipp_enum),
-                        connection_transaction_id[ipp]));
+                    fmt::format("Trying to connect {}. Transaction ID is {}", tr_ip_protocol_to_sv(ipp_enum), conn_transc_id));
 
                 auto buf = PayloadBuffer{};
                 buf.add_uint64(0x41727101980LL);
                 buf.add_uint32(TAU_ACTION_CONNECT);
-                buf.add_uint32(connection_transaction_id[ipp]);
+                buf.add_uint32(conn_transc_id);
 
                 sendto(ipp_enum, std::data(buf), std::size(buf));
             }
@@ -515,11 +512,7 @@ private:
                     fmt::arg("error_code", static_cast<int>(rc))));
             return {};
         }
-        auto const info_uniq = std::unique_ptr<addrinfo, void (*)(addrinfo*)>{ info,
-                                                                               [](addrinfo* p) // MSVC forced my hands
-                                                                               {
-                                                                                   freeaddrinfo(p);
-                                                                               } };
+        auto const info_uniq = std::unique_ptr<addrinfo, decltype(&freeaddrinfo)>{ info, freeaddrinfo };
 
         // N.B. getaddrinfo() will return IPv4-mapped addresses by default on macOS
         auto socket_address = tr_socket_address::from_sockaddr(info->ai_addr);
@@ -561,7 +554,7 @@ private:
     {
         for (ipp_t ipp = 0; ipp < NUM_TR_AF_INET_TYPES; ++ipp)
         {
-            if (connecting_at[ipp] != 0 && connecting_at[ipp] + ConnectionRequestTtl < now)
+            if (auto const conn_at = connecting_at[ipp]; conn_at != 0 && conn_at + ConnectionRequestTtl < now)
             {
                 auto empty_buf = PayloadBuffer{};
                 on_connection_response(static_cast<tr_address_type>(ipp), TAU_ACTION_ERROR, empty_buf);
@@ -638,10 +631,11 @@ private:
             auto const ipp_enum = static_cast<tr_address_type>(ipp);
             if (addr_[ipp] && (ip_protocol == TR_AF_UNSPEC || ipp == ip_protocol) && is_connected(ipp_enum, now))
             {
-                logdbg(log_name(), fmt::format("sending request w/connection id {}", connection_id[ipp]));
+                auto const conn_id = connection_id[ipp];
+                logdbg(log_name(), fmt::format("sending request w/connection id {}", conn_id));
 
                 auto buf = PayloadBuffer{};
-                buf.add_uint64(connection_id[ipp]);
+                buf.add_uint64(conn_id);
                 buf.add(payload, payload_len);
 
                 sendto(ipp_enum, std::data(buf), std::size(buf));

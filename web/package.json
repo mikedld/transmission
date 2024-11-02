@@ -3,9 +3,11 @@
   "main": "index.js",
   "repository": "https://github.com/transmission/transmission",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "node esbuild.mjs",
     "dev": "DEV=true node esbuild.mjs",
+    "generate-buildonly": "node generate-buildonly.js",
     "lint": "run-p --silent lint:eslint lint:stylelint lint:prettier",
     "lint:fix": "run-s lint:eslint:fix lint:stylelint:fix lint:prettier:fix",
     "lint:eslint": "eslint src/*.js",

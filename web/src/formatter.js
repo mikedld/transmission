@@ -94,8 +94,8 @@ export const Formatter = {
   },
 
   // format a percentage to a string
-  percentString(x) {
-    const decimal_places = x < 100 ? 1 : 0;
+  percentString(x, decimal_places) {
+    decimal_places = x < 100 ? decimal_places : 0;
     return this._toTruncFixed(x, decimal_places);
   },
 
@@ -109,7 +109,7 @@ export const Formatter = {
     if (x === -2) {
       return '&infin;';
     }
-    return this.percentString(x);
+    return this.percentString(x, 1);
   },
 
   /**

@@ -120,34 +120,18 @@ UTType* GetTorrentFileType(void) API_AVAILABLE(macos(11.0))
 
 - (BOOL)isDefaultForMagnetURLs
 {
-    if (@available(macOS 12, *))
+    NSURL* schemeUrl = [NSURL URLWithString:[kMagnetURLScheme stringByAppendingString:@":"]];
+    NSURL* appUrl = [NSWorkspace.sharedWorkspace URLForApplicationToOpenURL:schemeUrl];
+    if (!appUrl)
     {
-        NSURL* schemeUrl = [NSURL URLWithString:[kMagnetURLScheme stringByAppendingString:@":"]];
-        NSURL* appUrl = [NSWorkspace.sharedWorkspace URLForApplicationToOpenURL:schemeUrl];
-        if (!appUrl)
-        {
-            return NO;
-        }
-
-        NSString* bundleId = [NSBundle bundleWithURL:appUrl].bundleIdentifier;
-
-        if ([self.bundleIdentifier isEqualToString:bundleId])
-        {
-            return YES;
-        }
+        return NO;
     }
-    else
-    {
-        NSString* bundleId = (__bridge_transfer NSString*)LSCopyDefaultHandlerForURLScheme((__bridge CFStringRef)kMagnetURLScheme);
-        if (!bundleId)
-        {
-            return NO;
-        }
 
-        if ([self.bundleIdentifier isEqualToString:bundleId])
-        {
-            return YES;
-        }
+    NSString* bundleId = [NSBundle bundleWithURL:appUrl].bundleIdentifier;
+
+    if ([self.bundleIdentifier isEqualToString:bundleId])
+    {
+        return YES;
     }
 
     return NO;

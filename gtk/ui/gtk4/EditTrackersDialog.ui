@@ -14,59 +14,61 @@
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkLabel" id="urls_section_title">
-                <property name="label" translatable="1">Tracker Announce URLs</property>
-                <property name="xalign">0</property>
-                <attributes>
-                  <attribute name="weight" value="bold"></attribute>
-                </attributes>
-              </object>
-            </child>
-            <child>
-              <object class="GtkGrid" id="urls_section_layout">
-                <property name="margin-start">18</property>
-                <property name="row-spacing">6</property>
-                <property name="column-spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="urls_section_top_comment_label">
-                    <property name="label" translatable="1">To add a backup URL, add it on the next line after a primary URL.
-To add a new primary URL, add it after a blank line.</property>
-                    <property name="xalign">0</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">0</property>
-                      <property name="column-span">2</property>
-                    </layout>
+              <object class="GtkFrame">
+                <child type="label">
+                  <object class="GtkLabel" id="urls_section_title">
+                    <property name="label" translatable="1">Tracker Announce URLs</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkScrolledWindow" id="urls_view_scroll">
-                    <property name="width-request">500</property>
-                    <property name="height-request">166</property>
-                    <property name="focusable">1</property>
-                    <property name="has-frame">1</property>
-                    <property name="child">
-                      <object class="GtkTextView" id="urls_view">
-                        <property name="focusable">1</property>
-                        <property name="accepts-tab">0</property>
+                  <object class="GtkGrid" id="urls_section_layout">
+                    <property name="row-spacing">6</property>
+                    <property name="column-spacing">12</property>
+                    <child>
+                      <object class="GtkLabel" id="urls_section_top_comment_label">
+                        <property name="label" translatable="1"><![CDATA[To add a backup URL, add it on the next line after a primary URL.
+To add a new primary URL, add it after a blank line.]]></property>
+                        <property name="xalign">0</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                          <property name="column-span">2</property>
+                        </layout>
                       </object>
-                    </property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">1</property>
-                      <property name="column-span">2</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="urls_section_bottom_comment_label">
-                    <property name="label" translatable="1">Also see Default Public Trackers in Edit &gt; Preferences &gt; Network</property>
-                    <property name="xalign">0</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">2</property>
-                      <property name="column-span">2</property>
-                    </layout>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow" id="urls_view_scroll">
+                        <property name="width-request">500</property>
+                        <property name="height-request">166</property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">1</property>
+                        <property name="child">
+                          <object class="GtkTextView" id="urls_view">
+                            <property name="focusable">1</property>
+                            <property name="accepts-tab">0</property>
+                          </object>
+                        </property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="urls_section_bottom_comment_label">
+                        <property name="label" translatable="1">Also see Default Public Trackers in Edit &gt; Preferences &gt; Network</property>
+                        <property name="xalign">0</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

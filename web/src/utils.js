@@ -125,6 +125,12 @@ export function createDialogContainer(id) {
   confirm.textContent = 'OK';
   buttons.append(confirm);
 
+  win.addEventListener('keyup', ({ key }) => {
+    if (key === 'Enter') {
+      confirm.click();
+    }
+  });
+
   const bend = document.createElement('span');
   bend.classList.add('dialog-buttons-end');
   buttons.append(bend);

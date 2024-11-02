@@ -179,7 +179,7 @@ jobs:
         run: cmake -E chdir obj ctest -j $(nproc) --build-config Debug --output-on-failure
 
   sanitizer-tests-macos:
-    runs-on: macos-14
+    runs-on: macos-15
     needs: [ what-to-make ]
     if: ${{ needs.what-to-make.outputs.make-tests == 'true' }}
     steps:
@@ -272,8 +272,67 @@ jobs:
         run: |
           if grep 'warning:' makelog; then exit 1; fi
 
-  macos-14-arm64:
-    runs-on: macos-14
+  clang-tidy-libtransmission-win32:
+    runs-on: windows-2022
+    needs: [ what-to-make ]
+    if: ${{ needs.what-to-make.outputs.test-style == 'true' }}
+    steps:
+      - name: Show Configuration
+        run: |
+          echo '${{ toJSON(needs) }}'
+          echo '${{ toJSON(runner) }}'
+      - name: Get Source
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          path: src
+      - name: Prepare Build Deps
+        uses: ./src/.github/actions/prepare-deps-win32
+        with:
+          arch: x64
+          type: CoreDeps
+      - name: Configure
+        run: |
+          Import-VisualStudioVars -VisualStudioVersion 2022 -Architecture x64
+          cmake `
+            -S src `
+            -B obj `
+            -G Ninja `
+            -DCMAKE_BUILD_TYPE=Debug `
+            -DCMAKE_PREFIX_PATH="${Env:DEPS_PREFIX}" `
+            -DRUN_CLANG_TIDY=ON
+      - name: Make
+        run: |
+          Import-VisualStudioVars -VisualStudioVersion 2022 -Architecture x64
+          cmake --build obj --config Debug --target transmission.lib 2>&1 | tee makelog
+      - name: Test for warnings
+        run: |
+          if (Select-String -Path makelog -Pattern 'warning:') { exit 1 }
+
+  macos-15-project:
+     runs-on: macos-15
+     needs: [ what-to-make ]
+     if: ${{ needs.what-to-make.outputs.make-cli == 'true' || needs.what-to-make.outputs.make-daemon == 'true' || needs.what-to-make.outputs.make-mac == 'true' || needs.what-to-make.outputs.make-utils == 'true' }}
+     steps:
+       - name: Show Configuration
+         run: |
+           echo '${{ toJSON(needs) }}'
+           echo '${{ toJSON(runner) }}'
+           sw_vers
+       - name: Get Source
+         uses: actions/checkout@v4
+         with:
+           path: src
+           submodules: recursive
+       - name: Build
+         run: xcodebuild -project src/Transmission.xcodeproj
+       - uses: actions/upload-artifact@v4
+         with:
+           name: binaries-${{ github.job }}
+           path: pfx/**/*
+
+  macos-15-arm64:
+    runs-on: macos-15
     needs: [ what-to-make ]
     if: ${{ needs.what-to-make.outputs.make-cli == 'true' || needs.what-to-make.outputs.make-daemon == 'true' || needs.what-to-make.outputs.make-gtk == 'true' || needs.what-to-make.outputs.make-mac == 'true' || needs.what-to-make.outputs.make-qt == 'true' || needs.what-to-make.outputs.make-tests == 'true' || needs.what-to-make.outputs.make-utils == 'true' }}
     steps:
@@ -458,51 +517,16 @@ jobs:
         run: |
           echo '${{ toJSON(needs) }}'
           echo '${{ toJSON(runner) }}'
-      - name: Get Build Tools
-        run: |
-          $DepsPrefix = (Join-Path (Get-Item .).Root.Name "${{ matrix.arch }}-prefix")
-          "DEPS_PREFIX=${DepsPrefix}" | Out-File $Env:GITHUB_ENV -Append
-          (Join-Path $DepsPrefix bin) | Out-File $Env:GITHUB_PATH -Append
-
-          choco install `
-            jom `
-            nasm `
-            nodejs
-          & "C:\Program Files\OpenSSL\unins000.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- | Out-Host
-          (Join-Path $Env:ProgramFiles NASM) | Out-File $Env:GITHUB_PATH -Append
-          (Join-Path (Get-Item -Path "${Env:ProgramFiles(x86)}\WiX Toolset v3.*")[0].FullName bin) | Out-File $Env:GITHUB_PATH -Append
-
-          Install-Module -Name Pscx -RequiredVersion 4.0.0-beta4 -AllowPrerelease -Force
       - name: Get Source
         uses: actions/checkout@v4
         with:
           path: src
           submodules: recursive
-      - name: Get Cache Key
-        id: cache-key
-        run: |
-          try {
-              $DepsHash = & (Join-Path . src release windows main.ps1) -Mode DepsHash -BuildArch ${{ matrix.arch }}
-              "hash=${DepsHash}" | Out-File $Env:GITHUB_OUTPUT -Append
-          } catch {
-              Write-Error ("{1}{0}{2}{0}{3}" -f [Environment]::NewLine, $_.ToString(), $_.InvocationInfo.PositionMessage, $_.ScriptStackTrace) -ErrorAction Continue
-              exit 1
-          }
-      - name: Get Cache
-        uses: actions/cache@v4
-        id: cache
+      - name: Prepare Build Deps
+        uses: ./src/.github/actions/prepare-deps-win32
         with:
-          path: ${{ env.DEPS_PREFIX }}
-          key: ${{ github.job }}-${{ matrix.arch }}-${{ steps.cache-key.outputs.hash }}
-      - name: Build Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          try {
-              & (Join-Path . src release windows main.ps1) -Mode Build -BuildArch ${{ matrix.arch }} -BuildPart Deps
-          } catch {
-              Write-Error ("{1}{0}{2}{0}{3}" -f [Environment]::NewLine, $_.ToString(), $_.InvocationInfo.PositionMessage, $_.ScriptStackTrace) -ErrorAction Continue
-              exit 1
-          }
+          arch: ${{ matrix.arch }}
+          type: Deps
       - name: Configure
         run: |
           Import-VisualStudioVars -VisualStudioVersion 2022 -Architecture ${{ matrix.arch }}
@@ -584,10 +608,10 @@ jobs:
           name: source-tarball
           path: obj/transmission*.tar.*
 
-  macos-14-universal-from-tarball:
+  macos-15-universal-from-tarball:
     needs: [ make-source-tarball, what-to-make ]
     if: ${{ needs.what-to-make.outputs.make-mac == 'true' }}
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Show Configuration
         run: |
@@ -644,10 +668,11 @@ jobs:
           name: binaries-${{ github.job }}
           path: pfx/**/*
 
-  macos-12-x86_64-from-tarball:
+  # Oldest GitHub support for QT on Mac
+  macos-13-x86_64-from-tarball:
     needs: [ make-source-tarball, what-to-make ]
-    if: ${{ needs.what-to-make.outputs.make-cli == 'true' || needs.what-to-make.outputs.make-daemon == 'true' || needs.what-to-make.outputs.make-gtk == 'true' || needs.what-to-make.outputs.make-mac == 'true' || needs.what-to-make.outputs.make-qt == 'true' || needs.what-to-make.outputs.make-tests == 'true' || needs.what-to-make.outputs.make-utils == 'true' }}
-    runs-on: macos-12
+    if: ${{ needs.what-to-make.outputs.make-qt == 'true' || needs.what-to-make.outputs.make-tests == 'true' }}
+    runs-on: macos-13
     steps:
       - name: Show Configuration
         run: |
@@ -657,9 +682,6 @@ jobs:
       - name: Get Dependencies
         run: |
           brew install cmake gettext ninja node pkg-config
-      - name: Get Dependencies (GTK)
-        if: ${{ needs.what-to-make.outputs.make-gtk == 'true' }}
-        run: brew install gtkmm3
       - name: Get Dependencies (Qt)
         if: ${{ needs.what-to-make.outputs.make-qt == 'true' }}
         run: brew install qt
@@ -679,11 +701,75 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=pfx \
             -DCMAKE_OSX_ARCHITECTURES='x86_64' \
             -DCMAKE_PREFIX_PATH=`brew --prefix`/opt/qt \
+            -DENABLE_CLI=OFF \
+            -DENABLE_DAEMON=OFF \
+            -DENABLE_GTK=OFF \
+            -DENABLE_MAC=OFF  \
+            -DENABLE_QT=ON \
+            -DENABLE_TESTS=${{ (needs.what-to-make.outputs.make-tests == 'true') && 'ON' || 'OFF' }} \
+            -DENABLE_UTILS=OFF \
+            -DREBUILD_WEB=${{ (needs.what-to-make.outputs.make-web == 'true') && 'ON' || 'OFF' }} \
+            -DENABLE_WERROR=ON \
+            -DRUN_CLANG_TIDY=OFF \
+            -DUSE_SYSTEM_EVENT2=OFF \
+            -DUSE_SYSTEM_DEFLATE=OFF \
+            -DUSE_SYSTEM_DHT=OFF \
+            -DUSE_SYSTEM_MINIUPNPC=OFF \
+            -DUSE_SYSTEM_NATPMP=OFF \
+            -DUSE_SYSTEM_UTP=OFF \
+            -DUSE_SYSTEM_B64=OFF \
+            -DUSE_SYSTEM_PSL=OFF
+      - name: Make
+        run: cmake --build obj --config RelWithDebInfo
+      - name: Test
+        if: ${{ needs.what-to-make.outputs.make-tests == 'true' }}
+        env:
+          TMPDIR: /private/tmp
+        run: cmake -E chdir obj ctest -j $(sysctl -n hw.logicalcpu) --build-config RelWithDebInfo --output-on-failure
+      - name: Install
+        run: cmake --build obj --config RelWithDebInfo --target install/strip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binaries-${{ github.job }}
+          path: pfx/**/*
+
+  # Oldest GitHub support for CLI and GTK on Mac
+  macos-12-x86_64-from-tarball:
+    needs: [ make-source-tarball, what-to-make ]
+    if: ${{ needs.what-to-make.outputs.make-cli == 'true' || needs.what-to-make.outputs.make-daemon == 'true' || needs.what-to-make.outputs.make-gtk == 'true' || needs.what-to-make.outputs.make-mac == 'true' || needs.what-to-make.outputs.make-tests == 'true' || needs.what-to-make.outputs.make-utils == 'true' }}
+    runs-on: macos-12
+    steps:
+      - name: Show Configuration
+        run: |
+          echo '${{ toJSON(needs) }}'
+          echo '${{ toJSON(runner) }}'
+          sw_vers
+      - name: Get Dependencies
+        run: |
+          brew install cmake gettext ninja node pkg-config
+      - name: Get Dependencies (GTK)
+        if: ${{ needs.what-to-make.outputs.make-gtk == 'true' }}
+        run: brew install gtkmm3
+      - name: Get Source
+        uses: actions/download-artifact@v4
+        with:
+          name: source-tarball
+      - name: Extract Source
+        run: mkdir src && tar xf transmission*.tar.* -C src --strip-components 1
+      - name: Configure
+        run: |
+          cmake \
+            -S src \
+            -B obj \
+            -G Ninja \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_INSTALL_PREFIX=pfx \
+            -DCMAKE_OSX_ARCHITECTURES='x86_64' \
             -DENABLE_CLI=${{ (needs.what-to-make.outputs.make-cli == 'true') && 'ON' || 'OFF' }} \
             -DENABLE_DAEMON=${{ (needs.what-to-make.outputs.make-daemon == 'true') && 'ON' || 'OFF' }} \
             -DENABLE_GTK=${{ (needs.what-to-make.outputs.make-gtk == 'true') && 'ON' || 'OFF' }} \
             -DENABLE_MAC=${{ (needs.what-to-make.outputs.make-mac == 'true') && 'ON' || 'OFF' }}  \
-            -DENABLE_QT=${{ (needs.what-to-make.outputs.make-qt == 'true') && 'ON' || 'OFF' }} \
+            -DENABLE_QT=OFF \
             -DENABLE_TESTS=${{ (needs.what-to-make.outputs.make-tests == 'true') && 'ON' || 'OFF' }} \
             -DENABLE_UTILS=${{ (needs.what-to-make.outputs.make-utils == 'true') && 'ON' || 'OFF' }} \
             -DREBUILD_WEB=${{ (needs.what-to-make.outputs.make-web == 'true') && 'ON' || 'OFF' }} \

@@ -84,11 +84,6 @@ void tr_ctorFree(tr_ctor* ctor)
     delete ctor;
 }
 
-tr_session* tr_ctorGetSession(tr_ctor const* ctor)
-{
-    return ctor->session();
-}
-
 bool tr_ctorSetMetainfoFromFile(tr_ctor* const ctor, char const* const filename, tr_error* const error)
 {
     return ctor->set_metainfo_from_file(std::string_view{ filename != nullptr ? filename : "" }, error);
@@ -198,21 +193,6 @@ bool tr_ctorGetPaused(tr_ctor const* const ctor, tr_ctorMode const mode, bool* c
 bool tr_ctorGetDownloadDir(tr_ctor const* const ctor, tr_ctorMode const mode, char const** setme)
 {
     if (auto const& val = ctor->download_dir(mode); !std::empty(val))
-    {
-        if (setme != nullptr)
-        {
-            *setme = val.c_str();
-        }
-
-        return true;
-    }
-
-    return false;
-}
-
-bool tr_ctorGetIncompleteDir(tr_ctor const* const ctor, char const** setme)
-{
-    if (auto const& val = ctor->incomplete_dir(); !std::empty(val))
     {
         if (setme != nullptr)
         {

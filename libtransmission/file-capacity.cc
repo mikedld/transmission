@@ -452,13 +452,13 @@ extern "C"
 
     if (auto const wide_path = tr_win32_utf8_to_native(path); !std::empty(wide_path))
     {
-        ULARGE_INTEGER freeBytesAvailable;
-        ULARGE_INTEGER totalBytesAvailable;
+        ULARGE_INTEGER free_bytes_available;
+        ULARGE_INTEGER total_bytes_available;
 
-        if (GetDiskFreeSpaceExW(wide_path.c_str(), &freeBytesAvailable, &totalBytesAvailable, nullptr))
+        if (GetDiskFreeSpaceExW(wide_path.c_str(), &free_bytes_available, &total_bytes_available, nullptr) != 0)
         {
-            ret.free = freeBytesAvailable.QuadPart;
-            ret.total = totalBytesAvailable.QuadPart;
+            ret.free = free_bytes_available.QuadPart;
+            ret.total = total_bytes_available.QuadPart;
         }
     }
 

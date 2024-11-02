@@ -560,12 +560,11 @@ tr_sys_file_t tr_sys_file_open(char const* path, int flags, int permissions, tr_
         int native_value;
     };
 
-    auto constexpr NativeMap = std::array<native_map_item, 8>{
+    auto constexpr NativeMap = std::array<native_map_item, 7U>{
         { { TR_SYS_FILE_READ | TR_SYS_FILE_WRITE, TR_SYS_FILE_READ | TR_SYS_FILE_WRITE, O_RDWR },
           { TR_SYS_FILE_READ | TR_SYS_FILE_WRITE, TR_SYS_FILE_READ, O_RDONLY },
           { TR_SYS_FILE_READ | TR_SYS_FILE_WRITE, TR_SYS_FILE_WRITE, O_WRONLY },
           { TR_SYS_FILE_CREATE, TR_SYS_FILE_CREATE, O_CREAT },
-          { TR_SYS_FILE_APPEND, TR_SYS_FILE_APPEND, O_APPEND },
           { TR_SYS_FILE_TRUNCATE, TR_SYS_FILE_TRUNCATE, O_TRUNC },
           { TR_SYS_FILE_SEQUENTIAL, TR_SYS_FILE_SEQUENTIAL, O_SEQUENTIAL } }
     };
@@ -914,15 +913,14 @@ bool tr_sys_file_preallocate(tr_sys_file_t handle, uint64_t size, int flags, tr_
 bool tr_sys_file_lock([[maybe_unused]] tr_sys_file_t handle, [[maybe_unused]] int operation, tr_error* error)
 {
     TR_ASSERT(handle != TR_BAD_SYS_FILE);
-    TR_ASSERT((operation & ~(TR_SYS_FILE_LOCK_SH | TR_SYS_FILE_LOCK_EX | TR_SYS_FILE_LOCK_NB | TR_SYS_FILE_LOCK_UN)) == 0);
-    TR_ASSERT(
-        !!(operation & TR_SYS_FILE_LOCK_SH) + !!(operation & TR_SYS_FILE_LOCK_EX) + !!(operation & TR_SYS_FILE_LOCK_UN) == 1);
+    TR_ASSERT((operation & ~(TR_SYS_FILE_LOCK_SH | TR_SYS_FILE_LOCK_EX | TR_SYS_FILE_LOCK_NB)) == 0);
+    TR_ASSERT(!!(operation & TR_SYS_FILE_LOCK_SH) + !!(operation & TR_SYS_FILE_LOCK_EX) == 1);
 
 #if defined(F_OFD_SETLK)
 
     struct flock fl = {};
 
-    switch (operation & (TR_SYS_FILE_LOCK_SH | TR_SYS_FILE_LOCK_EX | TR_SYS_FILE_LOCK_UN))
+    switch (operation & (TR_SYS_FILE_LOCK_SH | TR_SYS_FILE_LOCK_EX))
     {
     case TR_SYS_FILE_LOCK_SH:
         fl.l_type = F_RDLCK;
@@ -930,10 +928,6 @@ bool tr_sys_file_lock([[maybe_unused]] tr_sys_file_t handle, [[maybe_unused]] in
 
     case TR_SYS_FILE_LOCK_EX:
         fl.l_type = F_WRLCK;
-        break;
-
-    case TR_SYS_FILE_LOCK_UN:
-        fl.l_type = F_UNLCK;
         break;
 
     default:
@@ -963,8 +957,7 @@ bool tr_sys_file_lock([[maybe_unused]] tr_sys_file_t handle, [[maybe_unused]] in
     int const native_operation = //
         (((operation & TR_SYS_FILE_LOCK_SH) != 0) ? LOCK_SH : 0) | //
         (((operation & TR_SYS_FILE_LOCK_EX) != 0) ? LOCK_EX : 0) | //
-        (((operation & TR_SYS_FILE_LOCK_NB) != 0) ? LOCK_NB : 0) | //
-        (((operation & TR_SYS_FILE_LOCK_UN) != 0) ? LOCK_UN : 0);
+        (((operation & TR_SYS_FILE_LOCK_NB) != 0) ? LOCK_NB : 0);
 
     auto result = std::optional<bool>{};
     while (!result)
@@ -986,6 +979,7 @@ bool tr_sys_file_lock([[maybe_unused]] tr_sys_file_t handle, [[maybe_unused]] in
 
 #endif
 
+    TR_ASSERT(result);
     if (!*result && errno == EAGAIN)
     {
         errno = EWOULDBLOCK;

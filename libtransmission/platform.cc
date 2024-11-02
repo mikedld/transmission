@@ -54,7 +54,7 @@ namespace
 #ifdef _WIN32
 std::string win32_get_known_folder_ex(REFKNOWNFOLDERID folder_id, DWORD flags)
 {
-    if (PWSTR path; SHGetKnownFolderPath(folder_id, flags | KF_FLAG_DONT_UNEXPAND, nullptr, &path) == S_OK)
+    if (PWSTR path = nullptr; SHGetKnownFolderPath(folder_id, flags | KF_FLAG_DONT_UNEXPAND, nullptr, &path) == S_OK)
     {
         auto ret = tr_win32_native_to_utf8(path);
         CoTaskMemFree(path);

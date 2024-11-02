@@ -38,7 +38,7 @@ class RenameTest : public SessionTest
 protected:
     void torrentRemoveAndWait(tr_torrent* tor, size_t expected_torrent_count)
     {
-        tr_torrentRemove(tor, false, nullptr, nullptr);
+        tr_torrentRemove(tor, false, nullptr, nullptr, nullptr, nullptr);
         auto const test = [this, expected_torrent_count]()
         {
             return std::size(session_->torrents()) == expected_torrent_count;

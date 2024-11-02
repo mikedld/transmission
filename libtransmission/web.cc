@@ -129,7 +129,7 @@ CURLcode ssl_context_func(CURL* /*curl*/, void* ssl_ctx, void* /*user_data*/)
 
     for (auto& sys_store_name : SysStoreNames)
     {
-        HCERTSTORE const sys_cert_store = CertOpenSystemStoreW(0, sys_store_name);
+        auto* const sys_cert_store = CertOpenSystemStoreW(0, sys_store_name);
         if (sys_cert_store == nullptr)
         {
             continue;
@@ -145,7 +145,7 @@ CURLcode ssl_context_func(CURL* /*curl*/, void* ssl_ctx, void* /*user_data*/)
                 break;
             }
 
-            tr_x509_cert_t const cert = tr_x509_cert_new(sys_cert->pbCertEncoded, sys_cert->cbCertEncoded);
+            auto* const cert = tr_x509_cert_new(sys_cert->pbCertEncoded, sys_cert->cbCertEncoded);
             if (cert == nullptr)
             {
                 continue;
@@ -406,7 +406,7 @@ public:
     // if unset: steady-state, all is good
     // if set: do not accept new tasks
     // if set and deadline reached: kill all remaining tasks
-    std::atomic<time_t> deadline_ = {};
+    std::atomic<time_t> deadline_ = {}; // NOLINT(readability-redundant-member-init)
 
     [[nodiscard]] auto deadline() const
     {

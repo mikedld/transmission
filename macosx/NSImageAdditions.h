@@ -9,8 +9,4 @@
 + (NSImage*)discIconWithColor:(NSColor*)color insetFactor:(CGFloat)insetFactor;
 - (NSImage*)imageWithColor:(NSColor*)color;
 
-/* macOS < 11 compatibility */
-+ (NSImage*)systemSymbol:(NSString*)symbolName withFallback:(NSString*)fallbackName;
-+ (NSImage*)largeSystemSymbol:(NSString*)symbolName withFallback:(NSString*)fallbackName;
-
 @end

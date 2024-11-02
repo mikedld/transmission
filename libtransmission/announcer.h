@@ -62,6 +62,7 @@ struct tr_tracker_event
     // for Peers and Counts events
     std::optional<int64_t> leechers;
     std::optional<int64_t> seeders;
+    std::optional<int64_t> downloaders;
 };
 
 using tr_tracker_callback = std::function<void(tr_torrent&, tr_tracker_event const*)>;

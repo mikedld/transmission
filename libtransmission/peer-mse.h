@@ -45,9 +45,9 @@ public:
     using private_key_bigend_t = std::array<std::byte, PrivateKeySize>;
     using key_bigend_t = std::array<std::byte, KeySize>;
 
-    // By default, a private key is randomly generated.
+    // In actual code, a private key is randomly generated.
     // Providing a predefined one is useful for reproducible unit tests.
-    constexpr DH(private_key_bigend_t const& private_key = randomPrivateKey()) noexcept
+    constexpr explicit DH(private_key_bigend_t const& private_key) noexcept
         : private_key_{ private_key }
     {
     }
@@ -67,7 +67,7 @@ public:
     [[nodiscard]] static private_key_bigend_t randomPrivateKey() noexcept;
 
 private:
-    private_key_bigend_t private_key_;
+    private_key_bigend_t private_key_ = {};
     key_bigend_t public_key_ = {};
     key_bigend_t secret_ = {};
 };

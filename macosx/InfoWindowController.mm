@@ -102,21 +102,27 @@ typedef NS_ENUM(NSUInteger, TabTag) {
         [self.fTabs.cell setToolTip:toolTip forSegment:segment];
     };
     setImageAndToolTipForSegment(
-        [NSImage systemSymbol:@"info.circle" withFallback:@"InfoGeneral"],
+        [NSImage imageWithSystemSymbolName:@"info.circle" accessibilityDescription:nil],
         NSLocalizedString(@"General Info", "Inspector -> tab"),
         TabTagGeneral);
     setImageAndToolTipForSegment(
-        [NSImage systemSymbol:@"square.grid.3x3.fill.square" withFallback:@"InfoActivity"],
+        [NSImage imageWithSystemSymbolName:@"square.grid.3x3.fill.square" accessibilityDescription:nil],
         NSLocalizedString(@"Activity", "Inspector -> tab"),
         TabTagActivity);
     setImageAndToolTipForSegment(
-        [NSImage systemSymbol:@"antenna.radiowaves.left.and.right" withFallback:@"InfoTracker"],
+        [NSImage imageWithSystemSymbolName:@"antenna.radiowaves.left.and.right" accessibilityDescription:nil],
         NSLocalizedString(@"Trackers", "Inspector -> tab"),
         TabTagTrackers);
-    setImageAndToolTipForSegment([NSImage systemSymbol:@"person.2" withFallback:@"InfoPeers"], NSLocalizedString(@"Peers", "Inspector -> tab"), TabTagPeers);
-    setImageAndToolTipForSegment([NSImage systemSymbol:@"doc.on.doc" withFallback:@"InfoFiles"], NSLocalizedString(@"Files", "Inspector -> tab"), TabTagFile);
     setImageAndToolTipForSegment(
-        [NSImage systemSymbol:@"gearshape" withFallback:@"InfoOptions"],
+        [NSImage imageWithSystemSymbolName:@"person.2" accessibilityDescription:nil],
+        NSLocalizedString(@"Peers", "Inspector -> tab"),
+        TabTagPeers);
+    setImageAndToolTipForSegment(
+        [NSImage imageWithSystemSymbolName:@"doc.on.doc" accessibilityDescription:nil],
+        NSLocalizedString(@"Files", "Inspector -> tab"),
+        TabTagFile);
+    setImageAndToolTipForSegment(
+        [NSImage imageWithSystemSymbolName:@"gearshape" accessibilityDescription:nil],
         NSLocalizedString(@"Options", "Inspector -> tab"),
         TabTagOptions);
 

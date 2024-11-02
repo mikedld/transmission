@@ -43,7 +43,7 @@ enum
     /* true if the peer supports encryption */
     ADDED_F_ENCRYPTION_FLAG = 1,
     /* true if the peer is a seed or partial seed */
-    ADDED_F_SEED_FLAG = 2,
+    ADDED_F_UPLOAD_ONLY_FLAG = 2,
     /* true if the peer supports µTP */
     ADDED_F_UTP_FLAGS = 4,
     /* true if the peer has holepunch support */
@@ -161,6 +161,16 @@ public:
         return is_seed_;
     }
 
+    constexpr void set_upload_only(bool value = true) noexcept
+    {
+        is_upload_only_ = value;
+    }
+
+    [[nodiscard]] constexpr auto is_upload_only() const noexcept
+    {
+        return is_upload_only_ || is_seed();
+    }
+
     // ---
 
     void set_connectable(bool value = true) noexcept
@@ -187,9 +197,33 @@ public:
 
     // ---
 
-    [[nodiscard]] constexpr auto compare_by_failure_count(tr_peer_info const& that) const noexcept
+    void set_encryption_preferred(bool value = true) noexcept
     {
-        return tr_compare_3way(num_consecutive_fails_, that.num_consecutive_fails_);
+        is_encryption_preferred_ = value;
+    }
+
+    [[nodiscard]] constexpr auto const& prefers_encryption() const noexcept
+    {
+        return is_encryption_preferred_;
+    }
+
+    // ---
+
+    void set_holepunch_supported(bool value = true) noexcept
+    {
+        is_holepunch_supported_ = value;
+    }
+
+    [[nodiscard]] constexpr auto const& supports_holepunch() const noexcept
+    {
+        return is_holepunch_supported_;
+    }
+
+    // ---
+
+    [[nodiscard]] constexpr auto compare_by_fruitless_count(tr_peer_info const& that) const noexcept
+    {
+        return tr_compare_3way(num_consecutive_fruitless_, that.num_consecutive_fruitless_);
     }
 
     [[nodiscard]] constexpr auto compare_by_piece_data_time(tr_peer_info const& that) const noexcept
@@ -201,14 +235,26 @@ public:
 
     constexpr auto set_connected(time_t now, bool is_connected = true) noexcept
     {
+        if (is_connected_ == is_connected)
+        {
+            return;
+        }
+
         connection_changed_at_ = now;
 
         is_connected_ = is_connected;
 
         if (is_connected_)
         {
-            num_consecutive_fails_ = {};
             piece_data_at_ = {};
+        }
+        else if (has_transferred_piece_data())
+        {
+            num_consecutive_fruitless_ = {};
+        }
+        else
+        {
+            on_fruitless_connection();
         }
     }
 
@@ -316,17 +362,17 @@ public:
 
     // ---
 
-    constexpr void on_connection_failed() noexcept
+    constexpr void on_fruitless_connection() noexcept
     {
-        if (num_consecutive_fails_ != std::numeric_limits<decltype(num_consecutive_fails_)>::max())
+        if (num_consecutive_fruitless_ != std::numeric_limits<decltype(num_consecutive_fruitless_)>::max())
         {
-            ++num_consecutive_fails_;
+            ++num_consecutive_fruitless_;
         }
     }
 
-    [[nodiscard]] constexpr auto connection_failure_count() const noexcept
+    [[nodiscard]] constexpr auto fruitless_connection_count() const noexcept
     {
-        return num_consecutive_fails_;
+        return num_consecutive_fruitless_;
     }
 
     // ---
@@ -345,7 +391,20 @@ public:
             set_utp_supported();
         }
 
-        is_seed_ = (pex_flags & ADDED_F_SEED_FLAG) != 0U;
+        if ((pex_flags & ADDED_F_ENCRYPTION_FLAG) != 0U)
+        {
+            set_encryption_preferred();
+        }
+
+        if ((pex_flags & ADDED_F_HOLEPUNCH) != 0U)
+        {
+            set_holepunch_supported();
+        }
+
+        if ((pex_flags & ADDED_F_UPLOAD_ONLY_FLAG) != 0U)
+        {
+            set_upload_only();
+        }
     }
 
     [[nodiscard]] constexpr uint8_t pex_flags() const noexcept
@@ -376,9 +435,37 @@ public:
             }
         }
 
-        if (is_seed_)
+        if (is_encryption_preferred_)
         {
-            ret |= ADDED_F_SEED_FLAG;
+            if (*is_encryption_preferred_)
+            {
+                ret |= ADDED_F_ENCRYPTION_FLAG;
+            }
+            else
+            {
+                ret &= ~ADDED_F_ENCRYPTION_FLAG;
+            }
+        }
+
+        if (is_holepunch_supported_)
+        {
+            if (*is_holepunch_supported_)
+            {
+                ret |= ADDED_F_HOLEPUNCH;
+            }
+            else
+            {
+                ret &= ~ADDED_F_HOLEPUNCH;
+            }
+        }
+
+        if (is_upload_only())
+        {
+            ret |= ADDED_F_UPLOAD_ONLY_FLAG;
+        }
+        else
+        {
+            ret &= ~ADDED_F_UPLOAD_ONLY_FLAG;
         }
 
         return ret;
@@ -404,7 +491,7 @@ private:
         // otherwise, the interval depends on how many times we've tried
         // and failed to connect to the peer. Penalize peers that were
         // unreachable the last time we tried
-        auto step = this->num_consecutive_fails_;
+        auto step = num_consecutive_fruitless_;
         if (unreachable)
         {
             step += 2;
@@ -445,16 +532,19 @@ private:
     mutable std::optional<bool> blocklisted_;
     std::optional<bool> is_connectable_;
     std::optional<bool> is_utp_supported_;
+    std::optional<bool> is_encryption_preferred_;
+    std::optional<bool> is_holepunch_supported_;
 
-    tr_peer_from from_first_; // where the peer was first found
+    tr_peer_from const from_first_; // where the peer was first found
     tr_peer_from from_best_; // the "best" place where this peer was found
 
-    uint8_t num_consecutive_fails_ = {};
+    uint8_t num_consecutive_fruitless_ = {};
     uint8_t pex_flags_ = {};
 
     bool is_banned_ = false;
     bool is_connected_ = false;
     bool is_seed_ = false;
+    bool is_upload_only_ = false;
 
     std::unique_ptr<tr_handshake> outgoing_handshake_;
 };

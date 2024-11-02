@@ -69,7 +69,8 @@ void SqueezeLabel::paintEvent(QPaintEvent* paint_event)
 
     if (hasFocus() && (textInteractionFlags() & (Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse)) != 0)
     {
-        return QLabel::paintEvent(paint_event);
+        QLabel::paintEvent(paint_event);
+        return;
     }
 
     auto painter = QPainter{ this };

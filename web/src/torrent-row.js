@@ -80,8 +80,10 @@ const TorrentRendererHelper = {
 
   renderProgressbar: (controller, t, progressbar) => {
     const info = TorrentRendererHelper.getProgressInfo(controller, t);
+    const pct_str = `${Formatter.percentString(info.percent, 2)}%`;
     progressbar.className = info.classList.join(' ');
-    progressbar.style.setProperty('--progress', `${info.percent.toFixed(2)}%`);
+    progressbar.style.setProperty('--progress', pct_str);
+    progressbar.dataset.progress = pct_str;
   },
 };
 
@@ -151,7 +153,7 @@ export class TorrentRendererFull {
     if (t.isChecking()) {
       return [
         'Verifying local data (',
-        Formatter.percentString(100 * t.getRecheckProgress()),
+        Formatter.percentString(100 * t.getRecheckProgress(), 1),
         '% tested)',
       ].join('');
     }
@@ -168,7 +170,7 @@ export class TorrentRendererFull {
       const percent = 100 * t.getMetadataPercentComplete();
       return [
         `Magnetized transfer - ${MetaDataStatus} metadata (`,
-        Formatter.percentString(percent),
+        Formatter.percentString(percent, 1),
         '%)',
       ].join('');
     }

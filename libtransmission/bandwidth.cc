@@ -182,7 +182,7 @@ void tr_bandwidth::phase_one(std::vector<tr_peerIo*>& peers, tr_direction dir)
     tr_logAddTrace(fmt::format("{} peers to go round-robin for {}", peers.size(), dir == TR_UP ? "upload" : "download"));
 
     // Shuffle the peers so they all have equal chance to be first in line.
-    thread_local auto urbg = tr_urbg<size_t>{};
+    static thread_local auto urbg = tr_urbg<size_t>{};
     std::shuffle(std::begin(peers), std::end(peers), urbg);
 
     // Give each peer `Increment` bandwidth bytes to use. Repeat this

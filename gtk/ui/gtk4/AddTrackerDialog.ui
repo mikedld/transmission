@@ -14,39 +14,41 @@
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkLabel" id="url_section_label">
-                <property name="label" translatable="1">Tracker</property>
-                <property name="xalign">0</property>
-                <attributes>
-                  <attribute name="weight" value="bold"></attribute>
-                </attributes>
-              </object>
-            </child>
-            <child>
-              <object class="GtkGrid" id="url_section_layout">
-                <property name="margin-start">18</property>
-                <property name="row-spacing">6</property>
-                <property name="column-spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="url_label">
-                    <property name="label" translatable="1">_Announce URL:</property>
-                    <property name="use-underline">1</property>
-                    <property name="mnemonic-widget">url_entry</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">0</property>
-                    </layout>
+              <object class="GtkFrame">
+                <child type="label">
+                  <object class="GtkLabel" id="url_section_label">
+                    <property name="label" translatable="1">Tracker</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="url_entry">
-                    <property name="width-request">400</property>
-                    <property name="focusable">1</property>
-                    <property name="hexpand">1</property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">0</property>
-                    </layout>
+                  <object class="GtkGrid" id="url_section_layout">
+                    <property name="row-spacing">6</property>
+                    <property name="column-spacing">12</property>
+                    <child>
+                      <object class="GtkLabel" id="url_label">
+                        <property name="label" translatable="1">_Announce URL:</property>
+                        <property name="use-underline">1</property>
+                        <property name="mnemonic-widget">url_entry</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="url_entry">
+                        <property name="width-request">400</property>
+                        <property name="focusable">1</property>
+                        <property name="hexpand">1</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

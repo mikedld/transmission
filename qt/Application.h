@@ -36,7 +36,14 @@ class Application : public QApplication
     TR_DISABLE_COPY_MOVE(Application)
 
 public:
-    Application(int& argc, char** argv);
+    Application(
+        std::unique_ptr<Prefs> prefs,
+        bool minimized,
+        QString const& config_dir,
+        QStringList const& filenames,
+        int& argc,
+        char** argv);
+    ~Application() override;
 
     void raise() const;
     bool notifyApp(QString const& title, QString const& body, QStringList const& actions = {}) const;
@@ -112,9 +119,6 @@ private:
     QTranslator app_translator_;
 
     FaviconCache<QPixmap> favicon_cache_;
-
-    QString const config_name_ = QStringLiteral("transmission");
-    QString const display_name_ = QStringLiteral("transmission-qt");
 
 #ifdef QT_DBUS_LIB
     QString const fdo_notifications_service_name_ = QStringLiteral("org.freedesktop.Notifications");

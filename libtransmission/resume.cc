@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <cstring>
 #include <ctime>
+#include <limits>
 #include <string_view>
 #include <vector>
 
@@ -403,6 +404,44 @@ tr_resume::fields_t loadFilenames(tr_variant* dict, tr_torrent* tor)
 
 // ---
 
+void saveQueueState(tr_variant* dict, tr_torrent const* tor)
+{
+    auto* const map = dict->get_if<tr_variant::Map>();
+    if (map == nullptr)
+    {
+        return;
+    }
+
+    map->try_emplace(TR_KEY_queuePosition, tor->queue_position());
+    map->try_emplace(TR_KEY_is_queued, tor->is_queued(tor->queue_direction()));
+}
+
+auto loadQueueState(tr_variant* dict, tr_torrent* tor, tr_torrent::ResumeHelper& helper)
+{
+    auto ret = tr_resume::fields_t{};
+    auto const* const map = dict->get_if<tr_variant::Map>();
+    if (map == nullptr)
+    {
+        return ret;
+    }
+
+    if (auto val = map->value_if<int64_t>(TR_KEY_queuePosition))
+    {
+        helper.load_queue_position(*val);
+        ret = tr_resume::QueueState;
+    }
+
+    if (auto val = map->value_if<bool>(TR_KEY_is_queued))
+    {
+        tor->set_is_queued(*val);
+        ret = tr_resume::QueueState;
+    }
+
+    return ret;
+}
+
+// ---
+
 void bitfieldToRaw(tr_bitfield const& b, tr_variant* benc)
 {
     if (b.has_none() || std::empty(b))
@@ -523,16 +562,28 @@ tr_resume::fields_t loadProgress(tr_variant* dict, tr_torrent* tor, tr_torrent::
                 }
                 else if (b != nullptr && b->holds_alternative<tr_variant::Vector>())
                 {
+                    // The first element (idx 0) stores a base value for all piece timestamps,
+                    // which would be the value of the smallest piece timestamp minus 1.
+                    //
+                    // The rest of the elements are the timestamp of each piece, stored as
+                    // an offset to the base value.
+                    // i.e. idx 1 <-> piece 0, idx 2 <-> piece 1, ...
+                    //      timestamp of piece n = idx 0 + idx n+1
+                    //
+                    // Pieces that haven't been checked will have a timestamp offset of 0.
+                    // They can be differentiated from the oldest checked piece(s) since the
+                    // offset for any checked pieces will be at least 1.
+
                     auto offset = int64_t{};
                     tr_variantGetInt(tr_variantListChild(b, 0), &offset);
 
-                    time_checked = tr_time();
                     auto const [piece_begin, piece_end] = tor->piece_span_for_file(fi);
-                    for (size_t i = 0, n = piece_end - piece_begin; i < n; ++i)
+                    time_checked = std::numeric_limits<time_t>::max();
+                    for (tr_piece_index_t i = 1, n = piece_end - piece_begin; i <= n; ++i)
                     {
-                        int64_t piece_time = 0;
-                        tr_variantGetInt(tr_variantListChild(b, i + 1), &piece_time);
-                        time_checked = std::min(time_checked, time_t(piece_time));
+                        auto t = int64_t{};
+                        tr_variantGetInt(tr_variantListChild(b, i), &t);
+                        time_checked = std::min(time_checked, time_t(t != 0 ? t + offset : 0));
                     }
                 }
 
@@ -771,6 +822,11 @@ tr_resume::fields_t load_from_file(tr_torrent* tor, tr_torrent::ResumeHelper& he
         fields_loaded |= loadGroup(&top, tor);
     }
 
+    if ((fields_to_load & tr_resume::QueueState) != 0)
+    {
+        fields_loaded |= loadQueueState(&top, tor, helper);
+    }
+
     return fields_loaded;
 }
 
@@ -892,6 +948,7 @@ void save(tr_torrent* const tor, tr_torrent::ResumeHelper const& helper)
     saveName(&top, tor);
     saveLabels(&top, tor);
     saveGroup(&top, tor);
+    saveQueueState(&top, tor);
 
     auto serde = tr_variant_serde::benc();
     if (!serde.to_file(top, tor->resume_file()))

@@ -228,7 +228,6 @@ set_source_files_properties(
 
 set(IMAGESETS
     ActionHover
-    Bandwidth
     CleanupTemplate
     CompleteCheck
     CreateLarge
@@ -236,17 +235,7 @@ set(IMAGESETS
     DownArrowTemplate
     DownloadBadge
     EllipsisTemplate
-    FavIcon
-    GearshapeTemplate
     Globe
-    Groups
-    InfoActivity
-    InfoFiles
-    InfoGeneral
-    InfoOptions
-    InfoPeers
-    InfoTracker
-    Lock
     Magnet
     PauseHover
     PauseOff
@@ -258,7 +247,6 @@ set(IMAGESETS
     PriorityHighTemplate
     PriorityLowTemplate
     PriorityNormalTemplate
-    Remote
     ResumeHover
     ResumeNoWaitHover
     ResumeNoWaitOff
@@ -268,18 +256,7 @@ set(IMAGESETS
     RevealHover
     RevealOff
     RevealOn
-    ToolbarCreateTemplate
-    ToolbarFilterTemplate
-    ToolbarInfoTemplate
-    ToolbarOpenTemplate
-    ToolbarOpenWebTemplate
-    ToolbarPauseAllTemplate
-    ToolbarPauseSelectedTemplate
-    ToolbarRemoveTemplate
-    ToolbarResumeAllTemplate
-    ToolbarResumeSelectedTemplate
     TortoiseTemplate
-    Transfers
     UpArrowGroupTemplate
     UpArrowTemplate
     UploadBadge

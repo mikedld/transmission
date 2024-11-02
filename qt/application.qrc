@@ -1,10 +1,10 @@
 <RCC>
   <qresource prefix="/icons">
-      <file alias="alt-limit-off.svg">icons/turtle-silhouette.svg</file>
-      <file alias="alt-limit-on.svg">icons/turtle.svg</file>
-      <file alias="encrypted.svg">icons/lock.svg</file>
-      <file alias="hamburger-menu.svg">icons/hamburger-menu.svg</file>
-      <file alias="ratio.svg">icons/yin-yang.svg</file>
-      <file alias="transmission.svg">icons/transmission.svg</file>
+      <file alias="alt-limit-off.svg">../icons/turtle-silhouette.svg</file>
+      <file alias="alt-limit-on.svg">../icons/turtle.svg</file>
+      <file alias="encrypted.svg">../icons/lock.svg</file>
+      <file alias="hamburger-menu.svg">../icons/hamburger-menu.svg</file>
+      <file alias="ratio.svg">../icons/yin-yang.svg</file>
+      <file alias="transmission.svg">../icons/hicolor_apps_scalable_transmission.svg</file>
   </qresource>
 </RCC>

@@ -128,7 +128,7 @@ bool tr_session_id::is_local(std::string_view session_id) noexcept
     auto error = tr_error{};
     if (auto lockfile_fd = tr_sys_file_open(lockfile_path, TR_SYS_FILE_READ, 0, &error); lockfile_fd == TR_BAD_SYS_FILE)
     {
-        if (TR_ERROR_IS_ENOENT(error.code()))
+        if (tr_error_is_enoent(error.code()))
         {
             error = {};
         }

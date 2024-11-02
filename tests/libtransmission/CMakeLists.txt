@@ -21,9 +21,9 @@ target_sources(libtransmission-test
         file-piece-map-test.cc
         file-test.cc
         getopt-test.cc
-        global-ip-cache-test.cc
         handshake-test.cc
         history-test.cc
+        ip-cache-test.cc
         json-test.cc
         lpd-test.cc
         magnet-metainfo-test.cc

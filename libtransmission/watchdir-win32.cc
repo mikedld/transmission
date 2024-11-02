@@ -34,6 +34,11 @@ namespace libtransmission
 namespace
 {
 
+constexpr bool to_bool(BOOL value) noexcept
+{
+    return value != FALSE;
+}
+
 BOOL tr_get_overlapped_result_ex(
     HANDLE handle,
     LPOVERLAPPED overlapped,
@@ -48,7 +53,7 @@ BOOL tr_get_overlapped_result_ex(
 
     if (!is_real_impl_valid)
     {
-        real_impl = (impl_t)GetProcAddress(GetModuleHandleW(L"kernel32.dll"), "GetOverlappedResultEx");
+        real_impl = reinterpret_cast<impl_t>(GetProcAddress(GetModuleHandleW(L"kernel32.dll"), "GetOverlappedResultEx"));
         is_real_impl_valid = true;
     }
 
@@ -142,14 +147,15 @@ private:
             return;
         }
 
-        if ((fd_ = CreateFileW(
-                 wide_path.c_str(),
-                 FILE_LIST_DIRECTORY,
-                 FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-                 nullptr,
-                 OPEN_EXISTING,
-                 FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,
-                 nullptr)) == INVALID_HANDLE_VALUE)
+        fd_ = CreateFileW(
+            wide_path.c_str(),
+            FILE_LIST_DIRECTORY,
+            FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+            nullptr,
+            OPEN_EXISTING,
+            FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,
+            nullptr);
+        if (fd_ == INVALID_HANDLE_VALUE)
         {
             tr_logAddError(fmt::format(_("Couldn't read '{path}'"), fmt::arg("path", path)));
             return;
@@ -157,7 +163,15 @@ private:
 
         overlapped_.Pointer = this;
 
-        if (!ReadDirectoryChangesW(fd_, buffer_, sizeof(buffer_), false, Win32WatchMask, nullptr, &overlapped_, nullptr))
+        if (!to_bool(ReadDirectoryChangesW(
+                fd_,
+                std::data(buffer_),
+                std::size(buffer_),
+                FALSE,
+                Win32WatchMask,
+                nullptr,
+                &overlapped_,
+                nullptr)))
         {
             tr_logAddError(fmt::format(_("Couldn't read '{path}'"), fmt::arg("path", path)));
             return;
@@ -188,7 +202,8 @@ private:
         bufferevent_setcb(event_, &Win32Watchdir::onBufferEvent, nullptr, nullptr, this);
         bufferevent_enable(event_, EV_READ);
 
-        thread_ = (HANDLE)_beginthreadex(nullptr, 0, Win32Watchdir::staticThreadFunc, this, 0, nullptr);
+        // NOLINTNEXTLINE(performance-no-int-to-ptr)
+        thread_ = reinterpret_cast<HANDLE>(_beginthreadex(nullptr, 0, Win32Watchdir::staticThreadFunc, this, 0, nullptr));
         if (thread_ == nullptr)
         {
             tr_logAddError(_("Couldn't create thread"));
@@ -203,22 +218,31 @@ private:
 
     unsigned int threadFunc()
     {
-        DWORD bytes_transferred;
+        DWORD bytes_transferred = 0;
 
-        while (tr_get_overlapped_result_ex(fd_, &overlapped_, &bytes_transferred, INFINITE, FALSE))
+        while (to_bool(tr_get_overlapped_result_ex(fd_, &overlapped_, &bytes_transferred, INFINITE, FALSE)))
         {
-            PFILE_NOTIFY_INFORMATION info = (PFILE_NOTIFY_INFORMATION)buffer_;
+            auto* info = reinterpret_cast<PFILE_NOTIFY_INFORMATION>(std::data(buffer_));
 
             while (info->NextEntryOffset != 0)
             {
-                *((BYTE**)&info) += info->NextEntryOffset;
+                *reinterpret_cast<BYTE**>(&info) += info->NextEntryOffset;
             }
 
-            info->NextEntryOffset = bytes_transferred - ((BYTE*)info - (BYTE*)buffer_);
+            info->NextEntryOffset = bytes_transferred -
+                (reinterpret_cast<BYTE*>(info) - reinterpret_cast<BYTE*>(std::data(buffer_)));
 
-            send(notify_pipe_[1], (char const*)buffer_, bytes_transferred, 0);
+            send(notify_pipe_[1], reinterpret_cast<char const*>(std::data(buffer_)), bytes_transferred, 0);
 
-            if (!ReadDirectoryChangesW(fd_, buffer_, sizeof(buffer_), FALSE, Win32WatchMask, nullptr, &overlapped_, nullptr))
+            if (!to_bool(ReadDirectoryChangesW(
+                    fd_,
+                    std::data(buffer_),
+                    std::size(buffer_),
+                    FALSE,
+                    Win32WatchMask,
+                    nullptr,
+                    &overlapped_,
+                    nullptr)))
             {
                 tr_logAddError(_("Couldn't read directory changes"));
                 return 0;
@@ -249,7 +273,7 @@ private:
 
         auto buffer = std::vector<char>{};
         buffer.resize(sizeof(FILE_NOTIFY_INFORMATION) + name_size);
-        PFILE_NOTIFY_INFORMATION ev = (PFILE_NOTIFY_INFORMATION)std::data(buffer);
+        auto* ev = reinterpret_cast<PFILE_NOTIFY_INFORMATION>(std::data(buffer));
 
         size_t const header_size = offsetof(FILE_NOTIFY_INFORMATION, FileName);
 
@@ -263,7 +287,7 @@ private:
                 break;
             }
 
-            if (nread == (size_t)-1)
+            if (nread == static_cast<size_t>(-1))
             {
                 auto const error_code = errno;
                 tr_logAddError(fmt::format(
@@ -292,12 +316,12 @@ private:
             {
                 name_size = nleft;
                 buffer.resize(sizeof(FILE_NOTIFY_INFORMATION) + name_size);
-                ev = (PFILE_NOTIFY_INFORMATION)std::data(buffer);
+                ev = reinterpret_cast<PFILE_NOTIFY_INFORMATION>(std::data(buffer));
             }
 
             // consume entire name into buffer
             nread = bufferevent_read(event, &buffer[header_size], nleft);
-            if (nread == (size_t)-1)
+            if (nread == static_cast<size_t>(-1))
             {
                 auto const error_code = errno;
                 tr_logAddError(fmt::format(
@@ -330,7 +354,7 @@ private:
 
     HANDLE fd_ = INVALID_HANDLE_VALUE;
     OVERLAPPED overlapped_ = {};
-    DWORD buffer_[8 * 1024 / sizeof(DWORD)];
+    std::array<DWORD, 8 * 1024 / sizeof(DWORD)> buffer_ = {};
     std::array<evutil_socket_t, 2> notify_pipe_{ static_cast<evutil_socket_t>(-1), static_cast<evutil_socket_t>(-1) };
     struct bufferevent* event_ = nullptr;
     HANDLE thread_ = {};
@@ -342,9 +366,9 @@ std::unique_ptr<Watchdir> Watchdir::create(
     std::string_view dirname,
     Callback callback,
     TimerMaker& timer_maker,
-    struct event_base* event_base)
+    struct event_base* evbase)
 {
-    return std::make_unique<Win32Watchdir>(dirname, std::move(callback), timer_maker, event_base);
+    return std::make_unique<Win32Watchdir>(dirname, std::move(callback), timer_maker, evbase);
 }
 
 } // namespace libtransmission

@@ -56,6 +56,7 @@ target_sources(${TR_NAME}-qt
         InteropObject.h
         LicenseDialog.cc
         LicenseDialog.h
+        main.cc
         MainWindow.cc
         MainWindow.h
         MakeDialog.cc
@@ -236,13 +237,28 @@ set_target_properties(
 
 tr_win32_app_info(${TR_NAME}-qt
     "Transmission Qt Client"
-    "transmission-qt"
-    "transmission-qt.exe"
-    "qtr.ico")
+    "${TR_NAME}-qt"
+    "${TR_NAME}-qt.exe"
+    "${SOURCE_ICONS_DIR}/${TR_NAME}.ico")
 
 install(
     TARGETS ${TR_NAME}-qt
     DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+set(PUBLIC_ICONS
+    hicolor_apps_scalable_transmission.svg
+    hicolor_apps_scalable_transmission-devel.svg
+    hicolor_apps_symbolic_transmission-symbolic.svg)
+
+set(ICON_NAME_REGEX "^([^_]+)_([^_]+)_([^_]+)_(.+)$")
+foreach(ICON ${PUBLIC_ICONS})
+    string(REGEX REPLACE ${ICON_NAME_REGEX} "\\1/\\3/\\2" ICON_DIR ${ICON})
+    string(REGEX REPLACE ${ICON_NAME_REGEX} "\\4" ICON_NAME ${ICON})
+    install(
+        FILES ${SOURCE_ICONS_DIR}/${ICON}
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/${ICON_DIR}/
+        RENAME ${ICON_NAME})
+endforeach()
 
 if(INSTALL_DOC)
     install(

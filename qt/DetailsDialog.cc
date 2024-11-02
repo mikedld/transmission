@@ -766,7 +766,7 @@ void DetailsDialog::refreshUI()
 
         auto const seconds = static_cast<int>(std::difftime(now, latest));
 
-        if (seconds < 0)
+        if (latest == 0)
         {
             string = none;
         }
@@ -1549,8 +1549,10 @@ void DetailsDialog::initOptionsTab()
     cr->addLayout(ui_.peerConnectionsSectionLayout);
     cr->update();
 
-    void (QComboBox::*const combo_index_changed)(int) = &QComboBox::currentIndexChanged;
-    void (QSpinBox::*const spin_value_changed)(int) = &QSpinBox::valueChanged;
+    // clang-format off
+    void (QComboBox::* const combo_index_changed)(int) = &QComboBox::currentIndexChanged;
+    void (QSpinBox::* const spin_value_changed)(int) = &QSpinBox::valueChanged;
+    // clang-format on
     connect(ui_.bandwidthPriorityCombo, combo_index_changed, this, &DetailsDialog::onBandwidthPriorityChanged);
     connect(ui_.idleCombo, combo_index_changed, this, &DetailsDialog::onIdleModeChanged);
     connect(ui_.idleSpin, &QSpinBox::editingFinished, this, &DetailsDialog::onSpinBoxEditingFinished);

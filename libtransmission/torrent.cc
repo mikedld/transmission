@@ -513,12 +513,14 @@ void tr_torrent::set_unique_queue_position(size_t const new_pos)
         {
             --walk->queue_position_;
             walk->mark_changed();
+            walk->set_dirty();
         }
 
         if ((old_pos > new_pos) && (new_pos <= walk->queue_position_) && (walk->queue_position_ < old_pos))
         {
             ++walk->queue_position_;
             walk->mark_changed();
+            walk->set_dirty();
         }
 
         max_pos = std::max(max_pos, walk->queue_position_);
@@ -526,6 +528,7 @@ void tr_torrent::set_unique_queue_position(size_t const new_pos)
 
     queue_position_ = std::min(new_pos, max_pos + 1);
     mark_changed();
+    set_dirty();
 
     TR_ASSERT(torrents_are_sorted_by_queue_position(torrents.get_all()));
 }
@@ -605,32 +608,6 @@ bool torrentShouldQueue(tr_torrent const* const tor)
 bool removeTorrentFile(char const* filename, void* /*user_data*/, tr_error* error)
 {
     return tr_sys_path_remove(filename, error);
-}
-
-void removeTorrentInSessionThread(tr_torrent* tor, bool delete_flag, tr_fileFunc delete_func, void* user_data)
-{
-    auto const lock = tor->unique_lock();
-
-    if (delete_flag && tor->has_metainfo())
-    {
-        // ensure the files are all closed and idle before moving
-        tor->session->close_torrent_files(tor->id());
-        tor->session->verify_remove(tor);
-
-        if (delete_func == nullptr)
-        {
-            delete_func = removeTorrentFile;
-        }
-
-        auto const delete_func_wrapper = [&delete_func, user_data](char const* filename)
-        {
-            delete_func(filename, user_data, nullptr);
-        };
-
-        tor->files().remove(tor->current_dir(), tor->name(), delete_func_wrapper);
-    }
-
-    tr_torrentFreeInSessionThread(tor);
 }
 
 void freeTorrent(tr_torrent* tor)
@@ -735,7 +712,6 @@ void tr_torrent::start_in_session_thread()
     time_t const now = tr_time();
 
     is_running_ = true;
-    completeness_ = completion_.status();
     date_started_ = now;
     mark_changed();
     error().clear();
@@ -784,6 +760,59 @@ void tr_torrent::stop_now()
     set_is_queued(false);
 }
 
+void tr_torrentRemoveInSessionThread(
+    tr_torrent* tor,
+    bool delete_flag,
+    tr_fileFunc delete_func,
+    void* delete_user_data,
+    tr_torrent_remove_done_func callback,
+    void* callback_user_data)
+{
+    auto const lock = tor->unique_lock();
+
+    bool ok = true;
+    if (delete_flag && tor->has_metainfo())
+    {
+        // ensure the files are all closed and idle before moving
+        tor->session->close_torrent_files(tor->id());
+        tor->session->verify_remove(tor);
+
+        if (delete_func == nullptr)
+        {
+            delete_func = start_stop_helpers::removeTorrentFile;
+        }
+
+        auto const delete_func_wrapper = [&delete_func, delete_user_data](char const* filename)
+        {
+            delete_func(filename, delete_user_data, nullptr);
+        };
+
+        tr_error error;
+        tor->files().remove(tor->current_dir(), tor->name(), delete_func_wrapper, &error);
+        if (error)
+        {
+            ok = false;
+            tor->is_deleting_ = false;
+
+            tor->error().set_local_error(fmt::format(
+                _("Couldn't remove all torrent files: {error} ({error_code})"),
+                fmt::arg("error", error.message()),
+                fmt::arg("error_code", error.code())));
+            tr_torrentStop(tor);
+        }
+    }
+
+    if (callback != nullptr)
+    {
+        callback(tor->id(), ok, callback_user_data);
+    }
+
+    if (ok)
+    {
+        tr_torrentFreeInSessionThread(tor);
+    }
+}
+
 void tr_torrentStop(tr_torrent* tor)
 {
     if (!tr_isTorrent(tor))
@@ -798,7 +827,13 @@ void tr_torrentStop(tr_torrent* tor)
     tor->session->run_in_session_thread([tor]() { tor->stop_now(); });
 }
 
-void tr_torrentRemove(tr_torrent* tor, bool delete_flag, tr_fileFunc delete_func, void* user_data)
+void tr_torrentRemove(
+    tr_torrent* tor,
+    bool delete_flag,
+    tr_fileFunc delete_func,
+    void* delete_user_data,
+    tr_torrent_remove_done_func callback,
+    void* callback_user_data)
 {
     using namespace start_stop_helpers;
 
@@ -806,7 +841,14 @@ void tr_torrentRemove(tr_torrent* tor, bool delete_flag, tr_fileFunc delete_func
 
     tor->is_deleting_ = true;
 
-    tor->session->run_in_session_thread(removeTorrentInSessionThread, tor, delete_flag, delete_func, user_data);
+    tor->session->run_in_session_thread(
+        tr_torrentRemoveInSessionThread,
+        tor,
+        delete_flag,
+        delete_func,
+        delete_user_data,
+        callback,
+        callback_user_data);
 }
 
 void tr_torrentFreeInSessionThread(tr_torrent* tor)
@@ -904,8 +946,8 @@ void tr_torrent::on_metainfo_completed()
     else
     {
         completion_.set_has_all();
-        date_done_ = date_added_;
         recheck_completeness();
+        date_done_ = date_added_; // Must be after recheck_completeness()
 
         if (start_when_stable_)
         {
@@ -923,6 +965,8 @@ void tr_torrent::init(tr_ctor const& ctor)
     session = ctor.session();
     TR_ASSERT(session != nullptr);
     auto const lock = unique_lock();
+
+    auto const now_sec = tr_time();
 
     queue_position_ = std::size(session->torrents());
 
@@ -957,7 +1001,7 @@ void tr_torrent::init(tr_ctor const& ctor)
 
     mark_changed();
 
-    date_added_ = tr_time(); // this is a default that will be overwritten by the resume file
+    date_added_ = now_sec; // this is a default that will be overwritten by the resume file
 
     tr_resume::fields_t loaded = {};
 
@@ -1056,6 +1100,12 @@ void tr_torrent::init(tr_ctor const& ctor)
     else
     {
         set_local_error_if_files_disappeared(this, has_any_local_data);
+    }
+
+    // Recover from the bug reported at https://github.com/transmission/transmission/issues/6899
+    if (is_done() && date_done_ == time_t{})
+    {
+        date_done_ = now_sec;
     }
 }
 
@@ -1656,9 +1706,7 @@ void tr_torrent::VerifyMediator::on_verify_started()
 
 void tr_torrent::VerifyMediator::on_piece_checked(tr_piece_index_t const piece, bool const has_piece)
 {
-    auto const had_piece = tor_->has_piece(piece);
-
-    if (has_piece != had_piece)
+    if (auto const had_piece = tor_->has_piece(piece); !has_piece || !had_piece)
     {
         tor_->set_has_piece(piece, has_piece);
         tor_->set_dirty();
@@ -1690,9 +1738,12 @@ void tr_torrent::VerifyMediator::on_verify_done(bool const aborted)
     if (!aborted && !tor_->is_deleting_)
     {
         tor_->session->run_in_session_thread(
-            [tor = tor_]()
+            // Do not capture the torrent pointer directly, or else we will crash if program
+            // execution reaches this point while the session thread is about to free this torrent.
+            [tor_id = tor_->id(), session = tor_->session]()
             {
-                if (tor->is_deleting_)
+                auto* const tor = session->torrents().get(tor_id);
+                if (tor == nullptr || tor->is_deleting_)
                 {
                     return;
                 }
@@ -1809,15 +1860,12 @@ void tr_torrent::recheck_completeness()
         bool const recent_change = bytes_downloaded_.during_this_session() != 0U;
         bool const was_running = is_running();
 
-        if (recent_change)
-        {
-            tr_logAddTraceTor(
-                this,
-                fmt::format(
-                    "State changed from {} to {}",
-                    get_completion_string(completeness_),
-                    get_completion_string(new_completeness)));
-        }
+        tr_logAddTraceTor(
+            this,
+            fmt::format(
+                "State changed from {} to {}",
+                get_completion_string(completeness_),
+                get_completion_string(new_completeness)));
 
         completeness_ = new_completeness;
         session->close_torrent_files(id());
@@ -1826,10 +1874,12 @@ void tr_torrent::recheck_completeness()
         {
             if (recent_change)
             {
+                // https://www.bittorrent.org/beps/bep_0003.html
+                // ...and one using completed is sent when the download is complete.
+                // No completed is sent if the file was complete when started.
                 tr_announcerTorrentCompleted(this);
-                mark_changed();
-                date_done_ = tr_time();
             }
+            date_done_ = tr_time();
 
             if (current_dir() == incomplete_dir())
             {
@@ -1842,6 +1892,7 @@ void tr_torrent::recheck_completeness()
         session->onTorrentCompletenessChanged(this, completeness_, was_running);
 
         set_dirty();
+        mark_changed();
 
         if (is_done())
         {
@@ -1944,7 +1995,10 @@ tr_block_span_t tr_torrent::block_span_for_file(tr_file_index_t const file) cons
 {
     auto const [begin_byte, end_byte] = byte_span_for_file(file);
 
-    auto const begin_block = byte_loc(begin_byte).block;
+    // N.B. If the last file in the torrent is 0 bytes, and the torrent size is a multiple of block size,
+    // then the computed block index will be past-the-end. We handle this with std::min.
+    auto const begin_block = std::min(byte_loc(begin_byte).block, block_count() - 1U);
+
     if (begin_byte >= end_byte) // 0-byte file
     {
         return { begin_block, begin_block + 1 };
@@ -2032,7 +2086,7 @@ void tr_torrent::on_announce_list_changed()
     if (auto const& error_url = error_.announce_url(); !std::empty(error_url))
     {
         auto const& ann = metainfo().announce_list();
-        if (std::any_of(
+        if (std::none_of(
                 std::begin(ann),
                 std::end(ann),
                 [error_url](auto const& tracker) { return tracker.announce == error_url; }))
@@ -2056,9 +2110,9 @@ void tr_torrent::on_tracker_response(tr_tracker_event const* event)
         break;
 
     case tr_tracker_event::Type::Counts:
-        if (is_private() && (event->leechers == 0))
+        if (is_private() && (event->leechers == 0 || event->downloaders == 0))
         {
-            swarm_is_all_seeds_.emit(this);
+            swarm_is_all_upload_only_.emit(this);
         }
 
         break;
@@ -2267,8 +2321,8 @@ void tr_torrent::set_download_dir(std::string_view path, bool is_new_torrent)
         else
         {
             completion_.set_has_all();
-            date_done_ = date_added_;
             recheck_completeness();
+            date_done_ = date_added_; // Must be after recheck_completeness()
         }
     }
     else if (error_.error_type() == TR_STAT_LOCAL_ERROR && !set_local_error_if_files_disappeared(this))
@@ -2677,6 +2731,13 @@ void tr_torrent::ResumeHelper::load_incomplete_dir(std::string_view const dir) n
     {
         tor_.current_dir_ = tor_.incomplete_dir_;
     }
+}
+
+// ---
+
+void tr_torrent::ResumeHelper::load_queue_position(size_t pos) noexcept
+{
+    tor_.queue_position_ = pos;
 }
 
 // ---

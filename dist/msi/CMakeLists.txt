@@ -58,7 +58,7 @@ else()
 endif()
 
 file(
-    COPY "${PROJECT_SOURCE_DIR}/qt/icons/transmission.ico"
+    COPY "${SOURCE_ICONS_DIR}/transmission.ico"
     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(WEBSRCDIR "${CMAKE_INSTALL_PREFIX}/share/transmission/public_html")
