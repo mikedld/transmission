@@ -312,6 +312,7 @@ a {
     background-repeat: no-repeat;
     border: 0;
     border-radius: 5px;
+    color: var(--color-fg-primary);
     cursor: pointer;
     height: var(--toolbar-height);
     margin-right: 6px;
@@ -328,6 +329,7 @@ a {
     }
 
     &:disabled {
+      color: var(--color-fg-disabled);
       cursor: default;
 
       svg {
