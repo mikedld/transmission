@@ -26,7 +26,7 @@ This falls into the are-you-sure-it-is-plugged-in category, but do not be embarr
 Even if you are the only downloader and there are four or five seeders ready to send you information, things can still be slow sometimes. Often what happens is the seeder's upload bandwidth is being shared between you and other peers in another torrent.
 
 ## 6. Are you uploading too fast?
-If you try to upload to the limit of your connection bandwidth you may block your own downloads (which also use a little bit of upload bandwidth). It is best to limit uploads to no more than around 80% of your nominal upload bandwidth. Remember many network connections are asymmetric &mdash; which in practice means that upload speeds may only be a fraction of download speeds. If your upload bandwidth is say 25KBytes/sec then a good value for torrent upload limits might be 20KBytes/sec.
+If you try to upload to the limit of your connection bandwidth you may block your own downloads (which also use a little bit of upload bandwidth). It is best to limit uploads to no more than around 80% of your nominal upload bandwidth. Remember many network connections are asymmetric &mdash; which in practice means that upload speeds may only be a fraction of download speeds. If your upload bandwidth is say 25kB/s then a good value for torrent upload limits might be 20kB/s.
 
 ## 7. Is it your ISP?
 If your ISP is one of those that manipulates BitTorrent packets &mdash; and even if it is not &mdash; it is often a good idea to enable the [Blocklist](./Blocklist.md) and also to tell Transmission to "Ignore Unencrypted Peers" to give your sessions slightly better privacy.
