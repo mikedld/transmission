@@ -22,8 +22,6 @@ static NSUInteger const kIconWidth = 16;
 namespace
 {
 
-static long counter = 0;
-
 class FileTreeNode
 {
   public:
@@ -130,7 +128,6 @@ NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableD
 
 - (NSString*)generateHTMLPreviewFor:(NSURL*)url andReply:(QLPreviewReply* _Nonnull)replyToUpdate
 {
-    ++counter;
     //try to parse the torrent file
     auto metainfo = tr_torrent_metainfo{};
     if (!metainfo.parse_torrent_file(url.path.UTF8String))
