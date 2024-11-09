@@ -263,7 +263,7 @@ NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableD
 
         NSString* fileTitleString = [NSString
             localizedStringWithFormat:NSLocalizedStringFromTableInBundle(@"%lu Files", nil, bundle, "quicklook file header"), n_files];
-        [listSection appendFormat:@"<tr><th>%@</th></tr>", fileTitleString];
+        [listSection appendFormat:@"<tr><th colspan=\"2\">%@</th></tr>", fileTitleString];
 
         FileTreeNode root{};
 
