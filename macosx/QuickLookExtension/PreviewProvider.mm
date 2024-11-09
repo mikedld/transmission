@@ -42,29 +42,19 @@ class FileTreeNode
 
 } // namespace
 
-NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableDictionary* allImgProps)
+NSString* generateIconData(UTType* type, NSUInteger width, NSMutableDictionary<NSString*, QLPreviewReplyAttachment*>* allImgProps)
 {
-    NSString* rawFilename = ![fileExtension isEqualToString:@""] ? fileExtension : @"blank_file_name_transmission";
-    // we need to do this once per file extension, per size
-    NSString* iconFileName = [NSString stringWithFormat:@"%ldx%@.tiff", width, rawFilename];
+    // we need to do this once per file type, per image size
+    NSString* iconFileName = [NSString stringWithFormat:@"%@.%ld.tiff", type.identifier, width];
 
     if (!allImgProps[iconFileName])
     {
-        UTType* type;
-        if ([fileExtension isEqualToString:@"'fldr'"])
-        {
-            type = UTTypeFolder;
-        }
-        else
-        {
-            type = [UTType typeWithFilenameExtension:fileExtension];
-        }
         NSImage* icon = [[NSWorkspace sharedWorkspace] iconForContentType:type];
 
         NSRect const iconFrame = NSMakeRect(0.0, 0.0, width, width);
         NSImage* renderedIcon = [[NSImage alloc] initWithSize:iconFrame.size];
         [renderedIcon lockFocus];
-        [icon drawInRect:iconFrame fromRect:NSZeroRect operation:NSCompositingOperationCopy fraction:1.0];
+        [icon drawInRect:iconFrame];
         [renderedIcon unlockFocus];
 
         NSData* iconData = renderedIcon.TIFFRepresentation;
@@ -143,17 +133,17 @@ NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableD
     NSMutableString* htmlString = [NSMutableString string];
     [htmlString appendFormat:@"<html><style type=\"text/css\">%@</style><body>", styleContents];
 
-    NSMutableDictionary* allImgProps = [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString*, QLPreviewReplyAttachment*>* attachments = [NSMutableDictionary dictionary];
 
     NSString* name = @(metainfo.name().c_str());
 
     auto const n_files = metainfo.file_count();
     auto const is_multifile = n_files > 1;
-    NSString* fileTypeString = is_multifile ? NSFileTypeForHFSTypeCode(kGenericFolderIcon) : name.pathExtension;
+    UTType* fileType = is_multifile ? UTTypeFolder : [UTType typeWithFilenameExtension:name.pathExtension];
 
     NSUInteger const width = 32;
     [htmlString appendFormat:@"<h2><img class=\"icon\" src=\"%@\" width=\"%ld\" height=\"%ld\" />%@</h2>",
-                             generateIconData(fileTypeString, width, allImgProps),
+                             generateIconData(fileType, width, attachments),
                              width,
                              width,
                              name];
@@ -287,24 +277,24 @@ NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableD
                 if (inserted)
                 {
                     NSString* pathPart = @(it->first.c_str());
-                    NSString* pathExt = nil;
+                    UTType* pathType = nil;
                     NSString* fileSize = nil;
                     if (level < last)
                     {
                         // This node is a directory.
-                        pathExt = NSFileTypeForHFSTypeCode(kGenericFolderIcon);
+                        pathType = UTTypeFolder;
                         fileSize = @"";
                     }
                     else
                     {
                         // This node is a leaf file.
-                        pathExt = pathPart.pathExtension;
+                        pathType = [UTType typeWithFilenameExtension:pathPart.pathExtension];
                         fileSize = [NSString stringForFileSize:size];
                     }
 
                     [listSection appendFormat:@"<tr><td><img style=\"padding-left: %ldpx\" class=\"icon\" src=\"%@\" width=\"%ld\" height=\"%ld\" />%@</td><td class=\"grey\">%@</td></tr>",
                                               level * kIconWidth,
-                                              generateIconData(pathExt, kIconWidth, allImgProps),
+                                              generateIconData(pathType, kIconWidth, attachments),
                                               kIconWidth,
                                               kIconWidth,
                                               pathPart,
@@ -328,7 +318,7 @@ NSString* generateIconData(NSString* fileExtension, NSUInteger width, NSMutableD
 
     [htmlString appendString:@"</body></html>"];
 
-    replyToUpdate.attachments = allImgProps;
+    replyToUpdate.attachments = attachments;
 
     return htmlString;
 }
