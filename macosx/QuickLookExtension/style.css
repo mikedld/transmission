@@ -1,94 +1,106 @@
 :root {
-  color-scheme: light dark;
-}
+    color-scheme: light dark;
 
-html {
-  color: rgb(0,0,0);
-  font-family: -apple-system, BlinkMacSystemFont, system-ui;
-  text-align: left;
-}
+    --bg-color: rgb(255, 255, 255);
+    --fg-color: rgb(0, 0, 0);
 
-table {
-  width: 100%;
-  border-spacing: 0;
-}
+    --header-text-color: rgb(50, 50, 50);
+    --header-underline-color: rgb(230, 230, 230);
 
-th {
-  color: rgb(50,50,50);
-  font-weight: 500;
-  text-align: left;
-}
+    --row-fg-color: rgb(40, 40, 40);
 
-tr:nth-child(even) {
-  background: rgb(244,245,245);
-}
-
-tr:hover, tr:nth-child(even):hover {
-  accent-color: auto;
-  background: AccentColor;
-}
-
-td:first-child {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-td:last-child {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-td {
-  color: rgb(80,80,80);
-  text-align: left;
-  max-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-td:nth-child(1) {
-  max-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-td:nth-child(2) {
-  text-align: right;
-  width: 80px;
-}
-
-td.grey {
-  color: rgb(133,133,133);
-}
-
-td:hover, td.grey:hover {
-  accent-color: auto;
-  color: AccentColorText;
-}
-
-
-img.icon {
-  margin-right: 8px;
-  margin-left: 8px;
-  vertical-align: text-bottom;
+    --alt-row-bg-color: rgb(245, 245, 245);
+    --alt-col-fg-color: rgb(133, 133, 133);
 }
 
 @media (prefers-color-scheme: dark) {
-    html {
-      color: rgb(255,255,255);
-    }
+    :root {
+        --bg-color: rgb(30, 30, 30);
+        --fg-color: rgb(255, 255, 255);
 
-    th {
-      color: rgb(200,200,200);
-    }
+        --header-text-color: rgb(200, 200, 200);
+        --header-underline-color: rgb(55, 55, 55);
 
-    tr:nth-child(even) {
-      background: rgb(50,50,50);
-    }
+        --row-fg-color: rgb(225, 225, 225);
 
-    td {
-      color: rgb(175,175,175);
+        --alt-row-bg-color: rgb(40, 40, 40);
+        --alt-col-fg-color: rgb(155, 155, 155);
     }
+}
+
+html {
+    background: var(--bg-color);
+    color: var(--fg-color);
+
+    font-family: -apple-system, BlinkMacSystemFont, system-ui;
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+/* Sticky Table Header Row */
+tr:has(th) {
+    top: 0;
+    position: sticky;
+
+    background: var(--bg-color);
+}
+
+th {
+    padding-top: 8px;
+
+    color: var(--header-text-color);
+    border-bottom: 1px solid var(--header-underline-color);
+
+    font-weight: 500;
+    text-align: left;
+}
+
+tr:has(td):nth-child(odd) {
+    background: var(--alt-row-bg-color);
+}
+
+td {
+    color: var(--row-fg-color);
+}
+
+td.grey {
+    color: var(--alt-col-fg-color);
+}
+
+td:first-child {
+    padding-left: 8px;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+td:last-child {
+    padding-right: 8px;
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+td:nth-child(1) {
+    text-align: left;
+
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td:nth-child(2) {
+    text-align: right;
+
+    width: 80px;
+}
+
+img.icon {
+    margin-right: 8px;
+    vertical-align: text-bottom;
 }
