@@ -1,10 +1,6 @@
-//
-//  PreviewProvider.mm
-//  QuickLookExtension
-//
-//  Created by Dzmitry Neviadomski on 18.10.24.
-//  Copyright © 2024 The Transmission Project. All rights reserved.
-//
+// This file Copyright © Transmission authors and contributors.
+// It may be used under the MIT (SPDX: MIT) license.
+// License text can be found in the licenses/ folder.
 
 #import "PreviewProvider.h"
 
@@ -44,7 +40,7 @@ class FileTreeNode
 
 NSString* generateIconData(UTType* type, NSUInteger width, NSMutableDictionary<NSString*, QLPreviewReplyAttachment*>* allImgProps)
 {
-    // we need to do this once per file type, per image size
+    // We need to do this once per file type, per image size
     NSString* iconFileName = [NSString stringWithFormat:@"%@.%ld.tiff", type.identifier, width];
 
     if (!allImgProps[iconFileName])
@@ -69,56 +65,24 @@ NSString* generateIconData(UTType* type, NSUInteger width, NSMutableDictionary<N
 
 @implementation PreviewProvider
 
-/*
-
- Use a QLPreviewProvider to provide data-based previews.
- 
- To set up your extension as a data-based preview extension:
-
- - Modify the extension's Info.plist by setting
-   <key>QLIsDataBasedPreview</key>
-   <true/>
- 
- - Add the supported content types to QLSupportedContentTypes array in the extension's Info.plist.
-
- - Change the NSExtensionPrincipalClass to this class.
-   e.g.
-   <key>NSExtensionPrincipalClass</key>
-   <string>PreviewProvider</string>
- 
- - Implement providePreviewForFileRequest:completionHandler:
- 
- */
-
 - (void)providePreviewForFileRequest:(QLFilePreviewRequest*)request
                    completionHandler:(void (^)(QLPreviewReply* _Nullable reply, NSError* _Nullable error))handler
 {
-    //You can create a QLPreviewReply in several ways, depending on the format of the data you want to return.
-    //To return NSData of a supported content type:
-
-    UTType* contentType = UTTypeHTML; //replace with your data type
-
     QLPreviewReply* reply = [[QLPreviewReply alloc]
-        initWithDataOfContentType:contentType
+        initWithDataOfContentType:UTTypeHTML
                       contentSize:CGSizeMake(1200, 800)
                 dataCreationBlock:^NSData* _Nullable(QLPreviewReply* _Nonnull replyToUpdate, NSError* __autoreleasing _Nullable* _Nullable error) {
-                    //setting the stringEncoding for text and html data is optional and defaults to NSUTF8StringEncoding
-                    replyToUpdate.stringEncoding = NSUTF8StringEncoding;
-
                     NSString* previewHTML = [self generateHTMLPreviewFor:request.fileURL andReply:replyToUpdate];
 
-                    //initialize your data here
                     return [previewHTML dataUsingEncoding:NSUTF8StringEncoding];
                 }];
-
-    //You can also create a QLPreviewReply with a fileURL of a supported file type, by drawing directly into a bitmap context, or by providing a PDFDocument.
 
     handler(reply, nil);
 }
 
 - (NSString*)generateHTMLPreviewFor:(NSURL*)url andReply:(QLPreviewReply* _Nonnull)replyToUpdate
 {
-    //try to parse the torrent file
+    // Try to parse the torrent file
     auto metainfo = tr_torrent_metainfo{};
     if (!metainfo.parse_torrent_file(url.path.UTF8String))
     {

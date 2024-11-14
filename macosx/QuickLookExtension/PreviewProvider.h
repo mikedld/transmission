@@ -1,10 +1,6 @@
-//
-//  PreviewProvider.h
-//  QuickLookExtension
-//
-//  Created by Dzmitry Neviadomski on 18.10.24.
-//  Copyright © 2024 The Transmission Project. All rights reserved.
-//
+// This file Copyright © Transmission authors and contributors.
+// It may be used under the MIT (SPDX: MIT) license.
+// License text can be found in the licenses/ folder.
 
 #import <Cocoa/Cocoa.h>
 #import <Quartz/Quartz.h>
