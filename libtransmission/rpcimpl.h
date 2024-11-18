@@ -15,4 +15,6 @@ using tr_rpc_response_func = std::function<void(tr_session* session, tr_variant&
 
 void tr_rpc_request_exec(tr_session* session, tr_variant const& request, tr_rpc_response_func&& callback = {});
 
+void tr_rpc_request_exec(tr_session* session, std::string_view request, tr_rpc_response_func&& callback = {});
+
 tr_variant tr_rpc_parse_list_str(std::string_view str);

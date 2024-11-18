@@ -2198,6 +2198,14 @@ void tr_rpc_request_exec(tr_session* session, tr_variant const& request, tr_rpc_
     callback(session, tr_variant{ std::move(response) });
 }
 
+void tr_rpc_request_exec(tr_session* session, std::string_view request, tr_rpc_response_func&& callback)
+{
+    if (auto otop = tr_variant_serde::json().inplace().parse(request); otop)
+    {
+        tr_rpc_request_exec(session, *otop, std::move(callback));
+    }
+}
+
 /**
  * Munge the URI into a usable form.
  *
