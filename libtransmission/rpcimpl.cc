@@ -60,6 +60,15 @@ enum class TrFormat : uint8_t
     Table
 };
 
+enum RpcErrorCode : int16_t
+{
+    JSONRPC_PARSE_ERROR = -32700,
+    JSONRPC_INVALID_REQUEST = -32600,
+    JSONRPC_METHOD_NOT_FOUND = -32601,
+    JSONRPC_INVALID_PARAMS = -32602,
+    JSONRPC_INTERNAL_ERROR = -32603
+};
+
 // ---
 
 /* For functions that can't be immediately executed, like torrentAdd,
