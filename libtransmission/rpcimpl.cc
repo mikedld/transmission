@@ -52,7 +52,8 @@ namespace
 auto constexpr RecentlyActiveSeconds = time_t{ 60 };
 auto constexpr RpcVersion = int64_t{ 18 };
 auto constexpr RpcVersionMin = int64_t{ 14 };
-auto constexpr RpcVersionSemver = "5.4.0"sv;
+auto constexpr RpcVersionSemver = "6.0.0"sv;
+auto constexpr JsonRpcVersion = "2.0"sv;
 
 enum class TrFormat : uint8_t
 {
@@ -68,6 +69,59 @@ enum RpcErrorCode : int16_t
     JSONRPC_INVALID_PARAMS = -32602,
     JSONRPC_INTERNAL_ERROR = -32603
 };
+
+// https://www.jsonrpc.org/specification#error_object
+tr_variant::Map tr_jsonrpc_error(RpcErrorCode code, tr_variant data)
+{
+    static auto constexpr Messages = std::array<std::pair<RpcErrorCode, std::string_view>, 5U>{ {
+        { JSONRPC_PARSE_ERROR, "Parse error"sv },
+        { JSONRPC_INVALID_REQUEST, "Invalid Request"sv },
+        { JSONRPC_METHOD_NOT_FOUND, "Method not found"sv },
+        { JSONRPC_INVALID_PARAMS, "Invalid params"sv },
+        { JSONRPC_INTERNAL_ERROR, "Internal error"sv },
+    } };
+
+    auto const message = [code]
+    {
+        auto const test = [code](auto const& error)
+        {
+            return error.first == code;
+        };
+        if (auto end = std::end(Messages), it = std::find_if(std::begin(Messages), end, test); it != end)
+        {
+            return it->second;
+        }
+
+        return ""sv;
+    }();
+
+    auto ret = tr_variant::Map{ 3U };
+    ret.try_emplace(TR_KEY_code, code);
+    ret.try_emplace(TR_KEY_message, tr_variant::unmanaged_string(message));
+    if (data.has_value())
+    {
+        ret.try_emplace(TR_KEY_data, std::move(data));
+    }
+
+    return ret;
+}
+
+// https://www.jsonrpc.org/specification#response_object
+tr_variant::Map tr_jsonrpc_response(RpcErrorCode code, tr_variant id, tr_variant body)
+{
+    TR_ASSERT(
+        id.index() == tr_variant::StringIndex || id.index() == tr_variant::IntIndex || id.index() == tr_variant::DoubleIndex ||
+        id.index() == tr_variant::NullIndex);
+
+    // TODO: add logic for normal response
+
+    auto ret = tr_variant::Map{ 3U };
+    ret.try_emplace(TR_KEY_jsonrpc, JsonRpcVersion);
+    ret.try_emplace(TR_KEY_error, tr_jsonrpc_error(code, std::move(body)));
+    ret.try_emplace(TR_KEY_id, std::move(id));
+
+    return ret;
+}
 
 // ---
 
@@ -2200,10 +2254,14 @@ void tr_rpc_request_exec(tr_session* session, tr_variant const& request, tr_rpc_
 
 void tr_rpc_request_exec(tr_session* session, std::string_view request, tr_rpc_response_func&& callback)
 {
-    if (auto otop = tr_variant_serde::json().inplace().parse(request); otop)
+    auto serde = tr_variant_serde::json().inplace();
+    if (auto otop = serde.parse(request); otop)
     {
         tr_rpc_request_exec(session, *otop, std::move(callback));
+        return;
     }
+
+    callback(session, tr_jsonrpc_response(JSONRPC_PARSE_ERROR, nullptr, serde.error_.message()));
 }
 
 /**
