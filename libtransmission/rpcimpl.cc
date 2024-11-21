@@ -2175,39 +2175,23 @@ void noop_response_callback(tr_session* /*session*/, tr_variant&& /*response*/)
 {
 }
 
-} // namespace
-
-void tr_rpc_request_exec(tr_session* session, tr_variant const& request, tr_rpc_response_func&& callback)
+void tr_rpc_request_exec_legacy(tr_session* session, tr_variant::Map const& request, tr_rpc_response_func&& callback)
 {
-    auto const lock = session->unique_lock();
-
-    auto const* const request_map = request.get_if<tr_variant::Map>();
-
     if (!callback)
     {
         callback = noop_response_callback;
     }
 
     auto const empty_args = tr_variant::Map{};
-    auto const* args_in = &empty_args;
-    auto method_name = std::string_view{};
-    auto tag = std::optional<int64_t>{};
-    if (request_map != nullptr)
+    auto const* args_in = request.find_if<tr_variant::Map>(TR_KEY_arguments);
+    if (args_in == nullptr)
     {
-        // find the args
-        if (auto const* val = request_map->find_if<tr_variant::Map>(TR_KEY_arguments))
-        {
-            args_in = val;
-        }
-
-        // find the requested method
-        if (auto const val = request_map->value_if<std::string_view>(TR_KEY_method))
-        {
-            method_name = *val;
-        }
-
-        tag = request_map->value_if<int64_t>(TR_KEY_tag);
+        args_in = &empty_args;
     }
+
+    auto const method_name = request.value_if<std::string_view>(TR_KEY_method).value_or(""sv);
+
+    auto const tag = request.value_if<int64_t>(TR_KEY_tag);
 
     auto const test = [method_name](auto const& handler)
     {
@@ -2240,16 +2224,49 @@ void tr_rpc_request_exec(tr_session* session, tr_variant const& request, tr_rpc_
         char const* const result = (handler->second)(session, *args_in, args_out);
 
         response.try_emplace(TR_KEY_arguments, std::move(args_out));
-        response.try_emplace(TR_KEY_result, result != nullptr ? result : "success");
+        response.try_emplace(TR_KEY_result, result != nullptr ? result : SuccessResult);
     }
     else
     {
         // couldn't find a handler
         response.try_emplace(TR_KEY_arguments, 0);
-        response.try_emplace(TR_KEY_result, "no method name");
+        response.try_emplace(TR_KEY_result, "no method name"sv);
     }
 
     callback(session, tr_variant{ std::move(response) });
+}
+
+void tr_rpc_request_exec_single(tr_session* session, tr_variant const& request, tr_rpc_response_func&& callback)
+{
+    auto const* const map = request.get_if<tr_variant::Map>();
+    if (map == nullptr)
+    {
+        callback(session, tr_jsonrpc_response(JSONRPC_INVALID_REQUEST, nullptr, {}));
+        return;
+    }
+
+    if (auto is_legacy = map->value_if<std::string_view>(TR_KEY_jsonrpc).value_or(""sv) != JsonRpcVersion; is_legacy)
+    {
+        tr_rpc_request_exec_legacy(session, *map, std::move(callback));
+        return;
+    }
+
+    // TODO: implement JSON-RPC 2.0
+}
+
+} // namespace
+
+void tr_rpc_request_exec(tr_session* session, tr_variant const& request, tr_rpc_response_func&& callback)
+{
+    auto const lock = session->unique_lock();
+
+    if (auto const* const vec = request.get_if<tr_variant::Vector>(); vec != nullptr)
+    {
+        // TODO: implement batch
+        return;
+    }
+
+    tr_rpc_request_exec_single(session, request, std::move(callback));
 }
 
 void tr_rpc_request_exec(tr_session* session, std::string_view request, tr_rpc_response_func&& callback)
