@@ -122,12 +122,29 @@ enum Code : int16_t
     }
 }
 
-[[nodiscard]] tr_variant::Map build(Error::Code code, tr_variant data)
+[[nodiscard]] tr_variant::Map build_data(std::string_view error_string, tr_variant::Map&& result)
+{
+    auto ret = tr_variant::Map{ 2U };
+
+    if (!std::empty(error_string))
+    {
+        ret.try_emplace(TR_KEY_errorString, error_string);
+    }
+
+    if (!std::empty(result))
+    {
+        ret.try_emplace(TR_KEY_result, std::move(result));
+    }
+
+    return ret;
+}
+
+[[nodiscard]] tr_variant::Map build(Error::Code code, tr_variant::Map&& data)
 {
     auto ret = tr_variant::Map{ 3U };
     ret.try_emplace(TR_KEY_code, code);
     ret.try_emplace(TR_KEY_message, tr_variant::unmanaged_string(Error::get_message(code)));
-    if (data.has_value())
+    if (!std::empty(data))
     {
         ret.try_emplace(TR_KEY_data, std::move(data));
     }
@@ -137,17 +154,25 @@ enum Code : int16_t
 } // namespace Error
 
 // https://www.jsonrpc.org/specification#response_object
-[[nodiscard]] tr_variant::Map build_response(Error::Code code, tr_variant id, tr_variant body)
+[[nodiscard]] tr_variant::Map build_response(Error::Code code, tr_variant id, tr_variant::Map&& body)
 {
-    TR_ASSERT(
-        id.index() == tr_variant::StringIndex || id.index() == tr_variant::IntIndex || id.index() == tr_variant::DoubleIndex ||
-        id.index() == tr_variant::NullIndex);
-
-    // TODO: add logic for normal response
+    if (id.index() != tr_variant::StringIndex && id.index() != tr_variant::IntIndex && id.index() != tr_variant::DoubleIndex &&
+        id.index() != tr_variant::NullIndex)
+    {
+        TR_ASSERT(false);
+        id = nullptr;
+    }
 
     auto ret = tr_variant::Map{ 3U };
     ret.try_emplace(TR_KEY_jsonrpc, Version);
-    ret.try_emplace(TR_KEY_error, Error::build(code, std::move(body)));
+    if (code == Error::SUCCESS)
+    {
+        ret.try_emplace(TR_KEY_result, std::move(body));
+    }
+    else
+    {
+        ret.try_emplace(TR_KEY_error, Error::build(code, std::move(body)));
+    }
     ret.try_emplace(TR_KEY_id, std::move(id));
 
     return ret;
@@ -161,11 +186,46 @@ enum Code : int16_t
  * when the task is complete */
 struct tr_rpc_idle_data
 {
-    std::optional<int64_t> tag;
+    tr_variant id;
     tr_session* session = nullptr;
     tr_variant::Map args_out;
     tr_rpc_response_func callback;
 };
+
+void tr_rpc_idle_done_legacy(struct tr_rpc_idle_data* data, JsonRpc::Error::Code code, std::string_view result)
+{
+    // build the response
+    auto response_map = tr_variant::Map{ 3U };
+    response_map.try_emplace(TR_KEY_arguments, std::move(data->args_out));
+    response_map.try_emplace(TR_KEY_result, std::empty(result) ? JsonRpc::Error::get_message(code) : result);
+    if (auto& tag = data->id; tag.has_value())
+    {
+        response_map.try_emplace(TR_KEY_tag, std::move(tag));
+    }
+
+    // send the response back to the listener
+    data->callback(data->session, tr_variant{ std::move(response_map) });
+}
+
+void tr_rpc_idle_done(struct tr_rpc_idle_data* data, JsonRpc::Error::Code code, std::string_view errmsg)
+{
+    using namespace JsonRpc;
+
+    if (data->id.has_value())
+    {
+        auto const is_success = code == Error::SUCCESS;
+        data->callback(
+            data->session,
+            build_response(
+                code,
+                std::move(data->id),
+                is_success ? std::move(data->args_out) : Error::build_data(errmsg, std::move(data->args_out))));
+    }
+    else // notification
+    {
+        data->callback(data->session, {});
+    }
+}
 
 using DoneCb = std::function<void(struct tr_rpc_idle_data* data, JsonRpc::Error::Code, std::string_view)>;
 
@@ -2306,44 +2366,44 @@ namespace session_get_helpers
 
 using SyncHandler = std::pair<JsonRpc::Error::Code, std::string> (*)(tr_session*, tr_variant::Map const&, tr_variant::Map&);
 
-auto constexpr SyncHandlers = std::array<std::pair<std::string_view, SyncHandler>, 20U>{ {
-    { "free-space"sv, freeSpace },
-    { "group-get"sv, groupGet },
-    { "group-set"sv, groupSet },
-    { "queue-move-bottom"sv, queueMoveBottom },
-    { "queue-move-down"sv, queueMoveDown },
-    { "queue-move-top"sv, queueMoveTop },
-    { "queue-move-up"sv, queueMoveUp },
-    { "session-close"sv, sessionClose },
-    { "session-get"sv, sessionGet },
-    { "session-set"sv, sessionSet },
-    { "session-stats"sv, sessionStats },
-    { "torrent-get"sv, torrentGet },
-    { "torrent-reannounce"sv, torrentReannounce },
-    { "torrent-remove"sv, torrentRemove },
-    { "torrent-set"sv, torrentSet },
-    { "torrent-set-location"sv, torrentSetLocation },
-    { "torrent-start"sv, torrentStart },
-    { "torrent-start-now"sv, torrentStartNow },
-    { "torrent-stop"sv, torrentStop },
-    { "torrent-verify"sv, torrentVerify },
+auto constexpr SyncHandlers = std::array<std::tuple<std::string_view, SyncHandler, bool /*has_side_effects*/>, 20U>{ {
+    { "free-space"sv, freeSpace, false },
+    { "group-get"sv, groupGet, false },
+    { "group-set"sv, groupSet, true },
+    { "queue-move-bottom"sv, queueMoveBottom, true },
+    { "queue-move-down"sv, queueMoveDown, true },
+    { "queue-move-top"sv, queueMoveTop, true },
+    { "queue-move-up"sv, queueMoveUp, true },
+    { "session-close"sv, sessionClose, true },
+    { "session-get"sv, sessionGet, false },
+    { "session-set"sv, sessionSet, true },
+    { "session-stats"sv, sessionStats, false },
+    { "torrent-get"sv, torrentGet, false },
+    { "torrent-reannounce"sv, torrentReannounce, true },
+    { "torrent-remove"sv, torrentRemove, true },
+    { "torrent-set"sv, torrentSet, true },
+    { "torrent-set-location"sv, torrentSetLocation, true },
+    { "torrent-start"sv, torrentStart, true },
+    { "torrent-start-now"sv, torrentStartNow, true },
+    { "torrent-stop"sv, torrentStop, true },
+    { "torrent-verify"sv, torrentVerify, true },
 } };
 
 using AsyncHandler =
     std::pair<JsonRpc::Error::Code, std::string> (*)(tr_session*, tr_variant::Map const&, DoneCb&&, tr_rpc_idle_data*);
 
-auto constexpr AsyncHandlers = std::array<std::pair<std::string_view, AsyncHandler>, 4U>{ {
-    { "blocklist-update"sv, blocklistUpdate },
-    { "port-test"sv, portTest },
-    { "torrent-add"sv, torrentAdd },
-    { "torrent-rename-path"sv, torrentRenamePath },
+auto constexpr AsyncHandlers = std::array<std::tuple<std::string_view, AsyncHandler, bool /*has_side_effects*/>, 4U>{ {
+    { "blocklist-update"sv, blocklistUpdate, true },
+    { "port-test"sv, portTest, false },
+    { "torrent-add"sv, torrentAdd, true },
+    { "torrent-rename-path"sv, torrentRenamePath, true },
 } };
 
 void noop_response_callback(tr_session* /*session*/, tr_variant&& /*response*/)
 {
 }
 
-void tr_rpc_request_exec_legacy(tr_session* session, tr_variant::Map const& request, tr_rpc_response_func&& callback)
+void tr_rpc_request_exec_impl(tr_session* session, tr_variant const& request, tr_rpc_response_func&& callback, bool is_batch)
 {
     using namespace JsonRpc;
 
@@ -2352,50 +2412,98 @@ void tr_rpc_request_exec_legacy(tr_session* session, tr_variant::Map const& requ
         callback = noop_response_callback;
     }
 
-    auto const empty_args = tr_variant::Map{};
-    auto const* args_in = request.find_if<tr_variant::Map>(TR_KEY_arguments);
-    if (args_in == nullptr)
+    auto const* const map = request.get_if<tr_variant::Map>();
+    if (map == nullptr)
     {
-        args_in = &empty_args;
+        callback(
+            session,
+            build_response(
+                Error::INVALID_REQUEST,
+                nullptr,
+                Error::build_data(is_batch ? "request must be an Object"sv : "request must be an Array or Object"sv, {})));
+        return;
     }
 
-    auto const method_name = request.value_if<std::string_view>(TR_KEY_method).value_or(""sv);
+    auto is_jsonrpc = false;
+    if (auto jsonrpc = map->value_if<std::string_view>(TR_KEY_jsonrpc); jsonrpc == Version)
+    {
+        is_jsonrpc = true;
+    }
+    else if (jsonrpc || is_batch)
+    {
+        callback(
+            session,
+            build_response(Error::INVALID_REQUEST, nullptr, Error::build_data("JSON-RPC version is not 2.0"sv, {})));
+        return;
+    }
+
+    auto const empty_params = tr_variant::Map{};
+    auto const* params = map->find_if<tr_variant::Map>(is_jsonrpc ? TR_KEY_params : TR_KEY_arguments);
+    if (params == nullptr)
+    {
+        params = &empty_params;
+    }
+
+    auto const method_name = map->value_if<std::string_view>(TR_KEY_method).value_or(""sv);
 
     auto data = tr_rpc_idle_data{};
     data.session = session;
-    data.tag = request.value_if<int64_t>(TR_KEY_tag);
+    if (is_jsonrpc)
+    {
+        if (auto it_id = map->find(TR_KEY_id); it_id != std::end(*map))
+        {
+            auto const& id = it_id->second;
+            switch (id.index())
+            {
+            case tr_variant::StringIndex:
+            case tr_variant::IntIndex:
+            case tr_variant::DoubleIndex:
+            case tr_variant::NullIndex:
+                data.id.merge(id); // copy
+                break;
+            default:
+                callback(
+                    session,
+                    build_response(
+                        Error::INVALID_REQUEST,
+                        nullptr,
+                        Error::build_data("id type must be String, Number, or Null"sv, {})));
+                return;
+            }
+        }
+    }
+    else if (auto tag = map->value_if<int64_t>(TR_KEY_tag); tag)
+    {
+        data.id = *tag;
+    }
     data.callback = std::move(callback);
 
-    auto done_cb = [](struct tr_rpc_idle_data& data, Error::Code code, std::string_view result)
-    {
-        // build the response
-        auto response_map = tr_variant::Map{ 3U };
-        response_map.try_emplace(TR_KEY_arguments, std::move(data.args_out));
-        response_map.try_emplace(TR_KEY_result, std::empty(result) ? Error::get_message(code) : result);
-        if (auto const& tag = data.tag; tag)
-        {
-            response_map.try_emplace(TR_KEY_tag, *tag);
-        }
+    auto const is_notification = is_jsonrpc && !data.id.has_value();
 
-        // send the response back to the listener
-        data.callback(data.session, tr_variant{ std::move(response_map) });
-    };
+    auto done_cb = is_jsonrpc ? tr_rpc_idle_done : tr_rpc_idle_done_legacy;
 
     auto const test = [method_name](auto const& handler)
     {
-        return handler.first == method_name;
+        auto const& name = std::get<0>(handler);
+        return name == method_name;
     };
 
     if (auto const end = std::end(AsyncHandlers), handler = std::find_if(std::begin(AsyncHandlers), end, test); handler != end)
     {
-        auto* const async_data = new tr_rpc_idle_data{ std::move(data) };
-        DoneCb async_done_cb = [cb = std::move(done_cb)](tr_rpc_idle_data* data, Error::Code code, std::string_view result)
+        auto const& [name, func, has_side_effects] = *handler;
+        if (is_notification && !has_side_effects)
         {
-            cb(*data, code, result);
+            done_cb(&data, Error::SUCCESS, {});
+            return;
+        }
+
+        auto* const async_data = new tr_rpc_idle_data{ std::move(data) };
+        DoneCb async_done_cb = [cb = std::move(done_cb)](tr_rpc_idle_data* data, Error::Code code, std::string_view errmsg)
+        {
+            cb(data, code, errmsg);
             delete data;
         };
-        if (auto const [err, errmsg] = handler->second(session, *args_in, std::move(async_done_cb), async_data);
-            err != Error::SUCCESS)
+        if (auto const [err, errmsg] = func(session, *params, std::move(async_done_cb), async_data); err != Error::SUCCESS)
         {
             // Async operation failed prematurely? Invoke callback to ensure client gets a reply
             async_done_cb(async_data, err, errmsg);
@@ -2405,32 +2513,20 @@ void tr_rpc_request_exec_legacy(tr_session* session, tr_variant::Map const& requ
 
     if (auto const end = std::end(SyncHandlers), handler = std::find_if(std::begin(SyncHandlers), end, test); handler != end)
     {
-        auto const [err, errmsg] = (handler->second)(session, *args_in, data.args_out);
-        done_cb(data, err, errmsg);
-    }
-    else
-    {
-        // couldn't find a handler
-        done_cb(data, Error::METHOD_NOT_FOUND, "no method name"sv);
-    }
-}
+        auto const& [name, func, has_side_effects] = *handler;
+        if (is_notification && !has_side_effects)
+        {
+            done_cb(&data, Error::SUCCESS, {});
+            return;
+        }
 
-void tr_rpc_request_exec_single(tr_session* session, tr_variant const& request, tr_rpc_response_func&& callback)
-{
-    auto const* const map = request.get_if<tr_variant::Map>();
-    if (map == nullptr)
-    {
-        callback(session, JsonRpc::build_response(JsonRpc::Error::INVALID_REQUEST, nullptr, {}));
+        auto const [err, errmsg] = func(session, *params, data.args_out);
+        done_cb(&data, err, errmsg);
         return;
     }
 
-    if (auto is_legacy = map->value_if<std::string_view>(TR_KEY_jsonrpc).value_or(""sv) != JsonRpc::Version; is_legacy)
-    {
-        tr_rpc_request_exec_legacy(session, *map, std::move(callback));
-        return;
-    }
-
-    // TODO: implement JSON-RPC 2.0
+    // couldn't find a handler
+    done_cb(&data, Error::METHOD_NOT_FOUND, is_jsonrpc ? ""sv : "no method name"sv);
 }
 
 } // namespace
@@ -2445,7 +2541,7 @@ void tr_rpc_request_exec(tr_session* session, tr_variant const& request, tr_rpc_
         return;
     }
 
-    tr_rpc_request_exec_single(session, request, std::move(callback));
+    tr_rpc_request_exec_impl(session, request, std::move(callback), false);
 }
 
 void tr_rpc_request_exec(tr_session* session, std::string_view request, tr_rpc_response_func&& callback)
@@ -2459,7 +2555,7 @@ void tr_rpc_request_exec(tr_session* session, std::string_view request, tr_rpc_r
         return;
     }
 
-    callback(session, build_response(Error::PARSE_ERROR, nullptr, serde.error_.message()));
+    callback(session, build_response(Error::PARSE_ERROR, nullptr, Error::build_data(serde.error_.message(), {})));
 }
 
 /**
