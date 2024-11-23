@@ -2529,6 +2529,37 @@ void tr_rpc_request_exec_impl(tr_session* session, tr_variant const& request, tr
     done_cb(&data, Error::METHOD_NOT_FOUND, is_jsonrpc ? ""sv : "no method name"sv);
 }
 
+void tr_rpc_request_exec_batch(tr_session* session, tr_variant::Vector const& requests, tr_rpc_response_func&& callback)
+{
+    auto const n_requests = std::size(requests);
+    auto responses = std::make_shared<tr_variant::Vector>(n_requests);
+    auto n_responses = std::make_shared<size_t>();
+
+    for (size_t i = 0U; i < n_requests; ++i)
+    {
+        tr_rpc_request_exec_impl(
+            session,
+            requests[i],
+            [responses, n_requests, n_responses, i, callback](tr_session* session, tr_variant&& response)
+            {
+                (*responses)[i] = std::move(response);
+
+                if (++(*n_responses) >= n_requests)
+                {
+                    // Remove notifications from reply
+                    auto const it_end = std::remove_if(
+                        std::begin(*responses),
+                        std::end(*responses),
+                        [](auto const& r) { return !r.has_value(); });
+                    responses->erase(it_end, std::end(*responses));
+
+                    callback(session, !std::empty(*responses) ? std::move(*responses) : tr_variant{});
+                }
+            },
+            true);
+    }
+}
+
 } // namespace
 
 void tr_rpc_request_exec(tr_session* session, tr_variant const& request, tr_rpc_response_func&& callback)
@@ -2537,7 +2568,7 @@ void tr_rpc_request_exec(tr_session* session, tr_variant const& request, tr_rpc_
 
     if (auto const* const vec = request.get_if<tr_variant::Vector>(); vec != nullptr)
     {
-        // TODO: implement batch
+        tr_rpc_request_exec_batch(session, *vec, std::move(callback));
         return;
     }
 
