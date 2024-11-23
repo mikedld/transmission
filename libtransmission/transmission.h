@@ -15,6 +15,7 @@
 #include <time.h> // time_t
 
 #ifdef __cplusplus
+#include <functional>
 #include <string>
 #include <string_view>
 #else
@@ -846,12 +847,8 @@ void tr_torrentStart(tr_torrent* torrent);
 /** @brief Stop (pause) a torrent */
 void tr_torrentStop(tr_torrent* torrent);
 
-using tr_torrent_rename_done_func = void (*)( //
-    tr_torrent* torrent,
-    char const* oldpath,
-    char const* newname,
-    int error,
-    void* user_data);
+using tr_torrent_rename_done_func = std::function<
+    void(tr_torrent* torrent, char const* oldpath, char const* newname, int error, void* user_data)>;
 
 /**
  * @brief Rename a file or directory in a torrent.

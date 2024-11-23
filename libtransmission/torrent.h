@@ -1277,7 +1277,7 @@ private:
     void rename_path_in_session_thread(
         std::string_view oldpath,
         std::string_view newname,
-        tr_torrent_rename_done_func callback,
+        tr_torrent_rename_done_func const& callback,
         void* callback_user_data);
 
     void start_in_session_thread();

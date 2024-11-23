@@ -81,6 +81,8 @@ enum Code : int16_t
     UNRECOGNIZED_INFO,
     SYSTEM_ERROR,
     FILE_IDX_OOR,
+    HTTP_ERROR,
+    CORRUPT_TORRENT,
 };
 
 [[nodiscard]] std::string_view get_message(Code code)
@@ -111,6 +113,10 @@ enum Code : int16_t
         return "system error"sv;
     case FILE_IDX_OOR:
         return "file index out of range"sv;
+    case HTTP_ERROR:
+        return "HTTP error from backend service"sv;
+    case CORRUPT_TORRENT:
+        return "invalid or corrupt torrent file"sv;
     default:
         return {};
     }
@@ -161,23 +167,7 @@ struct tr_rpc_idle_data
     tr_rpc_response_func callback;
 };
 
-void tr_idle_function_done(struct tr_rpc_idle_data* data, std::string_view result)
-{
-    // build the response
-    auto response_map = tr_variant::Map{ 3U };
-    response_map.try_emplace(TR_KEY_arguments, std::move(data->args_out));
-    response_map.try_emplace(TR_KEY_result, result);
-    if (auto const& tag = data->tag; tag.has_value())
-    {
-        response_map.try_emplace(TR_KEY_tag, *tag);
-    }
-
-    // send the response back to the listener
-    (data->callback)(data->session, tr_variant{ std::move(response_map) });
-
-    // cleanup
-    delete data;
-}
+using DoneCb = std::function<void(struct tr_rpc_idle_data* data, JsonRpc::Error::Code, std::string_view)>;
 
 // ---
 
@@ -1259,7 +1249,13 @@ namespace make_torrent_field_helpers
 
 // ---
 
-void torrentRenamePathDone(tr_torrent* tor, char const* oldpath, char const* newname, int error, void* user_data)
+void torrentRenamePathDone(
+    tr_torrent* tor,
+    char const* oldpath,
+    char const* newname,
+    int error,
+    DoneCb const& done_cb,
+    void* user_data)
 {
     using namespace JsonRpc;
 
@@ -1269,12 +1265,14 @@ void torrentRenamePathDone(tr_torrent* tor, char const* oldpath, char const* new
     data->args_out.try_emplace(TR_KEY_path, oldpath);
     data->args_out.try_emplace(TR_KEY_name, newname);
 
-    tr_idle_function_done(data, error != 0 ? tr_strerror(error) : Error::get_message(Error::SUCCESS));
+    auto const is_success = error == 0;
+    done_cb(data, is_success ? Error::SUCCESS : Error::SYSTEM_ERROR, is_success ? ""sv : tr_strerror(error));
 }
 
 [[nodiscard]] std::pair<JsonRpc::Error::Code, std::string> torrentRenamePath(
     tr_session* session,
     tr_variant::Map const& args_in,
+    DoneCb&& done_cb,
     struct tr_rpc_idle_data* idle_data)
 {
     using namespace JsonRpc;
@@ -1287,13 +1285,18 @@ void torrentRenamePathDone(tr_torrent* tor, char const* oldpath, char const* new
 
     auto const oldpath = args_in.value_if<std::string_view>(TR_KEY_path).value_or(""sv);
     auto const newname = args_in.value_if<std::string_view>(TR_KEY_name).value_or(""sv);
-    torrents[0]->rename_path(oldpath, newname, torrentRenamePathDone, idle_data);
+    torrents[0]->rename_path(
+        oldpath,
+        newname,
+        [cb = std::move(done_cb)](tr_torrent* tor, char const* oldpath, char const* newname, int error, void* user_data)
+        { torrentRenamePathDone(tor, oldpath, newname, error, cb, user_data); },
+        idle_data);
     return { Error::SUCCESS, {} }; // no error
 }
 
 // ---
 
-void onPortTested(tr_web::FetchResponse const& web_response)
+void onPortTested(tr_web::FetchResponse const& web_response, DoneCb const& done_cb)
 {
     using namespace JsonRpc;
 
@@ -1308,8 +1311,9 @@ void onPortTested(tr_web::FetchResponse const& web_response)
 
     if (status != 200)
     {
-        tr_idle_function_done(
+        done_cb(
             data,
+            Error::HTTP_ERROR,
             fmt::format(
                 _("Couldn't test port: {error} ({error_code})"),
                 fmt::arg("error", tr_webGetResponseStr(status)),
@@ -1318,12 +1322,13 @@ void onPortTested(tr_web::FetchResponse const& web_response)
     }
 
     data->args_out.try_emplace(TR_KEY_port_is_open, tr_strv_starts_with(body, '1'));
-    tr_idle_function_done(data, Error::get_message(Error::SUCCESS));
+    done_cb(data, Error::SUCCESS, {});
 }
 
 [[nodiscard]] std::pair<JsonRpc::Error::Code, std::string> portTest(
     tr_session* session,
     tr_variant::Map const& args_in,
+    DoneCb&& done_cb,
     struct tr_rpc_idle_data* idle_data)
 {
     using namespace JsonRpc;
@@ -1332,19 +1337,18 @@ void onPortTested(tr_web::FetchResponse const& web_response)
 
     auto const port = session->advertisedPeerPort();
     auto const url = fmt::format("https://portcheck.transmissionbt.com/{:d}", port.host());
-    auto options = tr_web::FetchOptions{ url, onPortTested, idle_data };
-    options.timeout_secs = TimeoutSecs;
+    auto ip_proto = std::optional<tr_web::FetchOptions::IPProtocol>{};
 
     if (auto const val = args_in.value_if<std::string_view>(TR_KEY_ipProtocol))
     {
         if (*val == "ipv4"sv)
         {
-            options.ip_proto = tr_web::FetchOptions::IPProtocol::V4;
+            ip_proto = tr_web::FetchOptions::IPProtocol::V4;
             idle_data->args_out.try_emplace(TR_KEY_ipProtocol, "ipv4"sv);
         }
         else if (*val == "ipv6"sv)
         {
-            options.ip_proto = tr_web::FetchOptions::IPProtocol::V6;
+            ip_proto = tr_web::FetchOptions::IPProtocol::V6;
             idle_data->args_out.try_emplace(TR_KEY_ipProtocol, "ipv6"sv);
         }
         else
@@ -1353,13 +1357,23 @@ void onPortTested(tr_web::FetchResponse const& web_response)
         }
     }
 
+    auto options = tr_web::FetchOptions{
+        url,
+        [cb = std::move(done_cb)](tr_web::FetchResponse const& r) { onPortTested(r, cb); },
+        idle_data,
+    };
+    options.timeout_secs = TimeoutSecs;
+    if (ip_proto)
+    {
+        options.ip_proto = *ip_proto;
+    }
     session->fetch(std::move(options));
     return { Error::SUCCESS, {} };
 }
 
 // ---
 
-void onBlocklistFetched(tr_web::FetchResponse const& web_response)
+void onBlocklistFetched(tr_web::FetchResponse const& web_response, DoneCb const& done_cb)
 {
     using namespace JsonRpc;
 
@@ -1370,8 +1384,9 @@ void onBlocklistFetched(tr_web::FetchResponse const& web_response)
     if (status != 200)
     {
         // we failed to download the blocklist...
-        tr_idle_function_done(
+        done_cb(
             data,
+            Error::HTTP_ERROR,
             fmt::format(
                 _("Couldn't fetch blocklist: {error} ({error_code})"),
                 fmt::arg("error", tr_webGetResponseStr(status)),
@@ -1415,8 +1430,9 @@ void onBlocklistFetched(tr_web::FetchResponse const& web_response)
     auto const filename = tr_pathbuf{ session->configDir(), "/blocklist.tmp"sv };
     if (auto error = tr_error{}; !tr_file_save(filename, content, &error))
     {
-        tr_idle_function_done(
+        done_cb(
             data,
+            Error::SYSTEM_ERROR,
             fmt::format(
                 _("Couldn't save '{path}': {error} ({error_code})"),
                 fmt::arg("path", filename),
@@ -1428,21 +1444,26 @@ void onBlocklistFetched(tr_web::FetchResponse const& web_response)
     // feed it to the session and give the client a response
     data->args_out.try_emplace(TR_KEY_blocklist_size, tr_blocklistSetContent(session, filename));
     tr_sys_path_remove(filename);
-    tr_idle_function_done(data, Error::get_message(Error::SUCCESS));
+    done_cb(data, Error::SUCCESS, {});
 }
 
 [[nodiscard]] std::pair<JsonRpc::Error::Code, std::string> blocklistUpdate(
     tr_session* session,
     tr_variant::Map const& /*args_in*/,
+    DoneCb&& done_cb,
     struct tr_rpc_idle_data* idle_data)
 {
-    session->fetch({ session->blocklistUrl(), onBlocklistFetched, idle_data });
+    session->fetch({
+        session->blocklistUrl(),
+        [cb = std::move(done_cb)](tr_web::FetchResponse const& r) { onBlocklistFetched(r, cb); },
+        idle_data,
+    });
     return { JsonRpc::Error::SUCCESS, {} };
 }
 
 // ---
 
-void add_torrent_impl(struct tr_rpc_idle_data* data, tr_ctor& ctor)
+void add_torrent_impl(struct tr_rpc_idle_data* data, DoneCb const& done_cb, tr_ctor& ctor)
 {
     using namespace JsonRpc;
 
@@ -1451,7 +1472,7 @@ void add_torrent_impl(struct tr_rpc_idle_data* data, tr_ctor& ctor)
 
     if (tor == nullptr && duplicate_of == nullptr)
     {
-        tr_idle_function_done(data, "invalid or corrupt torrent file"sv);
+        done_cb(data, Error::CORRUPT_TORRENT, {});
         return;
     }
 
@@ -1461,7 +1482,7 @@ void add_torrent_impl(struct tr_rpc_idle_data* data, tr_ctor& ctor)
         data->args_out.try_emplace(
             TR_KEY_torrent_duplicate,
             make_torrent_info(duplicate_of, TrFormat::Object, std::data(Fields), std::size(Fields)));
-        tr_idle_function_done(data, Error::get_message(Error::SUCCESS));
+        done_cb(data, Error::SUCCESS, {});
         return;
     }
 
@@ -1469,7 +1490,7 @@ void add_torrent_impl(struct tr_rpc_idle_data* data, tr_ctor& ctor)
     data->args_out.try_emplace(
         TR_KEY_torrent_added,
         make_torrent_info(tor, TrFormat::Object, std::data(Fields), std::size(Fields)));
-    tr_idle_function_done(data, Error::get_message(Error::SUCCESS));
+    done_cb(data, Error::SUCCESS, {});
 }
 
 struct add_torrent_idle_data
@@ -1484,7 +1505,7 @@ struct add_torrent_idle_data
     tr_ctor ctor;
 };
 
-void onMetadataFetched(tr_web::FetchResponse const& web_response)
+void onMetadataFetched(tr_web::FetchResponse const& web_response, DoneCb const& done_cb)
 {
     auto const& [status, body, primary_ip, did_connect, did_timeout, user_data] = web_response;
     auto* data = static_cast<struct add_torrent_idle_data*>(user_data);
@@ -1498,12 +1519,13 @@ void onMetadataFetched(tr_web::FetchResponse const& web_response)
     if (status == 200 || status == 221) /* http or ftp success.. */
     {
         data->ctor.set_metainfo(body);
-        add_torrent_impl(data->data, data->ctor);
+        add_torrent_impl(data->data, done_cb, data->ctor);
     }
     else
     {
-        tr_idle_function_done(
+        done_cb(
             data->data,
+            JsonRpc::Error::HTTP_ERROR,
             fmt::format(
                 _("Couldn't fetch torrent: {error} ({error_code})"),
                 fmt::arg("error", tr_webGetResponseStr(status)),
@@ -1538,6 +1560,7 @@ bool isCurlURL(std::string_view url)
 [[nodiscard]] std::pair<JsonRpc::Error::Code, std::string> torrentAdd(
     tr_session* session,
     tr_variant::Map const& args_in,
+    DoneCb&& done_cb,
     tr_rpc_idle_data* idle_data)
 {
     using namespace JsonRpc;
@@ -1630,7 +1653,10 @@ bool isCurlURL(std::string_view url)
     if (isCurlURL(filename))
     {
         auto* const d = new add_torrent_idle_data{ idle_data, std::move(ctor) };
-        auto options = tr_web::FetchOptions{ filename, onMetadataFetched, d };
+        auto options = tr_web::FetchOptions{ filename,
+                                             [cb = std::move(done_cb)](tr_web::FetchResponse const& r)
+                                             { onMetadataFetched(r, cb); },
+                                             d };
         options.cookies = cookies;
         session->fetch(std::move(options));
     }
@@ -1656,7 +1682,7 @@ bool isCurlURL(std::string_view url)
             return { Error::UNRECOGNIZED_INFO, {} };
         }
 
-        add_torrent_impl(idle_data, ctor);
+        add_torrent_impl(idle_data, done_cb, ctor);
     }
 
     return { Error::SUCCESS, {} };
@@ -2303,7 +2329,8 @@ auto constexpr SyncHandlers = std::array<std::pair<std::string_view, SyncHandler
     { "torrent-verify"sv, torrentVerify },
 } };
 
-using AsyncHandler = std::pair<JsonRpc::Error::Code, std::string> (*)(tr_session*, tr_variant::Map const&, tr_rpc_idle_data*);
+using AsyncHandler =
+    std::pair<JsonRpc::Error::Code, std::string> (*)(tr_session*, tr_variant::Map const&, DoneCb&&, tr_rpc_idle_data*);
 
 auto constexpr AsyncHandlers = std::array<std::pair<std::string_view, AsyncHandler>, 4U>{ {
     { "blocklist-update"sv, blocklistUpdate },
@@ -2334,7 +2361,25 @@ void tr_rpc_request_exec_legacy(tr_session* session, tr_variant::Map const& requ
 
     auto const method_name = request.value_if<std::string_view>(TR_KEY_method).value_or(""sv);
 
-    auto const tag = request.value_if<int64_t>(TR_KEY_tag);
+    auto data = tr_rpc_idle_data{};
+    data.session = session;
+    data.tag = request.value_if<int64_t>(TR_KEY_tag);
+    data.callback = std::move(callback);
+
+    auto done_cb = [](struct tr_rpc_idle_data& data, Error::Code code, std::string_view result)
+    {
+        // build the response
+        auto response_map = tr_variant::Map{ 3U };
+        response_map.try_emplace(TR_KEY_arguments, std::move(data.args_out));
+        response_map.try_emplace(TR_KEY_result, std::empty(result) ? Error::get_message(code) : result);
+        if (auto const& tag = data.tag; tag)
+        {
+            response_map.try_emplace(TR_KEY_tag, *tag);
+        }
+
+        // send the response back to the listener
+        data.callback(data.session, tr_variant{ std::move(response_map) });
+    };
 
     auto const test = [method_name](auto const& handler)
     {
@@ -2343,40 +2388,31 @@ void tr_rpc_request_exec_legacy(tr_session* session, tr_variant::Map const& requ
 
     if (auto const end = std::end(AsyncHandlers), handler = std::find_if(std::begin(AsyncHandlers), end, test); handler != end)
     {
-        auto* const data = new tr_rpc_idle_data{};
-        data->session = session;
-        data->tag = tag;
-        data->callback = std::move(callback);
-        if (auto const [err, errmsg] = (*handler->second)(session, *args_in, data); err != Error::SUCCESS)
+        auto* const async_data = new tr_rpc_idle_data{ std::move(data) };
+        DoneCb async_done_cb = [cb = std::move(done_cb)](tr_rpc_idle_data* data, Error::Code code, std::string_view result)
+        {
+            cb(*data, code, result);
+            delete data;
+        };
+        if (auto const [err, errmsg] = handler->second(session, *args_in, std::move(async_done_cb), async_data);
+            err != Error::SUCCESS)
         {
             // Async operation failed prematurely? Invoke callback to ensure client gets a reply
-            tr_idle_function_done(data, errmsg);
+            async_done_cb(async_data, err, errmsg);
         }
         return;
     }
 
-    auto response = tr_variant::Map{ 3U };
-    if (tag.has_value())
-    {
-        response.try_emplace(TR_KEY_tag, *tag);
-    }
-
     if (auto const end = std::end(SyncHandlers), handler = std::find_if(std::begin(SyncHandlers), end, test); handler != end)
     {
-        auto args_out = tr_variant::Map{};
-        auto const [err, errmsg] = (handler->second)(session, *args_in, args_out);
-
-        response.try_emplace(TR_KEY_arguments, std::move(args_out));
-        response.try_emplace(TR_KEY_result, std::empty(errmsg) ? Error::get_message(err) : errmsg);
+        auto const [err, errmsg] = (handler->second)(session, *args_in, data.args_out);
+        done_cb(data, err, errmsg);
     }
     else
     {
         // couldn't find a handler
-        response.try_emplace(TR_KEY_arguments, 0);
-        response.try_emplace(TR_KEY_result, "no method name"sv);
+        done_cb(data, Error::METHOD_NOT_FOUND, "no method name"sv);
     }
-
-    callback(session, tr_variant{ std::move(response) });
 }
 
 void tr_rpc_request_exec_single(tr_session* session, tr_variant const& request, tr_rpc_response_func&& callback)
