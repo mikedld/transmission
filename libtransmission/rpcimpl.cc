@@ -47,44 +47,11 @@
 using namespace std::literals;
 using namespace libtransmission::Values;
 
-namespace
-{
-auto constexpr RecentlyActiveSeconds = time_t{ 60 };
-auto constexpr RpcVersion = int64_t{ 18 };
-auto constexpr RpcVersionMin = int64_t{ 14 };
-auto constexpr RpcVersionSemver = "6.0.0"sv;
-
-enum class TrFormat : uint8_t
-{
-    Object,
-    Table
-};
-
 namespace JsonRpc
 {
-auto constexpr Version = "2.0"sv;
-
 // https://www.jsonrpc.org/specification#error_object
 namespace Error
 {
-enum Code : int16_t
-{
-    PARSE_ERROR = -32700,
-    INVALID_REQUEST = -32600,
-    METHOD_NOT_FOUND = -32601,
-    INVALID_PARAMS = -32602,
-    INTERNAL_ERROR = -32603,
-    SUCCESS = 0,
-    SET_ANNOUNCE_LIST,
-    INVALID_TRACKER_LIST,
-    PATH_NOT_ABSOLUTE,
-    UNRECOGNIZED_INFO,
-    SYSTEM_ERROR,
-    FILE_IDX_OOR,
-    HTTP_ERROR,
-    CORRUPT_TORRENT,
-};
-
 [[nodiscard]] std::string_view get_message(Code code)
 {
     switch (code)
@@ -178,6 +145,19 @@ enum Code : int16_t
     return ret;
 }
 } // namespace JsonRpc
+
+namespace
+{
+auto constexpr RecentlyActiveSeconds = time_t{ 60 };
+auto constexpr RpcVersion = int64_t{ 18 };
+auto constexpr RpcVersionMin = int64_t{ 14 };
+auto constexpr RpcVersionSemver = "6.0.0"sv;
+
+enum class TrFormat : uint8_t
+{
+    Object,
+    Table
+};
 
 // ---
 
