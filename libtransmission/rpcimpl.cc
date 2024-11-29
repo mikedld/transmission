@@ -52,7 +52,7 @@ namespace
 auto constexpr RecentlyActiveSeconds = time_t{ 60 };
 auto constexpr RpcVersion = int64_t{ 18 };
 auto constexpr RpcVersionMin = int64_t{ 14 };
-auto constexpr RpcVersionSemver = "5.4.0"sv;
+auto constexpr RpcVersionSemver = "6.0.0"sv;
 
 enum class TrFormat : uint8_t
 {

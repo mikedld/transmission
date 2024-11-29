@@ -1035,7 +1035,10 @@ Transmission 4.0.0 (`rpc-version-semver` 5.3.0, `rpc-version`: 17)
 | `group-get` | new method
 | `torrent-get` | :warning: old arg `wanted` was implemented as an array of `0` or `1` in Transmission 3.00 and older, despite being documented as an array of booleans. Transmission 4.0.0 and 4.0.1 "fixed" this by returning an array of booleans; but in practical terms, this change caused an unannounced breaking change for any 3rd party code that expected `0` or `1`. For this reason, 4.0.2 restored the 3.00 behavior and updated this spec to match the code.
 
-Transmission 4.1.0 (`rpc_version_semver` 5.4.0, `rpc_version`: 18)
+Transmission 4.1.0 (`rpc_version_semver` 6.0.0, `rpc_version`: 18)
+
+:bomb: switch to snake_case for all strings
+
 | Method | Description
 |:---|:---
 | `torrent_get` | new arg `sequential_download`
