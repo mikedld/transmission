@@ -1622,7 +1622,7 @@ bool isCurlURL(std::string_view url)
 
     auto ctor = tr_ctor{ session };
 
-    // set the optional arguments
+    // set the optional parameters
 
     auto const cookies = args_in.value_if<std::string_view>(TR_KEY_cookies).value_or(""sv);
 
