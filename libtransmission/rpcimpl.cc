@@ -1309,7 +1309,7 @@ void torrentRenamePathDone(
     done_cb(data, is_success ? Error::SUCCESS : Error::SYSTEM_ERROR, is_success ? ""sv : tr_strerror(error));
 }
 
-[[nodiscard]] std::pair<JsonRpc::Error::Code, std::string> torrentRenamePath(
+void torrentRenamePath(
     tr_session* session,
     tr_variant::Map const& args_in,
     DoneCb&& done_cb,
@@ -1320,7 +1320,8 @@ void torrentRenamePathDone(
     auto const torrents = getTorrents(session, args_in);
     if (std::size(torrents) != 1U)
     {
-        return { Error::INVALID_PARAMS, "torrent-rename-path requires 1 torrent"s };
+        done_cb(idle_data, Error::INVALID_PARAMS, "torrent-rename-path requires 1 torrent"sv);
+        return;
     }
 
     auto const oldpath = args_in.value_if<std::string_view>(TR_KEY_path).value_or(""sv);
@@ -1331,7 +1332,6 @@ void torrentRenamePathDone(
         [cb = std::move(done_cb)](tr_torrent* tor, char const* oldpath, char const* newname, int error, void* user_data)
         { torrentRenamePathDone(tor, oldpath, newname, error, cb, user_data); },
         idle_data);
-    return { Error::SUCCESS, {} }; // no error
 }
 
 // ---
@@ -1365,11 +1365,7 @@ void onPortTested(tr_web::FetchResponse const& web_response, DoneCb const& done_
     done_cb(data, Error::SUCCESS, {});
 }
 
-[[nodiscard]] std::pair<JsonRpc::Error::Code, std::string> portTest(
-    tr_session* session,
-    tr_variant::Map const& args_in,
-    DoneCb&& done_cb,
-    struct tr_rpc_idle_data* idle_data)
+void portTest(tr_session* session, tr_variant::Map const& args_in, DoneCb&& done_cb, struct tr_rpc_idle_data* idle_data)
 {
     using namespace JsonRpc;
 
@@ -1393,7 +1389,8 @@ void onPortTested(tr_web::FetchResponse const& web_response, DoneCb const& done_
         }
         else
         {
-            return { Error::INVALID_PARAMS, "invalid ip protocol string"s };
+            done_cb(idle_data, Error::INVALID_PARAMS, "invalid ip protocol string"sv);
+            return;
         }
     }
 
@@ -1408,7 +1405,6 @@ void onPortTested(tr_web::FetchResponse const& web_response, DoneCb const& done_
         options.ip_proto = *ip_proto;
     }
     session->fetch(std::move(options));
-    return { Error::SUCCESS, {} };
 }
 
 // ---
@@ -1487,7 +1483,7 @@ void onBlocklistFetched(tr_web::FetchResponse const& web_response, DoneCb const&
     done_cb(data, Error::SUCCESS, {});
 }
 
-[[nodiscard]] std::pair<JsonRpc::Error::Code, std::string> blocklistUpdate(
+void blocklistUpdate(
     tr_session* session,
     tr_variant::Map const& /*args_in*/,
     DoneCb&& done_cb,
@@ -1498,7 +1494,6 @@ void onBlocklistFetched(tr_web::FetchResponse const& web_response, DoneCb const&
         [cb = std::move(done_cb)](tr_web::FetchResponse const& r) { onBlocklistFetched(r, cb); },
         idle_data,
     });
-    return { JsonRpc::Error::SUCCESS, {} };
 }
 
 // ---
@@ -1597,11 +1592,7 @@ bool isCurlURL(std::string_view url)
     return files;
 }
 
-[[nodiscard]] std::pair<JsonRpc::Error::Code, std::string> torrentAdd(
-    tr_session* session,
-    tr_variant::Map const& args_in,
-    DoneCb&& done_cb,
-    tr_rpc_idle_data* idle_data)
+void torrentAdd(tr_session* session, tr_variant::Map const& args_in, DoneCb&& done_cb, tr_rpc_idle_data* idle_data)
 {
     using namespace JsonRpc;
 
@@ -1611,13 +1602,15 @@ bool isCurlURL(std::string_view url)
     auto const metainfo_base64 = args_in.value_if<std::string_view>(TR_KEY_metainfo).value_or(""sv);
     if (std::empty(filename) && std::empty(metainfo_base64))
     {
-        return { Error::INVALID_PARAMS, "no filename or metainfo specified"s };
+        done_cb(idle_data, Error::INVALID_PARAMS, "no filename or metainfo specified"sv);
+        return;
     }
 
     auto const download_dir = args_in.value_if<std::string_view>(TR_KEY_download_dir);
     if (download_dir && tr_sys_path_is_relative(*download_dir))
     {
-        return { Error::PATH_NOT_ABSOLUTE, "download directory path is not absolute"s };
+        done_cb(idle_data, Error::PATH_NOT_ABSOLUTE, "download directory path is not absolute"sv);
+        return;
     }
 
     auto ctor = tr_ctor{ session };
@@ -1682,7 +1675,8 @@ bool isCurlURL(std::string_view url)
 
         if (err != Error::SUCCESS)
         {
-            return { err, std::move(errmsg) };
+            done_cb(idle_data, err, errmsg);
+            return;
         }
 
         ctor.set_labels(std::move(labels));
@@ -1699,33 +1693,31 @@ bool isCurlURL(std::string_view url)
                                              d };
         options.cookies = cookies;
         session->fetch(std::move(options));
+        return;
+    }
+
+    auto ok = false;
+
+    if (std::empty(filename))
+    {
+        ok = ctor.set_metainfo(tr_base64_decode(metainfo_base64));
+    }
+    else if (tr_sys_path_exists(tr_pathbuf{ filename }))
+    {
+        ok = ctor.set_metainfo_from_file(filename);
     }
     else
     {
-        auto ok = false;
-
-        if (std::empty(filename))
-        {
-            ok = ctor.set_metainfo(tr_base64_decode(metainfo_base64));
-        }
-        else if (tr_sys_path_exists(tr_pathbuf{ filename }))
-        {
-            ok = ctor.set_metainfo_from_file(filename);
-        }
-        else
-        {
-            ok = ctor.set_metainfo_from_magnet_link(filename);
-        }
-
-        if (!ok)
-        {
-            return { Error::UNRECOGNIZED_INFO, {} };
-        }
-
-        add_torrent_impl(idle_data, done_cb, ctor);
+        ok = ctor.set_metainfo_from_magnet_link(filename);
     }
 
-    return { Error::SUCCESS, {} };
+    if (!ok)
+    {
+        done_cb(idle_data, Error::UNRECOGNIZED_INFO, {});
+        return;
+    }
+
+    add_torrent_impl(idle_data, done_cb, ctor);
 }
 
 // ---
@@ -2369,8 +2361,7 @@ auto constexpr SyncHandlers = std::array<std::tuple<std::string_view, SyncHandle
     { "torrent-verify"sv, torrentVerify, true },
 } };
 
-using AsyncHandler =
-    std::pair<JsonRpc::Error::Code, std::string> (*)(tr_session*, tr_variant::Map const&, DoneCb&&, tr_rpc_idle_data*);
+using AsyncHandler = void (*)(tr_session*, tr_variant::Map const&, DoneCb&&, tr_rpc_idle_data*);
 
 auto constexpr AsyncHandlers = std::array<std::tuple<std::string_view, AsyncHandler, bool /*has_side_effects*/>, 4U>{ {
     { "blocklist-update"sv, blocklistUpdate, true },
@@ -2477,17 +2468,15 @@ void tr_rpc_request_exec_impl(tr_session* session, tr_variant const& request, tr
             return;
         }
 
-        auto* const async_data = new tr_rpc_idle_data{ std::move(data) };
-        DoneCb async_done_cb = [cb = std::move(done_cb)](tr_rpc_idle_data* data, Error::Code code, std::string_view errmsg)
-        {
-            cb(data, code, errmsg);
-            delete data;
-        };
-        if (auto const [err, errmsg] = func(session, *params, std::move(async_done_cb), async_data); err != Error::SUCCESS)
-        {
-            // Async operation failed prematurely? Invoke callback to ensure client gets a reply
-            async_done_cb(async_data, err, errmsg);
-        }
+        func(
+            session,
+            *params,
+            [cb = std::move(done_cb)](tr_rpc_idle_data* data, Error::Code code, std::string_view errmsg)
+            {
+                cb(data, code, errmsg);
+                delete data;
+            },
+            new tr_rpc_idle_data{ std::move(data) });
         return;
     }
 

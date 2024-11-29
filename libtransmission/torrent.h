@@ -184,7 +184,7 @@ struct tr_torrent
     void rename_path(
         std::string_view oldpath,
         std::string_view newname,
-        tr_torrent_rename_done_func callback,
+        tr_torrent_rename_done_func&& callback,
         void* callback_user_data);
 
     // these functions should become private when possible,
