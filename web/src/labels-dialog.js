@@ -54,7 +54,10 @@ export class LabelsDialog extends EventTarget {
     const { elements } = this;
     const { entry } = elements;
     const { value } = entry;
-    const labels = value.split(/ *, */).filter((l) => l.length > 0);
+    const labels = value
+      .split(',')
+      .map((l) => l.trim())
+      .filter((l) => l.length > 0);
 
     remote.setLabels(ids, labels, (response) => {
       if (response.result === 'success') {

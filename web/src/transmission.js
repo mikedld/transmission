@@ -941,7 +941,7 @@ TODO: fix this when notifications get fixed
   ///
 
   _updateGuiFromSession(o) {
-    const [, version, checksum] = o.version.match(/(.*)\s\(([\da-f]+)\)/);
+    const [, version, checksum] = o.version.match(/^(.*)\s\(([\da-f]+)\)/);
     this.version_info = {
       checksum,
       version,
@@ -1027,6 +1027,9 @@ TODO: fix this when notifications get fixed
 
     let filter_text = null;
     let labels = null;
+    // TODO: This regex is wrong and is about to be removed in https://github.com/transmission/transmission/pull/7008,
+    // so it is left alone for now.
+    // eslint-disable-next-line sonarjs/slow-regex
     const m = /^labels:([\w,-\s]*)(.*)$/.exec(this.filterText);
     if (m) {
       filter_text = m[2].trim();

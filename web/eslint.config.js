@@ -123,6 +123,7 @@ export default [
       semi: 'error',
       'sonarjs/cognitive-complexity': 'off',
       'sonarjs/no-duplicate-string': 'off',
+      'sonarjs/todo-tag': 'off',
       'sort-keys': 'error',
       strict: 'error',
       'unicorn/consistent-function-scoping': 'off',
