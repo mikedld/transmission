@@ -48,22 +48,22 @@ Now, the config file can be edited. Some settings to draw your attention to:
 {
     ...
     # The default download directory.
-    "download-dir": "/home/youruser/Downloads",
+    "download_dir": "/home/youruser/Downloads",
     ...
     # Reduce the global peer limit if your router is low on memory.
-    "peer-limit-global": 32,
+    "peer_limit_global": 32,
     ...
     # For manual port forwarding. This controls the TCP and UDP bittorrent ports.
-    "peer-port": 32768,
+    "peer_port": 32768,
     ...
     # Reject RPC commands from anybody except localhost. For untrusted LANs.
-    "rpc-bind-address": "127.0.0.1",
+    "rpc_bind_address": "127.0.0.1",
     ...
     # If there are problems with other internet applications while bittorrent
     # is running, you may need to reduce the max upload speed to under 80% of
     # your ISP's max upload speed.
-    "speed-limit-up": 100,  # in KB/s
-    "speed-limit-up-enabled": true,
+    "speed_limit_up": 100,  # in KB/s
+    "speed_limit_up_enabled": true,
     ...
 }
 ```

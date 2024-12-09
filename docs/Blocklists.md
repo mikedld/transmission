@@ -15,7 +15,7 @@ Transmission stores blocklists in a folder named `blocklists` in its [configurat
 In that directory, files ending in ".bin" are blocklists that Transmission has parsed into a binary format suitable for quick lookups.  When Transmission starts, it scans this directory for files not ending in ".bin" and tries to parse them.  So to add another blocklist, all you have to do is put it in this directory and restart Transmission. Text and gzip formats are supported.
 
 ## Using blocklists in transmission-daemon ##
-transmission-daemon does not have an "update blocklist" button, so its users have two options. They can either copy blocklists from transmission-gtk's directory to transmission-daemon's directory, or they can download a blocklist by hand, uncompress it, and place it in the daemon's `blocklists` folder. In both cases, the daemon's [settings.json file](Configuration-Files.md) will need to be edited to set "blocklist-enabled" to "true".
+transmission-daemon does not have an "update blocklist" button, so its users have two options. They can either copy blocklists from transmission-gtk's directory to transmission-daemon's directory, or they can download a blocklist by hand, uncompress it, and place it in the daemon's `blocklists` folder. In both cases, the daemon's [settings.json file](Configuration-Files.md) will need to be edited to set "blocklist_enabled" to "true".
 
 In both cases the daemon is unaware of blocklist updates. Only when it starts it creates new .bin files.
 
@@ -23,8 +23,8 @@ There is a third option: add the blocklist URL in settings.json (only one blockl
 
 settings.json snippet:
 ```json
-"blocklist-enabled": true,
-"blocklist-url": "http://www.example.com/blocklist",
+"blocklist_enabled": true,
+"blocklist_url": "http://www.example.com/blocklist",
 ```
 
 Manual update example:

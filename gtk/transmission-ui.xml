@@ -178,22 +178,22 @@
       <attribute name="label" translatable="true">_View</attribute>
       <section>
         <item>
-          <attribute name="action">win.compact-view</attribute>
+          <attribute name="action">win.compact_view</attribute>
           <attribute name="label" translatable="yes">_Compact View</attribute>
           <attribute name="accel">&lt;alt&gt;C</attribute>
         </item>
       </section>
       <section>
         <item>
-          <attribute name="action">win.show-toolbar</attribute>
+          <attribute name="action">win.show_toolbar</attribute>
           <attribute name="label" translatable="yes">_Toolbar</attribute>
         </item>
         <item>
-          <attribute name="action">win.show-filterbar</attribute>
+          <attribute name="action">win.show_filterbar</attribute>
           <attribute name="label" translatable="yes">_Filterbar</attribute>
         </item>
         <item>
-          <attribute name="action">win.show-statusbar</attribute>
+          <attribute name="action">win.show_statusbar</attribute>
           <attribute name="label" translatable="yes">_Statusbar</attribute>
         </item>
       </section>
@@ -246,7 +246,7 @@
       </section>
       <section>
         <item>
-          <attribute name="action">win.sort-reversed</attribute>
+          <attribute name="action">win.sort_reversed</attribute>
           <attribute name="label" translatable="yes">Re_verse Sort Order</attribute>
         </item>
       </section>
@@ -353,7 +353,7 @@
         </section>
         <section>
           <item>
-            <attribute name="action">win.sort-reversed</attribute>
+            <attribute name="action">win.sort_reversed</attribute>
             <attribute name="label" translatable="yes">Re_verse Sort Order</attribute>
           </item>
         </section>
@@ -482,7 +482,7 @@
     </section>
     <section>
       <item>
-        <attribute name="action">win.alt-speed-enabled</attribute>
+        <attribute name="action">win.alt_speed_enabled</attribute>
         <attribute name="label" translatable="yes">Enable Alternative Speed _Limits</attribute>
       </item>
     </section>

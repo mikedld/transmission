@@ -1277,7 +1277,7 @@ void Session::port_test(PortTestIpProtocol const ip_protocol)
     auto const tag = nextTag++;
 
     auto arguments_map = tr_variant::Map{ 1U };
-    arguments_map.try_emplace(TR_KEY_ipProtocol, tr_variant::unmanaged_string(IpStr[ip_protocol]));
+    arguments_map.try_emplace(TR_KEY_ip_protocol, tr_variant::unmanaged_string(IpStr[ip_protocol]));
 
     auto request_map = tr_variant::Map{ 3U };
     request_map.try_emplace(TR_KEY_method, tr_variant::unmanaged_string("port-test"sv));
@@ -1294,7 +1294,7 @@ void Session::port_test(PortTestIpProtocol const ip_protocol)
             auto status = std::optional<bool>{};
             if (tr_variant* args = nullptr; tr_variantDictFindDict(&response, TR_KEY_arguments, &args))
             {
-                if (auto result = bool{}; tr_variantDictFindBool(args, TR_KEY_port_is_open, &result))
+                if (auto result = bool{}; tr_variantDictFindBool(args, TR_KEY_port_is_open_kebab, &result))
                 {
                     status = result;
                 }
@@ -1347,7 +1347,7 @@ void Session::blocklist_update()
             int64_t ruleCount = 0;
 
             if (!tr_variantDictFindDict(&response, TR_KEY_arguments, &args) ||
-                !tr_variantDictFindInt(args, TR_KEY_blocklist_size, &ruleCount))
+                !tr_variantDictFindInt(args, TR_KEY_blocklist_size_kebab, &ruleCount))
             {
                 ruleCount = -1;
             }

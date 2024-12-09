@@ -44,7 +44,7 @@ export class Torrent extends EventTarget {
   updateFiles(files) {
     let changed = false;
     const myfiles = this.fields.files || [];
-    const keys = ['length', 'name', 'bytesCompleted', 'wanted', 'priority'];
+    const keys = ['length', 'name', 'bytes_completed', 'wanted', 'priority'];
 
     for (const [index, f] of files.entries()) {
       const myfile = myfiles[index] || {};
@@ -69,10 +69,10 @@ export class Torrent extends EventTarget {
     for (const [key, value] of Object.entries(data)) {
       switch (key) {
         case 'files':
-        case 'fileStats': // merge files and fileStats together
+        case 'file_stats': // merge files and file_stats together
           changed |= this.updateFiles(value);
           break;
-        case 'trackerStats': // 'trackerStats' is a superset of 'trackers'...
+        case 'tracker_stats': // 'tracker_stats' is a superset of 'trackers'...
           changed |= this.setField(this.fields, 'trackers', value);
           break;
         case 'trackers': // ...so only save 'trackers' if we don't have it already
@@ -110,34 +110,34 @@ export class Torrent extends EventTarget {
     return this.fields.creator;
   }
   getDateAdded() {
-    return this.fields.addedDate;
+    return this.fields.added_date;
   }
   getDateCreated() {
-    return this.fields.dateCreated;
+    return this.fields.date_created;
   }
   getDesiredAvailable() {
-    return this.fields.desiredAvailable;
+    return this.fields.desired_available;
   }
   getDownloadDir() {
-    return this.fields.downloadDir;
+    return this.fields.download_dir;
   }
   getDownloadSpeed() {
-    return this.fields.rateDownload;
+    return this.fields.rate_download;
   }
   getDownloadedEver() {
-    return this.fields.downloadedEver;
+    return this.fields.downloaded_ever;
   }
   getError() {
     return this.fields.error;
   }
   getErrorString() {
-    return this.fields.errorString;
+    return this.fields.error_string;
   }
   getETA() {
     return this.fields.eta;
   }
   getFailedEver() {
-    return this.fields.corruptEver;
+    return this.fields.corrupt_ever;
   }
   getFiles() {
     return this.fields.files || [];
@@ -146,19 +146,19 @@ export class Torrent extends EventTarget {
     return this.fields.files[index];
   }
   getFileCount() {
-    return this.fields['file-count'];
+    return this.fields.file_count;
   }
   getHashString() {
-    return this.fields.hashString;
+    return this.fields.hash_string;
   }
   getHave() {
     return this.getHaveValid() + this.getHaveUnchecked();
   }
   getHaveUnchecked() {
-    return this.fields.haveUnchecked;
+    return this.fields.have_unchecked;
   }
   getHaveValid() {
-    return this.fields.haveValid;
+    return this.fields.have_valid;
   }
   getId() {
     return this.fields.id;
@@ -167,16 +167,16 @@ export class Torrent extends EventTarget {
     return this.fields.labels.sort();
   }
   getLastActivity() {
-    return this.fields.activityDate;
+    return this.fields.activity_date;
   }
   getLeftUntilDone() {
-    return this.fields.leftUntilDone;
+    return this.fields.left_until_done;
   }
   getMagnetLink() {
-    return this.fields.magnetLink;
+    return this.fields.magnet_link;
   }
   getMetadataPercentComplete() {
-    return this.fields.metadataPercentComplete;
+    return this.fields.metadata_percent_complete;
   }
   getName() {
     return this.fields.name || 'Unknown';
@@ -185,72 +185,72 @@ export class Torrent extends EventTarget {
     return this.fields.peers || [];
   }
   getPeersConnected() {
-    return this.fields.peersConnected;
+    return this.fields.peers_connected;
   }
   getPeersGettingFromUs() {
-    return this.fields.peersGettingFromUs;
+    return this.fields.peers_getting_from_us;
   }
   getPeersSendingToUs() {
-    return this.fields.peersSendingToUs;
+    return this.fields.peers_sending_to_us;
   }
   getPieceCount() {
-    return this.fields.pieceCount;
+    return this.fields.piece_count;
   }
   getPieceSize() {
-    return this.fields.pieceSize;
+    return this.fields.piece_size;
   }
   getPrimaryMimeType() {
-    return this.fields['primary-mime-type'] || 'application/octet-stream';
+    return this.fields.primary_mime_type || 'application/octet-stream';
   }
   getPrivateFlag() {
-    return this.fields.isPrivate;
+    return this.fields.is_private;
   }
   getQueuePosition() {
-    return this.fields.queuePosition;
+    return this.fields.queue_position;
   }
   getRecheckProgress() {
-    return this.fields.recheckProgress;
+    return this.fields.recheck_progress;
   }
   getSeedRatioLimit() {
-    return this.fields.seedRatioLimit;
+    return this.fields.seed_ratio_limit;
   }
   getSeedRatioMode() {
-    return this.fields.seedRatioMode;
+    return this.fields.seed_ratio_mode;
   }
   getSizeWhenDone() {
-    return this.fields.sizeWhenDone;
+    return this.fields.size_when_done;
   }
   getStartDate() {
-    return this.fields.startDate;
+    return this.fields.start_date;
   }
   getStatus() {
     return this.fields.status;
   }
   getTotalSize() {
-    return this.fields.totalSize;
+    return this.fields.total_size;
   }
   getTrackers() {
     return this.fields.trackers || [];
   }
   getUploadSpeed() {
-    return this.fields.rateUpload;
+    return this.fields.rate_upload;
   }
   getUploadRatio() {
-    return this.fields.uploadRatio;
+    return this.fields.upload_ratio;
   }
   getUploadedEver() {
-    return this.fields.uploadedEver;
+    return this.fields.uploaded_ever;
   }
   getWebseedsSendingToUs() {
-    return this.fields.webseedsSendingToUs;
+    return this.fields.webseeds_sending_to_us;
   }
   isFinished() {
-    return this.fields.isFinished;
+    return this.fields.is_finished;
   }
 
   // derived accessors
   hasExtraInfo() {
-    return 'hashString' in this.fields;
+    return 'hash_string' in this.fields;
   }
   isSeeding() {
     return this.getStatus() === Torrent._StatusSeed;
@@ -283,7 +283,7 @@ export class Torrent extends EventTarget {
     return Formatter.percentString(100 * this.getPercentDone(), 1);
   }
   getPercentDone() {
-    return this.fields.percentDone;
+    return this.fields.percent_done;
   }
   getStateString() {
     switch (this.getStatus()) {
@@ -558,7 +558,7 @@ Torrent._StatusDownload = 4;
 Torrent._StatusSeedWait = 5;
 Torrent._StatusSeed = 6;
 
-// Torrent.fields.seedRatioMode
+// Torrent.fields.seed_ratio_mode
 Torrent._RatioUseGlobal = 0;
 Torrent._RatioUseLocal = 1;
 Torrent._RatioUnlimited = 2;
@@ -569,7 +569,7 @@ Torrent._ErrTrackerWarning = 1;
 Torrent._ErrTrackerError = 2;
 Torrent._ErrLocalError = 3;
 
-// TrackerStats' announceState
+// tracker_stats' announceState
 Torrent._TrackerInactive = 0;
 Torrent._TrackerWaiting = 1;
 Torrent._TrackerQueued = 2;
@@ -581,65 +581,65 @@ Torrent.Fields = {};
 // either on startup or when a magnet finishes downloading its metadata
 // finishes downloading its metadata
 Torrent.Fields.Metadata = [
-  'addedDate',
-  'file-count',
+  'added_date',
+  'file_count',
   'name',
-  'primary-mime-type',
-  'totalSize',
+  'primary_mime_type',
+  'total_size',
 ];
 
 // commonly used fields which need to be periodically refreshed
 Torrent.Fields.Stats = [
   'error',
-  'errorString',
+  'error_string',
   'eta',
-  'isFinished',
-  'isStalled',
+  'is_finished',
+  'is_stalled',
   'labels',
-  'leftUntilDone',
-  'metadataPercentComplete',
-  'peersConnected',
-  'peersGettingFromUs',
-  'peersSendingToUs',
-  'percentDone',
-  'queuePosition',
-  'rateDownload',
-  'rateUpload',
-  'recheckProgress',
-  'seedRatioMode',
-  'seedRatioLimit',
-  'sizeWhenDone',
+  'left_until_done',
+  'metadata_percent_complete',
+  'peers_connected',
+  'peers_getting_from_us',
+  'peers_sending_to_us',
+  'percent_done',
+  'queue_position',
+  'rate_download',
+  'rate_upload',
+  'recheck_progress',
+  'seed_ratio_mode',
+  'seed_ratio_limit',
+  'size_when_done',
   'status',
   'trackers',
-  'downloadDir',
-  'uploadedEver',
-  'uploadRatio',
-  'webseedsSendingToUs',
+  'download_dir',
+  'uploaded_ever',
+  'upload_ratio',
+  'webseeds_sending_to_us',
 ];
 
 // fields used by the inspector which only need to be loaded once
 Torrent.Fields.InfoExtra = [
   'comment',
   'creator',
-  'dateCreated',
+  'date_created',
   'files',
-  'hashString',
-  'isPrivate',
-  'magnetLink',
-  'pieceCount',
-  'pieceSize',
+  'hash_string',
+  'is_private',
+  'magnet_link',
+  'piece_count',
+  'piece_size',
 ];
 
 // fields used in the inspector which need to be periodically refreshed
 Torrent.Fields.StatsExtra = [
-  'activityDate',
-  'corruptEver',
-  'desiredAvailable',
-  'downloadedEver',
-  'fileStats',
-  'haveUnchecked',
-  'haveValid',
+  'activity_date',
+  'corrupt_ever',
+  'desired_available',
+  'downloaded_ever',
+  'file_stats',
+  'have_unchecked',
+  'have_valid',
   'peers',
-  'startDate',
-  'trackerStats',
+  'start_date',
+  'tracker_stats',
 ];

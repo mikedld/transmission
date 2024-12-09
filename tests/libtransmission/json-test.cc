@@ -50,7 +50,7 @@ private:
 
 TEST_P(JSONTest, testElements)
 {
-    auto const in = std::string{
+    static auto constexpr In = std::string_view{
         "{ \"string\": \"hello world\","
         "  \"escaped\": \"bell \\b formfeed \\f linefeed \\n carriage return \\r tab \\t\","
         "  \"int\": 5, "
@@ -60,54 +60,77 @@ TEST_P(JSONTest, testElements)
         "  \"null\": null }"
     };
 
-    auto var = tr_variant_serde::json().inplace().parse(in).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
+    // Same as In, just formatted differently
+    static auto constexpr Out = std::string_view{
+        // clang-format off
+        "{"
+            "\"escaped\":\"bell \\b formfeed \\f linefeed \\n carriage return \\r tab \\t\","
+            "\"false\":false,"
+            "\"float\":6.5,"
+            "\"int\":5,"
+            "\"null\":null,"
+            "\"string\":\"hello world\","
+            "\"true\":true"
+        "}"
+        // clang-format on
+    };
 
-    auto sv = std::string_view{};
-    auto key = tr_quark_new("string"sv);
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, key, &sv));
-    EXPECT_EQ("hello world"sv, sv);
+    auto serde = tr_variant_serde::json().inplace().compact();
+    auto const var = serde.parse(In).value_or(tr_variant{});
+    auto const* const map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
 
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, tr_quark_new("escaped"sv), &sv));
-    EXPECT_EQ("bell \b formfeed \f linefeed \n carriage return \r tab \t"sv, sv);
+    auto sv = map->value_if<std::string_view>(tr_quark_new("string"sv));
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("hello world"sv, *sv);
 
-    auto i = int64_t{};
-    EXPECT_TRUE(tr_variantDictFindInt(&var, tr_quark_new("int"sv), &i));
-    EXPECT_EQ(5, i);
+    sv = map->value_if<std::string_view>(tr_quark_new("escaped"sv));
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("bell \b formfeed \f linefeed \n carriage return \r tab \t"sv, *sv);
 
-    auto d = double{};
-    EXPECT_TRUE(tr_variantDictFindReal(&var, tr_quark_new("float"sv), &d));
-    EXPECT_EQ(65, int(d * 10));
+    auto i = map->value_if<int64_t>(tr_quark_new("int"sv));
+    ASSERT_TRUE(i);
+    EXPECT_EQ(5, *i);
 
-    auto f = bool{};
-    EXPECT_TRUE(tr_variantDictFindBool(&var, tr_quark_new("true"sv), &f));
-    EXPECT_TRUE(f);
+    auto d = map->value_if<double>(tr_quark_new("float"sv));
+    ASSERT_TRUE(d);
+    EXPECT_EQ(65, int(*d * 10));
 
-    EXPECT_TRUE(tr_variantDictFindBool(&var, tr_quark_new("false"sv), &f));
-    EXPECT_FALSE(f);
+    auto b = map->value_if<bool>(tr_quark_new("true"sv));
+    ASSERT_TRUE(b);
+    EXPECT_TRUE(*b);
 
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, tr_quark_new("null"sv), &sv));
-    EXPECT_EQ(""sv, sv);
+    b = map->value_if<bool>(tr_quark_new("false"sv));
+    ASSERT_TRUE(b);
+    EXPECT_FALSE(*b);
+
+    auto n = map->value_if<std::nullptr_t>(tr_quark_new("null"sv));
+    EXPECT_TRUE(n);
+
+    EXPECT_EQ(serde.to_string(var), Out);
 }
 
 TEST_P(JSONTest, testUtf8)
 {
     auto in = "{ \"key\": \"Letöltések\" }"sv;
-    auto sv = std::string_view{};
     tr_quark const key = tr_quark_new("key"sv);
 
     auto serde = tr_variant_serde::json().inplace().compact();
     auto var = serde.parse(in).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, key, &sv));
-    EXPECT_EQ("Letöltések"sv, sv);
+    auto* map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
+    auto sv = map->value_if<std::string_view>(key);
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("Letöltések"sv, *sv);
     var.clear();
 
     in = R"({ "key": "\u005C" })"sv;
     var = serde.parse(in).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, key, &sv));
-    EXPECT_EQ("\\"sv, sv);
+    map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
+    sv = map->value_if<std::string_view>(key);
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("\\"sv, *sv);
     var.clear();
 
     /**
@@ -120,41 +143,51 @@ TEST_P(JSONTest, testUtf8)
      */
     in = R"({ "key": "Let\u00f6lt\u00e9sek" })"sv;
     var = serde.parse(in).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, key, &sv));
-    EXPECT_EQ("Letöltések"sv, sv);
+    map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
+    sv = map->value_if<std::string_view>(key);
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("Letöltések"sv, *sv);
     auto json = serde.to_string(var);
     var.clear();
 
     EXPECT_FALSE(std::empty(json));
     EXPECT_EQ(R"({"key":"Letöltések"})"sv, json);
     var = serde.parse(json).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, key, &sv));
-    EXPECT_EQ("Letöltések"sv, sv);
+    map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
+    sv = map->value_if<std::string_view>(key);
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("Letöltések"sv, *sv);
 
     // Test string known to be prone to locale issues
     // https://github.com/transmission/transmission/issues/5967
     var.clear();
-    tr_variantInitDict(&var, 1U);
-    tr_variantDictAddStr(&var, key, "Дыскаграфія"sv);
+    var = tr_variant::make_map(1U);
+    map = var.get_if<tr_variant::Map>();
+    map->try_emplace(key, "Дыскаграфія"sv);
     json = serde.to_string(var);
     EXPECT_EQ(R"({"key":"Дыскаграфія"})"sv, json);
     var = serde.parse(json).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, key, &sv));
-    EXPECT_EQ("Дыскаграфія"sv, sv);
+    map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
+    sv = map->value_if<std::string_view>(key);
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("Дыскаграфія"sv, *sv);
 
     // Thinking emoji 🤔
     var.clear();
-    tr_variantInitDict(&var, 1U);
-    tr_variantDictAddStr(&var, key, "\xf0\x9f\xa4\x94"sv);
+    var = tr_variant::make_map(1U);
+    map = var.get_if<tr_variant::Map>();
+    map->try_emplace(key, "\xf0\x9f\xa4\x94"sv);
     json = serde.to_string(var);
     EXPECT_EQ("{\"key\":\"\xf0\x9f\xa4\x94\"}"sv, json);
     var = serde.parse(json).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, key, &sv));
-    EXPECT_EQ("\xf0\x9f\xa4\x94"sv, sv);
+    map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
+    sv = map->value_if<std::string_view>(key);
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("\xf0\x9f\xa4\x94"sv, *sv);
 }
 
 TEST_P(JSONTest, test1)
@@ -175,32 +208,33 @@ TEST_P(JSONTest, test1)
 
     auto serde = tr_variant_serde::json();
     auto var = serde.inplace().parse(Input).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
+    auto* map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
 
-    auto sv = std::string_view{};
-    auto i = int64_t{};
-    auto* headers = tr_variantDictFind(&var, tr_quark_new("headers"sv));
-    EXPECT_NE(nullptr, headers);
-    EXPECT_TRUE(headers->holds_alternative<tr_variant::Map>());
-    EXPECT_TRUE(tr_variantDictFindStrView(headers, tr_quark_new("type"sv), &sv));
-    EXPECT_EQ("request"sv, sv);
-    EXPECT_TRUE(tr_variantDictFindInt(headers, TR_KEY_tag, &i));
-    EXPECT_EQ(666, i);
-    auto* body = tr_variantDictFind(&var, tr_quark_new("body"sv));
-    EXPECT_NE(nullptr, body);
-    EXPECT_TRUE(tr_variantDictFindStrView(body, TR_KEY_name, &sv));
-    EXPECT_EQ("torrent-info"sv, sv);
-    auto* args = tr_variantDictFind(body, tr_quark_new("arguments"sv));
-    EXPECT_NE(nullptr, args);
-    EXPECT_TRUE(args->holds_alternative<tr_variant::Map>());
-    auto* ids = tr_variantDictFind(args, TR_KEY_ids);
-    ASSERT_NE(nullptr, ids);
-    EXPECT_TRUE(ids->holds_alternative<tr_variant::Vector>());
-    EXPECT_EQ(2U, tr_variantListSize(ids));
-    EXPECT_TRUE(tr_variantGetInt(tr_variantListChild(ids, 0), &i));
-    EXPECT_EQ(7, i);
-    EXPECT_TRUE(tr_variantGetInt(tr_variantListChild(ids, 1), &i));
-    EXPECT_EQ(10, i);
+    auto* headers = map->find_if<tr_variant::Map>(tr_quark_new("headers"sv));
+    ASSERT_NE(headers, nullptr);
+    auto sv = headers->value_if<std::string_view>(tr_quark_new("type"sv));
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("request"sv, *sv);
+    auto i = headers->value_if<int64_t>(TR_KEY_tag);
+    ASSERT_TRUE(i);
+    EXPECT_EQ(666, *i);
+    auto* body = map->find_if<tr_variant::Map>(tr_quark_new("body"sv));
+    ASSERT_NE(body, nullptr);
+    sv = body->value_if<std::string_view>(TR_KEY_name);
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("torrent-info"sv, *sv);
+    auto* args = body->find_if<tr_variant::Map>(tr_quark_new("arguments"sv));
+    ASSERT_NE(args, nullptr);
+    auto* ids = args->find_if<tr_variant::Vector>(TR_KEY_ids);
+    ASSERT_NE(ids, nullptr);
+    EXPECT_EQ(2U, std::size(*ids));
+    i = (*ids)[0].value_if<int64_t>();
+    ASSERT_TRUE(i);
+    EXPECT_EQ(7, *i);
+    i = (*ids)[1].value_if<int64_t>();
+    ASSERT_TRUE(i);
+    EXPECT_EQ(10, *i);
 }
 
 TEST_P(JSONTest, test2)
@@ -214,17 +248,18 @@ TEST_P(JSONTest, test3)
 {
     static auto constexpr Input =
         "{ \"error\": 2,"
-        "  \"errorString\": \"torrent not registered with this tracker 6UHsVW'*C\","
+        "  \"error_string\": \"torrent not registered with this tracker 6UHsVW'*C\","
         "  \"eta\": 262792,"
         "  \"id\": 25,"
-        "  \"leftUntilDone\": 2275655680 }"sv;
+        "  \"left_until_done\": 2275655680 }"sv;
 
     auto var = tr_variant_serde::json().inplace().parse(Input).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
+    auto* map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
 
-    auto sv = std::string_view{};
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, TR_KEY_errorString, &sv));
-    EXPECT_EQ("torrent not registered with this tracker 6UHsVW'*C"sv, sv);
+    auto sv = map->value_if<std::string_view>(TR_KEY_error_string);
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("torrent not registered with this tracker 6UHsVW'*C"sv, *sv);
 }
 
 TEST_P(JSONTest, unescape)
@@ -232,11 +267,12 @@ TEST_P(JSONTest, unescape)
     static auto constexpr Input = R"({ "string-1": "\/usr\/lib" })"sv;
 
     auto var = tr_variant_serde::json().inplace().parse(Input).value_or(tr_variant{});
-    EXPECT_TRUE(var.holds_alternative<tr_variant::Map>());
+    auto* map = var.get_if<tr_variant::Map>();
+    ASSERT_NE(map, nullptr);
 
-    auto sv = std::string_view{};
-    EXPECT_TRUE(tr_variantDictFindStrView(&var, tr_quark_new("string-1"sv), &sv));
-    EXPECT_EQ("/usr/lib"sv, sv);
+    auto sv = map->value_if<std::string_view>(tr_quark_new("string-1"sv));
+    ASSERT_TRUE(sv);
+    EXPECT_EQ("/usr/lib"sv, *sv);
 }
 
 INSTANTIATE_TEST_SUITE_P( //

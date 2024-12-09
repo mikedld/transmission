@@ -240,7 +240,7 @@ void OptionsDialog::onAccepted()
         download_dir = ui_.destinationEdit->text();
     }
 
-    dictAdd(&args, TR_KEY_download_dir, download_dir);
+    dictAdd(&args, TR_KEY_download_dir_kebab, download_dir);
 
     // paused
     dictAdd(&args, TR_KEY_paused, !ui_.startCheck->isChecked());
@@ -248,14 +248,14 @@ void OptionsDialog::onAccepted()
     // priority
     int const index = ui_.priorityCombo->currentIndex();
     int const priority = ui_.priorityCombo->itemData(index).toInt();
-    dictAdd(&args, TR_KEY_bandwidthPriority, priority);
+    dictAdd(&args, TR_KEY_bandwidth_priority_camel, priority);
 
-    // files-unwanted
+    // files_unwanted
     auto count = std::count(wanted_.begin(), wanted_.end(), false);
 
     if (count > 0)
     {
-        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_files_unwanted, count);
+        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_files_unwanted_kebab, count);
 
         for (int i = 0, n = wanted_.size(); i < n; ++i)
         {
@@ -266,12 +266,12 @@ void OptionsDialog::onAccepted()
         }
     }
 
-    // priority-low
+    // priority_low
     count = std::count(priorities_.begin(), priorities_.end(), TR_PRI_LOW);
 
     if (count > 0)
     {
-        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_priority_low, count);
+        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_priority_low_kebab, count);
 
         for (int i = 0, n = priorities_.size(); i < n; ++i)
         {
@@ -282,12 +282,12 @@ void OptionsDialog::onAccepted()
         }
     }
 
-    // priority-high
+    // priority_high
     count = std::count(priorities_.begin(), priorities_.end(), TR_PRI_HIGH);
 
     if (count > 0)
     {
-        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_priority_high, count);
+        tr_variant* l = tr_variantDictAddList(&args, TR_KEY_priority_high_kebab, count);
 
         for (int i = 0, n = priorities_.size(); i < n; ++i)
         {

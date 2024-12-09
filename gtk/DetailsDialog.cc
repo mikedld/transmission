@@ -438,7 +438,7 @@ void DetailsDialog::Impl::torrent_set_bool(tr_quark key, bool value)
     tr_variant top;
 
     tr_variantInitDict(&top, 2);
-    tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-set"sv);
+    tr_variantDictAddStrView(&top, TR_KEY_method, tr_quark_get_string_view(TR_KEY_torrent_set_kebab));
     tr_variant* const args = tr_variantDictAddDict(&top, TR_KEY_arguments, 2);
     tr_variantDictAddBool(args, key, value);
     tr_variant* const ids = tr_variantDictAddList(args, TR_KEY_ids, ids_.size());
@@ -456,7 +456,7 @@ void DetailsDialog::Impl::torrent_set_int(tr_quark key, int value)
     tr_variant top;
 
     tr_variantInitDict(&top, 2);
-    tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-set"sv);
+    tr_variantDictAddStrView(&top, TR_KEY_method, tr_quark_get_string_view(TR_KEY_torrent_set_kebab));
     tr_variant* const args = tr_variantDictAddDict(&top, TR_KEY_arguments, 2);
     tr_variantDictAddInt(args, key, value);
     tr_variant* const ids = tr_variantDictAddList(args, TR_KEY_ids, ids_.size());
@@ -474,7 +474,7 @@ void DetailsDialog::Impl::torrent_set_real(tr_quark key, double value)
     tr_variant top;
 
     tr_variantInitDict(&top, 2);
-    tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-set"sv);
+    tr_variantDictAddStrView(&top, TR_KEY_method, tr_quark_get_string_view(TR_KEY_torrent_set_kebab));
     tr_variant* const args = tr_variantDictAddDict(&top, TR_KEY_arguments, 2);
     tr_variantDictAddReal(args, key, value);
     tr_variant* const ids = tr_variantDictAddList(args, TR_KEY_ids, ids_.size());
@@ -492,29 +492,29 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
     auto const speed_units_kbyps_str = Speed::units().display_name(Speed::Units::KByps);
 
     honor_limits_check_tag_ = honor_limits_check_->signal_toggled().connect(
-        [this]() { torrent_set_bool(TR_KEY_honorsSessionLimits, honor_limits_check_->get_active()); });
+        [this]() { torrent_set_bool(TR_KEY_honors_session_limits_camel, honor_limits_check_->get_active()); });
 
     down_limited_check_->set_label(
         fmt::format(fmt::runtime(down_limited_check_->get_label().raw()), fmt::arg("speed_units", speed_units_kbyps_str)));
     down_limited_check_tag_ = down_limited_check_->signal_toggled().connect(
-        [this]() { torrent_set_bool(TR_KEY_downloadLimited, down_limited_check_->get_active()); });
+        [this]() { torrent_set_bool(TR_KEY_download_limited_camel, down_limited_check_->get_active()); });
 
     down_limit_spin_->set_adjustment(Gtk::Adjustment::create(0, 0, std::numeric_limits<int>::max(), 5));
     down_limit_spin_tag_ = down_limit_spin_->signal_value_changed().connect(
-        [this]() { torrent_set_int(TR_KEY_downloadLimit, down_limit_spin_->get_value_as_int()); });
+        [this]() { torrent_set_int(TR_KEY_download_limit_camel, down_limit_spin_->get_value_as_int()); });
 
     up_limited_check_->set_label(
         fmt::format(fmt::runtime(up_limited_check_->get_label().raw()), fmt::arg("speed_units", speed_units_kbyps_str)));
     up_limited_check_tag_ = up_limited_check_->signal_toggled().connect(
-        [this]() { torrent_set_bool(TR_KEY_uploadLimited, up_limited_check_->get_active()); });
+        [this]() { torrent_set_bool(TR_KEY_upload_limited_camel, up_limited_check_->get_active()); });
 
     up_limit_sping_->set_adjustment(Gtk::Adjustment::create(0, 0, std::numeric_limits<int>::max(), 5));
     up_limit_spin_tag_ = up_limit_sping_->signal_value_changed().connect(
-        [this]() { torrent_set_int(TR_KEY_uploadLimit, up_limit_sping_->get_value_as_int()); });
+        [this]() { torrent_set_int(TR_KEY_upload_limit_camel, up_limit_sping_->get_value_as_int()); });
 
     gtr_priority_combo_init(*bandwidth_combo_);
     bandwidth_combo_tag_ = bandwidth_combo_->signal_changed().connect(
-        [this]() { torrent_set_int(TR_KEY_bandwidthPriority, gtr_combo_box_get_active_enum(*bandwidth_combo_)); });
+        [this]() { torrent_set_int(TR_KEY_bandwidth_priority_camel, gtr_combo_box_get_active_enum(*bandwidth_combo_)); });
 
     gtr_combo_box_set_enum(
         *ratio_combo_,
@@ -526,13 +526,13 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
     ratio_combo_tag_ = ratio_combo_->signal_changed().connect(
         [this]()
         {
-            torrent_set_int(TR_KEY_seedRatioMode, gtr_combo_box_get_active_enum(*ratio_combo_));
+            torrent_set_int(TR_KEY_seed_ratio_mode_camel, gtr_combo_box_get_active_enum(*ratio_combo_));
             refresh();
         });
     ratio_spin_->set_adjustment(Gtk::Adjustment::create(0, 0, 1000, .05));
     ratio_spin_->set_width_chars(7);
     ratio_spin_tag_ = ratio_spin_->signal_value_changed().connect(
-        [this]() { torrent_set_real(TR_KEY_seedRatioLimit, ratio_spin_->get_value()); });
+        [this]() { torrent_set_real(TR_KEY_seed_ratio_limit_camel, ratio_spin_->get_value()); });
 
     gtr_combo_box_set_enum(
         *idle_combo_,
@@ -544,16 +544,16 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
     idle_combo_tag_ = idle_combo_->signal_changed().connect(
         [this]()
         {
-            torrent_set_int(TR_KEY_seedIdleMode, gtr_combo_box_get_active_enum(*idle_combo_));
+            torrent_set_int(TR_KEY_seed_idle_mode_camel, gtr_combo_box_get_active_enum(*idle_combo_));
             refresh();
         });
     idle_spin_->set_adjustment(Gtk::Adjustment::create(1, 1, 40320, 5));
     idle_spin_tag_ = idle_spin_->signal_value_changed().connect(
-        [this]() { torrent_set_int(TR_KEY_seedIdleLimit, idle_spin_->get_value_as_int()); });
+        [this]() { torrent_set_int(TR_KEY_seed_idle_limit_camel, idle_spin_->get_value_as_int()); });
 
     max_peers_spin_->set_adjustment(Gtk::Adjustment::create(1, 1, 3000, 5));
     max_peers_spin_tag_ = max_peers_spin_->signal_value_changed().connect(
-        [this]() { torrent_set_int(TR_KEY_peer_limit, max_peers_spin_->get_value_as_int()); });
+        [this]() { torrent_set_int(TR_KEY_peer_limit_kebab, max_peers_spin_->get_value_as_int()); });
 }
 
 /****
@@ -2369,10 +2369,10 @@ void AddTrackerDialog::on_response(int response)
                 tr_variant top;
 
                 tr_variantInitDict(&top, 2);
-                tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-set"sv);
+                tr_variantDictAddStrView(&top, TR_KEY_method, tr_quark_get_string_view(TR_KEY_torrent_set_kebab));
                 auto* const args = tr_variantDictAddDict(&top, TR_KEY_arguments, 2);
                 tr_variantDictAddInt(args, TR_KEY_id, torrent_id_);
-                auto* const trackers = tr_variantDictAddList(args, TR_KEY_trackerAdd, 1);
+                auto* const trackers = tr_variantDictAddList(args, TR_KEY_tracker_add_camel, 1);
                 tr_variantListAddStr(trackers, url.raw());
 
                 core_->exec(top);
@@ -2416,10 +2416,10 @@ void DetailsDialog::Impl::on_tracker_list_remove_button_clicked()
         tr_variant top;
 
         tr_variantInitDict(&top, 2);
-        tr_variantDictAddStrView(&top, TR_KEY_method, "torrent-set"sv);
+        tr_variantDictAddStrView(&top, TR_KEY_method, tr_quark_get_string_view(TR_KEY_torrent_set_kebab));
         auto* const args = tr_variantDictAddDict(&top, TR_KEY_arguments, 2);
         tr_variantDictAddInt(args, TR_KEY_id, torrent_id);
-        auto* const trackers = tr_variantDictAddList(args, TR_KEY_trackerRemove, 1);
+        auto* const trackers = tr_variantDictAddList(args, TR_KEY_tracker_remove_camel, 1);
         tr_variantListAddInt(trackers, tracker_id);
 
         core_->exec(top);

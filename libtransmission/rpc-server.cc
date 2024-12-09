@@ -53,7 +53,7 @@
 
 struct evbuffer;
 
-/* session-id is used to make cross-site request forgery attacks difficult.
+/* session_id is used to make cross-site request forgery attacks difficult.
  * Don't disable this feature unless you really know what you're doing!
  * https://en.wikipedia.org/wiki/Cross-site_request_forgery
  * https://shiflett.org/articles/cross-site-request-forgeries
@@ -537,7 +537,7 @@ void handle_request(struct evhttp_request* req, void* arg)
                 "<li>Enable password authentication, then any hostname is allowed.</li>"
                 "<li>Add the hostname you want to use to the whitelist in settings.</li>"
                 "</ul></p>"
-                "<p>If you're editing settings.json, see the 'rpc-host-whitelist' and 'rpc-host-whitelist-enabled' entries.</p>"
+                "<p>If you're editing settings.json, see the 'rpc_host_whitelist' and 'rpc_host_whitelist_enabled' entries.</p>"
                 "<p>This requirement has been added to help prevent "
                 "<a href=\"https://en.wikipedia.org/wiki/DNS_rebinding\">DNS Rebinding</a> "
                 "attacks.</p>";
@@ -548,9 +548,10 @@ void handle_request(struct evhttp_request* req, void* arg)
         {
             auto const session_id = std::string{ server->session->sessionId() };
             auto const tmp = fmt::format(
-                "<p>Your request had an invalid session-id header.</p>"
+                "<p>Your request had an invalid session_id header.</p>"
                 "<p>To fix this, follow these steps:"
-                "<ol><li> When reading a response, get its X-Transmission-Session-Id header and remember it"
+                "<ol><li> When reading a response, get its " TR_RPC_SESSION_ID_HEADER
+                " header and remember it"
                 "<li> Add the updated header to your outgoing requests"
                 "<li> When you get this 409 error message, resend your request with the updated header"
                 "</ol></p>"

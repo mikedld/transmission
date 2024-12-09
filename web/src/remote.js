@@ -6,18 +6,18 @@ import { AlertDialog } from './alert-dialog.js';
 
 export const RPC = {
   _DaemonVersion: 'version',
-  _DownSpeedLimit: 'speed-limit-down',
-  _DownSpeedLimited: 'speed-limit-down-enabled',
-  _QueueMoveBottom: 'queue-move-bottom',
-  _QueueMoveDown: 'queue-move-down',
-  _QueueMoveTop: 'queue-move-top',
-  _QueueMoveUp: 'queue-move-up',
+  _DownSpeedLimit: 'speed_limit_down',
+  _DownSpeedLimited: 'speed_limit_down_enabled',
+  _QueueMoveBottom: 'queue_move_bottom',
+  _QueueMoveDown: 'queue_move_down',
+  _QueueMoveTop: 'queue_move_top',
+  _QueueMoveUp: 'queue_move_up',
   _Root: '../rpc',
-  _TurtleDownSpeedLimit: 'alt-speed-down',
-  _TurtleState: 'alt-speed-enabled',
-  _TurtleUpSpeedLimit: 'alt-speed-up',
-  _UpSpeedLimit: 'speed-limit-up',
-  _UpSpeedLimited: 'speed-limit-up-enabled',
+  _TurtleDownSpeedLimit: 'alt_speed_down',
+  _TurtleState: 'alt_speed_enabled',
+  _TurtleUpSpeedLimit: 'alt_speed_up',
+  _UpSpeedLimit: 'speed_limit_up',
+  _UpSpeedLimited: 'speed_limit_up_enabled',
 };
 
 export class Remote {
@@ -84,17 +84,17 @@ export class Remote {
   // TODO: return a Promise
   loadDaemonPrefs(callback, context) {
     const o = {
-      method: 'session-get',
+      method: 'session_get',
     };
     this.sendRequest(o, callback, context);
   }
 
-  checkPort(ipProtocol, callback, context) {
+  checkPort(ip_protocol, callback, context) {
     const o = {
       arguments: {
-        ipProtocol,
+        ip_protocol,
       },
-      method: 'port-test',
+      method: 'port_test',
     };
     this.sendRequest(o, callback, context);
   }
@@ -106,7 +106,7 @@ export class Remote {
         name: newname,
         path: oldpath,
       },
-      method: 'torrent-rename-path',
+      method: 'torrent_rename_path',
     };
     this.sendRequest(o, callback, context);
   }
@@ -116,12 +116,12 @@ export class Remote {
       ids: torrentIds,
       labels,
     };
-    this.sendRequest({ arguments: args, method: 'torrent-set' }, callback);
+    this.sendRequest({ arguments: args, method: 'torrent_set' }, callback);
   }
 
   loadDaemonStats(callback, context) {
     const o = {
-      method: 'session-stats',
+      method: 'session_stats',
     };
     this.sendRequest(o, callback, context);
   }
@@ -132,7 +132,7 @@ export class Remote {
         fields,
         format: 'table',
       },
-      method: 'torrent-get',
+      method: 'torrent_get',
     };
     if (torrentIds) {
       o.arguments.ids = torrentIds;
@@ -148,11 +148,11 @@ export class Remote {
       arguments: {
         path: dir,
       },
-      method: 'free-space',
+      method: 'free_space',
     };
     this.sendRequest(o, (response) => {
-      const arguments_ = response['arguments'];
-      callback.call(context, arguments_.path, arguments_['size-bytes']);
+      const arguments_ = response.arguments;
+      callback.call(context, arguments_.path, arguments_.size_bytes);
     });
   }
 
@@ -164,7 +164,7 @@ export class Remote {
     this.sendRequest(
       {
         arguments: arguments_,
-        method: 'torrent-set',
+        method: 'torrent_set',
       },
       () => {
         this._controller.refreshTorrents([torrentId]);
@@ -189,12 +189,12 @@ export class Remote {
   }
 
   startTorrents(torrent_ids, noqueue, callback, context) {
-    const name = noqueue ? 'torrent-start-now' : 'torrent-start';
+    const name = noqueue ? 'torrent_start_now' : 'torrent_start';
     this.sendTorrentActionRequests(name, torrent_ids, callback, context);
   }
   stopTorrents(torrent_ids, callback, context) {
     this.sendTorrentActionRequests(
-      'torrent-stop',
+      'torrent_stop',
       torrent_ids,
       callback,
       context,
@@ -203,7 +203,7 @@ export class Remote {
 
   moveTorrents(torrent_ids, new_location, callback, context) {
     this.sendTorrentSetRequests(
-      'torrent-set-location',
+      'torrent_set_location',
       torrent_ids,
       {
         location: new_location,
@@ -217,10 +217,10 @@ export class Remote {
   removeTorrents(torrents, trash) {
     const o = {
       arguments: {
-        'delete-local-data': trash,
+        delete_local_data: trash,
         ids: [],
       },
-      method: 'torrent-remove',
+      method: 'torrent_remove',
     };
 
     if (torrents) {
@@ -234,7 +234,7 @@ export class Remote {
   }
   verifyTorrents(torrent_ids, callback, context) {
     this.sendTorrentActionRequests(
-      'torrent-verify',
+      'torrent_verify',
       torrent_ids,
       callback,
       context,
@@ -242,7 +242,7 @@ export class Remote {
   }
   reannounceTorrents(torrent_ids, callback, context) {
     this.sendTorrentActionRequests(
-      'torrent-reannounce',
+      'torrent_reannounce',
       torrent_ids,
       callback,
       context,
@@ -257,7 +257,7 @@ export class Remote {
         filename: url,
         paused: options.paused,
       },
-      method: 'torrent-add',
+      method: 'torrent_add',
     };
     this.sendRequest(o, () => {
       this._controller.refreshTorrents();
@@ -266,7 +266,7 @@ export class Remote {
   savePrefs(arguments_) {
     const o = {
       arguments: arguments_,
-      method: 'session-set',
+      method: 'session_set',
     };
     this.sendRequest(o, () => {
       this._controller.loadDaemonPrefs();
@@ -274,7 +274,7 @@ export class Remote {
   }
   updateBlocklist() {
     const o = {
-      method: 'blocklist-update',
+      method: 'blocklist_update',
     };
     this.sendRequest(o, () => {
       this._controller.loadDaemonPrefs();

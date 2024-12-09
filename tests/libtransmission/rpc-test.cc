@@ -69,7 +69,7 @@ TEST_F(RpcTest, list)
 TEST_F(RpcTest, tagSync)
 {
     auto request_map = tr_variant::Map{ 2U };
-    request_map.try_emplace(TR_KEY_method, "session-stats");
+    request_map.try_emplace(TR_KEY_method, "session_stats");
     request_map.try_emplace(TR_KEY_tag, 12345);
 
     auto response = tr_variant{};
@@ -94,7 +94,7 @@ TEST_F(RpcTest, tagAsync)
     EXPECT_NE(nullptr, tor);
 
     auto request_map = tr_variant::Map{ 3U };
-    request_map.try_emplace(TR_KEY_method, "torrent-rename-path");
+    request_map.try_emplace(TR_KEY_method, "torrent_rename_path");
     request_map.try_emplace(TR_KEY_tag, 12345);
 
     auto arguments_map = tr_variant::Map{ 2U };
@@ -156,7 +156,7 @@ TEST_F(RpcTest, sessionGet)
 
     auto request = tr_variant{};
     tr_variantInitDict(&request, 1);
-    tr_variantDictAddStrView(&request, TR_KEY_method, "session-get");
+    tr_variantDictAddStrView(&request, TR_KEY_method, "session_get");
     auto response = tr_variant{};
     tr_rpc_request_exec(
         session_,
@@ -169,6 +169,13 @@ TEST_F(RpcTest, sessionGet)
 
     // what we expected
     static auto constexpr ExpectedKeys = std::array{
+        TR_KEY_alt_speed_down_kebab,
+        TR_KEY_alt_speed_enabled_kebab,
+        TR_KEY_alt_speed_time_begin_kebab,
+        TR_KEY_alt_speed_time_day_kebab,
+        TR_KEY_alt_speed_time_enabled_kebab,
+        TR_KEY_alt_speed_time_end_kebab,
+        TR_KEY_alt_speed_up_kebab,
         TR_KEY_alt_speed_down,
         TR_KEY_alt_speed_enabled,
         TR_KEY_alt_speed_time_begin,
@@ -176,57 +183,106 @@ TEST_F(RpcTest, sessionGet)
         TR_KEY_alt_speed_time_enabled,
         TR_KEY_alt_speed_time_end,
         TR_KEY_alt_speed_up,
+        TR_KEY_anti_brute_force_enabled_kebab,
+        TR_KEY_anti_brute_force_threshold_kebab,
         TR_KEY_anti_brute_force_enabled,
         TR_KEY_anti_brute_force_threshold,
+        TR_KEY_blocklist_enabled_kebab,
+        TR_KEY_blocklist_size_kebab,
+        TR_KEY_blocklist_url_kebab,
         TR_KEY_blocklist_enabled,
         TR_KEY_blocklist_size,
         TR_KEY_blocklist_url,
+        TR_KEY_cache_size_mb_kebab,
         TR_KEY_cache_size_mb,
+        TR_KEY_config_dir_kebab,
         TR_KEY_config_dir,
+        TR_KEY_default_trackers_kebab,
         TR_KEY_default_trackers,
+        TR_KEY_dht_enabled_kebab,
         TR_KEY_dht_enabled,
+        TR_KEY_download_dir_kebab,
+        TR_KEY_download_dir_free_space_kebab,
+        TR_KEY_download_queue_enabled_kebab,
+        TR_KEY_download_queue_size_kebab,
         TR_KEY_download_dir,
         TR_KEY_download_dir_free_space,
         TR_KEY_download_queue_enabled,
         TR_KEY_download_queue_size,
         TR_KEY_encryption,
+        TR_KEY_idle_seeding_limit_kebab,
+        TR_KEY_idle_seeding_limit_enabled_kebab,
         TR_KEY_idle_seeding_limit,
         TR_KEY_idle_seeding_limit_enabled,
+        TR_KEY_incomplete_dir_kebab,
+        TR_KEY_incomplete_dir_enabled_kebab,
         TR_KEY_incomplete_dir,
         TR_KEY_incomplete_dir_enabled,
+        TR_KEY_lpd_enabled_kebab,
         TR_KEY_lpd_enabled,
+        TR_KEY_peer_limit_global_kebab,
+        TR_KEY_peer_limit_per_torrent_kebab,
+        TR_KEY_peer_port_kebab,
+        TR_KEY_peer_port_random_on_start_kebab,
         TR_KEY_peer_limit_global,
         TR_KEY_peer_limit_per_torrent,
         TR_KEY_peer_port,
         TR_KEY_peer_port_random_on_start,
+        TR_KEY_pex_enabled_kebab,
         TR_KEY_pex_enabled,
+        TR_KEY_port_forwarding_enabled_kebab,
         TR_KEY_port_forwarding_enabled,
+        TR_KEY_queue_stalled_enabled_kebab,
+        TR_KEY_queue_stalled_minutes_kebab,
         TR_KEY_queue_stalled_enabled,
         TR_KEY_queue_stalled_minutes,
+        TR_KEY_rename_partial_files_kebab,
         TR_KEY_rename_partial_files,
         TR_KEY_reqq,
+        TR_KEY_rpc_version_kebab,
+        TR_KEY_rpc_version_minimum_kebab,
+        TR_KEY_rpc_version_semver_kebab,
         TR_KEY_rpc_version,
         TR_KEY_rpc_version_minimum,
         TR_KEY_rpc_version_semver,
+        TR_KEY_script_torrent_added_enabled_kebab,
+        TR_KEY_script_torrent_added_filename_kebab,
+        TR_KEY_script_torrent_done_enabled_kebab,
+        TR_KEY_script_torrent_done_filename_kebab,
+        TR_KEY_script_torrent_done_seeding_enabled_kebab,
+        TR_KEY_script_torrent_done_seeding_filename_kebab,
         TR_KEY_script_torrent_added_enabled,
         TR_KEY_script_torrent_added_filename,
         TR_KEY_script_torrent_done_enabled,
         TR_KEY_script_torrent_done_filename,
         TR_KEY_script_torrent_done_seeding_enabled,
         TR_KEY_script_torrent_done_seeding_filename,
+        TR_KEY_seed_queue_enabled_kebab,
+        TR_KEY_seed_queue_size_kebab,
+        TR_KEY_seed_ratio_limit_camel,
+        TR_KEY_seed_ratio_limited_camel,
         TR_KEY_seed_queue_enabled,
         TR_KEY_seed_queue_size,
-        TR_KEY_seedRatioLimit,
-        TR_KEY_seedRatioLimited,
+        TR_KEY_seed_ratio_limit,
+        TR_KEY_seed_ratio_limited,
+        TR_KEY_session_id_kebab,
         TR_KEY_session_id,
+        TR_KEY_speed_limit_down_kebab,
+        TR_KEY_speed_limit_down_enabled_kebab,
+        TR_KEY_speed_limit_up_kebab,
+        TR_KEY_speed_limit_up_enabled_kebab,
         TR_KEY_speed_limit_down,
         TR_KEY_speed_limit_down_enabled,
         TR_KEY_speed_limit_up,
         TR_KEY_speed_limit_up_enabled,
+        TR_KEY_start_added_torrents_kebab,
         TR_KEY_start_added_torrents,
+        TR_KEY_tcp_enabled_kebab,
         TR_KEY_tcp_enabled,
+        TR_KEY_trash_original_torrent_files_kebab,
         TR_KEY_trash_original_torrent_files,
         TR_KEY_units,
+        TR_KEY_utp_enabled_kebab,
         TR_KEY_utp_enabled,
         TR_KEY_version,
     };
@@ -271,7 +327,7 @@ TEST_F(RpcTest, torrentGet)
     tr_variant request;
     tr_variantInitDict(&request, 1);
 
-    tr_variantDictAddStrView(&request, TR_KEY_method, "torrent-get");
+    tr_variantDictAddStrView(&request, TR_KEY_method, "torrent_get");
 
     tr_variant* args_in = tr_variantDictAddDict(&request, TR_KEY_arguments, 1);
     tr_variant* fields = tr_variantDictAddList(args_in, TR_KEY_fields, 1);

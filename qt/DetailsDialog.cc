@@ -95,13 +95,13 @@ constexpr tr_quark priorityKey(int priority)
     switch (priority)
     {
     case TR_PRI_LOW:
-        return TR_KEY_priority_low;
+        return TR_KEY_priority_low_kebab;
 
     case TR_PRI_HIGH:
-        return TR_KEY_priority_high;
+        return TR_KEY_priority_high_kebab;
 
     default:
-        return TR_KEY_priority_normal;
+        return TR_KEY_priority_normal_kebab;
     }
 }
 
@@ -1346,12 +1346,12 @@ void DetailsDialog::onShowBackupTrackersToggled(bool val)
 
 void DetailsDialog::onHonorsSessionLimitsToggled(bool val)
 {
-    torrentSet(TR_KEY_honorsSessionLimits, val);
+    torrentSet(TR_KEY_honors_session_limits_camel, val);
 }
 
 void DetailsDialog::onDownloadLimitedToggled(bool val)
 {
-    torrentSet(TR_KEY_downloadLimited, val);
+    torrentSet(TR_KEY_download_limited_camel, val);
 }
 
 void DetailsDialog::onSpinBoxEditingFinished()
@@ -1372,13 +1372,13 @@ void DetailsDialog::onSpinBoxEditingFinished()
 
 void DetailsDialog::onUploadLimitedToggled(bool val)
 {
-    torrentSet(TR_KEY_uploadLimited, val);
+    torrentSet(TR_KEY_upload_limited_camel, val);
 }
 
 void DetailsDialog::onIdleModeChanged(int index)
 {
     int const val = ui_.idleCombo->itemData(index).toInt();
-    torrentSet(TR_KEY_seedIdleMode, val);
+    torrentSet(TR_KEY_seed_idle_mode_camel, val);
 }
 
 void DetailsDialog::onIdleLimitChanged()
@@ -1392,7 +1392,7 @@ void DetailsDialog::onIdleLimitChanged()
 void DetailsDialog::onRatioModeChanged(int index)
 {
     int const val = ui_.ratioCombo->itemData(index).toInt();
-    torrentSet(TR_KEY_seedRatioMode, val);
+    torrentSet(TR_KEY_seed_ratio_mode_camel, val);
 }
 
 void DetailsDialog::onBandwidthPriorityChanged(int index)
@@ -1400,7 +1400,7 @@ void DetailsDialog::onBandwidthPriorityChanged(int index)
     if (index != -1)
     {
         int const priority = ui_.bandwidthPriorityCombo->itemData(index).toInt();
-        torrentSet(TR_KEY_bandwidthPriority, priority);
+        torrentSet(TR_KEY_bandwidth_priority_camel, priority);
     }
 }
 
@@ -1466,14 +1466,14 @@ void DetailsDialog::onAddTrackerClicked()
                 urls_list << url;
             }
 
-            torrentSet(torrent_ids_t{ std::begin(ids), std::end(ids) }, TR_KEY_trackerAdd, urls_list);
+            torrentSet(torrent_ids_t{ std::begin(ids), std::end(ids) }, TR_KEY_tracker_add_camel, urls_list);
         }
     }
 }
 
 void DetailsDialog::onTrackerListEdited(QString tracker_list)
 {
-    torrentSet(TR_KEY_trackerList, tracker_list);
+    torrentSet(TR_KEY_tracker_list_camel, tracker_list);
 }
 
 void DetailsDialog::onEditTrackersClicked()
@@ -1513,7 +1513,7 @@ void DetailsDialog::onRemoveTrackerClicked()
     {
         auto const ids = torrent_ids_t{ torrent_id };
         auto const values = std::vector<int>{ std::begin(tracker_ids), std::end(tracker_ids) };
-        torrentSet(ids, TR_KEY_trackerRemove, values);
+        torrentSet(ids, TR_KEY_tracker_remove_camel, values);
     }
 
     selection_model->clearSelection();
@@ -1525,11 +1525,11 @@ void DetailsDialog::initOptionsTab()
     ui_.singleDownSpin->setSuffix(speed_unit_suffix);
     ui_.singleUpSpin->setSuffix(speed_unit_suffix);
 
-    ui_.singleDownSpin->setProperty(PrefKey, TR_KEY_downloadLimit);
-    ui_.singleUpSpin->setProperty(PrefKey, TR_KEY_uploadLimit);
-    ui_.ratioSpin->setProperty(PrefKey, TR_KEY_seedRatioLimit);
-    ui_.idleSpin->setProperty(PrefKey, TR_KEY_seedIdleLimit);
-    ui_.peerLimitSpin->setProperty(PrefKey, TR_KEY_peer_limit);
+    ui_.singleDownSpin->setProperty(PrefKey, TR_KEY_download_limit_camel);
+    ui_.singleUpSpin->setProperty(PrefKey, TR_KEY_upload_limit_camel);
+    ui_.ratioSpin->setProperty(PrefKey, TR_KEY_seed_ratio_limit_camel);
+    ui_.idleSpin->setProperty(PrefKey, TR_KEY_seed_idle_limit_camel);
+    ui_.peerLimitSpin->setProperty(PrefKey, TR_KEY_peer_limit_kebab);
 
     ui_.bandwidthPriorityCombo->addItem(tr("High"), TR_PRI_HIGH);
     ui_.bandwidthPriorityCombo->addItem(tr("Normal"), TR_PRI_NORMAL);
@@ -1643,7 +1643,7 @@ void DetailsDialog::onFilePriorityChanged(file_indices_t const& indices, int pri
 
 void DetailsDialog::onFileWantedChanged(file_indices_t const& indices, bool wanted)
 {
-    tr_quark const key = wanted ? TR_KEY_files_wanted : TR_KEY_files_unwanted;
+    tr_quark const key = wanted ? TR_KEY_files_wanted_kebab : TR_KEY_files_unwanted_kebab;
     torrentSet(key, std::vector<int>{ std::begin(indices), std::end(indices) });
 }
 

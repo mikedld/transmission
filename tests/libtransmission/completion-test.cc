@@ -300,7 +300,7 @@ TEST_F(CompletionTest, sizeWhenDone)
     auto constexpr PieceSize = uint64_t{ BlockSize * 64 };
     auto const block_info = tr_block_info{ TotalSize, PieceSize };
 
-    // check that adding or removing blocks or pieces does not affect sizeWhenDone
+    // check that adding or removing blocks or pieces does not affect size_when_done
     auto completion = torrent.makeCompletion(block_info);
     EXPECT_EQ(block_info.total_size(), completion.size_when_done());
     completion.add_block(0);
@@ -310,7 +310,7 @@ TEST_F(CompletionTest, sizeWhenDone)
     completion.remove_piece(0);
     EXPECT_EQ(block_info.total_size(), completion.size_when_done());
 
-    // check that flagging complete pieces as dnd does not affect sizeWhenDone
+    // check that flagging complete pieces as dnd does not affect size_when_done
     for (size_t i = 0; i < 32; ++i)
     {
         completion.add_piece(i);
@@ -319,7 +319,7 @@ TEST_F(CompletionTest, sizeWhenDone)
     completion.invalidate_size_when_done();
     EXPECT_EQ(block_info.total_size(), completion.size_when_done());
 
-    // check that flagging missing pieces as dnd does not affect sizeWhenDone
+    // check that flagging missing pieces as dnd does not affect size_when_done
     for (size_t i = 32; i < 48; ++i)
     {
         torrent.dnd_pieces.insert(i);

@@ -51,7 +51,7 @@ export class FileRow extends EventTarget {
     const files = this.fields.torrent.getFiles();
     for (const index of this.fields.indices) {
       const file = files[index];
-      have += file.bytesCompleted;
+      have += file.bytes_completed;
       size += file.length;
       wanted |= file.wanted;
       switch (file.priority.toString()) {
