@@ -223,7 +223,7 @@ export class OverflowMenu extends EventTarget {
     div.classList.add('table-row');
     options.append(div);
 
-    let action = 'toggle-compact-rows';
+    const action = 'toggle-compact-rows';
     check = document.createElement('input');
     check.id = 'display-compact-check';
     check.dataset.action = action;
@@ -245,37 +245,6 @@ export class OverflowMenu extends EventTarget {
       this.prefs.display_mode = checked
         ? Prefs.DisplayCompact
         : Prefs.DisplayFull;
-    });
-
-    // contrast
-
-    div = document.createElement('div');
-    div.classList.add('table-row');
-    options.append(div);
-
-    action = 'toggle-contrast';
-    check = document.createElement('input');
-    check.id = 'contrast-more-check';
-    check.dataset.action = action;
-    check.type = 'checkbox';
-    check.classList.add('switch');
-
-    label = document.createElement('label');
-    label.id = 'contrast-more-label';
-    label.for = check.id;
-    label.setAttribute('for', check.id);
-    label.textContent = this.action_manager.text(action);
-
-    check.checked = this.prefs.contrast_mode === Prefs.ContrastMore;
-
-    div.append(check);
-    div.append(label);
-
-    check.addEventListener('input', (event_) => {
-      const { checked } = event_.target;
-      this.prefs.contrast_mode = checked
-        ? Prefs.ContrastMore
-        : Prefs.ContrastLess;
     });
 
     // fullscreen
@@ -308,6 +277,19 @@ export class OverflowMenu extends EventTarget {
     label.setAttribute('for', check.id);
     label.textContent = 'Fullscreen';
     div.append(label);
+
+    // appearance
+
+    const appearance_text = this.action_manager.text(
+      'open-appearance-settings',
+    );
+    div = make_button(
+      section,
+      appearance_text,
+      'open-appearance-settings',
+      on_click,
+    );
+    options.append(div);
 
     section = make_section('speed', 'Speed Limit');
     root.append(section);
