@@ -3926,6 +3926,7 @@
 				HEADER_SEARCH_PATHS = "third-party/libevent/include";
 				OTHER_CFLAGS = "-DHAVE_CONFIG_H";
 				PRODUCT_NAME = event;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -3959,6 +3960,7 @@
 					"-DWITH_CCRYPTO",
 				);
 				PRODUCT_NAME = transmission;
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/dht",
@@ -4151,6 +4153,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				OTHER_CFLAGS = "-DENABLE_STRNATPMPERR";
 				PRODUCT_NAME = natpmp;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4161,6 +4164,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				OTHER_CFLAGS = "-DENABLE_STRNATPMPERR";
 				PRODUCT_NAME = natpmp;
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4171,6 +4175,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				OTHER_CFLAGS = "-DENABLE_STRNATPMPERR";
 				PRODUCT_NAME = natpmp;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4204,6 +4209,7 @@
 					"-DWITH_CCRYPTO",
 				);
 				PRODUCT_NAME = transmission;
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/dht",
@@ -4356,6 +4362,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = dht;
 				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4367,6 +4374,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = dht;
 				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4378,6 +4386,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = dht;
 				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4531,6 +4540,7 @@
 					"-DWITH_CCRYPTO",
 				);
 				PRODUCT_NAME = transmission;
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/dht",
@@ -4606,6 +4616,7 @@
 				HEADER_SEARCH_PATHS = "third-party/libevent/include";
 				OTHER_CFLAGS = "-DHAVE_CONFIG_H";
 				PRODUCT_NAME = event;
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4616,6 +4627,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = utp;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4626,6 +4638,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = utp;
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4639,6 +4652,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = utp;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4660,6 +4674,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.m0k.transmission.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4687,6 +4702,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.m0k.transmission.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4714,6 +4730,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.m0k.transmission.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4730,6 +4747,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = miniupnpc;
 				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4740,6 +4758,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = miniupnpc;
 				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4750,6 +4769,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = miniupnpc;
 				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4763,6 +4783,7 @@
 				HEADER_SEARCH_PATHS = "third-party/libevent/include";
 				OTHER_CFLAGS = "-DHAVE_CONFIG_H";
 				PRODUCT_NAME = event;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4812,6 +4833,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4821,6 +4843,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4830,6 +4853,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4839,6 +4863,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = wildmat;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4848,6 +4873,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = wildmat;
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4857,6 +4883,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = wildmat;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4868,6 +4895,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				HEADER_SEARCH_PATHS = "third-party/libdeflate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4879,6 +4907,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				HEADER_SEARCH_PATHS = "third-party/libdeflate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4890,6 +4919,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				HEADER_SEARCH_PATHS = "third-party/libdeflate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4905,6 +4935,7 @@
 					"-DFORCE_BUILTIN_LIST=1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4920,6 +4951,7 @@
 					"-DFORCE_BUILTIN_LIST=1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4935,6 +4967,7 @@
 					"-DFORCE_BUILTIN_LIST=1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
