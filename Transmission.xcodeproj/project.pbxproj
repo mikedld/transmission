@@ -4355,6 +4355,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = dht;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
 			};
 			name = Debug;
 		};
@@ -4365,6 +4366,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = dht;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
 			};
 			name = "Release - Debug";
 		};
@@ -4375,6 +4377,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = dht;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
 			};
 			name = Release;
 		};
@@ -4726,6 +4729,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = miniupnpc;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
 			};
 			name = Release;
 		};
@@ -4735,6 +4739,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = miniupnpc;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
 			};
 			name = "Release - Debug";
 		};
@@ -4744,6 +4749,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = miniupnpc;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
 			};
 			name = Debug;
 		};
