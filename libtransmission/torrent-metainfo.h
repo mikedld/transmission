@@ -167,17 +167,17 @@ public:
 
     // UTILS
 
-    [[nodiscard]] auto torrent_file(std::string_view torrent_dir) const
+    [[nodiscard]] auto torrent_file(std::string_view torrent_dir = {}) const
     {
         return make_filename(torrent_dir, name(), info_hash_string(), BasenameFormat::Hash, ".torrent");
     }
 
-    [[nodiscard]] auto magnet_file(std::string_view torrent_dir) const
+    [[nodiscard]] auto magnet_file(std::string_view torrent_dir = {}) const
     {
         return make_filename(torrent_dir, name(), info_hash_string(), BasenameFormat::Hash, ".magnet");
     }
 
-    [[nodiscard]] auto resume_file(std::string_view resume_dir) const
+    [[nodiscard]] auto resume_file(std::string_view resume_dir = {}) const
     {
         return make_filename(resume_dir, name(), info_hash_string(), BasenameFormat::Hash, ".resume");
     }

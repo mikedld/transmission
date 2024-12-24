@@ -1055,11 +1055,11 @@ void tr_torrent::init(tr_ctor const& ctor)
             [](auto mtime) { return mtime > 0; });
     }
 
-    auto const filename = has_metainfo() ? torrent_file() : magnet_file();
+    auto const file_path = store_file();
 
     // if we don't have a local .torrent or .magnet file already,
     // assume the torrent is new
-    bool const is_new_torrent = !tr_sys_path_exists(filename);
+    bool const is_new_torrent = !tr_sys_path_exists(file_path);
 
     if (is_new_torrent)
     {
@@ -1067,19 +1067,19 @@ void tr_torrent::init(tr_ctor const& ctor)
 
         if (has_metainfo()) // torrent file
         {
-            ctor.save(filename, &error);
+            ctor.save(file_path, &error);
         }
         else // magnet link
         {
             auto const magnet_link = magnet();
-            tr_file_save(filename, magnet_link, &error);
+            tr_file_save(file_path, magnet_link, &error);
         }
 
         if (error)
         {
             this->error().set_local_error(fmt::format(
                 _("Couldn't save '{path}': {error} ({error_code})"),
-                fmt::arg("path", filename),
+                fmt::arg("path", file_path),
                 fmt::arg("error", error.message()),
                 fmt::arg("error_code", error.code())));
         }
