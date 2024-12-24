@@ -404,44 +404,6 @@ tr_resume::fields_t loadFilenames(tr_variant* dict, tr_torrent* tor)
 
 // ---
 
-void saveQueueState(tr_variant* dict, tr_torrent const* tor)
-{
-    auto* const map = dict->get_if<tr_variant::Map>();
-    if (map == nullptr)
-    {
-        return;
-    }
-
-    map->try_emplace(TR_KEY_queuePosition, tor->queue_position());
-    map->try_emplace(TR_KEY_is_queued, tor->is_queued(tor->queue_direction()));
-}
-
-auto loadQueueState(tr_variant* dict, tr_torrent* tor, tr_torrent::ResumeHelper& helper)
-{
-    auto ret = tr_resume::fields_t{};
-    auto const* const map = dict->get_if<tr_variant::Map>();
-    if (map == nullptr)
-    {
-        return ret;
-    }
-
-    if (auto val = map->value_if<int64_t>(TR_KEY_queuePosition))
-    {
-        helper.load_queue_position(*val);
-        ret = tr_resume::QueueState;
-    }
-
-    if (auto val = map->value_if<bool>(TR_KEY_is_queued))
-    {
-        tor->set_is_queued(*val);
-        ret = tr_resume::QueueState;
-    }
-
-    return ret;
-}
-
-// ---
-
 void bitfieldToRaw(tr_bitfield const& b, tr_variant* benc)
 {
     if (b.has_none() || std::empty(b))
@@ -822,11 +784,6 @@ tr_resume::fields_t load_from_file(tr_torrent* tor, tr_torrent::ResumeHelper& he
         fields_loaded |= loadGroup(&top, tor);
     }
 
-    if ((fields_to_load & tr_resume::QueueState) != 0)
-    {
-        fields_loaded |= loadQueueState(&top, tor, helper);
-    }
-
     return fields_loaded;
 }
 
@@ -948,7 +905,6 @@ void save(tr_torrent* const tor, tr_torrent::ResumeHelper const& helper)
     saveName(&top, tor);
     saveLabels(&top, tor);
     saveGroup(&top, tor);
-    saveQueueState(&top, tor);
 
     auto serde = tr_variant_serde::benc();
     if (!serde.to_file(top, tor->resume_file()))

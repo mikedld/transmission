@@ -45,7 +45,6 @@ auto inline constexpr Name = fields_t{ 1 << 21 };
 auto inline constexpr Labels = fields_t{ 1 << 22 };
 auto inline constexpr Group = fields_t{ 1 << 23 };
 auto inline constexpr SequentialDownload = fields_t{ 1 << 24 };
-auto inline constexpr QueueState = fields_t{ 1 << 25 };
 
 auto inline constexpr All = ~fields_t{ 0 };
 
