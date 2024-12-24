@@ -72,11 +72,17 @@ const TorrentRendererHelper = {
     progressbar.style.setProperty('--progress', pct_str);
     progressbar.dataset.progress = info.ratio ? '100%' : pct_str;
   },
-  symbol: { down: '▼', up: '▲' },
-  updateIcon: (e, torrent) => {
+  renderSelectIcon: (select, torrent) => {
+    const check = document.createElement('input');
+    check.type = 'checkbox';
+    check.checked = true;
+    const e = document.createElement('icon');
+    e.className = 'icon';
     e.dataset.iconMimeType = torrent.getPrimaryMimeType().split('/', 1).pop();
     e.dataset.iconMultifile = torrent.getFileCount() > 1 ? 'true' : 'false';
+    select.append(check, e);
   },
+  symbol: { down: '▼', up: '▲' },
 };
 
 ///
@@ -257,7 +263,7 @@ export class TorrentRendererFull {
     root.className = 'torrent';
 
     const elements = [
-      ['icon', 'icon'],
+      ['select', 'select'],
       ['name', 'torrent-name'],
       ['labels', 'torrent-labels'],
       ['progress_details', 'torrent-progress-details'],
@@ -272,7 +278,7 @@ export class TorrentRendererFull {
       root[name] = e;
     }
 
-    TorrentRendererHelper.updateIcon(root.icon, torrent);
+    TorrentRendererHelper.renderSelectIcon(root.select, torrent);
 
     const progressbar = document.createElement('div');
     progressbar.className = 'torrent-progress-bar full';
@@ -361,7 +367,7 @@ export class TorrentRendererCompact {
     root.className = 'torrent compact';
 
     const elements = [
-      ['icon', 'icon'],
+      ['select', 'select'],
       ['name', 'torrent-name compact'],
       ['labels', 'torrent-labels compact'],
       ['peer_details', 'torrent-peer-details compact'],
@@ -375,7 +381,7 @@ export class TorrentRendererCompact {
       root[name] = e;
     }
 
-    TorrentRendererHelper.updateIcon(root.icon, torrent);
+    TorrentRendererHelper.renderSelectIcon(root.select, torrent);
 
     return root;
   }

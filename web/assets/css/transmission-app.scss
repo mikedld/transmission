@@ -467,7 +467,7 @@ a {
       background-color: var(--color-bg-odd);
     }
 
-    .icon {
+    .select .icon {
       // color the background svg fill
       background-color: var(--color-fg-primary);
       background-position:
@@ -574,15 +574,34 @@ a {
       align-items: center;
       display: flex;
 
-      .icon {
-        -webkit-mask-size: var(--icon-size), calc(var(--icon-size) / 2);
+      .select {
+        margin: 0;
+        padding: 8px 10px 7px 5px;
         height: var(--icon-size);
-        mask-size: var(--icon-size), calc(var(--icon-size) / 2);
         width: var(--icon-size);
 
-        &[data-icon-multifile='true'] {
-          --mime-icon-url: var(--folder-image-url);
+        input[type='checkbox'] {
+          margin: 0;
         }
+
+        .icon {
+          -webkit-mask-size: var(--icon-size), calc(var(--icon-size) / 2);
+          height: var(--icon-size);
+          mask-size: var(--icon-size), calc(var(--icon-size) / 2);
+          width: var(--icon-size);
+
+          &[data-icon-multifile='true'] {
+            --mime-icon-url: var(--folder-image-url);
+          }
+        }
+      }
+
+      &.selected .select .icon {
+        display: none;
+      }
+
+      .torrent-name {
+        margin-left: 0;
       }
 
       > * {
@@ -596,36 +615,49 @@ a {
       display: grid;
       grid-column-gap: 12px;
       grid-template-areas:
-        'icon name labels'
-        'icon progress-text progress-text'
-        'icon progressbar progressbar'
-        'icon peers peers';
-      grid-template-columns: var(--icon-size) auto 1fr;
-      padding: 6px 12px;
+        'select name labels'
+        'select progress-text progress-text'
+        'select progressbar progressbar'
+        'select peers peers';
+      grid-template-columns: 44px auto 1fr;
 
-      .icon {
-        background-size: var(--icon-size), calc(var(--icon-size) / 2);
-        grid-area: icon;
-        height: var(--icon-size);
-        width: var(--icon-size);
+      .select {
+        height: 100%;
+        width: 100%;
+        grid-area: select;
+        padding-left: 12px;
+
+        input[type='checkbox'] {
+          margin: 6px 0;
+        }
+
+        .icon {
+          background-size: var(--icon-size), calc(var(--icon-size) / 2);
+          height: var(--icon-size);
+          width: var(--icon-size);
+        }
       }
 
       .torrent-name {
         grid-area: name;
+        padding-top: 6px;
       }
 
       .torrent-labels {
         grid-area: labels;
+        padding-top: 6px;
       }
 
       .torrent-peer-details {
         grid-area: peers;
+        padding-bottom: 6px;
       }
 
       .torrent-progress {
         display: flex;
         flex-direction: row;
         grid-area: progressbar;
+        padding-right: 12px;
       }
 
       .torrent-progress-details {
@@ -644,8 +676,29 @@ a {
         color: var(--color-fg-primary);
       }
 
-      .icon {
+      .select .icon {
         background-color: var(--color-fg-disabled);
+      }
+    }
+
+    .select {
+      position: relative;
+
+      .icon {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      input[type='checkbox'] {
+        display: none;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      > * {
+        position: absolute;
+        pointer-events: none;
       }
     }
 
@@ -653,13 +706,19 @@ a {
       background-color: var(--color-bg-selected);
       color: var(--color-fg-selected);
 
-      .icon {
-        background-color: var(--color-fg-selected);
+      .select {
+        input[type='checkbox'] {
+          display: block;
+        }
+
+        .icon {
+          background-color: var(--color-fg-selected);
+        }
       }
     }
   }
 
-  .icon {
+  .select .icon {
     background-position: center;
     background-repeat: no-repeat;
   }
