@@ -57,6 +57,7 @@
 #include "libtransmission/settings.h"
 #include "libtransmission/stats.h"
 #include "libtransmission/timer.h"
+#include "libtransmission/torrent-queue.h"
 #include "libtransmission/torrents.h"
 #include "libtransmission/tr-assert.h"
 #include "libtransmission/tr-dht.h"
@@ -533,6 +534,16 @@ public:
     [[nodiscard]] constexpr auto const& torrents() const
     {
         return torrents_;
+    }
+
+    [[nodiscard]] constexpr auto& torrent_queue()
+    {
+        return torrent_queue_;
+    }
+
+    [[nodiscard]] constexpr auto const& torrent_queue() const
+    {
+        return torrent_queue_;
     }
 
     [[nodiscard]] auto unique_lock() const
@@ -1262,6 +1273,8 @@ private:
     tr_open_files open_files_;
 
     libtransmission::Blocklists blocklists_;
+
+    tr_torrent_queue torrent_queue_{ config_dir_ };
 
 private:
     /// other fields

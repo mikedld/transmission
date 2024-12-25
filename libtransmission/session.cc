@@ -2130,6 +2130,7 @@ void tr_session::addIncoming(tr_peer_socket&& socket)
 void tr_session::addTorrent(tr_torrent* tor)
 {
     tor->init_id(torrents().add(tor));
+    torrent_queue_.add(*tor);
 
     tr_peerMgrAddTorrent(peer_mgr_.get(), tor);
 }
