@@ -602,7 +602,6 @@ a {
     grid-template-columns: calc(var(--icon-size) + 10px) auto 1fr;
     grid-template-areas: 'icon name labels peers progressbar';
 
-
     .icon {
       -webkit-mask-size: var(--icon-size), calc(var(--icon-size) / 2);
       height: var(--icon-size);
@@ -618,7 +617,7 @@ a {
       font-size: 1em;
       font-weight: normal;
     }
-   
+
     .torrent-labels {
       flex: 1;
       font-size: small;
