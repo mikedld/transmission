@@ -45,7 +45,7 @@ NSString* generateIconData(UTType* type, NSUInteger width, NSMutableDictionary<N
 
     if (!allImgProps[iconFileName])
     {
-        NSImage* icon = [[NSWorkspace sharedWorkspace] iconForContentType:type];
+        NSImage* icon = [NSWorkspace.sharedWorkspace iconForContentType:type];
 
         NSRect const iconFrame = NSMakeRect(0.0, 0.0, width, width);
         NSImage* renderedIcon = [[NSImage alloc] initWithSize:iconFrame.size];
@@ -84,12 +84,12 @@ NSString* generateIconData(UTType* type, NSUInteger width, NSMutableDictionary<N
 {
     // Try to parse the torrent file
     auto metainfo = tr_torrent_metainfo{};
-    if (!metainfo.parse_torrent_file(url.path.UTF8String))
+    if (!metainfo.parse_torrent_file(url.fileSystemRepresentation))
     {
         return nil;
     }
 
-    NSBundle* bundle = [NSBundle mainBundle];
+    NSBundle* bundle = NSBundle.mainBundle;
 
     NSURL* styleURL = [bundle URLForResource:@"style" withExtension:@"css"];
     NSString* styleContents = [NSString stringWithContentsOfURL:styleURL encoding:NSUTF8StringEncoding error:NULL];
