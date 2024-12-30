@@ -59,7 +59,7 @@ using PeerList = std::vector<Peer>;
 
 struct TrackerStat
 {
-    QPixmap getFavicon() const;
+    [[nodiscard]] QPixmap getFavicon() const;
 
     bool has_announced;
     bool has_scraped;

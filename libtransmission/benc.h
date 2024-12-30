@@ -119,17 +119,17 @@ struct BasicHandler : public Handler
         return true;
     }
 
-    constexpr auto key(size_t i) const
+    [[nodiscard]] constexpr auto key(size_t i) const
     {
         return keys_[i];
     }
 
-    constexpr auto depth() const
+    [[nodiscard]] constexpr auto depth() const
     {
         return depth_;
     }
 
-    constexpr auto currentKey() const
+    [[nodiscard]] constexpr auto currentKey() const
     {
         return key(depth());
     }
@@ -225,7 +225,7 @@ struct ParserStack
         return depth > 0 && stack[depth].parent_type == ParentType::Dict && (stack[depth].n_children_walked % 2) == 0;
     }
 
-    constexpr std::optional<ParentType> parentType() const
+    [[nodiscard]] constexpr std::optional<ParentType> parentType() const
     {
         if (depth == 0)
         {

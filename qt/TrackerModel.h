@@ -39,11 +39,11 @@ public:
     TrackerModel& operator=(TrackerModel const&) = delete;
 
     void refresh(TorrentModel const&, torrent_ids_t const& ids);
-    int find(int torrent_id, QString const& url) const;
+    [[nodiscard]] int find(int torrent_id, QString const& url) const;
 
     // QAbstractItemModel
-    int rowCount(QModelIndex const& parent = QModelIndex{}) const override;
-    QVariant data(QModelIndex const& index, int role = Qt::DisplayRole) const override;
+    [[nodiscard]] int rowCount(QModelIndex const& parent = QModelIndex{}) const override;
+    [[nodiscard]] QVariant data(QModelIndex const& index, int role = Qt::DisplayRole) const override;
 
 private:
     using rows_t = std::vector<TrackerInfo>;
