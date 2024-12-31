@@ -470,6 +470,7 @@ a {
       background-position:
         center,
         top left;
+      grid-area: icon;
       -webkit-mask-image: var(--mime-icon-url);
       -webkit-mask-repeat: no-repeat;
       mask-image: var(--mime-icon-url);
@@ -619,7 +620,6 @@ a {
 
       .icon {
         background-size: var(--icon-size), calc(var(--icon-size) / 2);
-        grid-area: icon;
         height: var(--icon-size);
         width: var(--icon-size);
       }
