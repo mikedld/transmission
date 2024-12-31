@@ -128,16 +128,13 @@ std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
     bool client_is_seed,
     bool utp)
 {
-    using preferred_key_t = std::underlying_type_t<tr_preferred_transport>;
-    auto const preferred = session->preferred_transport();
-
     TR_ASSERT(!tr_peer_socket::limit_reached(session));
     TR_ASSERT(session != nullptr);
     TR_ASSERT(socket_address.is_valid());
     TR_ASSERT(utp || session->allowsTCP());
 
     auto peer_io = tr_peerIo::create(session, parent, &info_hash, false, client_is_seed);
-    auto const func = small::max_size_map<preferred_key_t, std::function<bool()>, TR_NUM_PREFERRED_TRANSPORT>{
+    auto const func = small::max_size_map<tr_preferred_transport, std::function<bool()>, TR_NUM_PREFERRED_TRANSPORT>{
         { TR_PREFER_UTP,
           [&]()
           {
@@ -172,14 +169,9 @@ std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
           } }
     };
 
-    if (func.at(preferred)())
+    for (auto const& transport : session->preferred_transport())
     {
-        log_peer_io_bandwidth(*peer_io, parent);
-        return peer_io;
-    }
-    for (preferred_key_t i = 0U; i < TR_NUM_PREFERRED_TRANSPORT; ++i)
-    {
-        if (i != preferred && func.at(i)())
+        if (func.at(transport)())
         {
             log_peer_io_bandwidth(*peer_io, parent);
             return peer_io;
