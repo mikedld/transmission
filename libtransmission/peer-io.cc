@@ -162,9 +162,9 @@ std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
           {
               if (!peer_io->socket_.is_valid())
               {
-                  if (auto sock = tr_netOpenPeerSocket(session, socket_address, client_is_seed); sock.is_valid())
+                  if (auto sock = tr_netOpenPeerSocket(session, socket_address, client_is_seed); sock != TR_BAD_SOCKET)
                   {
-                      peer_io->set_socket(std::move(sock));
+                      peer_io->set_socket({ session, socket_address, sock });
                       return true;
                   }
               }
@@ -254,12 +254,12 @@ bool tr_peerIo::reconnect()
 
     close();
 
-    auto sock = tr_netOpenPeerSocket(session_, socket_address(), client_is_seed());
-    if (!sock.is_tcp())
+    auto const s = tr_netOpenPeerSocket(session_, socket_address(), client_is_seed());
+    if (s == TR_BAD_SOCKET)
     {
         return false;
     }
-    set_socket(std::move(sock));
+    set_socket({ session_, socket_address(), s });
 
     event_enable(pending_events);
 
