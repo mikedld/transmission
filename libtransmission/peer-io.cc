@@ -142,7 +142,7 @@ std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
         },
         [&]() -> tr_peer_socket
         {
-            if (auto sock = tr_netOpenPeerSocket(session, socket_address, client_is_seed); sock != TR_BAD_SOCKET)
+            if (auto sock = tr_net_open_peer_socket(session, socket_address, client_is_seed); sock != TR_BAD_SOCKET)
             {
                 return { session, socket_address, sock };
             }
@@ -226,7 +226,7 @@ bool tr_peerIo::reconnect()
 
     close();
 
-    auto const s = tr_netOpenPeerSocket(session_, socket_address(), client_is_seed());
+    auto const s = tr_net_open_peer_socket(session_, socket_address(), client_is_seed());
     if (s == TR_BAD_SOCKET)
     {
         return false;

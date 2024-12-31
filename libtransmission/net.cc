@@ -228,7 +228,7 @@ tr_socket_t createSocket(int domain, int type)
 }
 } // namespace
 
-tr_socket_t tr_netOpenPeerSocket(tr_session* session, tr_socket_address const& socket_address, bool client_is_seed)
+tr_socket_t tr_net_open_peer_socket(tr_session* session, tr_socket_address const& socket_address, bool client_is_seed)
 {
     auto const& [addr, port] = socket_address;
 
