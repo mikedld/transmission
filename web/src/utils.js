@@ -113,7 +113,7 @@ export function createDialogContainer(id) {
   win.append(buttons);
 
   const bbegin = document.createElement('span');
-  bbegin.classList.add('dialog-buttons-begin');
+  bbegin.className = 'flexible-space';
   buttons.append(bbegin);
 
   const dismiss = document.createElement('button');
@@ -130,10 +130,6 @@ export function createDialogContainer(id) {
       confirm.click();
     }
   });
-
-  const bend = document.createElement('span');
-  bend.classList.add('dialog-buttons-end');
-  buttons.append(bend);
 
   return {
     confirm,
