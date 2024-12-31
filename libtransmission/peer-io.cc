@@ -68,13 +68,6 @@ size_t get_desired_output_buffer_size(tr_peerIo const* io, uint64_t now)
     auto const current_speed = io->get_piece_speed(now, TR_UP);
     return std::max(Floor, current_speed.base_quantity() * PeriodSecs);
 }
-
-void log_peer_io_bandwidth(tr_peerIo const& peer_io, tr_bandwidth* const parent)
-{
-    tr_logAddTraceIo(
-        &peer_io,
-        fmt::format("bandwidth is {}; its parent is {}", fmt::ptr(&peer_io.bandwidth()), fmt::ptr(parent)));
-}
 } // namespace
 
 // ---
@@ -108,16 +101,14 @@ std::shared_ptr<tr_peerIo> tr_peerIo::create(
 
     auto io = std::make_shared<tr_peerIo>(session, std::move(socket), parent, info_hash, is_incoming, is_seed);
     io->bandwidth().set_peer(io);
+    tr_logAddTraceIo(io, fmt::format("bandwidth is {}; its parent is {}", fmt::ptr(&io->bandwidth()), fmt::ptr(parent)));
     return io;
 }
 
 std::shared_ptr<tr_peerIo> tr_peerIo::new_incoming(tr_session* session, tr_bandwidth* parent, tr_peer_socket socket)
 {
     TR_ASSERT(session != nullptr);
-
-    auto peer_io = tr_peerIo::create(session, std::move(socket), parent, nullptr, true, false);
-    log_peer_io_bandwidth(*peer_io, parent);
-    return peer_io;
+    return tr_peerIo::create(session, std::move(socket), parent, nullptr, true, false);
 }
 
 std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
@@ -163,9 +154,7 @@ std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
     {
         if (auto sock = get_socket[transport](); sock.is_valid())
         {
-            auto peer_io = tr_peerIo::create(session, std::move(sock), parent, &info_hash, false, client_is_seed);
-            log_peer_io_bandwidth(*peer_io, parent);
-            return peer_io;
+            return tr_peerIo::create(session, std::move(sock), parent, &info_hash, false, client_is_seed);
         }
     }
 
