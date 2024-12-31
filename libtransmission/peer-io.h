@@ -65,11 +65,12 @@ class tr_peerIo final : public std::enable_shared_from_this<tr_peerIo>
 
 public:
     tr_peerIo(
-        tr_session* session_in,
+        tr_session* session,
+        tr_peer_socket&& socket,
+        tr_bandwidth* parent_bandwidth,
         tr_sha1_digest_t const* info_hash,
         bool is_incoming,
-        bool client_is_seed,
-        tr_bandwidth* parent_bandwidth);
+        bool client_is_seed);
 
     ~tr_peerIo();
 
@@ -353,6 +354,7 @@ private:
     // production code should use new_outgoing() or new_incoming()
     static std::shared_ptr<tr_peerIo> create(
         tr_session* session,
+        tr_peer_socket&& socket,
         tr_bandwidth* parent,
         tr_sha1_digest_t const* info_hash,
         bool is_incoming,

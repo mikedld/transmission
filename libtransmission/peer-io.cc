@@ -20,8 +20,6 @@
 
 #include <fmt/core.h>
 
-#include <small/map.hpp>
-
 #include "libtransmission/transmission.h"
 
 #include "libtransmission/bandwidth.h"
@@ -83,20 +81,23 @@ void log_peer_io_bandwidth(tr_peerIo const& peer_io, tr_bandwidth* const parent)
 
 tr_peerIo::tr_peerIo(
     tr_session* session,
+    tr_peer_socket&& socket,
+    tr_bandwidth* parent_bandwidth,
     tr_sha1_digest_t const* info_hash,
     bool is_incoming,
-    bool client_is_seed,
-    tr_bandwidth* parent_bandwidth)
+    bool client_is_seed)
     : bandwidth_{ parent_bandwidth }
     , info_hash_{ info_hash != nullptr ? *info_hash : tr_sha1_digest_t{} }
     , session_{ session }
     , client_is_seed_{ client_is_seed }
     , is_incoming_{ is_incoming }
 {
+    set_socket(std::move(socket));
 }
 
 std::shared_ptr<tr_peerIo> tr_peerIo::create(
     tr_session* session,
+    tr_peer_socket&& socket,
     tr_bandwidth* parent,
     tr_sha1_digest_t const* info_hash,
     bool is_incoming,
@@ -105,7 +106,7 @@ std::shared_ptr<tr_peerIo> tr_peerIo::create(
     TR_ASSERT(session != nullptr);
     auto lock = session->unique_lock();
 
-    auto io = std::make_shared<tr_peerIo>(session, info_hash, is_incoming, is_seed, parent);
+    auto io = std::make_shared<tr_peerIo>(session, std::move(socket), parent, info_hash, is_incoming, is_seed);
     io->bandwidth().set_peer(io);
     return io;
 }
@@ -114,8 +115,7 @@ std::shared_ptr<tr_peerIo> tr_peerIo::new_incoming(tr_session* session, tr_bandw
 {
     TR_ASSERT(session != nullptr);
 
-    auto peer_io = tr_peerIo::create(session, parent, nullptr, true, false);
-    peer_io->set_socket(std::move(socket));
+    auto peer_io = tr_peerIo::create(session, std::move(socket), parent, nullptr, true, false);
     log_peer_io_bandwidth(*peer_io, parent);
     return peer_io;
 }
@@ -133,46 +133,37 @@ std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
     TR_ASSERT(socket_address.is_valid());
     TR_ASSERT(utp || session->allowsTCP());
 
-    auto peer_io = tr_peerIo::create(session, parent, &info_hash, false, client_is_seed);
-    auto const func = small::max_size_map<tr_preferred_transport, std::function<bool()>, TR_NUM_PREFERRED_TRANSPORT>{
-        { TR_PREFER_UTP,
-          [&]()
-          {
+    auto const get_socket = std::array<std::function<tr_peer_socket()>, TR_NUM_PREFERRED_TRANSPORT>{
+        [&]() -> tr_peer_socket
+        {
 #ifdef WITH_UTP
-              if (utp)
-              {
-                  auto* const sock = utp_create_socket(session->utp_context);
-                  utp_set_userdata(sock, peer_io.get());
-                  peer_io->set_socket(tr_peer_socket{ socket_address, sock });
-
-                  auto const [ss, sslen] = socket_address.to_sockaddr();
-                  if (utp_connect(sock, reinterpret_cast<sockaddr const*>(&ss), sslen) == 0)
-                  {
-                      return true;
-                  }
-              }
+            if (utp)
+            {
+                auto* const sock = utp_create_socket(session->utp_context);
+                auto const [ss, sslen] = socket_address.to_sockaddr();
+                if (utp_connect(sock, reinterpret_cast<sockaddr const*>(&ss), sslen) == 0)
+                {
+                    return { socket_address, sock };
+                }
+            }
 #endif
-              return false;
-          } },
-        { TR_PREFER_TCP,
-          [&]()
-          {
-              if (!peer_io->socket_.is_valid())
-              {
-                  if (auto sock = tr_netOpenPeerSocket(session, socket_address, client_is_seed); sock != TR_BAD_SOCKET)
-                  {
-                      peer_io->set_socket({ session, socket_address, sock });
-                      return true;
-                  }
-              }
-              return false;
-          } }
+            return {};
+        },
+        [&]() -> tr_peer_socket
+        {
+            if (auto sock = tr_netOpenPeerSocket(session, socket_address, client_is_seed); sock != TR_BAD_SOCKET)
+            {
+                return { session, socket_address, sock };
+            }
+            return {};
+        }
     };
 
     for (auto const& transport : session->preferred_transport())
     {
-        if (func.at(transport)())
+        if (auto sock = get_socket[transport](); sock.is_valid())
         {
+            auto peer_io = tr_peerIo::create(session, std::move(sock), parent, &info_hash, false, client_is_seed);
             log_peer_io_bandwidth(*peer_io, parent);
             return peer_io;
         }
