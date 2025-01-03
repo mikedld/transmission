@@ -544,17 +544,17 @@ export class Transmission extends EventTarget {
     if (event_.shiftKey) {
       a.push('Shift');
     }
-    a.push(event_.key.length === 1 ? event_.key.toUpperCase() : event_.key);
+    a.push(event_.code.slice(3));
     return a.join('+');
   }
 
   // Process key events
   _keyDown(event_) {
-    const { ctrlKey, keyCode, metaKey, shiftKey, target } = event_;
+    const { code, ctrlKey, metaKey, shiftKey, target } = event_;
 
     // look for a shortcut
     const is_input_focused = ['INPUT', 'TEXTAREA'].includes(target.tagName);
-    if (!is_input_focused) {
+    if (!is_input_focused && code.startsWith('Key')) {
       const shortcut = Transmission._createKeyShortcutFromKeyboardEvent(event_);
       const action = this.action_manager.getActionForShortcut(shortcut);
       if (action) {
@@ -564,8 +564,7 @@ export class Transmission extends EventTarget {
       }
     }
 
-    const esc_key = keyCode === 27; // esc key pressed
-    if (esc_key && this.popup.some(Boolean)) {
+    if (code === 'Escape' && this.popup.some(Boolean)) {
       this.setCurrentPopup(null, 0);
       event_.preventDefault();
       return;
@@ -579,9 +578,8 @@ export class Transmission extends EventTarget {
     // 2. when no other dialogs are visible
     // 3. when the meta or ctrl key isn't pressed (i.e. opening dev tools shouldn't trigger the info panel)
     if (!is_input_focused && !any_popup_active && !metaKey && !ctrlKey) {
-      const shift_key = keyCode === 16; // shift key pressed
-      const up_key = keyCode === 38; // up key pressed
-      const dn_key = keyCode === 40; // down key pressed
+      const up_key = code === 'ArrowUp';
+      const dn_key = code === 'ArrowDown';
       if ((up_key || dn_key) && rows.length > 0) {
         const last = this._indexOfLastTorrent();
         const anchor = this._shift_index;
@@ -623,15 +621,15 @@ export class Transmission extends EventTarget {
           r.getElement().scrollIntoView();
           event_.preventDefault();
         }
-      } else if (shift_key) {
+      } else if (code === 'ShiftLeft' || code === 'ShiftRight') {
         this._shift_index = this._indexOfLastTorrent();
       }
     }
   }
 
   _keyUp(event_) {
-    if (event_.keyCode === 16) {
-      // shift key pressed
+    const { code, shiftKey } = event_;
+    if (!shiftKey && (code === 'ShiftLeft' || code === 'ShiftRight')) {
       delete this._shift_index;
     }
   }
