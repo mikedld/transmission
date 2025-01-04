@@ -57,6 +57,8 @@ export class Transmission extends EventTarget {
     });
     this.popup = Array.from({ length: Transmission.max_popups }).fill(null);
 
+    this.busytyping = false;
+
     // listen to actions
     // TODO: consider adding a mutator listener here to see dynamic additions
     for (const element of document.querySelectorAll(`button[data-action]`)) {
@@ -195,6 +197,20 @@ export class Transmission extends EventTarget {
       this.prefs.filter_mode = event_.target.value;
       this.refilterAllSoon();
     });
+
+    const s = document.querySelector('#torrent-search');
+    e = document.querySelector('#reset');
+    e.addEventListener('click', () => {
+      s.value = '';
+      this._setFilterText(s.value);
+      this.refilterAllSoon();
+    });
+
+    if (s.value.trim()) {
+      this.filterText = s.value;
+      e.style.display = 'block';
+      this.refilterAllSoon();
+    }
 
     document.addEventListener('keydown', this._keyDown.bind(this));
     document.addEventListener('keyup', this._keyUp.bind(this));
@@ -370,7 +386,11 @@ export class Transmission extends EventTarget {
     e.classList.add(blur_token);
     e.addEventListener('blur', () => e.classList.add(blur_token));
     e.addEventListener('focus', () => e.classList.remove(blur_token));
-    e.addEventListener('keyup', () => this._setFilterText(e.value));
+    e.addEventListener('input', () => {
+      if (e.value.trim() !== this.filterText) {
+        this._setFilterText(e.value);
+      }
+    });
   }
 
   _onPrefChanged(key, value) {
@@ -713,8 +733,15 @@ export class Transmission extends EventTarget {
   }
 
   _setFilterText(search) {
-    this.filterText = search ? search.trim() : null;
-    this.refilterAllSoon();
+    clearTimeout(this.busytyping);
+    this.busytyping = setTimeout(
+      () => {
+        this.busytyping = false;
+        this.filterText = search.trim();
+        this.refilterAllSoon();
+      },
+      search ? 250 : 0,
+    );
   }
 
   _onTorrentChanged(event_) {
@@ -1053,6 +1080,9 @@ TODO: fix this when notifications get fixed
       }
       this._rows = [];
       this.dirtyTorrents = new Set(Object.keys(this._torrents));
+
+      document.querySelector('#reset').style.display =
+        this.filterText.length > 0 ? 'block' : 'none';
     }
 
     // rows that overlap with dirtyTorrents need to be refiltered.
