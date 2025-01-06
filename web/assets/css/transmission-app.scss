@@ -423,9 +423,10 @@ a {
   }
 
   button {
-    cursor: pointer;
+    background-color: transparent;
     border: 1px solid var(--color-border-default);
     border-radius: 4px;
+    cursor: pointer;
     height: 22px;
     user-select: none;
     -webkit-user-select: none;
@@ -444,8 +445,10 @@ a {
     &::before {
       content: '';
       background: var(--image-turtle) no-repeat center;
+      left: calc(20% - 5px);
       filter: grayscale(100%) brightness(50%);
       padding: 9px;
+      position: relative;
     }
   }
 }
@@ -1444,7 +1447,6 @@ a {
     }
 
     #alt-speed-check {
-      height: 14px;
       grid-area: check;
 
       &:not(:checked) ~ #alt-speed-image {
