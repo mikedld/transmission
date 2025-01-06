@@ -308,6 +308,13 @@ public:
         return s ? static_cast<double>(s - l) / static_cast<double>(s) : 0.0;
     }
 
+    double seedRatioPercentDone() const;
+
+    [[nodiscard]] constexpr double activityPercentDone() const noexcept
+    {
+        return isDone() ? seedRatioPercentDone() : percentDone();
+    }
+
     [[nodiscard]] constexpr auto failedEver() const noexcept
     {
         return failed_ever_;
