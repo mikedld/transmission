@@ -435,7 +435,7 @@ export class OverflowMenu extends EventTarget {
     elements.alt_speed_check = check;
 
     label = document.createElement('label');
-    label.id = 'alt-speed-icon';
+    label.id = 'alt-speed-image';
     label.setAttribute('for', check.id);
     div.append(label);
 
