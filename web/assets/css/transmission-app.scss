@@ -1447,12 +1447,12 @@ a {
     #alt-speed-check {
       grid-area: check;
 
-      &:not(:checked) ~ #alt-speed-icon {
+      &:not(:checked) ~ #alt-speed-image {
         filter: grayscale(100%) brightness(50%);
       }
     }
 
-    #alt-speed-icon {
+    #alt-speed-image {
       background: var(--image-turtle) no-repeat;
       filter: hue-rotate(120deg) saturate(180%);
       grid-area: turtle;
