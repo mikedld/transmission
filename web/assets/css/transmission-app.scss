@@ -443,13 +443,9 @@ a {
 
     &::before {
       content: '';
-      background: var(--image-turtle) no-repeat;
+      background: var(--image-turtle) no-repeat center;
       filter: grayscale(100%) brightness(50%);
-      height: 18px;
-      width: 18px;
-      left: calc(20% - 5px);
-      position: relative;
-      display: inline-block;
+      padding: 9px;
     }
   }
 }
@@ -838,10 +834,9 @@ a {
 
   .alt-speed-section-label::before {
     content: '';
-    background: var(--image-turtle) no-repeat;
-    background-size: 20px;
+    background: var(--image-turtle) no-repeat left / 20px;
     filter: hue-rotate(120deg) saturate(180%);
-    padding-left: 22px;
+    padding: 0 11px;
   }
 
   :disabled,
