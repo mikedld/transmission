@@ -1437,14 +1437,14 @@ a {
 
     .alt-speed {
       display: grid;
-      grid-column-gap: 5px;
-      grid-row-gap: 5px;
+      grid-gap: 4px;
       grid-template-areas:
         'check   lb'
         'turtle  values';
     }
 
     #alt-speed-check {
+      height: 14px;
       grid-area: check;
 
       &:not(:checked) ~ #alt-speed-image {
@@ -1456,6 +1456,7 @@ a {
       background: var(--image-turtle) no-repeat;
       filter: hue-rotate(120deg) saturate(180%);
       grid-area: turtle;
+      height: 18px;
     }
 
     #alt-speed-label {
