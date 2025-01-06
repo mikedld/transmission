@@ -838,7 +838,7 @@ a {
 
   .alt-speed-section-label::before {
     content: '';
-    background: transparent var(--image-turtle) no-repeat;
+    background: var(--image-turtle) no-repeat;
     background-size: 20px;
     filter: hue-rotate(120deg) saturate(180%);
     padding-left: 22px;
