@@ -244,11 +244,15 @@
     body:not(.highlight-legacy) {
       --color-bg-selected: Highlight;
       --color-fg-selected: HighlightText;
+    }
+  }
+}
 
-      &:not(.highlight-system) {
-        --color-bg-selected: AccentColor;
-        --color-fg-selected: #f8f8f8;
-      }
+@supports (background-color: AccentColor) {
+  :root {
+    body:not(.highlight-legacy):not(.highlight-system) {
+      --color-bg-selected: AccentColor;
+      --color-fg-selected: #f8f8f8;
     }
   }
 }
