@@ -769,8 +769,10 @@ public:
     }
 
 private:
-    static inline std::unique_ptr<tr_net_init_mgr> instance;
+    static std::unique_ptr<tr_net_init_mgr> instance;
 };
+
+std::unique_ptr<tr_net_init_mgr> tr_net_init_mgr::instance;
 } // namespace tr_net_init_impl
 } // namespace
 
