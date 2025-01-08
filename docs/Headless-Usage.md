@@ -62,7 +62,7 @@ Now, the config file can be edited. Some settings to draw your attention to:
     # If there are problems with other internet applications while bittorrent
     # is running, you may need to reduce the max upload speed to under 80% of
     # your ISP's max upload speed.
-    "speed-limit-up": 100,  # in KB/s
+    "speed-limit-up": 100,  # in kB/s
     "speed-limit-up-enabled": true,
     ...
 }
