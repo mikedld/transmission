@@ -84,7 +84,7 @@ private:
 class tr_file_priorities
 {
 public:
-    TR_CONSTEXPR20 explicit tr_file_priorities(tr_file_piece_map const* fpm) noexcept
+    explicit tr_file_priorities(tr_file_piece_map const* fpm) noexcept
         : fpm_{ fpm }
     {
     }
