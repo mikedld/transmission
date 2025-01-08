@@ -380,8 +380,9 @@ void MainWindow::Impl::syncAltSpeedButton()
     bool const b = gtr_pref_flag_get(TR_KEY_alt_speed_enabled);
     alt_speed_button_->set_active(b);
     alt_speed_button_->set_tooltip_text(fmt::format(
-        b ? _("Click to disable Alternative Speed Limits\n ({download_speed} down, {upload_speed} up)") :
-            _("Click to enable Alternative Speed Limits\n ({download_speed} down, {upload_speed} up)"),
+        fmt::runtime(
+            b ? _("Click to disable Alternative Speed Limits\n ({download_speed} down, {upload_speed} up)") :
+                _("Click to enable Alternative Speed Limits\n ({download_speed} down, {upload_speed} up)")),
         fmt::arg("download_speed", Speed{ gtr_pref_int_get(TR_KEY_alt_speed_down), Speed::Units::KByps }.to_string()),
         fmt::arg("upload_speed", Speed{ gtr_pref_int_get(TR_KEY_alt_speed_up), Speed::Units::KByps }.to_string())));
 }
@@ -579,7 +580,9 @@ void MainWindow::Impl::onOptionsClicked()
 
     update_menu(
         ratio_menu_info_,
-        fmt::format(_("Stop at Ratio ({ratio})"), fmt::arg("ratio", tr_strlratio(gtr_pref_double_get(TR_KEY_ratio_limit)))),
+        fmt::format(
+            fmt::runtime(_("Stop at Ratio ({ratio})")),
+            fmt::arg("ratio", tr_strlratio(gtr_pref_double_get(TR_KEY_ratio_limit)))),
         TR_KEY_ratio_limit_enabled);
 }
 
@@ -760,13 +763,13 @@ void MainWindow::Impl::updateStats()
     if (auto const pch = gtr_pref_string_get(TR_KEY_statusbar_stats); pch == "session-ratio")
     {
         auto const stats = tr_sessionGetStats(session);
-        buf = fmt::format(_("Ratio: {ratio}"), fmt::arg("ratio", tr_strlratio(stats.ratio)));
+        buf = fmt::format(fmt::runtime(_("Ratio: {ratio}")), fmt::arg("ratio", tr_strlratio(stats.ratio)));
     }
     else if (pch == "session-transfer")
     {
         auto const stats = tr_sessionGetStats(session);
         buf = fmt::format(
-            C_("current session totals", "Down: {downloaded_size}, Up: {uploaded_size}"),
+            fmt::runtime(C_("current session totals", "Down: {downloaded_size}, Up: {uploaded_size}")),
             fmt::arg("downloaded_size", tr_strlsize(stats.downloadedBytes)),
             fmt::arg("uploaded_size", tr_strlsize(stats.uploadedBytes)));
     }
@@ -774,14 +777,14 @@ void MainWindow::Impl::updateStats()
     {
         auto const stats = tr_sessionGetCumulativeStats(session);
         buf = fmt::format(
-            C_("all-time totals", "Down: {downloaded_size}, Up: {uploaded_size}"),
+            fmt::runtime(C_("all-time totals", "Down: {downloaded_size}, Up: {uploaded_size}")),
             fmt::arg("downloaded_size", tr_strlsize(stats.downloadedBytes)),
             fmt::arg("uploaded_size", tr_strlsize(stats.uploadedBytes)));
     }
     else /* default is total-ratio */
     {
         auto const stats = tr_sessionGetCumulativeStats(session);
-        buf = fmt::format(_("Ratio: {ratio}"), fmt::arg("ratio", tr_strlratio(stats.ratio)));
+        buf = fmt::format(fmt::runtime(_("Ratio: {ratio}")), fmt::arg("ratio", tr_strlratio(stats.ratio)));
     }
 
     stats_lb_->set_text(buf);

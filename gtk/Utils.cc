@@ -132,28 +132,30 @@ std::string tr_format_future_time(time_t seconds)
     if (auto const days_from_now = seconds / 86400U; days_from_now > 0U)
     {
         return fmt::format(
-            ngettext("{days_from_now:L} day from now", "{days_from_now:L} days from now", days_from_now),
+            fmt::runtime(ngettext("{days_from_now:L} day from now", "{days_from_now:L} days from now", days_from_now)),
             fmt::arg("days_from_now", days_from_now));
     }
 
     if (auto const hours_from_now = (seconds % 86400U) / 3600U; hours_from_now > 0U)
     {
         return fmt::format(
-            ngettext("{hours_from_now:L} hour from now", "{hours_from_now:L} hours from now", hours_from_now),
+            fmt::runtime(ngettext("{hours_from_now:L} hour from now", "{hours_from_now:L} hours from now", hours_from_now)),
             fmt::arg("hours_from_now", hours_from_now));
     }
 
     if (auto const minutes_from_now = (seconds % 3600U) / 60U; minutes_from_now > 0U)
     {
         return fmt::format(
-            ngettext("{minutes_from_now:L} minute from now", "{minutes_from_now:L} minutes from now", minutes_from_now),
+            fmt::runtime(
+                ngettext("{minutes_from_now:L} minute from now", "{minutes_from_now:L} minutes from now", minutes_from_now)),
             fmt::arg("minutes_from_now", minutes_from_now));
     }
 
     if (auto const seconds_from_now = seconds % 60U; seconds_from_now > 0U)
     {
         return fmt::format(
-            ngettext("{seconds_from_now:L} second from now", "{seconds_from_now:L} seconds from now", seconds_from_now),
+            fmt::runtime(
+                ngettext("{seconds_from_now:L} second from now", "{seconds_from_now:L} seconds from now", seconds_from_now)),
             fmt::arg("seconds_from_now", seconds_from_now));
     }
 
@@ -164,27 +166,29 @@ std::string tr_format_past_time(time_t seconds)
 {
     if (auto const days_ago = seconds / 86400U; days_ago > 0U)
     {
-        return fmt::format(ngettext("{days_ago:L} day ago", "{days_ago:L} days ago", days_ago), fmt::arg("days_ago", days_ago));
+        return fmt::format(
+            fmt::runtime(ngettext("{days_ago:L} day ago", "{days_ago:L} days ago", days_ago)),
+            fmt::arg("days_ago", days_ago));
     }
 
     if (auto const hours_ago = (seconds % 86400U) / 3600U; hours_ago > 0U)
     {
         return fmt::format(
-            ngettext("{hours_ago:L} hour ago", "{hours_ago:L} hours ago", hours_ago),
+            fmt::runtime(ngettext("{hours_ago:L} hour ago", "{hours_ago:L} hours ago", hours_ago)),
             fmt::arg("hours_ago", hours_ago));
     }
 
     if (auto const minutes_ago = (seconds % 3600U) / 60U; minutes_ago > 0U)
     {
         return fmt::format(
-            ngettext("{minutes_ago:L} minute ago", "{minutes_ago:L} minutes ago", minutes_ago),
+            fmt::runtime(ngettext("{minutes_ago:L} minute ago", "{minutes_ago:L} minutes ago", minutes_ago)),
             fmt::arg("minutes_ago", minutes_ago));
     }
 
     if (auto const seconds_ago = seconds % 60U; seconds_ago > 0U)
     {
         return fmt::format(
-            ngettext("{seconds_ago:L} second ago", "{seconds_ago:L} seconds ago", seconds_ago),
+            fmt::runtime(ngettext("{seconds_ago:L} second ago", "{seconds_ago:L} seconds ago", seconds_ago)),
             fmt::arg("seconds_ago", seconds_ago));
     }
 
@@ -197,22 +201,26 @@ std::string tr_format_time(time_t timestamp)
 {
     if (auto const days = timestamp / 86400U; days > 0U)
     {
-        return fmt::format(ngettext("{days:L} day", "{days:L} days", days), fmt::arg("days", days));
+        return fmt::format(fmt::runtime(ngettext("{days:L} day", "{days:L} days", days)), fmt::arg("days", days));
     }
 
     if (auto const hours = (timestamp % 86400U) / 3600U; hours > 0U)
     {
-        return fmt::format(ngettext("{hours:L} hour", "{hours:L} hours", hours), fmt::arg("hours", hours));
+        return fmt::format(fmt::runtime(ngettext("{hours:L} hour", "{hours:L} hours", hours)), fmt::arg("hours", hours));
     }
 
     if (auto const minutes = (timestamp % 3600U) / 60U; minutes > 0U)
     {
-        return fmt::format(ngettext("{minutes:L} minute", "{minutes:L} minutes", minutes), fmt::arg("minutes", minutes));
+        return fmt::format(
+            fmt::runtime(ngettext("{minutes:L} minute", "{minutes:L} minutes", minutes)),
+            fmt::arg("minutes", minutes));
     }
 
     if (auto const seconds = timestamp % 60U; seconds > 0U)
     {
-        return fmt::format(ngettext("{seconds:L} second", "{seconds:L} seconds", seconds), fmt::arg("seconds", seconds));
+        return fmt::format(
+            fmt::runtime(ngettext("{seconds:L} second", "{seconds:L} seconds", seconds)),
+            fmt::arg("seconds", seconds));
     }
 
     return _("now");
@@ -223,28 +231,28 @@ std::string tr_format_time_left(time_t timestamp)
     if (auto const days_left = timestamp / 86400U; days_left > 0U)
     {
         return fmt::format(
-            ngettext("{days_left:L} day left", "{days_left:L} days left", days_left),
+            fmt::runtime(ngettext("{days_left:L} day left", "{days_left:L} days left", days_left)),
             fmt::arg("days_left", days_left));
     }
 
     if (auto const hours_left = (timestamp % 86400U) / 3600U; hours_left > 0U)
     {
         return fmt::format(
-            ngettext("{hours_left:L} hour left", "{hours_left:L} hours left", hours_left),
+            fmt::runtime(ngettext("{hours_left:L} hour left", "{hours_left:L} hours left", hours_left)),
             fmt::arg("hours_left", hours_left));
     }
 
     if (auto const minutes_left = (timestamp % 3600U) / 60U; minutes_left > 0U)
     {
         return fmt::format(
-            ngettext("{minutes_left:L} minute left", "{minutes_left:L} minutes left", minutes_left),
+            fmt::runtime(ngettext("{minutes_left:L} minute left", "{minutes_left:L} minutes left", minutes_left)),
             fmt::arg("minutes_left", minutes_left));
     }
 
     if (auto const seconds_left = timestamp % 60U; seconds_left > 0U)
     {
         return fmt::format(
-            ngettext("{seconds_left:L} second left", "{seconds_left:L} seconds left", seconds_left),
+            fmt::runtime(ngettext("{seconds_left:L} second left", "{seconds_left:L} seconds left", seconds_left)),
             fmt::arg("seconds_left", seconds_left));
     }
 
@@ -263,13 +271,13 @@ void gtr_add_torrent_error_dialog(Gtk::Widget& child, tr_torrent* duplicate_torr
     if (duplicate_torrent != nullptr)
     {
         secondary = fmt::format(
-            _("The torrent file '{path}' is already in use by '{torrent_name}'."),
+            fmt::runtime(_("The torrent file '{path}' is already in use by '{torrent_name}'.")),
             fmt::arg("path", filename),
             fmt::arg("torrent_name", tr_torrentName(duplicate_torrent)));
     }
     else
     {
-        secondary = fmt::format(_("Couldn't add torrent file '{path}'"), fmt::arg("path", filename));
+        secondary = fmt::format(fmt::runtime(_("Couldn't add torrent file '{path}'")), fmt::arg("path", filename));
     }
 
     auto w = std::make_shared<Gtk::MessageDialog>(
@@ -534,7 +542,7 @@ bool gtr_file_trash_or_remove(std::string const& filename, tr_error* error)
         {
             error->set(e.code(), TR_GLIB_EXCEPTION_WHAT(e));
             gtr_message(fmt::format(
-                _("Couldn't move '{path}' to trash: {error} ({error_code})"),
+                fmt::runtime(_("Couldn't move '{path}' to trash: {error} ({error_code})")),
                 fmt::arg("path", filename),
                 fmt::arg("error", error->message()),
                 fmt::arg("error_code", error->code())));
@@ -552,7 +560,7 @@ bool gtr_file_trash_or_remove(std::string const& filename, tr_error* error)
         {
             error->set(e.code(), TR_GLIB_EXCEPTION_WHAT(e));
             gtr_message(fmt::format(
-                _("Couldn't remove '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't remove '{path}': {error} ({error_code})")),
                 fmt::arg("path", filename),
                 fmt::arg("error", error->message()),
                 fmt::arg("error_code", error->code())));
@@ -641,7 +649,7 @@ void gtr_open_uri(Glib::ustring const& uri)
 
         if (!opened)
         {
-            gtr_message(fmt::format(_("Couldn't open '{url}'"), fmt::arg("url", uri)));
+            gtr_message(fmt::format(fmt::runtime(_("Couldn't open '{url}'")), fmt::arg("url", uri)));
         }
     }
 }
@@ -852,13 +860,13 @@ void gtr_unrecognized_url_dialog(Gtk::Widget& parent, Glib::ustring const& url)
 
     auto w = std::make_shared<Gtk::MessageDialog>(
         gtr_widget_get_window(parent),
-        fmt::format(_("Unsupported URL: '{url}'"), fmt::arg("url", url)),
+        fmt::format(fmt::runtime(_("Unsupported URL: '{url}'")), fmt::arg("url", url)),
         false /*use markup*/,
         TR_GTK_MESSAGE_TYPE(ERROR),
         TR_GTK_BUTTONS_TYPE(CLOSE),
         true /*modal*/);
 
-    gstr += fmt::format(_("Transmission doesn't know how to use '{url}'"), fmt::arg("url", url));
+    gstr += fmt::format(fmt::runtime(_("Transmission doesn't know how to use '{url}'")), fmt::arg("url", url));
 
     if (tr_magnet_metainfo{}.parseMagnet(url.raw()))
     {

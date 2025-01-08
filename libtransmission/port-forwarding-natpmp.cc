@@ -87,7 +87,8 @@ tr_natpmp::PulseResult tr_natpmp::pulse(tr_port local_port, bool is_enabled)
         {
             auto str = std::array<char, 128>{};
             evutil_inet_ntop(AF_INET, &response.pnu.publicaddress.addr, std::data(str), std::size(str));
-            tr_logAddInfo(fmt::format(_("Found public address '{address}'"), fmt::arg("address", std::data(str))));
+            tr_logAddInfo(
+                fmt::format(fmt::runtime(_("Found public address '{address}'")), fmt::arg("address", std::data(str))));
             state_ = State::Idle;
         }
         else if (val != NATPMP_TRYAGAIN)
@@ -124,7 +125,8 @@ tr_natpmp::PulseResult tr_natpmp::pulse(tr_port local_port, bool is_enabled)
         {
             auto const unmapped_port = tr_port::from_host(resp.pnu.newportmapping.privateport);
 
-            tr_logAddInfo(fmt::format(_("Port {port} is no longer forwarded"), fmt::arg("port", unmapped_port.host())));
+            tr_logAddInfo(
+                fmt::format(fmt::runtime(_("Port {port} is no longer forwarded")), fmt::arg("port", unmapped_port.host())));
 
             if (local_port_ == unmapped_port)
             {
@@ -172,7 +174,8 @@ tr_natpmp::PulseResult tr_natpmp::pulse(tr_port local_port, bool is_enabled)
             renew_time_ = tr_time() + (resp.pnu.newportmapping.lifetime / 2);
             local_port_ = tr_port::from_host(resp.pnu.newportmapping.privateport);
             advertised_port_ = tr_port::from_host(resp.pnu.newportmapping.mappedpublicport);
-            tr_logAddInfo(fmt::format(_("Port {port} forwarded successfully"), fmt::arg("port", local_port_.host())));
+            tr_logAddInfo(
+                fmt::format(fmt::runtime(_("Port {port} forwarded successfully")), fmt::arg("port", local_port_.host())));
         }
         else if (val != NATPMP_TRYAGAIN)
         {

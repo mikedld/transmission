@@ -371,9 +371,10 @@ struct tau_tracker
         }
         else if (action == TAU_ACTION_ERROR)
         {
-            std::string errmsg = !std::empty(buf) ?
-                buf.to_string() :
-                fmt::format(_("{ip_protocol} connection failed"), fmt::arg("ip_protocol", tr_ip_protocol_to_sv(ip_protocol)));
+            std::string errmsg = !std::empty(buf) ? buf.to_string() :
+                                                    fmt::format(
+                                                        fmt::runtime(_("{ip_protocol} connection failed")),
+                                                        fmt::arg("ip_protocol", tr_ip_protocol_to_sv(ip_protocol)));
             fail_all(true, false, errmsg);
             logdbg(log_name(), std::move(errmsg));
         }
@@ -505,7 +506,7 @@ private:
             logwarn(
                 log_name(),
                 fmt::format(
-                    _("Couldn't look up '{address}:{port}' in {ip_protocol}: {error} ({error_code})"),
+                    fmt::runtime(_("Couldn't look up '{address}:{port}' in {ip_protocol}: {error} ({error_code})")),
                     fmt::arg("address", host),
                     fmt::arg("port", port.host()),
                     fmt::arg("ip_protocol", tr_ip_protocol_to_sv(ip_protocol)),

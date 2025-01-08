@@ -702,7 +702,7 @@ bool tr_torrent_metainfo::migrate_file(
     {
         tr_logAddError(
             fmt::format(
-                _("Migrated torrent file from '{old_path}' to '{path}'"),
+                fmt::runtime(_("Migrated torrent file from '{old_path}' to '{path}'")),
                 fmt::arg("old_path", old_filename),
                 fmt::arg("path", new_filename)),
             name);

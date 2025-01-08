@@ -718,15 +718,18 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
         }
         else if (!empty_creator && !empty_date)
         {
-            str = fmt::format(_("Created by {creator} on {date}"), fmt::arg("creator", creator), fmt::arg("date", datestr));
+            str = fmt::format(
+                fmt::runtime(_("Created by {creator} on {date}")),
+                fmt::arg("creator", creator),
+                fmt::arg("date", datestr));
         }
         else if (!empty_creator)
         {
-            str = fmt::format(_("Created by {creator}"), fmt::arg("creator", creator));
+            str = fmt::format(fmt::runtime(_("Created by {creator}")), fmt::arg("creator", creator));
         }
         else if (!empty_date)
         {
-            str = fmt::format(_("Created on {date}"), fmt::arg("date", datestr));
+            str = fmt::format(fmt::runtime(_("Created on {date}")), fmt::arg("date", datestr));
         }
         else
         {
@@ -877,7 +880,8 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
                 [](auto sum, auto const* tor) { return sum + tr_torrentFileCount(tor); });
 
             str = fmt::format(
-                ngettext("{total_size} in {file_count:L} file", "{total_size} in {file_count:L} files", file_count),
+                fmt::runtime(
+                    ngettext("{total_size} in {file_count:L} file", "{total_size} in {file_count:L} files", file_count)),
                 fmt::arg("total_size", tr_strlsize(total_size)),
                 fmt::arg("file_count", file_count));
 
@@ -891,10 +895,10 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
             {
                 str += ' ';
                 str += fmt::format(
-                    ngettext(
+                    fmt::runtime(ngettext(
                         "({piece_count} BitTorrent piece @ {piece_size})",
                         "({piece_count} BitTorrent pieces @ {piece_size})",
-                        piece_count),
+                        piece_count)),
                     fmt::arg("piece_count", piece_count),
                     fmt::arg("piece_size", Memory{ piece_size, Memory::Units::Bytes }.to_string()));
             }
@@ -936,7 +940,7 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
             if (haveUnchecked == 0 && leftUntilDone == 0)
             {
                 str = fmt::format(
-                    _("{current_size} ({percent_done}%)"),
+                    fmt::runtime(_("{current_size} ({percent_done}%)")),
                     fmt::arg("current_size", total),
                     fmt::arg("percent_done", buf2));
             }
@@ -944,7 +948,7 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
             {
                 str = fmt::format(
                     // xgettext:no-c-format
-                    _("{current_size} ({percent_done}% of {percent_available}% available)"),
+                    fmt::runtime(_("{current_size} ({percent_done}% of {percent_available}% available)")),
                     fmt::arg("current_size", total),
                     fmt::arg("percent_done", buf2),
                     fmt::arg("percent_available", avail));
@@ -953,7 +957,8 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
             {
                 str = fmt::format(
                     // xgettext:no-c-format
-                    _("{current_size} ({percent_done}% of {percent_available}% available; {unverified_size} unverified)"),
+                    fmt::runtime(
+                        _("{current_size} ({percent_done}% of {percent_available}% available; {unverified_size} unverified)")),
                     fmt::arg("current_size", total),
                     fmt::arg("percent_done", buf2),
                     fmt::arg("percent_available", avail),
@@ -986,7 +991,7 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
         if (failed != 0)
         {
             str = fmt::format(
-                _("{downloaded_size} (+{discarded_size} discarded after failed checksum)"),
+                fmt::runtime(_("{downloaded_size} (+{discarded_size} discarded after failed checksum)")),
                 fmt::arg("downloaded_size", downloaded_str),
                 fmt::arg("discarded_size", tr_strlsize(failed)));
         }
@@ -1016,7 +1021,7 @@ void DetailsDialog::Impl::refreshInfo(std::vector<tr_torrent*> const& torrents)
             uint64_t{},
             [](auto sum, auto const* st) { return sum + st->sizeWhenDone; });
         str = fmt::format(
-            _("{uploaded_size} (Ratio: {ratio})"),
+            fmt::runtime(_("{uploaded_size} (Ratio: {ratio})")),
             fmt::arg("uploaded_size", tr_strlsize(uploaded)),
             fmt::arg("ratio", tr_strlratio(tr_getRatio(uploaded, denominator))));
     }
@@ -1812,10 +1817,10 @@ void appendAnnounceInfo(tr_tracker_view const& tracker, time_t const now, Gtk::T
         {
             gstr << fmt::format(
                 // {markup_begin} and {markup_end} should surround the peer text
-                ngettext(
+                fmt::runtime(ngettext(
                     "Got a list of {markup_begin}{peer_count} peer{markup_end} {time_span_ago}",
                     "Got a list of {markup_begin}{peer_count} peers{markup_end} {time_span_ago}",
-                    tracker.lastAnnouncePeerCount),
+                    tracker.lastAnnouncePeerCount)),
                 fmt::arg("markup_begin", SuccessMarkupBegin),
                 fmt::arg("peer_count", tracker.lastAnnouncePeerCount),
                 fmt::arg("markup_end", SuccessMarkupEnd),
@@ -1825,7 +1830,7 @@ void appendAnnounceInfo(tr_tracker_view const& tracker, time_t const now, Gtk::T
         {
             gstr << fmt::format(
                 // {markup_begin} and {markup_end} should surround the time_span
-                _("Peer list request {markup_begin}timed out {time_span_ago}{markup_end}; will retry"),
+                fmt::runtime(_("Peer list request {markup_begin}timed out {time_span_ago}{markup_end}; will retry")),
                 fmt::arg("markup_begin", TimeoutMarkupBegin),
                 fmt::arg("time_span_ago", time_span_ago),
                 fmt::arg("markup_end", TimeoutMarkupEnd));
@@ -1834,7 +1839,7 @@ void appendAnnounceInfo(tr_tracker_view const& tracker, time_t const now, Gtk::T
         {
             gstr << fmt::format(
                 // {markup_begin} and {markup_end} should surround the error
-                _("Got an error '{markup_begin}{error}{markup_end}' {time_span_ago}"),
+                fmt::runtime(_("Got an error '{markup_begin}{error}{markup_end}' {time_span_ago}")),
                 fmt::arg("markup_begin", ErrMarkupBegin),
                 fmt::arg("error", Glib::Markup::escape_text(std::data(tracker.lastAnnounceResult))),
                 fmt::arg("markup_end", ErrMarkupEnd),
@@ -1854,7 +1859,7 @@ void appendAnnounceInfo(tr_tracker_view const& tracker, time_t const now, Gtk::T
         gstr << '\n';
         gstr << dir_mark;
         gstr << fmt::format(
-            _("Asking for more peers {time_span_from_now}"),
+            fmt::runtime(_("Asking for more peers {time_span_from_now}")),
             fmt::arg("time_span_from_now", tr_format_time_relative(now, tracker.nextAnnounceTime)));
         break;
 
@@ -1869,7 +1874,7 @@ void appendAnnounceInfo(tr_tracker_view const& tracker, time_t const now, Gtk::T
         gstr << dir_mark;
         gstr << fmt::format(
             // {markup_begin} and {markup_end} should surround time_span_ago
-            _("Asked for more peers {markup_begin}{time_span_ago}{markup_end}"),
+            fmt::runtime(_("Asked for more peers {markup_begin}{time_span_ago}{markup_end}")),
             fmt::arg("markup_begin", "<small>"),
             fmt::arg("time_span_ago", tr_format_time_relative(now, tracker.lastAnnounceStartTime)),
             fmt::arg("markup_end", "</small>"));
@@ -1894,7 +1899,8 @@ void appendScrapeInfo(tr_tracker_view const& tracker, time_t const now, Gtk::Tex
         {
             gstr << fmt::format(
                 // {markup_begin} and {markup_end} should surround the seeder/leecher text
-                _("Tracker had {markup_begin}{seeder_count} {seeder_or_seeders} and {leecher_count} {leecher_or_leechers}{markup_end} {time_span_ago}"),
+                fmt::runtime(_(
+                    "Tracker had {markup_begin}{seeder_count} {seeder_or_seeders} and {leecher_count} {leecher_or_leechers}{markup_end} {time_span_ago}")),
                 fmt::arg("seeder_count", tracker.seederCount),
                 fmt::arg("seeder_or_seeders", ngettext("seeder", "seeders", tracker.seederCount)),
                 fmt::arg("leecher_count", tracker.leecherCount),
@@ -1907,7 +1913,7 @@ void appendScrapeInfo(tr_tracker_view const& tracker, time_t const now, Gtk::Tex
         {
             gstr << fmt::format(
                 // {markup_begin} and {markup_end} should surround the error text
-                _("Got a scrape error '{markup_begin}{error}{markup_end}' {time_span_ago}"),
+                fmt::runtime(_("Got a scrape error '{markup_begin}{error}{markup_end}' {time_span_ago}")),
                 fmt::arg("error", Glib::Markup::escape_text(std::data(tracker.lastScrapeResult))),
                 fmt::arg("time_span_ago", time_span_ago),
                 fmt::arg("markup_begin", ErrMarkupBegin),
@@ -1924,7 +1930,7 @@ void appendScrapeInfo(tr_tracker_view const& tracker, time_t const now, Gtk::Tex
         gstr << '\n';
         gstr << dir_mark;
         gstr << fmt::format(
-            _("Asking for peer counts in {time_span_from_now}"),
+            fmt::runtime(_("Asking for peer counts in {time_span_from_now}")),
             fmt::arg("time_span_from_now", tr_format_time_relative(now, tracker.nextScrapeTime)));
         break;
 
@@ -1938,7 +1944,7 @@ void appendScrapeInfo(tr_tracker_view const& tracker, time_t const now, Gtk::Tex
         gstr << '\n';
         gstr << dir_mark;
         gstr << fmt::format(
-            _("Asked for peer counts {markup_begin}{time_span_ago}{markup_end}"),
+            fmt::runtime(_("Asked for peer counts {markup_begin}{time_span_ago}{markup_end}")),
             fmt::arg("markup_begin", "<small>"),
             fmt::arg("time_span_ago", tr_format_time_relative(now, tracker.lastScrapeStartTime)),
             fmt::arg("markup_end", "</small>"));
@@ -2223,7 +2229,8 @@ EditTrackersDialog::EditTrackersDialog(
     , torrent_id_(tr_torrentId(torrent))
     , urls_view_(gtr_get_widget<Gtk::TextView>(builder, "urls_view"))
 {
-    set_title(fmt::format(_("{torrent_name} - Edit Trackers"), fmt::arg("torrent_name", tr_torrentName(torrent))));
+    set_title(
+        fmt::format(fmt::runtime(_("{torrent_name} - Edit Trackers")), fmt::arg("torrent_name", tr_torrentName(torrent))));
     set_transient_for(parent);
 
     urls_view_->get_buffer()->set_text(tr_torrentGetTrackerList(torrent));
@@ -2344,7 +2351,7 @@ AddTrackerDialog::AddTrackerDialog(
     , torrent_id_(tr_torrentId(torrent))
     , url_entry_(gtr_get_widget<Gtk::Entry>(builder, "url_entry"))
 {
-    set_title(fmt::format(_("{torrent_name} - Add Tracker"), fmt::arg("torrent_name", tr_torrentName(torrent))));
+    set_title(fmt::format(fmt::runtime(_("{torrent_name} - Add Tracker")), fmt::arg("torrent_name", tr_torrentName(torrent))));
     set_transient_for(parent);
 
     auto* const accept = get_widget_for_response(TR_GTK_RESPONSE_TYPE(ACCEPT));
@@ -2639,12 +2646,12 @@ void DetailsDialog::Impl::set_torrents(std::vector<tr_torrent_id_t> const& ids)
     {
         int const id = ids.front();
         auto const* tor = core_->find_torrent(id);
-        title = fmt::format(_("{torrent_name} Properties"), fmt::arg("torrent_name", tr_torrentName(tor)));
+        title = fmt::format(fmt::runtime(_("{torrent_name} Properties")), fmt::arg("torrent_name", tr_torrentName(tor)));
     }
     else
     {
         title = fmt::format(
-            ngettext("Properties - {torrent_count:L} Torrent", "Properties - {torrent_count:L} Torrents", len),
+            fmt::runtime(ngettext("Properties - {torrent_count:L} Torrent", "Properties - {torrent_count:L} Torrents", len)),
             fmt::arg("torrent_count", len));
     }
 

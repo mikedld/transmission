@@ -103,7 +103,7 @@ int main(int argc, char** argv)
         fmt::print(stderr, "{}\n", TR_GLIB_EXCEPTION_WHAT(e));
         fmt::print(
             stderr,
-            _("Run '{program} --help' to see a full list of available command line options.\n"),
+            fmt::runtime(_("Run '{program} --help' to see a full list of available command line options.\n")),
             fmt::arg("program", *argv));
         return 1;
     }

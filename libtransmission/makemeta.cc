@@ -77,7 +77,7 @@ void walkTree(std::string_view const top, std::string_view const subpath, std::s
     if (error)
     {
         tr_logAddWarn(fmt::format(
-            _("Skipping '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Skipping '{path}': {error} ({error_code})")),
             fmt::arg("path", path),
             fmt::arg("error", error.message()),
             fmt::arg("error_code", error.code())));
