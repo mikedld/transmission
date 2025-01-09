@@ -765,6 +765,10 @@ a {
       );
     }
   }
+
+  &.limit-width .torrent .torrent-progress-bar {
+    max-width: 640px;
+  }
 }
 
 /// PREFERENCES DIALOG

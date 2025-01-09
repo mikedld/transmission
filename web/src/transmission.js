@@ -398,6 +398,11 @@ export class Transmission extends EventTarget {
         this.refilterAllSoon();
         break;
 
+      case Prefs.LimitWidth: {
+        this.elements.torrent_list.classList.toggle('limit-width', value);
+        break;
+      }
+
       case Prefs.RefreshRate: {
         clearInterval(this.refreshTorrentsInterval);
         const callback = this.refreshTorrents.bind(this);
