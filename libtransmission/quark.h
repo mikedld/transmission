@@ -61,6 +61,8 @@ enum
     TR_KEY_blocklist_url,
     TR_KEY_blocks,
     TR_KEY_bytesCompleted,
+    TR_KEY_bytesToClient,
+    TR_KEY_bytesToPeer,
     TR_KEY_cache_size_mb,
     TR_KEY_clientIsChoked,
     TR_KEY_clientIsInterested,
