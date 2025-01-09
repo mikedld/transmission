@@ -1,0 +1,27 @@
+/* quicklook file header */
+"%lu Files" = "%lu 个文件";
+
+/* quicklook file count */
+"%lu files" = "%lu 文件";
+
+/* quicklook tracker header */
+"%lu Trackers" = "%lu 个 Tracker";
+
+/* quicklook web seed header */
+"%lu Web Seeds" = "%lu 个网络种子";
+
+/* quicklook tracker header */
+"1 Tracker" = "1 个 Tracker";
+
+/* quicklook web seed header */
+"1 Web Seed" = "1 个网络种子";
+
+/* quicklook creation info */
+"Created on %@" = "创建于 %@";
+
+/* quicklook creation info */
+"Created on %@ with %@" = "由 %2$@ 创建于 %1$@";
+
+/* quicklook creation info */
+"Created with %@" = "由 %@ 创建";
+

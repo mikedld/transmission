@@ -1,0 +1,27 @@
+/* quicklook file header */
+"%lu Files" = "%lu 個檔案";
+
+/* quicklook file count */
+"%lu files" = "%lu 個檔案";
+
+/* quicklook tracker header */
+"%lu Trackers" = "%lu 個追蹤器";
+
+/* quicklook web seed header */
+"%lu Web Seeds" = "%lu 個網路種子";
+
+/* quicklook tracker header */
+"1 Tracker" = "1 個追蹤器";
+
+/* quicklook web seed header */
+"1 Web Seed" = "1 個網路種子";
+
+/* quicklook creation info */
+"Created on %@" = "建立於 %@";
+
+/* quicklook creation info */
+"Created on %@ with %@" = "由 %2$@ 建立於 %1$@";
+
+/* quicklook creation info */
+"Created with %@" = "由 %@ 建立";
+

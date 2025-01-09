@@ -1,0 +1,27 @@
+/* quicklook file header */
+"%lu Files" = "%luファイル";
+
+/* quicklook file count */
+"%lu files" = "%luファイル";
+
+/* quicklook tracker header */
+"%lu Trackers" = "%luトラッカー";
+
+/* quicklook web seed header */
+"%lu Web Seeds" = "%luウェブシード";
+
+/* quicklook tracker header */
+"1 Tracker" = "1トラッカー";
+
+/* quicklook web seed header */
+"1 Web Seed" = "1ウェブシード";
+
+/* quicklook creation info */
+"Created on %@" = "作成日 %@";
+
+/* quicklook creation info */
+"Created on %@ with %@" = "作成日 %1$@ / 作成 %2$@";
+
+/* quicklook creation info */
+"Created with %@" = "作成 %@";
+

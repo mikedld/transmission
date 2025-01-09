@@ -1,0 +1,27 @@
+/* quicklook file header */
+"%lu Files" = "%lu Fitxategiak";
+
+/* quicklook file count */
+"%lu files" = "%lu fitxategiak";
+
+/* quicklook tracker header */
+"%lu Trackers" = "%lu Aztarnariak";
+
+/* quicklook web seed header */
+"%lu Web Seeds" = "%lu Web Igorleak";
+
+/* quicklook tracker header */
+"1 Tracker" = "Aztarnari 1";
+
+/* quicklook web seed header */
+"1 Web Seed" = "1 Web hazia";
+
+/* quicklook creation info */
+"Created on %@" = "%@ Sortua ";
+
+/* quicklook creation info */
+"Created on %@ with %@" = "Honekin %2$@ %1$@ Sortua  ";
+
+/* quicklook creation info */
+"Created with %@" = "%@ Honekin sortua";
+

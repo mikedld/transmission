@@ -1,0 +1,27 @@
+/* quicklook file header */
+"%lu Files" = "%lu Fájl";
+
+/* quicklook file count */
+"%lu files" = "%lu Fájl";
+
+/* quicklook tracker header */
+"%lu Trackers" = "%lu Tracker";
+
+/* quicklook web seed header */
+"%lu Web Seeds" = "%lu Web seed";
+
+/* quicklook tracker header */
+"1 Tracker" = "1 Tracker";
+
+/* quicklook web seed header */
+"1 Web Seed" = "1 Web seed";
+
+/* quicklook creation info */
+"Created on %@" = "Létrehozva ekkor: %@";
+
+/* quicklook creation info */
+"Created on %@ with %@" = "Létrehozva ekkor: %1$@, ezzel: %2$@";
+
+/* quicklook creation info */
+"Created with %@" = "Létrehozva ezzel: %@";
+

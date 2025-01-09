@@ -1,0 +1,27 @@
+/* quicklook file header */
+"%lu Files" = "%lu Dosya";
+
+/* quicklook file count */
+"%lu files" = "%lu dosya";
+
+/* quicklook tracker header */
+"%lu Trackers" = "%lu İzleyici";
+
+/* quicklook web seed header */
+"%lu Web Seeds" = "%lu Web Beslemesi";
+
+/* quicklook tracker header */
+"1 Tracker" = "1 İzleyici";
+
+/* quicklook web seed header */
+"1 Web Seed" = "1 Web Beslemesi";
+
+/* quicklook creation info */
+"Created on %@" = "%@ üzerinde oluşturuldu";
+
+/* quicklook creation info */
+"Created on %@ with %@" = "%1$@ üzerinde %2$@ ile oluşturuldu";
+
+/* quicklook creation info */
+"Created with %@" = "%@ ile oluşturuldu";
+
