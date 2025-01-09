@@ -341,6 +341,11 @@ size_t tr_session::WebMediator::clamp(int torrent_id, size_t byte_count) const
     return tor == nullptr ? 0U : tor->bandwidth().clamp(TR_DOWN, byte_count);
 }
 
+std::optional<std::string_view> tr_session::WebMediator::proxyUrl() const
+{
+    return session_->settings_.proxy_url;
+}
+
 void tr_session::WebMediator::run(tr_web::FetchDoneFunc&& func, tr_web::FetchResponse&& response) const
 {
     session_->run_in_session_thread(std::move(func), std::move(response));

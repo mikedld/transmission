@@ -149,6 +149,12 @@ public:
             return byte_count;
         }
 
+        // Return the preferred proxy url
+        [[nodiscard]] virtual std::optional<std::string_view> proxyUrl() const
+        {
+            return std::nullopt;
+        }
+
         // Invoke the user-provided fetch callback
         virtual void run(FetchDoneFunc&& func, FetchResponse&& response) const
         {

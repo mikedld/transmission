@@ -81,6 +81,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
  * **message-level:** Number (0 = None, 1 = Critical, 2 = Error, 3 = Warn, 4 = Info, 5 = Debug, 6 = Trace; default = 4) Set verbosity of Transmission's log messages.
  * **pex-enabled:** Boolean (default = true) Enable [Peer Exchange (PEX)](https://en.wikipedia.org/wiki/Peer_exchange).
  * **pidfile:** String Path to file in which daemon PID will be stored (_transmission-daemon only_)
+ * **proxy_url:** String (default = "") Proxy for HTTP(S) requests (for example, requests to tracker). Format `[scheme]://[host]:[port]`, where `scheme` is one of: `http`, `https`, `socks4`, `socks4h`, `socks5`, `socks5h`. If unspecified, or empty, no proxy is used. For more information see [curl proxy documentation](https://curl.se/libcurl/c/CURLOPT_PROXY.html)
  * **scrape-paused-torrents-enabled:** Boolean (default = true)
  * **script-torrent-added-enabled:** Boolean (default = false) Run a script when a torrent is added to Transmission. Environmental variables are passed in as detailed on the [Scripts](./Scripts.md) page.
  * **script-torrent-added-filename:** String (default = "") Path to script.
