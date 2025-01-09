@@ -45,43 +45,51 @@ constexpr int MaxRememberedPeers = 200;
 
 void savePeers(tr_variant* dict, tr_torrent const* tor)
 {
+    auto* const map = dict->get_if<tr_variant::Map>();
+    if (map == nullptr)
+    {
+        return;
+    }
+
     if (auto const pex = tr_peerMgrGetPeers(tor, TR_AF_INET, TR_PEERS_INTERESTING, MaxRememberedPeers); !std::empty(pex))
     {
-        tr_variantDictAddRaw(dict, TR_KEY_peers2, std::data(pex), sizeof(tr_pex) * std::size(pex));
+        map->try_emplace(TR_KEY_peers2, tr_pex::to_variant(std::data(pex), std::size(pex)));
     }
 
     if (auto const pex = tr_peerMgrGetPeers(tor, TR_AF_INET6, TR_PEERS_INTERESTING, MaxRememberedPeers); !std::empty(pex))
     {
-        tr_variantDictAddRaw(dict, TR_KEY_peers2_6, std::data(pex), sizeof(tr_pex) * std::size(pex));
+        map->try_emplace(TR_KEY_peers2_6, tr_pex::to_variant(std::data(pex), std::size(pex)));
     }
 }
 
-size_t addPeers(tr_torrent* tor, uint8_t const* buf, size_t buflen)
+size_t addPeers(tr_torrent* tor, tr_variant const* l)
 {
-    size_t const n_in = buflen / sizeof(tr_pex);
-    size_t const n_pex = std::min(n_in, size_t{ MaxRememberedPeers });
+    auto* const vec = l->get_if<tr_variant::Vector>();
+    if (vec == nullptr)
+    {
+        return {};
+    }
 
-    auto pex = std::array<tr_pex, MaxRememberedPeers>{};
-    memcpy(std::data(pex), buf, sizeof(tr_pex) * n_pex);
-    return tr_peerMgrAddPex(tor, TR_PEER_FROM_RESUME, std::data(pex), n_pex);
+    auto const n_pex = std::min(std::size(*vec), size_t{ MaxRememberedPeers });
+    auto const pex = tr_pex::from_variant(std::data(*vec), n_pex);
+    return tr_peerMgrAddPex(tor, TR_PEER_FROM_RESUME, std::data(pex), std::size(pex));
 }
 
 auto loadPeers(tr_variant* dict, tr_torrent* tor)
 {
     auto ret = tr_resume::fields_t{};
 
-    uint8_t const* str = nullptr;
-    auto len = size_t{};
-    if (tr_variantDictFindRaw(dict, TR_KEY_peers2, &str, &len))
+    tr_variant* l = nullptr;
+    if (tr_variantDictFindList(dict, TR_KEY_peers2, &l))
     {
-        size_t const num_added = addPeers(tor, str, len);
+        size_t const num_added = addPeers(tor, l);
         tr_logAddTraceTor(tor, fmt::format("Loaded {} IPv4 peers from resume file", num_added));
         ret = tr_resume::Peers;
     }
 
-    if (tr_variantDictFindRaw(dict, TR_KEY_peers2_6, &str, &len))
+    if (tr_variantDictFindList(dict, TR_KEY_peers2_6, &l))
     {
-        size_t const num_added = addPeers(tor, str, len);
+        size_t const num_added = addPeers(tor, l);
         tr_logAddTraceTor(tor, fmt::format("Loaded {} IPv6 peers from resume file", num_added));
         ret = tr_resume::Peers;
     }
