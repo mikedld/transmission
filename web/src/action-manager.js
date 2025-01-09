@@ -16,6 +16,10 @@ export class ActionManager extends EventTarget {
       'move-down': { enabled: false, text: 'Move down in the queue' },
       'move-top': { enabled: false, text: 'Move to the front of the queue' },
       'move-up': { enabled: false, text: 'Move up in the queue' },
+      'open-appearance-settings': {
+        enabled: true,
+        text: 'Appearance settings',
+      },
       'open-torrent': {
         enabled: true,
         shortcut: 'O',

@@ -2,6 +2,7 @@ set(WEB_SOURCES
     src/about-dialog.js
     src/action-manager.js
     src/alert-dialog.js
+    src/appearance-settings.js
     src/context-menu.js
     src/file-row.js
     src/formatter.js
