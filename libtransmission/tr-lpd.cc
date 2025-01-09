@@ -437,7 +437,12 @@ private:
             }
         }
 
-        events_[ip_protocol].reset(event_new(event_base, sock, EV_READ | EV_PERSIST, event_callback<ip_protocol>, this));
+        events_[ip_protocol].reset(libtransmission::evhelpers::event_new_pri2(
+            event_base,
+            sock,
+            EV_READ | EV_PERSIST,
+            event_callback<ip_protocol>,
+            this));
         event_add(events_[ip_protocol].get(), nullptr);
 
         tr_logAddDebug(fmt::format("{} Local Peer Discovery initialised", tr_ip_protocol_to_sv(ip_protocol)));

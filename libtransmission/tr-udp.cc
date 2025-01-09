@@ -201,7 +201,12 @@ tr_session::tr_udp_core::tr_udp_core(tr_session& session, tr_port udp_port)
             session_.setSocketTOS(sock, TR_AF_INET);
             set_socket_buffers(sock, session_.allowsUTP());
             udp4_socket_ = sock;
-            udp4_event_.reset(event_new(session_.event_base(), udp4_socket_, EV_READ | EV_PERSIST, event_callback, &session_));
+            udp4_event_.reset(libtransmission::evhelpers::event_new_pri2(
+                session_.event_base(),
+                udp4_socket_,
+                EV_READ | EV_PERSIST,
+                event_callback,
+                &session_));
             event_add(udp4_event_.get(), nullptr);
         }
     }
@@ -246,7 +251,12 @@ tr_session::tr_udp_core::tr_udp_core(tr_session& session, tr_port udp_port)
             session_.setSocketTOS(sock, TR_AF_INET6);
             set_socket_buffers(sock, session_.allowsUTP());
             udp6_socket_ = sock;
-            udp6_event_.reset(event_new(session_.event_base(), udp6_socket_, EV_READ | EV_PERSIST, event_callback, &session_));
+            udp6_event_.reset(libtransmission::evhelpers::event_new_pri2(
+                session_.event_base(),
+                udp6_socket_,
+                EV_READ | EV_PERSIST,
+                event_callback,
+                &session_));
             event_add(udp6_event_.get(), nullptr);
         }
     }
