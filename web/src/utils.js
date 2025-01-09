@@ -24,6 +24,17 @@ export const Utils = {
   },
 };
 
+const icon32 = {
+  fill: 'none',
+  height: 32,
+  stroke: 'currentColor',
+  'stroke-linecap': 'round',
+  'stroke-linejoin': 'round',
+  'stroke-width': 2,
+  viewBox: '0 0 24 24',
+  width: 32,
+};
+
 function toggleClass(buttons, button, pages, page, callback) {
   for (const element of buttons.children) {
     element.classList.toggle('selected', element === button);
@@ -34,6 +45,25 @@ function toggleClass(buttons, button, pages, page, callback) {
   if (callback) {
     callback(page);
   }
+}
+
+function namespace(tagname, attrs) {
+  const e = document.createElementNS('http://www.w3.org/2000/svg', tagname);
+
+  for (const attr of Object.keys(attrs)) {
+    e.setAttribute(attr, attrs[attr]);
+  }
+
+  return e;
+}
+
+function renderIcon(...svgca) {
+  // SVG Command Array
+  const svg = namespace('svg', icon32);
+  for (const [tagname, attrs] of svgca) {
+    svg.append(namespace(tagname, attrs));
+  }
+  return svg;
 }
 
 export function createTextualTabsContainer(id, tabs, callback) {
@@ -158,6 +188,83 @@ export function makeUUID() {
     ).toString(16),
   );
 }
+
+export const icon = Object.freeze({
+  delete: () => {
+    return renderIcon(
+      ['polyline', { points: '3 6 5 6 21 6' }],
+      [
+        'path',
+        {
+          d: 'M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2',
+        },
+      ],
+      ['line', { x1: 10, x2: 10, y1: 11, y2: 17 }],
+      ['line', { x1: 14, x2: 14, y1: 11, y2: 17 }],
+    );
+  },
+  inspector: () => {
+    const svg = namespace('svg', {
+      fill: 'none',
+      'fill-opacity': 1,
+      height: 26,
+      stroke: 'currentColor',
+      viewBox: '-1 -1 26 26',
+      width: 26,
+    });
+    const g = namespace('g', {});
+    g.append(
+      namespace('circle', {
+        cx: 12,
+        cy: 12,
+        r: 12,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round',
+        'stroke-width': 2,
+      }),
+      namespace('path', {
+        d: 'M 11.88208 4.883789 C 12.326418 4.883789 12.702391 5.039305 13.01001 5.350342 C 13.317628 5.6613785 13.471436 6.035642 13.471436 6.4731445 C 13.471436 6.910647 13.31592 7.283202 13.004883 7.59082 C 12.693846 7.898439 12.319582 8.052246 11.88208 8.052246 C 11.444578 8.052246 11.072023 7.898439 10.764404 7.59082 C 10.456786 7.283202 10.302979 6.910647 10.302979 6.4731445 C 10.302979 6.035642 10.456786 5.6613785 10.764404 5.350342 C 11.072023 5.039305 11.444578 4.883789 11.88208 4.883789 Z M 13.317627 9.528809 L 13.317627 17.126953 C 13.317627 17.803714 13.39624 18.236083 13.553467 18.424072 C 13.710694 18.612061 14.018308 18.719726 14.476318 18.74707 L 14.476318 19.11621 L 9.298096 19.11621 L 9.298096 18.74707 C 9.721926 18.733398 10.036376 18.610353 10.241455 18.37793 C 10.378175 18.220702 10.446533 17.803714 10.446533 17.126953 L 10.446533 11.52832 C 10.446533 10.851559 10.367921 10.41919 10.210693 10.231201 C 10.053466 10.043212 9.74927 9.935547 9.298096 9.908203 L 9.298096 9.528809 Z',
+        fill: 'currentColor',
+      }),
+    );
+    svg.append(g);
+    return svg;
+  },
+  open: () => {
+    return renderIcon(
+      [
+        'path',
+        {
+          d: 'M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z',
+        },
+      ],
+      ['line', { x1: 12, x2: 12, y1: 11, y2: 17 }],
+      ['line', { x1: 9, x2: 15, y1: 14, y2: 14 }],
+    );
+  },
+  overflow: () => {
+    return renderIcon(
+      ['line', { x1: 3, x2: 21, y1: 12, y2: 12 }],
+      ['line', { x1: 3, x2: 21, y1: 6, y2: 6 }],
+      ['line', { x1: 3, x2: 21, y1: 18, y2: 18 }],
+    );
+  },
+  pause: () => {
+    return renderIcon(
+      ['rect', { height: 16, width: 4, x: 6, y: 4 }],
+      ['rect', { height: 16, width: 4, x: 14, y: 4 }],
+    );
+  },
+  speedDown: () => {
+    return renderIcon(['polyline', { points: '6 9 12 15 18 9' }]);
+  },
+  speedUp: () => {
+    return renderIcon(['polyline', { points: '18 15 12 9 6 15' }]);
+  },
+  start: () => {
+    return renderIcon(['polyline', { points: '5 3 19 12 5 21 5 3' }]);
+  },
+});
 
 export function createSection(title) {
   const root = document.createElement('fieldset');

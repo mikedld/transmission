@@ -410,23 +410,14 @@ a {
     align-items: inherit;
     flex-direction: inherit;
 
+    svg {
+      min-width: 20px;
+      width: 20px;
+    }
+
     + .speed-container {
       min-width: 100px;
     }
-  }
-
-  #speed-up-icon,
-  #speed-dn-icon {
-    fill: var(--color-fg-primary);
-
-    svg {
-      width: 20px;
-    }
-  }
-
-  #speed-dn-label,
-  #speed-up-label {
-    text-align: right;
   }
 }
 
