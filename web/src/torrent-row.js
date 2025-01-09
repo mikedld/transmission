@@ -263,6 +263,10 @@ export class TorrentRendererFull {
 
     TorrentRendererHelper.updateIcon(root.icon, torrent);
 
+    const progress = document.createElement('div');
+    progress.className = 'progress';
+    root.progressbar.append(progress);
+
     return root;
   }
 }
@@ -355,6 +359,10 @@ export class TorrentRendererCompact {
     }
 
     TorrentRendererHelper.updateIcon(root.icon, torrent);
+
+    const progress = document.createElement('div');
+    progress.className = 'progress';
+    root.progressbar.append(progress);
 
     return root;
   }

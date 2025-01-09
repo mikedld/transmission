@@ -624,11 +624,6 @@ a {
         width: var(--icon-size);
       }
 
-      .torrent-progress-bar {
-        display: flex;
-        flex-direction: row;
-      }
-
       > * {
         margin: 1px 0;
       }
@@ -662,14 +657,11 @@ a {
   }
 
   .torrent-progress-bar {
-    font-size: 14px;
-    position: relative;
     border: 1px solid var(--color-border-starkest);
     border-radius: 3px;
-    height: 18px;
+    position: relative;
 
     &.full {
-      flex-grow: 1;
       margin: 2px 0;
     }
 
@@ -678,76 +670,107 @@ a {
     }
 
     &.leech {
-      &.queued::before {
-        background: var(--color-progressbar-queued);
-      }
-
       &::before {
-        background: var(--color-progressbar-leech);
         color: var(--color-progressbar-fg-2);
         text-shadow: var(--progress-bar-shadow-2);
       }
+
+      &.queued .progress::before {
+        background: var(--color-progressbar-queued);
+      }
+
+      .progress::before {
+        background: var(--color-progressbar-leech);
+      }
     }
 
-    &.magnet::before {
-      background: var(--color-progressbar-magnet);
-      color: #000;
+    &.magnet {
+      &::before {
+        color: #000;
+      }
+
+      .progress::before {
+        background: var(--color-progressbar-magnet);
+      }
     }
 
     &.seed {
       &.paused::before {
-        background: var(--color-progressbar-seed-paused);
         color: var(--color-progressbar-fg-1);
         text-shadow: var(--progress-bar-shadow-1);
       }
 
+      .progress::after {
+        background: var(--color-progressbar-seed-paused);
+      }
+
       &:not(.paused) {
         &::before {
-          background: var(--color-progressbar-seed-1);
           color: var(--color-progressbar-fg-2);
           text-shadow: var(--progress-bar-shadow-2);
         }
 
         &::after {
-          background: var(--color-progressbar-seed-2);
           color: var(--color-progressbar-fg-3);
           text-shadow: var(--progress-bar-shadow-3);
         }
       }
 
-      &.queued::before {
+      &.queued .progress::before {
         background-color: var(--color-progressbar-seed-1);
       }
 
       &::before {
-        background-color: var(--color-progressbar-seed-1);
         color: var(--color-progressbar-fg-2);
         text-shadow: var(--progress-bar-shadow-2);
       }
+
+      .progress {
+        &::before {
+          background: var(--color-progressbar-seed-1);
+        }
+
+        &::after {
+          background: var(--color-progressbar-seed-2);
+        }
+      }
     }
 
-    &.verify::before {
-      background: var(--color-progressbar-verify);
-      color: #000;
+    &.verify {
+      &::before {
+        color: #000;
+      }
+
+      .progress::before {
+        background: var(--color-progressbar-verify);
+      }
     }
 
-    &.paused::before {
-      background: var(--color-progressbar-paused);
-      color: var(--color-progressbar-fg-1);
-      text-shadow: var(--progress-bar-shadow-1);
+    &.paused {
+      &::before {
+        color: var(--color-progressbar-fg-1);
+        text-shadow: var(--progress-bar-shadow-1);
+      }
+
+      .progress::before {
+        background: var(--color-progressbar-paused);
+      }
     }
 
     &::before,
     &::after {
       content: attr(data-progress);
+      font-size: 14px;
       height: 100%;
-      width: 100%;
       position: absolute;
-      border-radius: 2px;
       text-align: center;
+      top: 0;
+      width: 100%;
+      z-index: 1;
     }
 
-    &::before {
+    &::before,
+    .progress::before {
       clip-path: polygon(
         0 0,
         var(--progress, 30%) 0,
@@ -756,13 +779,28 @@ a {
       );
     }
 
-    &::after {
+    &::after,
+    .progress::after {
       clip-path: polygon(
         var(--progress, 30%) 0,
         100% 0,
         100% 100%,
         var(--progress, 30%) 100%
       );
+    }
+
+    .progress {
+      border-radius: 2px;
+      height: 18px;
+
+      &::before,
+      &::after {
+        border-radius: 2px;
+        content: '';
+        height: 100%;
+        position: absolute;
+        width: 100%;
+      }
     }
   }
 }
