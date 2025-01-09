@@ -44,10 +44,15 @@ export class ActionManager extends EventTarget {
         text: 'Select all',
       },
       'show-about-dialog': { enabled: true, text: 'About' },
+      'show-context-menu': {
+        enabled: true,
+        shortcut: 'X',
+        text: 'Context Menu (right-click / long press)',
+      },
       'show-inspector': {
         enabled: false,
         shortcut: 'I',
-        text: 'Torrent Inspector',
+        text: 'Torrent Inspector (double-click)',
       },
       'show-labels-dialog': {
         enabled: false,
