@@ -64,6 +64,7 @@ public:
             tr_peer_id_t client_peer_id;
             tr_torrent_id_t id;
             bool is_done;
+            bool is_running;
         };
 
         virtual ~Mediator() = default;

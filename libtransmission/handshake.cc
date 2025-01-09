@@ -290,14 +290,14 @@ ReadState tr_handshake::read_handshake(tr_peerIo* peer_io)
     auto hash = tr_sha1_digest_t{};
     peer_io->read_bytes(std::data(hash), std::size(hash));
 
+    if (auto const& info = mediator_->torrent(hash); !info || !info->is_running)
+    {
+        tr_logAddTraceHand(this, "peer is trying to connect to us for a torrent we aren't running.");
+        return done(false);
+    }
+
     if (is_incoming() && peer_io->torrent_hash() == tr_sha1_digest_t{}) // incoming plain handshake
     {
-        if (!mediator_->torrent(hash))
-        {
-            tr_logAddTraceHand(this, "peer is trying to connect to us for a torrent we don't have.");
-            return done(false);
-        }
-
         peer_io->set_torrent_hash(hash);
     }
     else // outgoing, or incoming MSE handshake
@@ -458,14 +458,14 @@ ReadState tr_handshake::read_crypto_provide(tr_peerIo* peer_io)
         obfuscated_hash[i] = x_or[i] ^ req3[i];
     }
 
-    if (auto const info = mediator_->torrent_from_obfuscated(obfuscated_hash); info)
+    if (auto const info = mediator_->torrent_from_obfuscated(obfuscated_hash); info && info->is_running)
     {
         tr_logAddTraceHand(this, fmt::format("got INCOMING connection's MSE handshake for torrent [{}]", info->id));
         peer_io->set_torrent_hash(info->info_hash);
     }
     else
     {
-        tr_logAddTraceHand(this, "can't find that torrent...");
+        tr_logAddTraceHand(this, "we are not running that torrent...");
         return done(false);
     }
 
@@ -714,7 +714,7 @@ bool tr_handshake::build_handshake_message(tr_peerIo* io, libtransmission::Buffe
     TR_ASSERT_MSG(info_hash != tr_sha1_digest_t{}, "build_handshake_message requires an info_hash");
 
     auto const info = mediator_->torrent(info_hash);
-    if (!info)
+    if (!info || !info->is_running)
     {
         return false;
     }

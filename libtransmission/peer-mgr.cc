@@ -75,12 +75,13 @@ private:
             return {};
         }
 
-        auto info = TorrentInfo{};
-        info.info_hash = tor->info_hash();
-        info.client_peer_id = tor->peer_id();
-        info.id = tor->id();
-        info.is_done = tor->is_done();
-        return info;
+        return TorrentInfo{
+            tor->info_hash(), // info_hash
+            tor->peer_id(), // client_peer_id
+            tor->id(), // id
+            tor->is_done(), // is_done
+            tor->is_running() // is_running
+        };
     }
 
 public:
@@ -1284,7 +1285,12 @@ void create_bit_torrent_peer(
         info->destroy_handshake();
     }
 
-    if (!result.is_connected || swarm == nullptr || !swarm->is_running)
+    if (swarm == nullptr || !swarm->is_running)
+    {
+        return false;
+    }
+
+    if (!result.is_connected)
     {
         if (info && !info->is_connected())
         {
