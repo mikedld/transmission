@@ -15,7 +15,6 @@
 #include <memory>
 #include <optional>
 #include <tuple> // std::tie
-#include <type_traits>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -75,12 +74,12 @@ private:
             return {};
         }
 
-        auto info = TorrentInfo{};
-        info.info_hash = tor->info_hash();
-        info.client_peer_id = tor->peer_id();
-        info.id = tor->id();
-        info.is_done = tor->is_done();
-        return info;
+        return TorrentInfo{
+            .info_hash = tor->info_hash(),
+            .client_peer_id = tor->peer_id(),
+            .id = tor->id(),
+            .is_done = tor->is_done(),
+        };
     }
 
 public:
@@ -285,8 +284,7 @@ constexpr struct
     }
 
     template<typename T>
-    [[nodiscard]] constexpr std::enable_if_t<std::is_same_v<std::decay_t<decltype(*std::declval<T>())>, tr_peer_info>, bool>
-    operator()(T const& a, T const& b) const noexcept
+    [[nodiscard]] constexpr bool operator()(T const& a, T const& b) const noexcept
     {
         return compare(*a, *b) < 0;
     }
@@ -2312,9 +2310,7 @@ struct ComparePeerInfo
     }
 
     template<typename T>
-    [[nodiscard]] std::enable_if_t<std::is_same_v<std::decay_t<decltype(*std::declval<T>())>, tr_peer_info>, bool> operator()(
-        T const& a,
-        T const& b) const noexcept
+    [[nodiscard]] bool operator()(T const& a, T const& b) const noexcept
     {
         return compare(*a, *b) < 0;
     }

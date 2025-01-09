@@ -78,7 +78,7 @@ private:
 
         [[nodiscard]] bool contains(tr_address const& addr) const;
 
-        [[nodiscard]] auto size() const
+        [[nodiscard]] size_t size() const
         {
             ensureLoaded();
 

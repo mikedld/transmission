@@ -59,7 +59,7 @@ void save(std::string_view filename, address_range_t const* ranges, size_t n_ran
     if (!out.is_open())
     {
         tr_logAddWarn(fmt::format(
-            _("Couldn't read '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't read '{path}': {error} ({error_code})")),
             fmt::arg("path", filename),
             fmt::arg("error", tr_strerror(errno)),
             fmt::arg("error_code", errno)));
@@ -70,7 +70,7 @@ void save(std::string_view filename, address_range_t const* ranges, size_t n_ran
         !out.write(reinterpret_cast<char const*>(ranges), n_ranges * sizeof(*ranges)))
     {
         tr_logAddWarn(fmt::format(
-            _("Couldn't save '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't save '{path}': {error} ({error_code})")),
             fmt::arg("path", filename),
             fmt::arg("error", tr_strerror(errno)),
             fmt::arg("error_code", errno)));
@@ -78,7 +78,8 @@ void save(std::string_view filename, address_range_t const* ranges, size_t n_ran
     else
     {
         tr_logAddInfo(fmt::format(
-            tr_ngettext("Blocklist '{path}' has {count} entry", "Blocklist '{path}' has {count} entries", n_ranges),
+            fmt::runtime(
+                tr_ngettext("Blocklist '{path}' has {count} entry", "Blocklist '{path}' has {count} entries", n_ranges)),
             fmt::arg("path", tr_sys_path_basename(filename)),
             fmt::arg("count", n_ranges)));
     }
@@ -237,7 +238,7 @@ auto parseFile(std::string_view filename)
     if (!in.is_open())
     {
         tr_logAddWarn(fmt::format(
-            _("Couldn't read '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't read '{path}': {error} ({error_code})")),
             fmt::arg("path", filename),
             fmt::arg("error", tr_strerror(errno)),
             fmt::arg("error_code", errno)));
@@ -256,7 +257,7 @@ auto parseFile(std::string_view filename)
         else
         {
             // don't try to display the actual lines - it causes issues
-            tr_logAddWarn(fmt::format(_("Couldn't parse line: '{line}'"), fmt::arg("line", line_number)));
+            tr_logAddWarn(fmt::format(fmt::runtime(_("Couldn't parse line: '{line}'")), fmt::arg("line", line_number)));
         }
     }
     in.close();
@@ -335,7 +336,7 @@ void Blocklists::Blocklist::ensureLoaded() const
     if (error)
     {
         tr_logAddWarn(fmt::format(
-            _("Couldn't read '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't read '{path}': {error} ({error_code})")),
             fmt::arg("path", bin_file_),
             fmt::arg("error", error.message()),
             fmt::arg("error_code", error.code())));
@@ -350,7 +351,7 @@ void Blocklists::Blocklist::ensureLoaded() const
     if (!in)
     {
         tr_logAddWarn(fmt::format(
-            _("Couldn't read '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't read '{path}': {error} ({error_code})")),
             fmt::arg("path", bin_file_),
             fmt::arg("error", tr_strerror(errno)),
             fmt::arg("error_code", errno)));
@@ -400,7 +401,8 @@ void Blocklists::Blocklist::ensureLoaded() const
     }
 
     tr_logAddInfo(fmt::format(
-        tr_ngettext("Blocklist '{path}' has {count} entry", "Blocklist '{path}' has {count} entries", std::size(rules_)),
+        fmt::runtime(
+            tr_ngettext("Blocklist '{path}' has {count} entry", "Blocklist '{path}' has {count} entries", std::size(rules_))),
         fmt::arg("path", tr_sys_path_basename(bin_file_)),
         fmt::arg("count", std::size(rules_))));
 }
@@ -470,7 +472,7 @@ std::optional<Blocklists::Blocklist> Blocklists::Blocklist::saveNew(
     if (error)
     {
         tr_logAddWarn(fmt::format(
-            _("Couldn't save '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't save '{path}': {error} ({error_code})")),
             fmt::arg("path", src_file),
             fmt::arg("error", error.message()),
             fmt::arg("error_code", error.code())));

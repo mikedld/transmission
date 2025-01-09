@@ -191,7 +191,7 @@ bool MakeProgressDialog::onProgressDialogRefresh()
     auto const base = Glib::path_get_basename(builder_.top());
     if (!is_done)
     {
-        str = fmt::format(_("Creating '{path}'"), fmt::arg("path", base));
+        str = fmt::format(fmt::runtime(_("Creating '{path}'")), fmt::arg("path", base));
     }
     else
     {
@@ -204,13 +204,13 @@ bool MakeProgressDialog::onProgressDialogRefresh()
 
         if (!error)
         {
-            str = fmt::format(_("Created '{path}'"), fmt::arg("path", base));
+            str = fmt::format(fmt::runtime(_("Created '{path}'")), fmt::arg("path", base));
             success = true;
         }
         else
         {
             str = fmt::format(
-                _("Couldn't create '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't create '{path}': {error} ({error_code})")),
                 fmt::arg("path", base),
                 fmt::arg("error", error.message()),
                 fmt::arg("error_code", error.code()));
@@ -228,7 +228,7 @@ bool MakeProgressDialog::onProgressDialogRefresh()
     {
         /* how much data we've scanned through to generate checksums */
         str = fmt::format(
-            _("Scanned {file_size}"),
+            fmt::runtime(_("Scanned {file_size}")),
             fmt::arg("file_size", tr_strlsize(static_cast<uint64_t>(piece_index) * builder_.piece_size())));
     }
 
@@ -389,15 +389,18 @@ void MakeDialog::Impl::updatePiecesLabel()
     else
     {
         gstr += fmt::format(
-            ngettext("{total_size} in {file_count:L} file", "{total_size} in {file_count:L} files", builder_->file_count()),
+            fmt::runtime(ngettext(
+                "{total_size} in {file_count:L} file",
+                "{total_size} in {file_count:L} files",
+                builder_->file_count())),
             fmt::arg("total_size", tr_strlsize(builder_->total_size())),
             fmt::arg("file_count", builder_->file_count()));
         gstr += ' ';
         gstr += fmt::format(
-            ngettext(
+            fmt::runtime(ngettext(
                 "({piece_count} BitTorrent piece @ {piece_size})",
                 "({piece_count} BitTorrent pieces @ {piece_size})",
-                builder_->piece_count()),
+                builder_->piece_count())),
             fmt::arg("piece_count", builder_->piece_count()),
             fmt::arg("piece_size", Memory{ builder_->piece_size(), Memory::Units::Bytes }.to_string()));
     }

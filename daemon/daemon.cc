@@ -194,7 +194,7 @@ auto onFileAdded(tr_session* session, std::string_view dirname, std::string_view
         if (!tr_file_read(filename, content, &error))
         {
             tr_logAddWarn(fmt::format(
-                _("Couldn't read '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't read '{path}': {error} ({error_code})")),
                 fmt::arg("path", basename),
                 fmt::arg("error", error.message()),
                 fmt::arg("error_code", error.code())));
@@ -219,7 +219,7 @@ auto onFileAdded(tr_session* session, std::string_view dirname, std::string_view
 
     if (tr_torrentNew(ctor, nullptr) == nullptr)
     {
-        tr_logAddError(fmt::format(_("Couldn't add torrent file '{path}'"), fmt::arg("path", basename)));
+        tr_logAddError(fmt::format(fmt::runtime(_("Couldn't add torrent file '{path}'")), fmt::arg("path", basename)));
     }
     else
     {
@@ -228,12 +228,12 @@ auto onFileAdded(tr_session* session, std::string_view dirname, std::string_view
 
         if (test && trash)
         {
-            tr_logAddInfo(fmt::format(_("Removing torrent file '{path}'"), fmt::arg("path", basename)));
+            tr_logAddInfo(fmt::format(fmt::runtime(_("Removing torrent file '{path}'")), fmt::arg("path", basename)));
 
             if (auto error = tr_error{}; !tr_sys_path_remove(filename, &error))
             {
                 tr_logAddError(fmt::format(
-                    _("Couldn't remove '{path}': {error} ({error_code})"),
+                    fmt::runtime(_("Couldn't remove '{path}': {error} ({error_code})")),
                     fmt::arg("path", basename),
                     fmt::arg("error", error.message()),
                     fmt::arg("error_code", error.code())));
@@ -634,7 +634,8 @@ bool tr_daemon::parse_args(int argc, char const* const* argv, bool* dump_setting
             }
             else
             {
-                std::cerr << fmt::format(_("Couldn't parse log level '{level}'"), fmt::arg("level", optstr)) << std::endl;
+                std::cerr << fmt::format(fmt::runtime(_("Couldn't parse log level '{level}'")), fmt::arg("level", optstr))
+                          << std::endl;
             }
             break;
 
@@ -695,7 +696,7 @@ void tr_daemon::reconfigure()
         }
 
         configDir = tr_sessionGetConfigDir(my_session_);
-        tr_logAddInfo(fmt::format(_("Reloading settings from '{path}'"), fmt::arg("path", configDir)));
+        tr_logAddInfo(fmt::format(fmt::runtime(_("Reloading settings from '{path}'")), fmt::arg("path", configDir)));
 
         tr_sessionSet(my_session_, load_settings(configDir));
         tr_sessionReloadBlocklists(my_session_);
@@ -719,7 +720,7 @@ int tr_daemon::start([[maybe_unused]] bool foreground)
     {
         auto const error_code = errno;
         auto const errmsg = fmt::format(
-            _("Couldn't initialize daemon: {error} ({error_code})"),
+            fmt::runtime(_("Couldn't initialize daemon: {error} ({error_code})")),
             fmt::arg("error", tr_strerror(error_code)),
             fmt::arg("error_code", error_code));
         printMessage(log_stream_, TR_LOG_ERROR, MyName, errmsg, __FILE__, __LINE__);
@@ -731,7 +732,7 @@ int tr_daemon::start([[maybe_unused]] bool foreground)
     auto const* const cdir = this->config_dir_.c_str();
     auto* session = tr_sessionInit(cdir, true, settings_);
     tr_sessionSetRPCCallback(session, on_rpc_callback, this);
-    tr_logAddInfo(fmt::format(_("Loading settings from '{path}'"), fmt::arg("path", cdir)));
+    tr_logAddInfo(fmt::format(fmt::runtime(_("Loading settings from '{path}'")), fmt::arg("path", cdir)));
     tr_sessionSaveSettings(session, cdir, settings_);
 
     auto sv = std::string_view{};
@@ -752,13 +753,13 @@ int tr_daemon::start([[maybe_unused]] bool foreground)
             auto const out = std::to_string(getpid());
             tr_sys_file_write(fp, std::data(out), std::size(out), nullptr);
             tr_sys_file_close(fp);
-            tr_logAddInfo(fmt::format(_("Saved pidfile '{path}'"), fmt::arg("path", sz_pid_filename)));
+            tr_logAddInfo(fmt::format(fmt::runtime(_("Saved pidfile '{path}'")), fmt::arg("path", sz_pid_filename)));
             pidfile_created = true;
         }
         else
         {
             tr_logAddError(fmt::format(
-                _("Couldn't save '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't save '{path}': {error} ({error_code})")),
                 fmt::arg("path", sz_pid_filename),
                 fmt::arg("error", error.message()),
                 fmt::arg("error_code", error.code())));
@@ -789,7 +790,7 @@ int tr_daemon::start([[maybe_unused]] bool foreground)
         (void)tr_variantDictFindStrView(&settings_, TR_KEY_watch_dir, &dir);
         if (!std::empty(dir))
         {
-            tr_logAddInfo(fmt::format(_("Watching '{path}' for new torrent files"), fmt::arg("path", dir)));
+            tr_logAddInfo(fmt::format(fmt::runtime(_("Watching '{path}' for new torrent files")), fmt::arg("path", dir)));
 
             auto handler = [session](std::string_view dirname, std::string_view basename)
             {
@@ -834,7 +835,7 @@ int tr_daemon::start([[maybe_unused]] bool foreground)
         {
             auto const error_code = errno;
             tr_logAddError(fmt::format(
-                _("Couldn't create event: {error} ({error_code})"),
+                fmt::runtime(_("Couldn't create event: {error} ({error_code})")),
                 fmt::arg("error", tr_strerror(error_code)),
                 fmt::arg("error_code", error_code)));
             goto CLEANUP;
@@ -844,7 +845,7 @@ int tr_daemon::start([[maybe_unused]] bool foreground)
         {
             auto const error_code = errno;
             tr_logAddError(fmt::format(
-                _("Couldn't add event: {error} ({error_code})"),
+                fmt::runtime(_("Couldn't add event: {error} ({error_code})")),
                 fmt::arg("error", tr_strerror(error_code)),
                 fmt::arg("error_code", error_code)));
             goto CLEANUP;
@@ -858,7 +859,7 @@ int tr_daemon::start([[maybe_unused]] bool foreground)
     {
         auto const error_code = errno;
         tr_logAddError(fmt::format(
-            _("Couldn't launch daemon event loop: {error} ({error_code})"),
+            fmt::runtime(_("Couldn't launch daemon event loop: {error} ({error_code})")),
             fmt::arg("error", tr_strerror(error_code)),
             fmt::arg("error_code", error_code)));
         goto CLEANUP;

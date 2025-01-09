@@ -130,7 +130,7 @@ public:
     template<typename T, typename... ArgTs>
     static void localize_label(T& widget, ArgTs&&... args)
     {
-        widget.set_label(fmt::format(widget.get_label().raw(), std::forward<ArgTs>(args)...));
+        widget.set_label(fmt::format(fmt::runtime(widget.get_label().raw()), std::forward<ArgTs>(args)...));
     }
 
 private:
@@ -564,7 +564,7 @@ void PrivacyPage::updateBlocklistText()
 {
     int const n = tr_blocklistGetRuleCount(core_->get_session());
     auto const msg = fmt::format(
-        ngettext("Blocklist has {count:L} entry", "Blocklist has {count:L} entries", n),
+        fmt::runtime(ngettext("Blocklist has {count:L} entry", "Blocklist has {count:L} entries", n)),
         fmt::arg("count", n));
     label_->set_text(msg);
 }
@@ -972,9 +972,9 @@ void NetworkPage::updatePortStatusText()
 
     portLabel_->set_markup(
         portTestStatus_[Session::PORT_TEST_IPV4] == portTestStatus_[Session::PORT_TEST_IPV6] ?
-            fmt::format(_("Status: <b>{status}</b>"), fmt::arg("status", status_ipv4)) :
+            fmt::format(fmt::runtime(_("Status: <b>{status}</b>")), fmt::arg("status", status_ipv4)) :
             fmt::format(
-                _("Status: <b>{status_ipv4}</b> (IPv4), <b>{status_ipv6}</b> (IPv6)"),
+                fmt::runtime(_("Status: <b>{status_ipv4}</b> (IPv4), <b>{status_ipv6}</b> (IPv6)")),
                 fmt::arg("status_ipv4", status_ipv4),
                 fmt::arg("status_ipv6", status_ipv6)));
 }

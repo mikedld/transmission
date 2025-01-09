@@ -115,7 +115,7 @@ bool write_entire_buf(tr_sys_file_t const fd, uint64_t file_offset, uint8_t cons
     error.set(
         err,
         fmt::format(
-            _("Couldn't get '{path}': {error} ({error_code})"),
+            fmt::runtime(_("Couldn't get '{path}': {error} ({error_code})")),
             fmt::arg("path", tor.file_subpath(file_index)),
             fmt::arg("error", tr_strerror(err)),
             fmt::arg("error_code", err)));

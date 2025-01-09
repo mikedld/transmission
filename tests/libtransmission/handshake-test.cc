@@ -152,14 +152,18 @@ public:
     static auto constexpr PlaintextProtocolName = "\023BitTorrent protocol"sv;
 
     tr_socket_address const DefaultPeerSockAddr{ *tr_address::from_string("127.0.0.1"sv), tr_port::from_host(8080) };
-    tr_handshake::Mediator::TorrentInfo const TorrentWeAreSeeding{ tr_sha1::digest("abcde"sv),
-                                                                   tr_peerIdInit(),
-                                                                   tr_torrent_id_t{ 100 },
-                                                                   true /*is_done*/ };
-    tr_handshake::Mediator::TorrentInfo const UbuntuTorrent{ *tr_sha1_from_string("2c6b6858d61da9543d4231a71db4b1c9264b0685"sv),
-                                                             tr_peerIdInit(),
-                                                             tr_torrent_id_t{ 101 },
-                                                             false /*is_done*/ };
+    tr_handshake::Mediator::TorrentInfo const TorrentWeAreSeeding{
+        .info_hash = tr_sha1::digest("abcde"sv),
+        .client_peer_id = tr_peerIdInit(),
+        .id = tr_torrent_id_t{ 100 },
+        .is_done = true,
+    };
+    tr_handshake::Mediator::TorrentInfo const UbuntuTorrent{
+        .info_hash = *tr_sha1_from_string("2c6b6858d61da9543d4231a71db4b1c9264b0685"sv),
+        .client_peer_id = tr_peerIdInit(),
+        .id = tr_torrent_id_t{ 101 },
+        .is_done = false,
+    };
 
     auto createIncomingIo(tr_session* session)
     {

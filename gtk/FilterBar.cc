@@ -585,7 +585,7 @@ bool FilterBar::Impl::update_count_label()
     /* set the text */
     if (auto const new_markup = visibleCount == std::min(activityCount, trackerCount) ?
             _("_Show:") :
-            fmt::format(_("_Show {count:L} of:"), fmt::arg("count", visibleCount));
+            fmt::format(fmt::runtime(_("_Show {count:L} of:")), fmt::arg("count", visibleCount));
         new_markup != show_lb_->get_label().raw())
     {
         show_lb_->set_markup_with_mnemonic(new_markup);
