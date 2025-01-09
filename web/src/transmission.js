@@ -342,7 +342,7 @@ export class Transmission extends EventTarget {
 
   loadDaemonPrefs() {
     this.remote.loadDaemonPrefs((data) => {
-      this.session_properties = data.arguments;
+      this.session_properties = data.result;
       this._openTorrentFromUrl();
     });
   }
