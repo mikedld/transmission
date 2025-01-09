@@ -17,14 +17,28 @@
 #include "libtransmission/tr-assert.h"
 #include "libtransmission/tr-macros.h" // tr_sha1_digest_t
 
+// workaround bug in GCC < 10.4
+// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99859
+#if __GNUC__ < 10 || (__GNUC__ == 10 && __GNUC_MINOR__ < 4)
+#define PRIME_CONSTEXPR const
+#else
+#define PRIME_CONSTEXPR constexpr
+#endif
+
 using namespace std::literals;
 
 namespace
 {
 namespace wi
 {
+// clang-format off
 using key_t = math::wide_integer::uintwide_t<
-    tr_message_stream_encryption::DH::KeySize * std::numeric_limits<unsigned char>::digits>;
+    tr_message_stream_encryption::DH::KeySize * std::numeric_limits<unsigned char>::digits
+#ifdef WIDE_INTEGER_HAS_LIMB_TYPE_UINT64
+    , uint64_t
+#endif
+    >;
+// clang-format on
 
 using private_key_t = math::wide_integer::uintwide_t<
     tr_message_stream_encryption::DH::PrivateKeySize * std::numeric_limits<unsigned char>::digits>;
@@ -58,9 +72,9 @@ auto export_bits(UIntWide i)
     return ret;
 }
 
+auto constexpr Generator = wi::key_t{ 2U };
 // NOLINTBEGIN(readability-identifier-naming)
-auto WIDE_INTEGER_CONSTEXPR const generator = wi::key_t{ "2" };
-auto WIDE_INTEGER_CONSTEXPR const prime = wi::key_t{
+auto PRIME_CONSTEXPR Prime = wi::key_t{
     "0xFFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD129024E088A67CC74020BBEA63B139B22514A08798E3404DDEF9519B3CD3A431B302B0A6DF25F14374FE1356D6D51C245E485B576625E7EC6F44C42E9A63A36210000000000090563"
 };
 // NOLINTEND(readability-identifier-naming)
@@ -83,7 +97,7 @@ DH::key_bigend_t DH::publicKey() noexcept
     if (public_key_ == key_bigend_t{})
     {
         auto const private_key_wi = wi::import_bits<wi::private_key_t>(private_key_);
-        auto const public_key_wi = math::wide_integer::powm(wi::generator, private_key_wi, wi::prime);
+        auto const public_key_wi = math::wide_integer::powm(wi::Generator, private_key_wi, wi::Prime);
         public_key_ = wi::export_bits(public_key_wi);
     }
 
@@ -95,7 +109,7 @@ void DH::setPeerPublicKey(key_bigend_t const& peer_public_key)
     auto const secret = math::wide_integer::powm(
         wi::import_bits<wi::key_t>(peer_public_key),
         wi::import_bits<wi::private_key_t>(private_key_),
-        wi::prime);
+        wi::Prime);
     secret_ = wi::export_bits(secret);
 }
 
