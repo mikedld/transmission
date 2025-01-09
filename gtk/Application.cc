@@ -1359,6 +1359,10 @@ void Application::Impl::on_prefs_changed(tr_quark const key)
         tr_sessionSetDeleteSource(tr, gtr_pref_flag_get(key));
         break;
 
+    case TR_KEY_torrent_complete_verify_enabled:
+        tr_sessionSetCompleteVerifyEnabled(tr, gtr_pref_flag_get(key));
+        break;
+
     default:
         break;
     }

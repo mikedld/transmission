@@ -1862,6 +1862,12 @@ void tr_torrent::recheck_completeness()
         bool const recent_change = bytes_downloaded_.during_this_session() != 0U;
         bool const was_running = is_running();
 
+        if (new_completeness != TR_LEECH && was_running && session->shouldFullyVerifyCompleteTorrents())
+        {
+            tr_torrentVerify(this);
+            return;
+        }
+
         tr_logAddTraceTor(
             this,
             fmt::format(
@@ -1870,10 +1876,11 @@ void tr_torrent::recheck_completeness()
                 get_completion_string(new_completeness)));
 
         completeness_ = new_completeness;
-        session->close_torrent_files(id());
 
         if (is_done())
         {
+            session->close_torrent_files(id());
+
             if (recent_change)
             {
                 // https://www.bittorrent.org/beps/bep_0003.html

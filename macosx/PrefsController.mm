@@ -916,6 +916,12 @@ static NSString* const kWebUIURLFormat = @"http://localhost:%ld/";
     [self updateShowAddMagnetWindowField];
 }
 
+- (IBAction)setVerifyDataOnCompletion:(id)sender
+{
+    bool enabled = [self.fDefaults boolForKey:@"VerifyDataOnCompletion"];
+    tr_sessionSetCompleteVerifyEnabled(self.fHandle, enabled);
+}
+
 - (void)folderSheetShow:(id)sender
 {
     NSOpenPanel* panel = [NSOpenPanel openPanel];
