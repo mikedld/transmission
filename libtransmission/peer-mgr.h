@@ -60,20 +60,29 @@ enum
 class tr_peer_info
 {
 public:
-    tr_peer_info(tr_socket_address socket_address, uint8_t pex_flags, tr_peer_from from)
+    tr_peer_info(
+        tr_socket_address socket_address,
+        uint8_t pex_flags,
+        tr_peer_from from,
+        tr_address client_external_address,
+        std::function<tr_port()> get_client_advertised_port)
         : listen_socket_address_{ socket_address }
+        , client_external_address_{ std::move(client_external_address) }
         , from_first_{ from }
         , from_best_{ from }
+        , get_client_advertised_port_{ std::move(get_client_advertised_port) }
     {
         TR_ASSERT(!std::empty(socket_address.port()));
         ++n_known_connectable;
         set_pex_flags(pex_flags);
+        update_canonical_priority();
     }
 
-    tr_peer_info(tr_address address, uint8_t pex_flags, tr_peer_from from)
+    tr_peer_info(tr_address address, uint8_t pex_flags, tr_peer_from from, std::function<tr_port()> get_client_advertised_port)
         : listen_socket_address_{ address, tr_port{} }
         , from_first_{ from }
         , from_best_{ from }
+        , get_client_advertised_port_{ std::move(get_client_advertised_port) }
     {
         set_pex_flags(pex_flags);
     }
@@ -116,14 +125,15 @@ public:
 
     void set_listen_port(tr_port port_in) noexcept
     {
-        if (!std::empty(port_in))
+        if (auto& port = listen_socket_address_.port_; !std::empty(port_in) && port_in != port)
         {
-            auto& port = listen_socket_address_.port_;
-            if (std::empty(port)) // increment known connectable peers if we did not know the listening port of this peer before
+            if (std::empty(port))
             {
+                // increment known connectable peers if we did not know the listening port of this peer before
                 ++n_known_connectable;
             }
             port = port_in;
+            update_canonical_priority();
         }
     }
 
@@ -473,6 +483,30 @@ public:
 
     // ---
 
+    void maybe_update_canonical_priority(tr_address client_external_address)
+    {
+        if (!client_external_address.is_valid() || client_external_address.type != listen_address().type)
+        {
+            return;
+        }
+
+        if (client_external_address == client_external_address_)
+        {
+            return;
+        }
+
+        client_external_address_ = client_external_address;
+
+        update_canonical_priority();
+    }
+
+    [[nodiscard]] constexpr auto get_canonical_priority() const noexcept
+    {
+        return canonical_priority_;
+    }
+
+    // ---
+
     // merge two peer info objects that supposedly describes the same peer
     void merge(tr_peer_info& that) noexcept;
 
@@ -516,6 +550,8 @@ private:
         }
     }
 
+    void update_canonical_priority();
+
     // the minimum we'll wait before attempting to reconnect to a peer
     static auto constexpr MinimumReconnectIntervalSecs = time_t{ 5U };
     static auto constexpr InactiveThresSecs = time_t{ 60 * 60 };
@@ -524,6 +560,7 @@ private:
 
     // if the port is 0, it SHOULD mean we don't know this peer's listen socket address
     tr_socket_address listen_socket_address_;
+    tr_address client_external_address_;
 
     time_t connection_attempted_at_ = {};
     time_t connection_changed_at_ = {};
@@ -541,12 +578,17 @@ private:
     uint8_t num_consecutive_fruitless_ = {};
     uint8_t pex_flags_ = {};
 
+    // https://www.bittorrent.org/beps/bep_0040.html
+    uint32_t canonical_priority_ = {};
+
     bool is_banned_ = false;
     bool is_connected_ = false;
     bool is_seed_ = false;
     bool is_upload_only_ = false;
 
     std::unique_ptr<tr_handshake> outgoing_handshake_;
+
+    std::function<tr_port()> const get_client_advertised_port_;
 };
 
 struct tr_pex

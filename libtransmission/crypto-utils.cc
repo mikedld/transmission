@@ -21,6 +21,8 @@ extern "C"
 #include <b64/cencode.h>
 }
 
+#include <crc32c/crc32c.h>
+
 #include <fmt/core.h>
 
 #include "libtransmission/crypto-utils.h"
@@ -237,6 +239,11 @@ std::optional<tr_sha256_digest_t> tr_sha256_from_string(std::string_view hex)
     auto digest = tr_sha256_digest_t{};
     tr_hex_to_binary(std::data(hex), std::data(digest), std::size(digest));
     return digest;
+}
+
+uint32_t tr_crc32c(uint8_t const* data, size_t count)
+{
+    return crc32c::Crc32c(data, count);
 }
 
 // fallback implementation in case the system crypto library's RNG fails

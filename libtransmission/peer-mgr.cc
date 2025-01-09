@@ -255,6 +255,64 @@ void tr_peer_info::merge(tr_peer_info& that) noexcept
     }
 }
 
+void tr_peer_info::update_canonical_priority()
+{
+    auto const type = client_external_address_.type;
+
+    // https://www.bittorrent.org/beps/bep_0040.html
+    // If the IP addresses are the same, the port numbers (16-bit integers) should be used instead:
+    //    priority = crc32-c(sort(client_port, peer_port))
+    // N.B. Although not specified in BEP-40, in libtorrent's implementation, the port numbers are
+    // in network byte order when calculating the crc32-c result.
+    if (client_external_address_ == listen_address())
+    {
+        auto buf = std::array{ get_client_advertised_port_().host(), listen_port().host() };
+        static_assert(std::is_same_v<std::remove_reference_t<decltype(buf[0])>, uint16_t>);
+        std::sort(std::begin(buf), std::end(buf));
+        std::transform(std::begin(buf), std::end(buf), std::begin(buf), [](uint16_t p) { return htons(p); });
+        canonical_priority_ = tr_crc32c(reinterpret_cast<uint8_t*>(std::data(buf)), std::size(buf) * sizeof(uint16_t));
+        return;
+    }
+
+    // https://www.bittorrent.org/beps/bep_0040.html
+    // The formula to be used in prioritizing peers is this:
+    //    priority = crc32-c(sort(masked_client_ip, masked_peer_ip))
+    // N.B. Although not specified in BEP-40, in libtorrent's implementation,
+    // smaller IP addresses go first.
+    auto const address_size = tr_address::CompactAddrBytes[type];
+    auto addresses = std::array{ client_external_address_, listen_address() };
+    std::sort(std::begin(addresses), std::end(addresses));
+
+    auto buf = std::array<std::byte, tr_address::CompactAddrMaxBytes * 2U>{};
+    auto const first = std::begin(buf);
+    auto const second = addresses[0].to_compact(first);
+    addresses[1].to_compact(second);
+    TR_ASSERT(second - first == address_size);
+
+    // https://www.bittorrent.org/beps/bep_0040.html
+    // For an IPv4 address, the mask to be used should be FF.FF.55.55
+    // unless the IP addresses are in the same /16. In that case, the
+    // mask to be used should be FF.FF.FF.55. If the IP addresses are
+    // in the same /24, the entire address should be used (mask FF.FF.FF.FF).
+    //
+    // For an IPv6 address, the mask should be derived in the same way,
+    // beginning with FFFF:FFFF:FFFF:5555:5555:5555:5555:5555. If the
+    // IP addresses are in the same /48, the mask to be used should be
+    // FFFF:FFFF:FFFF:FF55:5555:5555:5555:5555. If the IP addresses are
+    // in the same /56, the mask to be used should be
+    // FFFF:FFFF:FFFF:FFFF:5555:5555:5555:5555, etc...
+    static auto constexpr MaskStartBaseOffset = std::array{ 2U, 6U };
+    auto const base_idx = MaskStartBaseOffset[type];
+    auto const mismatch_idx = std::mismatch(first, second, second).first - first;
+    for (auto i = mismatch_idx >= base_idx ? mismatch_idx + 1 : base_idx; i < address_size; ++i)
+    {
+        first[i] &= std::byte{ 0x55 };
+        second[i] &= std::byte{ 0x55 };
+    }
+
+    canonical_priority_ = tr_crc32c(reinterpret_cast<uint8_t*>(std::data(buf)), address_size * 2U);
+}
+
 #define tr_logAddDebugSwarm(swarm, msg) tr_logAddDebugTor((swarm)->tor, msg)
 #define tr_logAddTraceSwarm(swarm, msg) tr_logAddTraceTor((swarm)->tor, msg)
 
@@ -267,6 +325,12 @@ constexpr struct
     [[nodiscard]] constexpr static int compare(tr_peer_info const& a, tr_peer_info const& b) noexcept // <=>
     {
         if (auto const val = a.compare_by_piece_data_time(b); val != 0)
+        {
+            return -val;
+        }
+
+        // According to libtorrent, larger values has higher priority. Not specified in BEP-40.
+        if (auto const val = tr_compare_3way(a.get_canonical_priority(), b.get_canonical_priority()); val != 0)
         {
             return -val;
         }
@@ -478,7 +542,14 @@ public:
         else
         {
             peer_info = connectable_pool
-                            .try_emplace(socket_address, std::make_shared<tr_peer_info>(socket_address, flags, from))
+                            .try_emplace(
+                                socket_address,
+                                std::make_shared<tr_peer_info>(
+                                    socket_address,
+                                    flags,
+                                    from,
+                                    tor->session->global_address(socket_address.address().type).value_or(tr_address{}),
+                                    get_client_advertised_port))
                             .first->second;
             ++stats.known_peer_from_count[from];
         }
@@ -619,6 +690,11 @@ public:
     Pool connectable_pool;
 
     tr_peerMsgs* optimistic = nullptr; /* the optimistic peer, or nullptr if none */
+
+    std::function<tr_port()> const get_client_advertised_port = [this]
+    {
+        return tor->session->advertisedPeerPort();
+    };
 
 private:
     void rebuild_webseeds()
@@ -1307,7 +1383,11 @@ void create_bit_torrent_peer(
 
     if (result.io->is_incoming())
     {
-        info = std::make_shared<tr_peer_info>(socket_address.address(), 0U, TR_PEER_FROM_INCOMING);
+        info = std::make_shared<tr_peer_info>(
+            socket_address.address(),
+            0U,
+            TR_PEER_FROM_INCOMING,
+            swarm->get_client_advertised_port);
     }
 
     if (!info)
