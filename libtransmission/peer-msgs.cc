@@ -456,6 +456,10 @@ public:
             set_client_interested(interested);
             protocol_send_interest(interested);
             update_active(TR_PEER_TO_CLIENT);
+
+            // make sure this is after we send the "interested" msg
+            update_desired_request_count();
+            maybe_send_block_requests();
         }
     }
 
@@ -682,6 +686,8 @@ private:
     }
 
     // ---
+
+    std::pair<ReadState, size_t> can_read_impl(tr_peerIo* io);
 
     static void did_write(tr_peerIo* /*io*/, size_t bytes_written, bool was_piece_data, void* vmsgs);
     static ReadState can_read(tr_peerIo* io, void* vmsgs, size_t* piece);
@@ -1424,6 +1430,7 @@ ReadResult tr_peerMsgsImpl::process_peer_message(uint8_t id, MessageReader& payl
         }
 
         update_active(TR_PEER_TO_CLIENT);
+        update_desired_request_count(); // set desired request count to 0
         break;
 
     case BtPeerMsgs::Unchoke:
@@ -1431,6 +1438,7 @@ ReadResult tr_peerMsgsImpl::process_peer_message(uint8_t id, MessageReader& payl
         set_client_choked(false);
         update_active(TR_PEER_TO_CLIENT);
         update_desired_request_count();
+        maybe_send_block_requests();
         break;
 
     case BtPeerMsgs::Interested:
@@ -1461,6 +1469,10 @@ ReadResult tr_peerMsgsImpl::process_peer_message(uint8_t id, MessageReader& payl
             have_.set(ui32);
             peer_info->set_seed(is_seed());
             publish(tr_peer_event::GotHave(ui32));
+
+            // make sure this is after publishing event, so that the wishlist
+            // will have the latest info when choosing blocks to request
+            maybe_send_block_requests();
         }
 
         break;
@@ -1471,6 +1483,11 @@ ReadResult tr_peerMsgsImpl::process_peer_message(uint8_t id, MessageReader& payl
         have_.set_raw(reinterpret_cast<uint8_t const*>(std::data(payload)), std::size(payload));
         peer_info->set_seed(is_seed());
         publish(tr_peer_event::GotBitfield(&have_));
+
+        // make sure these are after publishing event, so that the wishlist
+        // will have the latest info when choosing blocks to request
+        update_desired_request_count();
+        maybe_send_block_requests();
         break;
 
     case BtPeerMsgs::Request:
@@ -1571,6 +1588,11 @@ ReadResult tr_peerMsgsImpl::process_peer_message(uint8_t id, MessageReader& payl
             have_.set_has_all();
             peer_info->set_seed();
             publish(tr_peer_event::GotHaveAll());
+
+            // make sure these are after publishing event, so that the wishlist
+            // will have the latest info when choosing blocks to request
+            update_desired_request_count();
+            maybe_send_block_requests();
         }
         else
         {
@@ -1608,6 +1630,10 @@ ReadResult tr_peerMsgsImpl::process_peer_message(uint8_t id, MessageReader& payl
             {
                 if (auto const block = tor_.piece_loc(r.index, r.offset).block; active_requests.test(block))
                 {
+                    // Make sure maybe_send_block_requests() is called before removing the request,
+                    // so that it will choose a block other than the rejected block.
+                    maybe_send_block_requests();
+
                     active_requests.unset(block);
                     publish(tr_peer_event::GotRejected(tor_.block_info(), block));
                 }
@@ -1735,10 +1761,8 @@ void tr_peerMsgsImpl::did_write(tr_peerIo* /*io*/, size_t bytes_written, bool wa
     }
 }
 
-ReadState tr_peerMsgsImpl::can_read(tr_peerIo* io, void* vmsgs, size_t* piece)
+std::pair<ReadState, size_t> tr_peerMsgsImpl::can_read_impl(tr_peerIo* io)
 {
-    auto* const msgs = static_cast<tr_peerMsgsImpl*>(vmsgs);
-
     // https://www.bittorrent.org/beps/bep_0003.html
     // Next comes an alternating stream of length prefixes and messages.
     // Messages of length zero are keepalives, and ignored.
@@ -1751,13 +1775,13 @@ ReadState tr_peerMsgsImpl::can_read(tr_peerIo* io, void* vmsgs, size_t* piece)
     // The payload is message dependent.
 
     // read <length prefix>
-    auto& current_message_len = msgs->incoming_.length; // the full message payload length. Includes the +1 for id length
+    auto& current_message_len = incoming_.length; // the full message payload length. Includes the +1 for id length
     if (!current_message_len)
     {
         auto message_len = uint32_t{};
         if (io->read_buffer_size() < sizeof(message_len))
         {
-            return ReadState::Later;
+            return { ReadState::Later, {} };
         }
 
         io->read_uint32(&message_len);
@@ -1767,21 +1791,21 @@ ReadState tr_peerMsgsImpl::can_read(tr_peerIo* io, void* vmsgs, size_t* piece)
         // There is no message ID and no payload.
         if (message_len == 0U)
         {
-            logtrace(msgs, "got KeepAlive");
-            return ReadState::Now;
+            logtrace(this, "got KeepAlive");
+            return { ReadState::Now, {} };
         }
 
         current_message_len = message_len;
     }
 
     // read <message ID>
-    auto& current_message_type = msgs->incoming_.id;
+    auto& current_message_type = incoming_.id;
     if (!current_message_type)
     {
         auto message_type = uint8_t{};
         if (io->read_buffer_size() < sizeof(message_type))
         {
-            return ReadState::Later;
+            return { ReadState::Later, {} };
         }
 
         io->read_uint8(&message_type);
@@ -1789,32 +1813,54 @@ ReadState tr_peerMsgsImpl::can_read(tr_peerIo* io, void* vmsgs, size_t* piece)
     }
 
     // read <payload>
-    auto& current_payload = msgs->incoming_.payload;
+    auto& current_payload = incoming_.payload;
     auto const full_payload_len = *current_message_len - sizeof(*current_message_type);
     auto n_left = full_payload_len - std::size(current_payload);
     auto const [buf, n_this_pass] = current_payload.reserve_space(std::min(n_left, io->read_buffer_size()));
     io->read_bytes(buf, n_this_pass);
     current_payload.commit_space(n_this_pass);
     n_left -= n_this_pass;
-    logtrace(msgs, fmt::format("read {:d} payload bytes; {:d} left to go", n_this_pass, n_left));
+    logtrace(this, fmt::format("read {:d} payload bytes; {:d} left to go", n_this_pass, n_left));
 
     if (n_left > 0U)
     {
-        return ReadState::Later;
+        return { ReadState::Later, {} };
     }
 
     // The incoming message is now complete. After processing the message
     // with `process_peer_message()`, reset the peerMsgs' incoming
     // field so it's ready to receive the next message.
 
-    auto const [read_state, n_piece_bytes_read] = msgs->process_peer_message(*current_message_type, current_payload);
-    *piece = n_piece_bytes_read;
+    auto const ret = process_peer_message(*current_message_type, current_payload);
 
     current_message_len.reset();
     current_message_type.reset();
     current_payload.clear();
 
-    return read_state;
+    return ret;
+}
+
+ReadState tr_peerMsgsImpl::can_read(tr_peerIo* io, void* vmsgs, size_t* piece)
+{
+    auto* const msgs = static_cast<tr_peerMsgsImpl*>(vmsgs);
+
+    auto ret = ReadState::Now;
+    *piece = 0U;
+    while (ret == ReadState::Now)
+    {
+        auto const [read_state, n_piece_bytes_read] = msgs->can_read_impl(io);
+        ret = read_state;
+        *piece += n_piece_bytes_read;
+    }
+
+    // If we received piece data, then we might have quota to request new blocks
+    if (*piece > 0U)
+    {
+        msgs->update_desired_request_count();
+        msgs->maybe_send_block_requests();
+    }
+
+    return ret;
 }
 
 void tr_peerMsgsImpl::got_error(tr_peerIo* /*io*/, tr_error const& /*error*/, void* vmsgs)
