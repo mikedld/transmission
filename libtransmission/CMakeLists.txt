@@ -134,6 +134,8 @@ target_sources(${TR_NAME}
         torrent-magnet.h
         torrent-metainfo.cc
         torrent-metainfo.h
+        torrent-queue.cc
+        torrent-queue.h
         torrent.cc
         torrent.h
         torrents.cc
