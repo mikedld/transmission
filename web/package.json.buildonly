@@ -3,6 +3,7 @@
   "main": "index.js",
   "repository": "https://github.com/transmission/transmission",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "node esbuild.mjs"
   },
