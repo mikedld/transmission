@@ -1452,6 +1452,11 @@ char const* torrentAdd(tr_session* session, tr_variant::Map const& args_in, tr_r
         ctor.set_labels(std::move(labels));
     }
 
+    if (auto const val = args_in.value_if<bool>(TR_KEY_sequentialDownload); val)
+    {
+        ctor.set_sequential_download(TR_FORCE, *val);
+    }
+
     tr_logAddTrace(fmt::format("torrentAdd: filename is '{}'", filename));
 
     if (isCurlURL(filename))
@@ -1839,6 +1844,11 @@ char const* sessionSet(tr_session* session, tr_variant::Map const& args_in, tr_v
         tr_sessionSetAntiBruteForceEnabled(session, *val);
     }
 
+    if (auto const val = args_in.value_if<bool>(TR_KEY_sequentialDownload); val)
+    {
+        session->set_sequential_download(*val);
+    }
+
     session->rpcNotify(TR_RPC_SESSION_CHANGED, nullptr);
 
     return nullptr;
@@ -1974,6 +1984,7 @@ char const* sessionStats(tr_session* session, tr_variant::Map const& /*args_in*/
     case TR_KEY_seedRatioLimited: return session.isRatioLimited();
     case TR_KEY_seed_queue_enabled: return session.queueEnabled(TR_UP);
     case TR_KEY_seed_queue_size: return session.queueSize(TR_UP);
+    case TR_KEY_sequentialDownload: return session.sequential_download();
     case TR_KEY_session_id: return session.sessionId();
     case TR_KEY_speed_limit_down: return session.speed_limit(TR_DOWN).count(Speed::Units::KByps);
     case TR_KEY_speed_limit_down_enabled: return session.is_speed_limited(TR_DOWN);

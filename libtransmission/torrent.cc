@@ -1003,7 +1003,9 @@ void tr_torrent::init(tr_ctor const& ctor)
 
     mark_changed();
 
-    date_added_ = now_sec; // this is a default that will be overwritten by the resume file
+    // these are defaults that will be overwritten by the resume file
+    date_added_ = now_sec;
+    set_sequential_download(session->sequential_download());
 
     tr_resume::fields_t loaded = {};
 

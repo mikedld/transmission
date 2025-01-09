@@ -150,6 +150,7 @@ public:
     {
         return labels_;
     }
+
     void set_labels(tr_torrent::labels_t&& labels)
     {
         labels_ = std::move(labels);
@@ -205,10 +206,23 @@ public:
         verify_done_callback_ = std::move(callback);
     }
 
+    // ---
+
+    [[nodiscard]] constexpr auto const& sequential_download(tr_ctorMode const mode) const noexcept
+    {
+        return optional_args_[mode].sequential_download_;
+    }
+
+    constexpr void set_sequential_download(tr_ctorMode const mode, bool const seq) noexcept
+    {
+        optional_args_[mode].sequential_download_ = seq;
+    }
+
 private:
     struct OptionalArgs
     {
         std::optional<bool> paused_;
+        std::optional<bool> sequential_download_;
         std::optional<uint16_t> peer_limit_;
         std::string download_dir_;
     };
