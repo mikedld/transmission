@@ -61,7 +61,7 @@ void log_openssl_error(char const* file, int line)
         line,
         TR_LOG_ERROR,
         fmt::format(
-            _("{crypto_library} error: {error} ({error_code})"),
+            fmt::runtime(_("{crypto_library} error: {error} ({error_code})")),
             fmt::arg("crypto_library", "OpenSSL"),
             fmt::arg("error", std::data(buf)),
             fmt::arg("error_code", error_code)));

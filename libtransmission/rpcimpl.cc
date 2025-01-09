@@ -1155,7 +1155,7 @@ void onPortTested(tr_web::FetchResponse const& web_response)
         tr_idle_function_done(
             data,
             fmt::format(
-                _("Couldn't test port: {error} ({error_code})"),
+                fmt::runtime(_("Couldn't test port: {error} ({error_code})")),
                 fmt::arg("error", tr_webGetResponseStr(status)),
                 fmt::arg("error_code", status)));
         return;
@@ -1210,7 +1210,7 @@ void onBlocklistFetched(tr_web::FetchResponse const& web_response)
         tr_idle_function_done(
             data,
             fmt::format(
-                _("Couldn't fetch blocklist: {error} ({error_code})"),
+                fmt::runtime(_("Couldn't fetch blocklist: {error} ({error_code})")),
                 fmt::arg("error", tr_webGetResponseStr(status)),
                 fmt::arg("error_code", status)));
         return;
@@ -1255,7 +1255,7 @@ void onBlocklistFetched(tr_web::FetchResponse const& web_response)
         tr_idle_function_done(
             data,
             fmt::format(
-                _("Couldn't save '{path}': {error} ({error_code})"),
+                fmt::runtime(_("Couldn't save '{path}': {error} ({error_code})")),
                 fmt::arg("path", filename),
                 fmt::arg("error", error.message()),
                 fmt::arg("error_code", error.code())));
@@ -1337,7 +1337,7 @@ void onMetadataFetched(tr_web::FetchResponse const& web_response)
         tr_idle_function_done(
             data->data,
             fmt::format(
-                _("Couldn't fetch torrent: {error} ({error_code})"),
+                fmt::runtime(_("Couldn't fetch torrent: {error} ({error_code})")),
                 fmt::arg("error", tr_webGetResponseStr(status)),
                 fmt::arg("error_code", status)));
     }

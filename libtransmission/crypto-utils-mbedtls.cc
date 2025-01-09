@@ -42,7 +42,7 @@ void log_mbedtls_error(int error_code, char const* file, int line)
             line,
             TR_LOG_ERROR,
             fmt::format(
-                _("{crypto_library} error: {error} ({error_code})"),
+                fmt::runtime(_("{crypto_library} error: {error} ({error_code})")),
                 fmt::arg("crypto_library", "MbedTLS"),
                 fmt::arg("error", error_message),
                 fmt::arg("error_code", error_code)));

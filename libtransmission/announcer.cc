@@ -179,7 +179,7 @@ public:
         }
         else
         {
-            tr_logAddError(fmt::format(_("Unsupported URL: '{url}'"), fmt::arg("url", scrape_sv)));
+            tr_logAddError(fmt::format(fmt::runtime(_("Unsupported URL: '{url}'")), fmt::arg("url", scrape_sv)));
         }
     }
 
@@ -198,7 +198,7 @@ public:
         }
         else
         {
-            tr_logAddWarn(fmt::format(_("Unsupported URL: '{url}'"), fmt::arg("url", announce_sv)));
+            tr_logAddWarn(fmt::format(fmt::runtime(_("Unsupported URL: '{url}'")), fmt::arg("url", announce_sv)));
         }
     }
 
@@ -890,7 +890,10 @@ void on_announce_error(tr_tier* tier, char const* err, tr_announce_event e)
     {
         tr_logAddErrorTier(
             tier,
-            fmt::format(_("Announce error: {error} ({url})"), fmt::arg("error", err), fmt::arg("url", announce_url)));
+            fmt::format(
+                fmt::runtime(_("Announce error: {error} ({url})")),
+                fmt::arg("error", err),
+                fmt::arg("url", announce_url)));
     }
     else
     {
@@ -899,10 +902,10 @@ void on_announce_error(tr_tier* tier, char const* err, tr_announce_event e)
         tr_logAddWarnTier(
             tier,
             fmt::format(
-                tr_ngettext(
+                fmt::runtime(tr_ngettext(
                     "Announce error: {error} (Retrying in {count} second) ({url})",
                     "Announce error: {error} (Retrying in {count} seconds) ({url})",
-                    interval),
+                    interval)),
                 fmt::arg("error", err),
                 fmt::arg("count", interval),
                 fmt::arg("url", announce_url)));
