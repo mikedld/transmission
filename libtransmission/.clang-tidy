@@ -1,5 +1,10 @@
 ---
 # PRs welcome to fix & re-enable any of these explicitly-disabled checks
+#
+# -modernize-loop-convert (P0896R4): GCC 10.1, clang 15
+# -readability-container-contains (P0458R2): GCC 9.1, clang 13
+# Ref: https://gcc.gnu.org/onlinedocs/libstdc++/manual/status.html
+# Ref: https://libcxx.llvm.org/Status/Cxx20.html
 Checks: >
   bugprone-*,
   -bugprone-branch-clone,
@@ -28,11 +33,13 @@ Checks: >
   -misc-no-recursion,
   -misc-non-private-member-variables-in-classes,
   modernize-*,
+  -modernize-loop-convert,
   -modernize-use-trailing-return-type,
   performance-*,
   -performance-move-const-arg,
   portability-*,
   readability-*,
+  -readability-container-contains,
   -readability-function-cognitive-complexity,
   -readability-identifier-length,
   -readability-magic-numbers,
