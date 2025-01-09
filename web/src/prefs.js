@@ -115,6 +115,7 @@ Prefs.RefreshRate = 'refresh-rate-sec';
 Prefs.SortAscending = 'ascending';
 Prefs.SortByActivity = 'activity';
 Prefs.SortByAge = 'age';
+Prefs.SortByLastActivity = 'last-activity';
 Prefs.SortByName = 'name';
 Prefs.SortByProgress = 'progress';
 Prefs.SortByQueue = 'queue';
