@@ -1036,6 +1036,8 @@ a {
   padding: 0;
 
   .inspector-torrent-file-list-entry {
+    user-select: none;
+    -webkit-user-select: none;
     display: grid;
     grid-column-gap: 5px;
     grid-template-areas:
@@ -1053,32 +1055,44 @@ a {
       background-color: var(--color-bg-odd);
     }
 
+    .inspector-torrent-file-list-entry-name {
+      cursor: pointer;
+      font-size: 14px;
+      grid-area: name;
+      overflow-wrap: anywhere;
+    }
+
+    .inspector-torrent-file-list-entry-progress {
+      font-size: 12px;
+      grid-area: info;
+    }
+
+    .file-wanted-control {
+      grid-area: check;
+    }
+
     &.skip {
       opacity: 0.5;
+
+      > .inspector-torrent-file-list-entry-name {
+        color: var(--color-fg-disabled);
+      }
     }
-  }
 
-  .file-wanted-control {
-    grid-area: check;
-  }
-
-  .inspector-torrent-file-list-entry-name {
-    color: var(--color-fg-primary);
-    cursor: pointer;
-    font-size: 14px;
-    grid-area: name;
-    overflow-wrap: anywhere;
-  }
-
-  .inspector-torrent-file-list-entry.skip
-    > .inspector-torrent-file-list-entry-name {
-    color: var(--color-fg-disabled);
-  }
-
-  .inspector-torrent-file-list-entry-progress {
-    color: var(--color-fg-secondary);
-    font-size: 12px;
-    grid-area: info;
+    &:not(.selected) {
+      .inspector-torrent-file-list-entry-name {
+        color: var(--color-fg-primary);
+      }
+    
+      .inspector-torrent-file-list-entry-progress {
+        color: var(--color-fg-secondary);
+      }
+    }
+    
+    &.selected {
+      background: var(--color-bg-selected);
+      color: var(--color-fg-selected);
+    }
   }
 
   .single-file .inspector-torrent-file-list-entry,
