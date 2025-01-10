@@ -1265,6 +1265,7 @@ struct tr_tracker_view
     int lastAnnouncePeerCount; // if hasAnnounced, the number of peers the tracker gave us
     int leecherCount; // number of leechers the tracker knows of, or -1 if unknown
     int seederCount; // number of seeders the tracker knows of, or -1 if unknown
+    int downloader_count; // number of downloaders (BEP-21) the tracker knows of, or -1 if unknown
 
     size_t tier; // which tier this tracker is in
     tr_tracker_id_t id; // unique transmission-generated ID for use in libtransmission API

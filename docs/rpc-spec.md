@@ -378,6 +378,7 @@ Files are returned in the order they are laid out in the torrent. References to 
 | `announce`                | string     | tr_tracker_view
 | `announceState`           | number     | tr_tracker_view
 | `downloadCount`           | number     | tr_tracker_view
+| `downloader_count`        | number     | tr_tracker_view
 | `hasAnnounced`            | boolean    | tr_tracker_view
 | `hasScraped`              | boolean    | tr_tracker_view
 | `host`                    | string     | tr_tracker_view
@@ -1032,3 +1033,4 @@ Transmission 4.1.0 (`rpc-version-semver` 5.4.0, `rpc-version`: 18)
 | `torrent-get` | new arg `files.beginPiece`
 | `torrent-get` | new arg `files.endPiece`
 | `port-test` | new arg `ipProtocol`
+| `torrent-get` | new arg `trackerStats.downloader_count`

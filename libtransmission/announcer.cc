@@ -1637,6 +1637,7 @@ namespace tracker_view_helpers
     view.seederCount = tracker.seeder_count().value_or(-1);
     view.leecherCount = tracker.leecher_count().value_or(-1);
     view.downloadCount = tracker.download_count().value_or(-1);
+    view.downloader_count = tracker.downloader_count().value_or(-1);
 
     if (view.isBackup)
     {

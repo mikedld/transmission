@@ -395,10 +395,11 @@ namespace make_torrent_field_helpers
     for (size_t idx = 0U; idx != n_trackers; ++idx)
     {
         auto const tracker = tr_torrentTracker(&tor, idx);
-        auto stats_map = tr_variant::Map{ 27U };
+        auto stats_map = tr_variant::Map{ 28U };
         stats_map.try_emplace(TR_KEY_announce, tracker.announce);
         stats_map.try_emplace(TR_KEY_announceState, tracker.announceState);
         stats_map.try_emplace(TR_KEY_downloadCount, tracker.downloadCount);
+        stats_map.try_emplace(TR_KEY_downloader_count, tracker.downloader_count);
         stats_map.try_emplace(TR_KEY_hasAnnounced, tracker.hasAnnounced);
         stats_map.try_emplace(TR_KEY_hasScraped, tracker.hasScraped);
         stats_map.try_emplace(TR_KEY_host, tracker.host_and_port);
