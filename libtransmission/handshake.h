@@ -234,15 +234,17 @@ private:
     bool send_handshake(tr_peerIo* io);
 
     template<size_t PadMax>
-    void send_public_key_and_pad(tr_peerIo* io)
+    auto send_public_key_and_pad(tr_peerIo* io)
     {
         auto const public_key = get_dh().publicKey();
         auto outbuf = std::array<std::byte, std::size(public_key) + PadMax>{};
         auto const data = std::data(outbuf);
         auto walk = data;
         walk = std::copy(std::begin(public_key), std::end(public_key), walk);
-        walk += mediator_->pad(walk, PadMax);
+        auto const pad_len = mediator_->pad(walk, PadMax);
+        walk += pad_len;
         io->write_bytes(data, walk - data, false);
+        return pad_len;
     }
 
     [[nodiscard]] uint32_t crypto_provide() const noexcept;
@@ -333,12 +335,11 @@ private:
 
     uint32_t crypto_select_ = {};
     uint32_t crypto_provide_ = {};
+    uint16_t pad_a_len_ = {};
+    uint16_t pad_b_len_ = {};
     uint16_t pad_c_len_ = {};
     uint16_t pad_d_len_ = {};
     uint16_t ia_len_ = {};
-
-    uint16_t pad_a_recv_len_ = {};
-    uint16_t pad_b_recv_len_ = {};
 
     bool have_read_anything_from_peer_ = false;
 
