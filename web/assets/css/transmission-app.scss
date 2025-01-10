@@ -1421,13 +1421,13 @@ a {
       grid-column-gap: 5px;
       grid-row-gap: 5px;
       grid-template-areas:
-        'check   lb'
-        'turtle  values';
+        'check  text'
+        'turtle parentheses';
       grid-template-columns: 22px 1fr;
       margin-bottom: 4px;
     }
 
-    #alt-speed-check {
+    :nth-child(1) {
       grid-area: check;
 
       &:checked ~ #alt-speed-image {
@@ -1442,19 +1442,19 @@ a {
       }
     }
 
+    :nth-child(2) {
+      grid-area: text;
+    }
+
     #alt-speed-image {
       background-position: center;
       background-repeat: no-repeat;
       grid-area: turtle;
     }
 
-    #alt-speed-label {
-      grid-area: lb;
-    }
-
-    #alt-speed-values-label {
+    :nth-child(4) {
       font-size: small;
-      grid-area: values;
+      grid-area: parentheses;
     }
   }
 }
