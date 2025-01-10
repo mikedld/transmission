@@ -41,6 +41,7 @@ export class Transmission extends EventTarget {
 
     // Initialize the implementation fields
     this.filterText = '';
+    this._filter = {};
     this._torrents = {};
     this._rows = [];
     this.dirtyTorrents = new Set();
@@ -1019,23 +1020,120 @@ TODO: fix this when notifications get fixed
     }
   }
 
+  _registerFilter(op_text) {
+    const op_keywords = {
+      label: ['labels:', 'label:', 'kw:'],
+      name: ['name:'],
+      status: ['status:', 'is:'],
+      tracker: ['tracker:', 'tr:'],
+    };
+    const search_ops = [
+      [op_keywords.name, 'search'],
+      [op_keywords.label, 'labels'],
+      [
+        op_keywords.status,
+        'states',
+        [
+          Prefs.FilterActive,
+          Prefs.FilterDownloading,
+          Prefs.FilterSeeding,
+          Prefs.FilterPaused,
+          Prefs.FilterFinished,
+        ],
+      ],
+      [op_keywords.tracker, 'trackers'],
+      [],
+    ];
+    let text = op_text;
+    for (let [op, c, a] of search_ops) {
+      if (op) {
+        op = op.find((x) => op_text.startsWith(x));
+        if (!op) {
+          continue;
+        }
+        text = op_text.slice(op.length);
+        this._filter.autocomplete = a;
+        this._filter.controller = this._filter[c];
+      }
+
+      c = this._filter.controller;
+      if (c) {
+        let text_array = text.split(/,+/);
+        a = this._filter.autocomplete;
+        if (a) {
+          const new_ta = [];
+          for (const t of text_array) {
+            if (t) {
+              new_ta.push(a.find((e) => e.startsWith(t)));
+            }
+          }
+          text_array = new_ta;
+        }
+
+        if (op) {
+          c.push(text_array);
+        } else {
+          c.at(-1).push(...text_array);
+        }
+
+        if (text && !text.endsWith(',')) {
+          this._filter.autocomplete = null;
+          this._filter.controller = null;
+        }
+        return;
+      }
+    }
+    this._filter.opless.push(text);
+  }
+
+  _rebuildFilter() {
+    const { filter_mode } = this.prefs;
+    this._filter.search = [];
+    this._filter.labels = [];
+    this._filter.states =
+      filter_mode === Prefs.FilterAll ? [] : [[filter_mode]];
+    this._filter.trackers = this.filterTracker ? [[this.filterTracker]] : [];
+
+    if (this.filterText) {
+      this._filter.autocomplete = null;
+      this._filter.controller = null;
+      this._filter.opless = [];
+      const farray = this.filterText.match(/(?:\\.|[^"])+|^/g);
+      // array of non-quoted then quoted in odd-even model
+      for (const [n, t] of farray.entries()) {
+        const text = t.replaceAll(/\\(.)/g, '$1');
+        if (n % 2) {
+          // quoted
+          const c = this._filter.controller;
+          if (c) {
+            const a = this._filter.autocomplete;
+            c.at(-1).push(a ? a.find((e) => e.startsWith(text)) : text);
+          } else {
+            this._filter.opless.push(text);
+          }
+        } else {
+          // not quoted
+          for (const op_text of text.trimEnd().toLowerCase().split(/ +/)) {
+            if (op_text) {
+              this._registerFilter(op_text);
+            } else {
+              this._filter.autocomplete = null;
+              this._filter.controller = null;
+            }
+          }
+        }
+      }
+
+      if (this._filter.opless.length > 0) {
+        this._filter.search.push(this._filter.opless);
+      }
+    }
+  }
+
   _refilter(rebuildEverything) {
-    const { sort_mode, sort_direction, filter_mode } = this.prefs;
-    const filter_tracker = this.filterTracker;
+    const { sort_mode, sort_direction } = this.prefs;
     const renderer = this.torrentRenderer;
     const list = this.elements.torrent_list;
-
-    let filter_text = null;
-    let labels = null;
-    const m = /^labels:([\w,-\s]*)(.*)$/.exec(this.filterText);
-    if (m) {
-      filter_text = m[2].trim();
-      labels = m[1].split(',');
-    } else {
-      filter_text = this.filterText;
-      labels = [];
-    }
-
     const countRows = () => [...list.children].length;
     const countSelectedRows = () =>
       [...list.children].reduce(
@@ -1048,8 +1146,9 @@ TODO: fix this when notifications get fixed
     this._updateFilterSelect();
 
     if (rebuildEverything) {
+      this._rebuildFilter();
       while (list.firstChild) {
-        list.firstChild.remove();
+        list.lastChild.remove();
       }
       this._rows = [];
       this.dirtyTorrents = new Set(Object.keys(this._torrents));
@@ -1077,7 +1176,7 @@ TODO: fix this when notifications get fixed
     for (const row of dirty_rows) {
       const id = row.getTorrentId();
       const t = this._torrents[id];
-      if (t && t.test(filter_mode, filter_tracker, filter_text, labels)) {
+      if (t && t.test(this._filter)) {
         temporary.push(row);
       }
       this.dirtyTorrents.delete(id);
@@ -1088,7 +1187,7 @@ TODO: fix this when notifications get fixed
     // but don't already have a row
     for (const id of this.dirtyTorrents.values()) {
       const t = this._torrents[id];
-      if (t && t.test(filter_mode, filter_tracker, filter_text, labels)) {
+      if (t && t.test(this._filter)) {
         const row = new TorrentRow(renderer, this, t);
         const e = row.getElement();
         e.row = row;
