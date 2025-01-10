@@ -927,8 +927,8 @@ export class Inspector extends EventTarget {
     return tree;
   }
 
-  addNodeToView(tor, parent, sub) {
-    const row = new FileRow(tor, sub.depth, sub.name, sub.file_indices);
+  addNodeToView(tor, parent, subtree) {
+    const row = new FileRow(this.controller, tor, subtree);
     row.addEventListener('wantedToggled', this._onFileWantedToggled.bind(this));
     row.addEventListener(
       'priorityToggled',
