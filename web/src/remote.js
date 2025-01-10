@@ -281,6 +281,21 @@ export class Remote {
     });
   }
 
+  _setSequentialDownload(torrentIds, state, callback) {
+    const args = {
+      ids: torrentIds,
+      sequentialDownload: state,
+    };
+    this.sendRequest({ arguments: args, method: 'torrent-set' }, callback);
+  }
+
+  disableSequentialDownload(torrentIds, callback) {
+    this._setSequentialDownload(torrentIds, false, callback);
+  }
+  enableSequentialDownload(torrentIds, callback) {
+    this._setSequentialDownload(torrentIds, true, callback);
+  }
+
   // Added queue calls
   moveTorrentsToTop(torrent_ids, callback, context) {
     this.sendTorrentActionRequests(
