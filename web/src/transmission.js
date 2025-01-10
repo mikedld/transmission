@@ -31,6 +31,7 @@ export class Transmission extends EventTarget {
 
     // Initialize the helper classes
     this.action_manager = action_manager;
+    this.handler = null;
     this.notifications = notifications;
     this.prefs = prefs;
     this.remote = new Remote(this);
@@ -85,6 +86,16 @@ export class Transmission extends EventTarget {
 
     this.action_manager.addEventListener('click', (event_) => {
       switch (event_.action) {
+        case 'copy-name':
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(this.handler.subtree.name);
+          } else {
+            // navigator.clipboard requires HTTPS or localhost
+            // Emergency approach
+            prompt('Select all then copy', this.handler.subtree.name);
+          }
+          this.handler.classList.remove('selected');
+          break;
         case 'deselect-all':
           this._deselectAll();
           break;
@@ -221,30 +232,7 @@ export class Transmission extends EventTarget {
       torrent_list: document.querySelector('#torrent-list'),
     };
 
-    const context_menu = () => {
-      // open context menu
-      const popup = new ContextMenu(this.action_manager);
-      this.setCurrentPopup(popup);
-
-      const boundingElement = document.querySelector('#torrent-container');
-      const bounds = boundingElement.getBoundingClientRect();
-      const x = Math.min(
-        this.pointer_device.x,
-        bounds.right + globalThis.scrollX - popup.root.clientWidth,
-      );
-      const y = Math.min(
-        this.pointer_device.y,
-        bounds.bottom + globalThis.scrollY - popup.root.clientHeight,
-      );
-      popup.root.style.left = `${Math.max(x, 0)}px`;
-      popup.root.style.top = `${Math.max(y, 0)}px`;
-    };
-
     const right_click = (event_) => {
-      if (this.pointer_device.is_touch_device && event_.touches.length > 1) {
-        return;
-      }
-
       // if not already, highlight the torrent
       let row_element = event_.target;
       while (row_element && !row_element.classList.contains('torrent')) {
@@ -254,61 +242,13 @@ export class Transmission extends EventTarget {
       if (row && !row.isSelected()) {
         this._setSelectedRow(row);
       }
+      this.handler = null;
 
-      context_menu();
+      this.context_menu('#torrent-container');
       event_.preventDefault();
     };
 
-    if (this.pointer_device.is_touch_device) {
-      const touch = this.pointer_device;
-      this.elements.torrent_list.addEventListener('touchstart', (event_) => {
-        touch.x = event_.touches[0].pageX;
-        touch.y = event_.touches[0].pageY;
-
-        if (touch.long_press_callback) {
-          clearTimeout(touch.long_press_callback);
-          touch.long_press_callback = null;
-        } else {
-          touch.long_press_callback = setTimeout(
-            right_click.bind(this),
-            500,
-            event_,
-          );
-        }
-      });
-      this.elements.torrent_list.addEventListener('touchend', () => {
-        clearTimeout(touch.long_press_callback);
-        touch.long_press_callback = null;
-        setTimeout(() => {
-          const popup = this.popup[Transmission.default_popup_level];
-          if (popup) {
-            popup.root.style.pointerEvents = 'auto';
-          }
-        }, 1);
-      });
-      this.elements.torrent_list.addEventListener('touchmove', (event_) => {
-        touch.x = event_.touches[0].pageX;
-        touch.y = event_.touches[0].pageY;
-
-        clearTimeout(touch.long_press_callback);
-        touch.long_press_callback = null;
-      });
-      this.elements.torrent_list.addEventListener('contextmenu', (event_) => {
-        event_.preventDefault();
-      });
-    } else {
-      this.elements.torrent_list.addEventListener('mousemove', (event_) => {
-        this.pointer_device.x = event_.pageX;
-        this.pointer_device.y = event_.pageY;
-      });
-      this.elements.torrent_list.addEventListener('contextmenu', (event_) => {
-        right_click(event_);
-        const popup = this.popup[Transmission.default_popup_level];
-        if (popup) {
-          popup.root.style.pointerEvents = 'auto';
-        }
-      });
-    }
+    this.pointer_event(this.elements.torrent_list, right_click);
 
     // Get preferences & torrents from the daemon
     this.loadDaemonPrefs();
@@ -410,6 +350,77 @@ export class Transmission extends EventTarget {
       default:
         /*noop*/
         break;
+    }
+  }
+
+  context_menu(container_id, menu_items) {
+    // open context menu
+    const popup = new ContextMenu(this, menu_items);
+    this.setCurrentPopup(popup);
+
+    const bounds = document.querySelector(container_id).getBoundingClientRect();
+    const x = Math.min(
+      this.pointer_device.x,
+      bounds.right + globalThis.scrollX - popup.root.clientWidth,
+    );
+    const y = Math.min(
+      this.pointer_device.y,
+      bounds.bottom + globalThis.scrollY - popup.root.clientHeight,
+    );
+    popup.root.style.left = `${Math.max(x, 0)}px`;
+    popup.root.style.top = `${Math.max(y, 0)}px`;
+  };
+
+  pointer_event(e_, right_click) {
+    if (this.pointer_device.is_touch_device) {
+      const touch = this.pointer_device;
+      e_.addEventListener('touchstart', (event_) => {
+        touch.x = event_.touches[0].pageX;
+        touch.y = event_.touches[0].pageY;
+
+        if (touch.long_press_callback) {
+          clearTimeout(touch.long_press_callback);
+          touch.long_press_callback = null;
+        } else {
+          touch.long_press_callback = setTimeout(() => {
+            if (event_.touches.length === 1) {
+              right_click(event_);
+            }
+          }, 500);
+        }
+      });
+      e_.addEventListener('touchend', () => {
+        clearTimeout(touch.long_press_callback);
+        touch.long_press_callback = null;
+        setTimeout(() => {
+          const popup = this.popup[Transmission.default_popup_level];
+          if (popup) {
+            popup.root.style.pointerEvents = 'auto';
+          }
+        }, 1);
+      });
+      e_.addEventListener('touchmove', (event_) => {
+        touch.x = event_.touches[0].pageX;
+        touch.y = event_.touches[0].pageY;
+
+        clearTimeout(touch.long_press_callback);
+        touch.long_press_callback = null;
+      });
+      e_.addEventListener('contextmenu', (event_) => {
+        event_.preventDefault();
+      });
+    } else {
+      e_.addEventListener('mousemove', (event_) => {
+        this.pointer_device.x = event_.pageX;
+        this.pointer_device.y = event_.pageY;
+      });
+      e_.addEventListener('contextmenu', (event_) => {
+        right_click(event_);
+        const popup = this.popup[Transmission.default_popup_level];
+        if (popup) {
+          popup.root.style.pointerEvents = 'auto';
+        }
+      });
     }
   }
 
@@ -1194,6 +1205,8 @@ TODO: fix this when notifications get fixed
         }
       };
       this.popup[level].addEventListener('close', listener);
+    } else if (this.handler) {
+      this.handler.classList.remove('selected');
     }
   }
 }
