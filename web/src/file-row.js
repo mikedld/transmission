@@ -97,11 +97,36 @@ export class FileRow extends EventTarget {
     this.dispatchEvent(e);
   }
 
-  createRow(torrent, depth, name) {
+  createRow(torrent, subtree) {
     const root = document.createElement('li');
     root.classList.add('inspector-torrent-file-list-entry');
-
+    root.subtree = subtree;
     this.elements.root = root;
+
+    const right_click = (e_) => {
+      if (this.controller.handler) {
+        this.controller.handler.classList.remove('selected');
+      }
+      setTimeout(() => {
+        root.classList.add('selected');
+      }, 0);
+
+      let file_path = subtree.name;
+      let parent = subtree.parent;
+      while (parent.name) {
+        root.subdir = true;
+        file_path = `${parent.name}/${file_path}`;
+        parent = parent.parent;
+      }
+
+      root.file_path = file_path;
+      this.controller.handler = root;
+
+      const menu_items = ['show-rename-dialog', null, 'copy-name'];
+      this.controller.context_menu('#inspector', menu_items);
+      e_.preventDefault();
+    };
+    this.controller.pointer_event(root, right_click);
 
     let e = document.createElement('input');
     const check_id = makeUUID();
@@ -118,8 +143,9 @@ export class FileRow extends EventTarget {
     e = document.createElement('label');
     e.className = 'inspector-torrent-file-list-entry-name';
     e.setAttribute('for', check_id);
-    setTextContent(e, name);
+    setTextContent(e, subtree.name);
     root.append(e);
+    root.name_container = e;
 
     e = document.createElement('div');
     e.className = 'inspector-torrent-file-list-entry-progress';
@@ -162,7 +188,7 @@ export class FileRow extends EventTarget {
 
     root.append(box);
 
-    root.style.paddingLeft = `${depth * 20}px`;
+    root.style.paddingLeft = `${subtree.depth * 20}px`;
 
     this.refresh();
   }
@@ -173,12 +199,13 @@ export class FileRow extends EventTarget {
     return this.elements.root;
   }
 
-  constructor(torrent, depth, name, indices) {
+  constructor(controller, torrent, subtree) {
     super();
 
+    this.controller = controller;
     this.fields = {
       have: 0,
-      indices,
+      indices: subtree.file_indices,
       isWanted: true,
       // priorityHigh: false,
       // priorityLow: false,
@@ -193,6 +220,6 @@ export class FileRow extends EventTarget {
       progress: null,
       root: null,
     };
-    this.createRow(torrent, depth, name);
+    this.createRow(torrent, subtree);
   }
 }
