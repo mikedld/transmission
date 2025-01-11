@@ -260,6 +260,10 @@ a {
   text-decoration: underline;
 }
 
+.flexible-space {
+  flex-grow: 1;
+}
+
 .hidden {
   display: none;
 }
@@ -274,16 +278,11 @@ a {
     margin: 0;
     padding: 0;
   }
-
-  .flexible-space {
-    margin-right: auto;
-  }
 }
 
 #mainwin-workarea {
   display: flex;
   flex: 1;
-  flex-direction: row;
   overflow: auto;
 }
 
@@ -303,7 +302,6 @@ a {
   background: var(--color-toolbar-background);
   border-bottom: 1px solid var(--color-border-default);
   display: flex;
-  flex-direction: row;
   height: var(--toolbar-height);
   margin: 0;
   width: 100%;
@@ -347,11 +345,6 @@ a {
     height: 25px;
     margin: 0 6px 0 0;
   }
-
-  :nth-last-child(2) {
-    border: 0;
-    flex-grow: 1;
-  }
 }
 
 .toolbar-icon {
@@ -382,7 +375,6 @@ a {
   background: var(--color-toolbar-background);
   border-bottom: 1px solid var(--color-border-default);
   display: flex;
-  flex-direction: row;
   height: 30px;
   padding-left: 5px;
 
@@ -546,7 +538,6 @@ a {
       padding: 1px 0;
 
       &.compact {
-        flex: 1;
         font-size: small;
       }
     }
@@ -624,11 +615,6 @@ a {
         width: var(--icon-size);
       }
 
-      .torrent-progress-bar {
-        display: flex;
-        flex-direction: row;
-      }
-
       > * {
         margin: 1px 0;
       }
@@ -669,7 +655,6 @@ a {
     height: 18px;
 
     &.full {
-      flex-grow: 1;
       margin: 2px 0;
     }
 
@@ -942,7 +927,6 @@ a {
 
 .tabs-pages {
   box-sizing: border-box;
-  flex: 1;
   overflow-x: hidden;
   overflow-y: auto;
 
@@ -1359,7 +1343,6 @@ a {
     align-items: center;
     border-radius: 6px;
     display: flex;
-    flex-direction: row;
     padding: 3px 0;
   }
 
@@ -1391,7 +1374,6 @@ a {
   .input-and-label {
     align-items: center;
     display: inline-flex;
-    flex-direction: row;
   }
 
   #display-options {
@@ -1407,7 +1389,6 @@ a {
     > .speed-down {
       align-items: center;
       display: flex;
-      flex-direction: row;
       padding: 4px 0;
 
       > label {
@@ -1517,7 +1498,6 @@ a {
 
 .dialog-buttons {
   display: flex;
-  float: right;
   grid-area: buttons;
   margin: 10px 0 0;
   text-align: center;
@@ -1532,14 +1512,6 @@ a {
     padding: 8px;
     text-decoration: none;
   }
-}
-
-.dialog-buttons-begin {
-  flex-grow: 1;
-}
-
-.dialog-buttons-end {
-  display: none;
 }
 
 dialog {
