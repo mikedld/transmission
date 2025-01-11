@@ -3,7 +3,7 @@
    or any future license endorsed by Mnemosyne LLC.
    License text can be found in the licenses/ folder. */
 
-import { createDialogContainer } from './utils.js';
+import { createDialogContainer, setTextContent } from './utils.js';
 
 export class RenameDialog extends EventTarget {
   constructor(controller, remote) {
@@ -24,17 +24,24 @@ export class RenameDialog extends EventTarget {
       return;
     }
 
+    const { handler } = this.controller;
     this.torrents = torrents;
     this.elements = RenameDialog._create();
     this.elements.dismiss.addEventListener('click', () => this._onDismiss());
     this.elements.confirm.addEventListener('click', () => this._onConfirm());
-    this.elements.entry.value = torrents[0].getName();
+    this.elements.entry.value = handler === null
+      ? torrents[0].getName()
+      : handler.subtree.name;
     document.body.append(this.elements.root);
 
     this.elements.entry.focus();
   }
 
   close() {
+    const { handler } = this.controller;
+    if (handler) {
+      handler.classList.remove('selected');
+    }
     this.elements.root.remove();
 
     this.dispatchEvent(new Event('close'));
@@ -50,12 +57,28 @@ export class RenameDialog extends EventTarget {
   }
 
   _onConfirm() {
+    const { handler } = this.controller;
     const [tor] = this.torrents;
-    const old_name = tor.getName();
+    const file_path = handler ? handler.file_path : tor.getName();
     const new_name = this.elements.entry.value;
-    this.remote.renameTorrent([tor.getId()], old_name, new_name, (response) => {
+    this.remote.renameTorrent([tor.getId()], file_path, new_name, (response) => {
       if (response.result === 'success') {
-        tor.refresh(response.arguments);
+        const args = response.arguments;
+        if (handler) {
+          handler.subtree.name = args.name;
+          setTextContent(handler.name_container, args.name);
+          if (handler.subdir) {
+            const file = tor.getIndividualFile(file_path);
+            if (file) {
+              const dir = file.name.substring(0, file.name.lastIndexOf('/') + 1);
+              file.name = `${dir}${args.name}`;
+            }
+          } else {
+            tor.refresh(args);
+          }
+        } else {
+          tor.refresh(args);
+        }
       }
     });
 
