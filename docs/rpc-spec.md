@@ -950,7 +950,7 @@ Transmission 2.30 (`rpc-version-semver` 4.0.0, `rpc-version`: 13)
 | Method | Description
 |:---|:---
 | `torrent-get` | :bomb: removed arg `peersKnown`
-| `session-get` | new arg `isUTP` to the `peers` list
+| `torrent-get` | new arg `isUTP` to the `peers` list
 | `torrent-add` | new arg `cookies`
 
 Transmission 2.40 (`rpc-version-semver` 5.0.0, `rpc-version`: 14)
