@@ -116,5 +116,3 @@ private:
 
     static inline std::atomic<size_t> n_open_sockets_ = {};
 };
-
-tr_peer_socket tr_netOpenPeerSocket(tr_session* session, tr_socket_address const& socket_address, bool client_is_seed);

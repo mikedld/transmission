@@ -466,6 +466,11 @@ tr_socket_t tr_netBindTCP(tr_address const& addr, tr_port port, bool suppress_ms
 
 void tr_netSetCongestionControl(tr_socket_t s, char const* algorithm);
 
+[[nodiscard]] tr_socket_t tr_net_open_peer_socket(
+    tr_session* session,
+    tr_socket_address const& socket_address,
+    bool client_is_seed);
+
 void tr_net_close_socket(tr_socket_t fd);
 
 // --- TOS / DSCP
