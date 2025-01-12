@@ -100,6 +100,10 @@ export class Torrent extends EventTarget {
     }
   }
 
+  getIndividualFile(file_path) {
+    return this.fields.files.find((f) => f.name === file_path);
+  }
+
   ///
 
   // simple accessors

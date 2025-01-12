@@ -7,6 +7,10 @@ export class ActionManager extends EventTarget {
   constructor() {
     super();
     this.actions = Object.seal({
+      'copy-name': {
+        enabled: true,
+        text: 'Copy name',
+      },
       'deselect-all': {
         enabled: false,
         shortcut: 'D',
