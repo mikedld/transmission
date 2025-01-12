@@ -369,7 +369,7 @@ export class Transmission extends EventTarget {
     );
     popup.root.style.left = `${Math.max(x, 0)}px`;
     popup.root.style.top = `${Math.max(y, 0)}px`;
-  };
+  }
 
   pointer_event(e_, right_click) {
     if (this.pointer_device.is_touch_device) {

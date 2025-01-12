@@ -1083,12 +1083,12 @@ a {
       .inspector-torrent-file-list-entry-name {
         color: var(--color-fg-primary);
       }
-    
+
       .inspector-torrent-file-list-entry-progress {
         color: var(--color-fg-secondary);
       }
     }
-    
+
     &.selected {
       background: var(--color-bg-selected);
       color: var(--color-fg-selected);

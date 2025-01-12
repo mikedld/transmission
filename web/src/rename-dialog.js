@@ -29,9 +29,8 @@ export class RenameDialog extends EventTarget {
     this.elements = RenameDialog._create();
     this.elements.dismiss.addEventListener('click', () => this._onDismiss());
     this.elements.confirm.addEventListener('click', () => this._onConfirm());
-    this.elements.entry.value = handler === null
-      ? torrents[0].getName()
-      : handler.subtree.name;
+    this.elements.entry.value =
+      handler === null ? torrents[0].getName() : handler.subtree.name;
     document.body.append(this.elements.root);
 
     this.elements.entry.focus();
@@ -61,26 +60,34 @@ export class RenameDialog extends EventTarget {
     const [tor] = this.torrents;
     const file_path = handler ? handler.file_path : tor.getName();
     const new_name = this.elements.entry.value;
-    this.remote.renameTorrent([tor.getId()], file_path, new_name, (response) => {
-      if (response.result === 'success') {
-        const args = response.arguments;
-        if (handler) {
-          handler.subtree.name = args.name;
-          setTextContent(handler.name_container, args.name);
-          if (handler.subdir) {
-            const file = tor.getIndividualFile(file_path);
-            if (file) {
-              const dir = file.name.substring(0, file.name.lastIndexOf('/') + 1);
-              file.name = `${dir}${args.name}`;
+    this.remote.renameTorrent(
+      [tor.getId()],
+      file_path,
+      new_name,
+      (response) => {
+        if (response.result === 'success') {
+          const args = response.arguments;
+          if (handler) {
+            handler.subtree.name = args.name;
+            setTextContent(handler.name_container, args.name);
+            if (handler.subdir) {
+              const file = tor.getIndividualFile(file_path);
+              if (file) {
+                const dir = file.name.slice(
+                  0,
+                  Math.max(0, file.name.lastIndexOf('/') + 1),
+                );
+                file.name = `${dir}${args.name}`;
+              }
+            } else {
+              tor.refresh(args);
             }
           } else {
             tor.refresh(args);
           }
-        } else {
-          tor.refresh(args);
         }
-      }
-    });
+      },
+    );
 
     this.close();
   }
