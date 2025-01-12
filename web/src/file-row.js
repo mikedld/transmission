@@ -112,11 +112,12 @@ export class FileRow extends EventTarget {
       }, 0);
 
       let file_path = subtree.name;
-      let parent = subtree.parent;
-      while (parent.name) {
+      let sub = subtree.parent;
+      while (sub.name) {
         root.subdir = true;
-        file_path = `${parent.name}/${file_path}`;
-        parent = parent.parent;
+        file_path = `${sub.name}/${file_path}`;
+        const { parent } = sub;
+        sub = parent;
       }
 
       root.file_path = file_path;
