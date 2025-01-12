@@ -242,7 +242,11 @@ export class Transmission extends EventTarget {
       if (row && !row.isSelected()) {
         this._setSelectedRow(row);
       }
-      this.handler = null;
+
+      if (this.handler) {
+        this.handler.classList.remove('selected');
+        this.handler = null;
+      }
 
       this.context_menu('#torrent-container');
       event_.preventDefault();
