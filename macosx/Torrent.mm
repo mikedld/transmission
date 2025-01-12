@@ -147,16 +147,22 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error* error)
     return self;
 }
 
-- (void)setResumeStatusForTorrent:(Torrent*)torrent withHistory:(NSDictionary*)history forcePause:(BOOL)pause
+- (void)setResumeStatusWithHistory:(NSDictionary*)history forcePause:(BOOL)pause
 {
-    //restore GroupValue
-    torrent.groupValue = [history[@"GroupValue"] intValue];
+    // restore GroupValue
+    self.groupValue = [history[@"GroupValue"] intValue];
 
-    //start transfer
-    NSNumber* active;
-    if (!pause && (active = history[@"Active"]) && active.boolValue)
+    // start transfer
+    if (!pause && [history[@"Active"] boolValue])
     {
-        [torrent startTransferNoQueue];
+        if ([history[@"StartWhenStable"] boolValue])
+        {
+            [self startTransferNoQueue];
+        }
+        else
+        {
+            [self stabilize];
+        }
     }
 
     NSNumber* ratioLimit;
@@ -172,6 +178,7 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error* error)
         @"TorrentHash" : self.hashString,
         @"Active" : @(self.active),
         @"WaitToStart" : @(self.waitingToStart),
+        @"StartWhenStable" : @(self.startWhenStable),
         @"GroupValue" : @(self.groupValue),
         @"RemoveWhenFinishSeeding" : @(_removeWhenFinishSeeding)
     };
@@ -256,6 +263,12 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error* error)
                                                  coalesceMask:NSNotificationCoalescingOnName
                                                      forModes:nil];
     }
+}
+
+- (void)stabilize
+{
+    tr_torrentStabilize(self.fHandle);
+    [self update];
 }
 
 - (void)startTransferIgnoringQueue:(BOOL)ignoreQueue
@@ -446,6 +459,7 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error* error)
 {
     return tr_torrentGetPeerLimit(self.fHandle);
 }
+
 - (BOOL)waitingToStart
 {
     return self.fStat->activity == TR_STATUS_DOWNLOAD_WAIT || self.fStat->activity == TR_STATUS_SEED_WAIT;
@@ -886,6 +900,11 @@ bool trashDataFile(char const* filename, void* /*user_data*/, tr_error* error)
 - (CGFloat)availableDesired
 {
     return (CGFloat)self.fStat->desiredAvailable / self.sizeLeft;
+}
+
+- (BOOL)startWhenStable
+{
+    return self.fStat->startWhenStable;
 }
 
 - (BOOL)isActive
