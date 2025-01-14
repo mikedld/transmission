@@ -62,3 +62,6 @@
 	path = third-party/rpavlik-cmake-modules
 	# synced with https://github.com/rpavlik/cmake-modules.git
 	url = https://github.com/transmission/rpavlik-cmake-modules.git
+[submodule "third-party/libmaxminddb"]
+	path = third-party/libmaxminddb
+	url = https://github.com/maxmind/libmaxminddb.git
