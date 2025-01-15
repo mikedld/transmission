@@ -3,6 +3,7 @@
    or any future license endorsed by Mnemosyne LLC.
    License text can be found in the licenses/ folder. */
 
+import { AlertDialog } from './alert-dialog.js';
 import { createDialogContainer } from './utils.js';
 
 export class RenameDialog extends EventTarget {
@@ -39,7 +40,6 @@ export class RenameDialog extends EventTarget {
 
     this.dispatchEvent(new Event('close'));
 
-    delete this.controller;
     delete this.remote;
     delete this.elements;
     delete this.torrents;
@@ -56,7 +56,15 @@ export class RenameDialog extends EventTarget {
     this.remote.renameTorrent([tor.getId()], old_name, new_name, (response) => {
       if (response.result === 'success') {
         tor.refresh(response.arguments);
+      } else if (response.result === 'Invalid argument') {
+        const connection_alert = new AlertDialog({
+          heading: `Error renaming "${old_name}"`,
+          message:
+            'Could not rename a torrent or file name. The path to file may have changed/not reflected correctly or the argument is invalid.',
+        });
+        this.controller.setCurrentPopup(connection_alert);
       }
+      delete this.controller;
     });
 
     this.close();
