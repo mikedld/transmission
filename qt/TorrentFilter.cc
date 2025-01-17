@@ -75,6 +75,26 @@ void TorrentFilter::refilter()
 ****
 ***/
 
+namespace
+{
+int compareState(Torrent const* left, Torrent const* right)
+{
+    if (auto const val = tr_compare_3way(left->hasError(), right->hasError()); val != 0)
+    {
+        return val;
+    }
+    if (auto const val = tr_compare_3way(left->isFinished(), right->isFinished()); val != 0)
+    {
+        return val;
+    }
+    if (auto const val = -tr_compare_3way(left->isPaused(), right->isPaused()); val != 0)
+    {
+        return val;
+    }
+    return -tr_compare_3way(!left->hasMetadata(), !right->hasMetadata());
+}
+} // namespace
+
 bool TorrentFilter::lessThan(QModelIndex const& left, QModelIndex const& right) const
 {
     int val = 0;
@@ -84,36 +104,29 @@ bool TorrentFilter::lessThan(QModelIndex const& left, QModelIndex const& right) 
     switch (prefs_.get<SortMode>(Prefs::SORT_MODE).mode())
     {
     case SortMode::SORT_BY_QUEUE:
-        if (val == 0)
-        {
-            val = -tr_compare_3way(a->queuePosition(), b->queuePosition());
-        }
+        val = -tr_compare_3way(a->queuePosition(), b->queuePosition());
 
         break;
 
     case SortMode::SORT_BY_SIZE:
-        if (val == 0)
-        {
-            val = tr_compare_3way(a->sizeWhenDone(), b->sizeWhenDone());
-        }
+        val = tr_compare_3way(a->sizeWhenDone(), b->sizeWhenDone());
 
         break;
 
     case SortMode::SORT_BY_AGE:
-        if (val == 0)
-        {
-            val = tr_compare_3way(a->dateAdded(), b->dateAdded());
-        }
+        val = tr_compare_3way(a->dateAdded(), b->dateAdded());
 
         break;
 
     case SortMode::SORT_BY_ID:
-        if (val == 0)
-        {
-            val = tr_compare_3way(a->id(), b->id());
-        }
+        val = tr_compare_3way(a->id(), b->id());
 
         break;
+
+    case SortMode::SORT_BY_ETA:
+        val = a->compareETA(*b);
+
+        [[fallthrough]];
 
     case SortMode::SORT_BY_ACTIVITY:
         if (val == 0)
@@ -124,8 +137,8 @@ bool TorrentFilter::lessThan(QModelIndex const& left, QModelIndex const& right) 
         if (val == 0)
         {
             val = tr_compare_3way(
-                a->peersWeAreUploadingTo() + a->webseedsWeAreDownloadingFrom(),
-                b->peersWeAreUploadingTo() + b->webseedsWeAreDownloadingFrom());
+                a->peersWeAreUploadingTo() + a->peersWeAreDownloadingFrom() + a->webseedsWeAreDownloadingFrom(),
+                b->peersWeAreUploadingTo() + b->peersWeAreDownloadingFrom() + b->webseedsWeAreDownloadingFrom());
         }
 
         [[fallthrough]];
@@ -133,22 +146,7 @@ bool TorrentFilter::lessThan(QModelIndex const& left, QModelIndex const& right) 
     case SortMode::SORT_BY_STATE:
         if (val == 0)
         {
-            val = -tr_compare_3way(a->isPaused(), b->isPaused());
-        }
-
-        if (val == 0)
-        {
-            val = tr_compare_3way(a->getActivity(), b->getActivity());
-        }
-
-        if (val == 0)
-        {
-            val = -tr_compare_3way(a->queuePosition(), b->queuePosition());
-        }
-
-        if (val == 0)
-        {
-            val = tr_compare_3way(a->hasError(), b->hasError());
+            val = compareState(a, b);
         }
 
         [[fallthrough]];
@@ -171,12 +169,18 @@ bool TorrentFilter::lessThan(QModelIndex const& left, QModelIndex const& right) 
 
         if (val == 0)
         {
+            val = tr_compare_3way(a->getActivity(), b->getActivity());
+        }
+
+        if (val == 0)
+        {
             val = -tr_compare_3way(a->queuePosition(), b->queuePosition());
         }
 
-        [[fallthrough]];
+        break;
 
     case SortMode::SORT_BY_RATIO:
+        val = -tr_compare_3way(!a->hasMetadata(), !b->hasMetadata());
         if (val == 0)
         {
             val = a->compareRatio(*b);
@@ -184,13 +188,11 @@ bool TorrentFilter::lessThan(QModelIndex const& left, QModelIndex const& right) 
 
         break;
 
-    case SortMode::SORT_BY_ETA:
-        if (val == 0)
-        {
-            val = a->compareETA(*b);
-        }
-
+    case SortMode::SORT_BY_NAME:
+        // nothing to do: sorting by name is done after the switch
         break;
+
+        // TODO(coeur): SORT_BY_TRACKER
 
     default:
         break;
