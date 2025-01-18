@@ -9,6 +9,12 @@ license: Apache-2.0 license
 - horizontal-rule.svg
 - router.svg
 
+## [Twemoji](https://github.com/twitter/twemoji/blob/master/assets/svg/1f422.svg) (derived from)
+
+license: MIT
+
+- turtle.svg
+
 ## [Feather Icons](https://github.com/feathericons/feather)
 
 license: MIT
@@ -47,5 +53,3 @@ license: MIT
 - toolbar-info.png
 - toolbar-pause.png
 - toolbar-start.png
-- modern-tortoise.png
-- modern-tortoise-blue.png
