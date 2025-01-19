@@ -246,6 +246,7 @@ body {
   color: var(--color-fg-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  -webkit-text-size-adjust: none;
   height: 100%;
   margin: 0;
 }
@@ -520,7 +521,6 @@ a {
     }
 
     .torrent-name {
-      font-weight: bold;
       grid-area: name;
       margin-bottom: 2px;
       margin-top: 2px;
@@ -528,14 +528,13 @@ a {
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      &.compact {
-        font-size: 1em;
-        font-weight: normal;
+      &:not(.compact) {
+        font-weight: bold;
       }
     }
 
     .torrent-labels {
-      font-size: small;
+      font-size: 12px;
       font-weight: normal;
       grid-area: labels;
       margin-bottom: 2px;
@@ -547,7 +546,6 @@ a {
 
       &.compact {
         flex: 1;
-        font-size: small;
       }
     }
 
@@ -936,7 +934,6 @@ a {
     border: 1px solid transparent;
     border-radius: 6px;
     color: var(--color-fg-primary);
-    font-weight: 400;
   }
 }
 
@@ -995,10 +992,6 @@ a {
     &:not(:first-of-type) {
       margin-top: 20px;
     }
-  }
-
-  label {
-    font-weight: 500;
   }
 
   :not(.section-label) {
@@ -1288,7 +1281,6 @@ a {
 
   .context-menuitem {
     font-size: 13px;
-    font-weight: 400;
     list-style: none;
     padding: 5px 15px;
 
@@ -1297,7 +1289,6 @@ a {
       background-color: var(--color-bg-hover);
       border-radius: 6px;
       cursor: pointer;
-      font-weight: 500;
     }
 
     &:disabled {
