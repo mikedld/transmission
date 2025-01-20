@@ -27,7 +27,7 @@ public:
 protected:
     // QAbstractItemDelegate
     void paint(QPainter*, QStyleOptionViewItem const&, QModelIndex const&) const override;
-    QSize sizeHint(QStyleOptionViewItem const&, QModelIndex const&) const override;
+    [[nodiscard]] QSize sizeHint(QStyleOptionViewItem const&, QModelIndex const&) const override;
 
 private:
     QComboBox* const combo_ = {};

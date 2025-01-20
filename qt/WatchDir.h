@@ -44,7 +44,7 @@ private:
         Error
     };
 
-    AddResult metainfoTest(QString const& filename) const;
+    [[nodiscard]] AddResult metainfoTest(QString const& filename) const;
 
     TorrentModel const& model_;
 

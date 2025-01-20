@@ -67,16 +67,16 @@ public:
     void setWanted(QModelIndexList const& indices, bool wanted);
     void setPriority(QModelIndexList const& indices, int priority);
 
-    QModelIndex parent(QModelIndex const& child, int column) const;
+    [[nodiscard]] QModelIndex parent(QModelIndex const& child, int column) const;
 
     // QAbstractItemModel
-    QVariant data(QModelIndex const& index, int role = Qt::DisplayRole) const override;
-    Qt::ItemFlags flags(QModelIndex const& index) const override;
-    QVariant headerData(int column, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-    QModelIndex index(int row, int column, QModelIndex const& parent = {}) const override;
-    QModelIndex parent(QModelIndex const& child) const override;
-    int rowCount(QModelIndex const& parent = {}) const override;
-    int columnCount(QModelIndex const& parent = {}) const override;
+    [[nodiscard]] QVariant data(QModelIndex const& index, int role = Qt::DisplayRole) const override;
+    [[nodiscard]] Qt::ItemFlags flags(QModelIndex const& index) const override;
+    [[nodiscard]] QVariant headerData(int column, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    [[nodiscard]] QModelIndex index(int row, int column, QModelIndex const& parent = {}) const override;
+    [[nodiscard]] QModelIndex parent(QModelIndex const& child) const override;
+    [[nodiscard]] int rowCount(QModelIndex const& parent = {}) const override;
+    [[nodiscard]] int columnCount(QModelIndex const& parent = {}) const override;
     bool setData(QModelIndex const& index, QVariant const& value, int role = Qt::EditRole) override;
 
 signals:
@@ -94,9 +94,9 @@ private:
         int last_column,
         std::set<QModelIndex>* visited_parent_indices = nullptr);
     void emitSubtreeChanged(QModelIndex const&, int first_column, int last_column);
-    FileTreeItem* findItemForFileIndex(int file_index) const;
-    FileTreeItem* itemFromIndex(QModelIndex const&) const;
-    QModelIndexList getOrphanIndices(QModelIndexList const& indices) const;
+    [[nodiscard]] FileTreeItem* findItemForFileIndex(int file_index) const;
+    [[nodiscard]] FileTreeItem* itemFromIndex(QModelIndex const&) const;
+    [[nodiscard]] QModelIndexList getOrphanIndices(QModelIndexList const& indices) const;
 
     std::map<int, FileTreeItem*> index_cache_;
     std::unique_ptr<FileTreeItem> root_item_;

@@ -19,7 +19,7 @@ public:
     IconToolButton& operator=(IconToolButton const&) = delete;
 
     // QWidget
-    QSize sizeHint() const override;
+    [[nodiscard]] QSize sizeHint() const override;
 
 protected:
     // QWidget

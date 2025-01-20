@@ -29,13 +29,13 @@ public:
     void setShowMore(bool b);
 
     // QAbstractItemDelegate
-    QSize sizeHint(QStyleOptionViewItem const& option, QModelIndex const& index) const override;
+    [[nodiscard]] QSize sizeHint(QStyleOptionViewItem const& option, QModelIndex const& index) const override;
     void paint(QPainter* painter, QStyleOptionViewItem const& option, QModelIndex const& index) const override;
 
 protected:
-    QString getText(TrackerInfo const&) const;
+    [[nodiscard]] QString getText(TrackerInfo const&) const;
 
-    QSize sizeHint(QStyleOptionViewItem const&, TrackerInfo const&) const;
+    [[nodiscard]] QSize sizeHint(QStyleOptionViewItem const&, TrackerInfo const&) const;
     void drawTracker(QPainter*, QStyleOptionViewItem const&, TrackerInfo const&) const;
 
 private:

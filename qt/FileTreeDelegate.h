@@ -22,6 +22,6 @@ public:
     FileTreeDelegate& operator=(FileTreeDelegate const&) = delete;
 
     // QAbstractItemDelegate
-    QSize sizeHint(QStyleOptionViewItem const&, QModelIndex const&) const override;
+    [[nodiscard]] QSize sizeHint(QStyleOptionViewItem const&, QModelIndex const&) const override;
     void paint(QPainter*, QStyleOptionViewItem const&, QModelIndex const&) const override;
 };
