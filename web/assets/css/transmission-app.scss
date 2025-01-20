@@ -668,7 +668,7 @@ a {
     border-radius: 3px;
     height: 18px;
 
-    &.full {
+    &:not(.compact) {
       flex-grow: 1;
       margin: 2px 0;
     }
