@@ -544,7 +544,7 @@ export class Transmission extends EventTarget {
     if (event_.shiftKey) {
       a.push('Shift');
     }
-    a.push(event_.code.slice(3));
+    a.push(event_.key.length === 1 ? event_.key.toUpperCase() : event_.key);
     return a.join('+');
   }
 
@@ -554,7 +554,7 @@ export class Transmission extends EventTarget {
 
     // look for a shortcut
     const is_input_focused = ['INPUT', 'TEXTAREA'].includes(target.tagName);
-    if (!is_input_focused && code.startsWith('Key')) {
+    if (!is_input_focused) {
       const shortcut = Transmission._createKeyShortcutFromKeyboardEvent(event_);
       const action = this.action_manager.getActionForShortcut(shortcut);
       if (action) {
