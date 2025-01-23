@@ -454,6 +454,8 @@
 		ED8A16412735A8AA000D61F9 /* peer-mgr-wishlist.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8A163D2735A8AA000D61F9 /* peer-mgr-wishlist.h */; };
 		ED8A16422735A8AA000D61F9 /* peer-mgr-wishlist.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED8A163E2735A8AA000D61F9 /* peer-mgr-wishlist.cc */; };
 		ED9862972B979AA2002F3035 /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED9862962B979AA2002F3035 /* Utils.mm */; };
+		EDBA61FF2D4180D5001470F8 /* torrent-queue.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBA61FD2D4180D5001470F8 /* torrent-queue.h */; };
+		EDBA62002D4180D5001470F8 /* torrent-queue.cc in Sources */ = {isa = PBXBuildFile; fileRef = EDBA61FE2D4180D5001470F8 /* torrent-queue.cc */; };
 		EDBAAC8C29E486BC00D9495F /* ip-cache.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAAC8B29E486BC00D9495F /* ip-cache.h */; };
 		EDBAAC8E29E486C200D9495F /* ip-cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = EDBAAC8D29E486C200D9495F /* ip-cache.cc */; };
 		EDBDFA9E25AFCCA60093D9C1 /* evutil_time.c in Sources */ = {isa = PBXBuildFile; fileRef = EDBDFA9D25AFCCA60093D9C1 /* evutil_time.c */; };
@@ -1372,6 +1374,8 @@
 		ED8A163E2735A8AA000D61F9 /* peer-mgr-wishlist.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "peer-mgr-wishlist.cc"; sourceTree = "<group>"; };
 		ED9862952B979AA2002F3035 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		ED9862962B979AA2002F3035 /* Utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Utils.mm; sourceTree = "<group>"; };
+		EDBA61FD2D4180D5001470F8 /* torrent-queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "torrent-queue.h"; sourceTree = "<group>"; };
+		EDBA61FE2D4180D5001470F8 /* torrent-queue.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "torrent-queue.cc"; sourceTree = "<group>"; };
 		EDBAAC8B29E486BC00D9495F /* ip-cache.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = "ip-cache.h"; sourceTree = "<group>"; };
 		EDBAAC8D29E486C200D9495F /* ip-cache.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ip-cache.cc"; sourceTree = "<group>"; };
 		EDBDFA9D25AFCCA60093D9C1 /* evutil_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evutil_time.c; sourceTree = "<group>"; };
@@ -1903,6 +1907,8 @@
 				4D8017E910BBC073008A4AF2 /* torrent-magnet.h */,
 				0A89346B736DBCF81F3A4851 /* torrent-metainfo.cc */,
 				0A89346B736DBCF81F3A4853 /* torrent-metainfo.h */,
+				EDBA61FD2D4180D5001470F8 /* torrent-queue.h */,
+				EDBA61FE2D4180D5001470F8 /* torrent-queue.cc */,
 				BEFC1DF90C07861A00B0BB3C /* torrent.cc */,
 				A29DF8B80DB2544C00D04E5A /* torrent.h */,
 				2B9BA6C508B488FE586A0AB1 /* torrents.cc */,
@@ -2407,6 +2413,7 @@
 				4D36BA780CA2F00800A63CA5 /* peer-mgr.h in Headers */,
 				4D36BA7A0CA2F00800A63CA5 /* peer-msgs.h in Headers */,
 				C11DEA171FCD31C0009E22B9 /* subprocess.h in Headers */,
+				EDBA61FF2D4180D5001470F8 /* torrent-queue.h in Headers */,
 				A25D2CBE0CF4C73E0096A262 /* stats.h in Headers */,
 				C1033E0A1A3279B800EF44D8 /* crypto-utils.h in Headers */,
 				C17740D6273A002C00E455D2 /* web-utils.h in Headers */,
@@ -3213,6 +3220,7 @@
 				C17740D5273A002C00E455D2 /* web-utils.cc in Sources */,
 				A2679294130E00A000CB7464 /* tr-utp.cc in Sources */,
 				A23F29A2132A447400E9A83B /* announcer-http.cc in Sources */,
+				EDBA62002D4180D5001470F8 /* torrent-queue.cc in Sources */,
 				C1FEE5791C3223CC00D62832 /* watchdir-kqueue.cc in Sources */,
 				A2AA9BE1132CAC8E00FA131E /* announcer-udp.cc in Sources */,
 				A25BFD69167BED3B0039D1AA /* variant-benc.cc in Sources */,
