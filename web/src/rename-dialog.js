@@ -54,8 +54,8 @@ export class RenameDialog extends EventTarget {
     const old_name = tor.getName();
     const new_name = this.elements.entry.value;
     this.remote.renameTorrent([tor.getId()], old_name, new_name, (response) => {
-      if (response.result === 'success') {
-        tor.refresh(response.arguments);
+      if ('result' in response) {
+        tor.refresh(response.result);
       }
     });
 

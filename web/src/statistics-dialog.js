@@ -18,7 +18,7 @@ export class StatisticsDialog extends EventTarget {
     this.remote = remote;
 
     const updateDaemon = () =>
-      this.remote.loadDaemonStats((data) => this._update(data.arguments));
+      this.remote.loadDaemonStats((data) => this._update(data.result));
     const delay_msec = 5000;
     this.interval = setInterval(updateDaemon, delay_msec);
     updateDaemon();

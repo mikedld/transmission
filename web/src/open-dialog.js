@@ -5,6 +5,7 @@
 
 import { AlertDialog } from './alert-dialog.js';
 import { Formatter } from './formatter.js';
+import { RPC } from './remote.js';
 import { createDialogContainer, makeUUID } from './utils.js';
 
 export class OpenDialog extends EventTarget {
@@ -69,20 +70,24 @@ export class OpenDialog extends EventTarget {
           return;
         }
         const o = {
-          arguments: {
+          id: 'webui',
+          jsonrpc: RPC._JsonRpcVersion,
+          method: 'torrent-add',
+          params: {
             'download-dir': destination,
             metainfo: contents.slice(Math.max(0, index + key.length)),
             paused,
           },
-          method: 'torrent-add',
         };
         remote.sendRequest(o, (response) => {
-          if (response.result !== 'success') {
-            alert(`Error adding "${file.name}": ${response.result}`);
+          if ('error' in response) {
+            const message =
+              response.error?.data?.errorString ?? response.error.message;
+            alert(`Error adding "${file.name}": ${message}`);
             controller.setCurrentPopup(
               new AlertDialog({
                 heading: `Error adding "${file.name}"`,
-                message: response.result,
+                message,
               }),
             );
           }
@@ -97,19 +102,22 @@ export class OpenDialog extends EventTarget {
         url = `magnet:?xt=urn:btih:${url}`;
       }
       const o = {
-        arguments: {
+        id: 'webui',
+        jsonrpc: RPC._JsonRpcVersion,
+        method: 'torrent-add',
+        params: {
           'download-dir': destination,
           filename: url,
           paused,
         },
-        method: 'torrent-add',
       };
       remote.sendRequest(o, (payload) => {
-        if (payload.result !== 'success') {
+        if ('error' in payload) {
           controller.setCurrentPopup(
             new AlertDialog({
               heading: `Error adding "${url}"`,
-              message: payload.result,
+              message:
+                payload.error?.data?.errorString ?? payload.error.message,
             }),
           );
         }
