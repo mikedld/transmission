@@ -772,6 +772,7 @@ void tr_torrentRemoveInSessionThread(
     auto const lock = tor->unique_lock();
 
     bool ok = true;
+
     if (delete_flag && tor->has_metainfo())
     {
         // ensure the files are all closed and idle before moving
@@ -783,14 +784,101 @@ void tr_torrentRemoveInSessionThread(
             delete_func = start_stop_helpers::removeTorrentFile;
         }
 
-        auto const delete_func_wrapper = [&delete_func, delete_user_data](char const* filename)
-        {
-            delete_func(filename, delete_user_data, nullptr);
-        };
-
         tr_error error;
-        tor->files().remove(tor->current_dir(), tor->name(), delete_func_wrapper, &error);
-        if (error)
+
+        // Cross-seeding check loop
+        for (tr_file_index_t i = 0, n = tor->file_count(); i < n; ++i)
+        {
+            // Skip empty or nonexistent files
+            if (tor->file_size(i) == 0)
+            {
+                if (auto const found = tor->find_file(i))
+                {
+                    if (!delete_func(found->filename().c_str(), delete_user_data, &error))
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+                continue;
+            }
+
+            // Compute content hash
+            tr_sha256_digest_t my_hash = tor->calculateFileHash(i);
+            if (my_hash == tr_sha256_digest_t{}) // hashing failed
+            {
+                if (auto const found = tor->find_file(i))
+                {
+                    if (!delete_func(found->filename().c_str(), delete_user_data, &error))
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+                continue;
+            }
+
+            // Compare with all other torrents
+            bool is_shared = false;
+            for (auto* other : tor->session->torrents())
+            {
+                // Skip self
+                if (other == tor)
+                {
+                    continue;
+                }
+
+                // Skip magnet-only or incomplete-metainfo torrents
+                if (!other->has_metainfo())
+                {
+                    continue;
+                }
+
+                // Compare each file in the other torrent
+                for (tr_file_index_t j = 0, m = other->file_count(); j < m; ++j)
+                {
+                    // Quick size check
+                    if (other->file_size(j) == tor->file_size(i))
+                    {
+                        // If sizes match, compare hashes
+                        tr_sha256_digest_t that_hash = other->calculateFileHash(j);
+                        if (that_hash == my_hash && that_hash != tr_sha256_digest_t{})
+                        {
+                            // Found a match
+                            is_shared = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (is_shared)
+                {
+                    break;
+                }
+            }
+
+            // If not shared, remove it
+            if (!is_shared)
+            {
+                if (auto const found = tor->find_file(i))
+                {
+                    if (!delete_func(found->filename().c_str(), delete_user_data, &error))
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+            }
+
+            // If something has already failed, stop early
+            if (!ok)
+            {
+                break;
+            }
+        }
+
+        // If any failures occurred, set error message, stop torrent, etc.
+        if (!ok)
         {
             ok = false;
             tor->is_deleting_ = false;
@@ -1126,6 +1214,55 @@ void tr_torrent::set_metainfo(tr_torrent_metainfo tm)
     this->on_announce_list_changed();
 }
 
+tr_sha256_digest_t tr_torrent::calculateFileHash(tr_file_index_t file_index) const
+{
+    auto const found = find_file(file_index);
+    if (!found)
+    {
+        return {};
+    }
+
+    auto const& filename = found->filename();
+    tr_sha256 sha;
+    tr_error* file_error = nullptr;
+
+    auto file = tr_sys_file_open(filename, TR_SYS_FILE_READ | TR_SYS_FILE_SEQUENTIAL, 0, file_error);
+    if (!file)
+    {
+        return {};
+    }
+
+    auto buffer = std::array<char, tr_block_info::BlockSize>{};
+    uint64_t n_read;
+    while (tr_sys_file_read(file, std::data(buffer), std::size(buffer), &n_read, file_error))
+    {
+        if (n_read == 0)
+        {
+            break;
+        }
+        sha.add(std::data(buffer), n_read);
+    }
+
+    tr_sys_file_close(file);
+    return sha.finish();
+}
+
+void tr_torrent::setFileConflicted(bool has_conflicts, std::string_view conflicting_name)
+{
+    has_file_conflicts_ = has_conflicts;
+    conflicting_torrent_name_ = std::string{ conflicting_name };
+
+    if (has_conflicts)
+    {
+        error().set_local_error(fmt::format(
+            _("File '{path}' exists in torrent '{other_torrent}'"),
+            fmt::arg("path", this->name()),
+            fmt::arg("other_torrent", conflicting_name)));
+    }
+
+    set_dirty();
+}
+
 tr_torrent* tr_torrentNew(tr_ctor* ctor, tr_torrent** setme_duplicate_of)
 {
     TR_ASSERT(ctor != nullptr);
@@ -1151,8 +1288,82 @@ tr_torrent* tr_torrentNew(tr_ctor* ctor, tr_torrent** setme_duplicate_of)
     }
 
     auto* const tor = new tr_torrent{ std::move(metainfo) };
-    tor->verify_done_callback_ = ctor->steal_verify_done_callback();
+    auto cb = ctor->steal_verify_done_callback();
     tor->init(*ctor);
+
+    // Check if this is a new torrent addition versus a startup load
+    auto const filename = tor->has_metainfo() ? tor->torrent_file() : tor->magnet_file();
+    bool const is_new_torrent = !std::empty(filename) && !tr_sys_path_exists(filename);
+
+    // Skip conflict checking if this torrent was already marked as conflicted
+    if (!tor->hasFileConflicts() && tor->has_metainfo())
+    {
+        auto const our_current_dir = tor->current_dir();
+
+        for (tr_file_index_t i = 0, n = tor->file_count(); i < n; ++i)
+        {
+            auto const our_path = tor->file_subpath(i);
+            auto const our_size = tor->file_size(i);
+
+            // For each other torrent...
+            for (auto const* const other : session->torrents())
+            {
+                // Skip self-comparison and torrents in different directories
+                if (other == tor || other->current_dir() != our_current_dir)
+                {
+                    continue;
+                }
+
+                // Compare each of their files
+                for (tr_file_index_t j = 0, m = other->file_count(); j < m; ++j)
+                {
+                    // If filenames match...
+                    if (our_path == other->file_subpath(j))
+                    {
+                        bool conflict_found = false;
+
+                        // Different sizes mean different content
+                        if (our_size != other->file_size(j))
+                        {
+                            conflict_found = true;
+                        }
+
+                        // On new torrent add, also verify file contents match
+                        if (is_new_torrent)
+                        {
+                            // Same size, check content hash
+                            auto const our_hash = tor->calculateFileHash(i);
+                            auto const their_hash = other->calculateFileHash(j);
+
+                            if (our_hash != their_hash)
+                            {
+                                conflict_found = true;
+                            }
+                        }
+
+                        // If a conflict was found, handle it in one unified block
+                        if (conflict_found)
+                        {
+                            if (setme_duplicate_of != nullptr)
+                            {
+                                *setme_duplicate_of = const_cast<tr_torrent*>(other);
+                            }
+
+                            tor->setFileConflicted(true, other->name());
+                            tor->error().set_local_error(fmt::format(
+                                _("File '{path}' exists with different contents in torrent '{other_torrent}'"),
+                                fmt::arg("path", our_path),
+                                fmt::arg("other_torrent", other->name())));
+                            tr_torrentStop(tor);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    tor->verify_done_callback_ = cb;
+
     return tor;
 }
 
@@ -1840,8 +2051,14 @@ void tr_torrent::create_empty_files() const
         dir.popdir();
         tr_sys_dir_create(dir, TR_SYS_DIR_CREATE_PARENTS, 0777);
 
+        tr_error* file_error = nullptr;
+
         // create the file
-        if (auto const fd = tr_sys_file_open(filename, TR_SYS_FILE_WRITE | TR_SYS_FILE_CREATE | TR_SYS_FILE_SEQUENTIAL, 0666);
+        if (auto const fd = tr_sys_file_open(
+                filename,
+                TR_SYS_FILE_WRITE | TR_SYS_FILE_CREATE | TR_SYS_FILE_SEQUENTIAL,
+                0666,
+                file_error);
             fd != TR_BAD_SYS_FILE)
         {
             tr_sys_file_close(fd);
