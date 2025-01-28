@@ -194,8 +194,10 @@ public:
 
         if (auto const& ua = mediator.userAgent(); ua)
         {
-            this->user_agent = *ua;
+            this->user_agent = std::string(*ua) + " ";
         }
+        this->user_agent += "libcurl/";
+        this->user_agent += curl_version_info(CURLVERSION_NOW)->version;
 
         auto const lock = std::unique_lock{ tasks_mutex_ };
         curl_thread = std::make_unique<std::thread>(&Impl::curlThreadFunc, this);
