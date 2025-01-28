@@ -600,6 +600,11 @@ public:
             (void)curl_easy_setopt(e, CURLOPT_COOKIEFILE, file.c_str());
         }
 
+        if (auto const& proxyUrl = mediator.proxyUrl().value_or(""); !std::empty(proxyUrl))
+        {
+            (void)curl_easy_setopt(e, CURLOPT_PROXY, proxyUrl.data());
+        }
+
         if (auto const& range = task.range(); range)
         {
             /* don't bother asking the server to compress webseed fragments */
