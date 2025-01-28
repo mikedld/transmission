@@ -6,7 +6,7 @@
 import { Formatter } from './formatter.js';
 import { Prefs } from './prefs.js';
 import { RPC } from './remote.js';
-import { OutsideClickListener, setEnabled } from './utils.js';
+import { makeUUID, OutsideClickListener, setEnabled } from './utils.js';
 
 function make_section(classname, title) {
   const section = document.createElement('fieldset');
@@ -245,6 +245,29 @@ export class OverflowMenu extends EventTarget {
       this.prefs.display_mode = checked
         ? Prefs.DisplayCompact
         : Prefs.DisplayFull;
+    });
+
+    // limit width
+
+    div = document.createElement('div');
+    div.classList.add('table-row');
+    options.append(div);
+
+    check = document.createElement('input');
+    check.id = makeUUID();
+    check.type = 'checkbox';
+
+    label = document.createElement('label');
+    label.htmlFor = check.id;
+    label.textContent = 'Limit width to 640px';
+
+    div.append(check, label);
+    check.checked = document
+      .querySelector('#torrent-list')
+      .classList.contains('limit-width');
+    check.addEventListener('change', (event_) => {
+      const { checked } = event_.target;
+      this.prefs.limit_width = checked;
     });
 
     // contrast
