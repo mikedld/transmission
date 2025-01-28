@@ -31,6 +31,6 @@ public:
     InteropObject(InteropObject const&) = delete;
 
 public slots:
-    bool PresentWindow() const;
-    bool AddMetainfo(QString const& metainfo) const;
+    [[nodiscard]] bool PresentWindow() const;
+    [[nodiscard]] bool AddMetainfo(QString const& metainfo) const;
 };

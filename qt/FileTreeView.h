@@ -63,7 +63,7 @@ private slots:
 
 private:
     void initContextMenu();
-    QModelIndexList selectedSourceRows(int column = 0) const;
+    [[nodiscard]] QModelIndexList selectedSourceRows(int column = 0) const;
 
     static Qt::CheckState getCumulativeCheckState(QModelIndexList const& indices);
 

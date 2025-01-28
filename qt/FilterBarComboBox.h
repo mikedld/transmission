@@ -26,13 +26,13 @@ public:
     FilterBarComboBox& operator=(FilterBarComboBox const&) = delete;
 
     // QWidget
-    QSize minimumSizeHint() const override;
-    QSize sizeHint() const override;
+    [[nodiscard]] QSize minimumSizeHint() const override;
+    [[nodiscard]] QSize sizeHint() const override;
 
 protected:
     // QWidget
     void paintEvent(QPaintEvent* e) override;
 
 private:
-    QSize calculateSize(QSize const& text_size, QSize const& count_size) const;
+    [[nodiscard]] QSize calculateSize(QSize const& text_size, QSize const& count_size) const;
 };

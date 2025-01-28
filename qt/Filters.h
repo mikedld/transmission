@@ -30,7 +30,7 @@ public:
     {
     }
 
-    int mode() const
+    [[nodiscard]] int mode() const
     {
         return mode_;
     }
@@ -47,7 +47,7 @@ public:
 
     static bool test(Torrent const& tor, int mode);
 
-    bool test(Torrent const& tor) const
+    [[nodiscard]] bool test(Torrent const& tor) const
     {
         return test(tor, mode());
     }

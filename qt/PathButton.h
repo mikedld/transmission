@@ -36,7 +36,7 @@ public:
     }
 
     // QWidget
-    QSize sizeHint() const override;
+    [[nodiscard]] QSize sizeHint() const override;
 
 signals:
     void pathChanged(QString const& path);
@@ -52,8 +52,8 @@ private slots:
 private:
     void updateAppearance();
 
-    bool isDirMode() const;
-    QString effectiveTitle() const;
+    [[nodiscard]] bool isDirMode() const;
+    [[nodiscard]] QString effectiveTitle() const;
 
     QString name_filter_;
     QString path_;

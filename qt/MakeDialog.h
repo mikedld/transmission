@@ -37,7 +37,7 @@ private slots:
     void onPieceSizeUpdated(int);
 
 private:
-    QString getSource() const;
+    [[nodiscard]] QString getSource() const;
     void updatePiecesLabel();
     Session& session_;
 

@@ -135,7 +135,7 @@ public:
         rimraf(sandbox_dir_);
     }
 
-    std::string const& path() const
+    [[nodiscard]] constexpr std::string const& path() const
     {
         return sandbox_dir_;
     }
@@ -183,12 +183,12 @@ private:
 class SandboxedTest : public ::testing::Test
 {
 protected:
-    std::string sandboxDir() const
+    [[nodiscard]] std::string sandboxDir() const
     {
         return sandbox_.path();
     }
 
-    auto currentTestName() const
+    [[nodiscard]] auto currentTestName() const
     {
         auto const* i = ::testing::UnitTest::GetInstance()->current_test_info();
         auto child = std::string(i->test_suite_name());

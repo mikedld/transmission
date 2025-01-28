@@ -124,9 +124,9 @@ private slots:
     void trayActivated(QSystemTrayIcon::ActivationReason);
 
 private:
-    QIcon addEmblem(QIcon icon, QStringList const& emblem_names) const;
+    [[nodiscard]] QIcon addEmblem(QIcon icon, QStringList const& emblem_names) const;
 
-    torrent_ids_t getSelectedTorrents(bool with_metadata_only = false) const;
+    [[nodiscard]] torrent_ids_t getSelectedTorrents(bool with_metadata_only = false) const;
     void updateNetworkIcon();
 
     QMenu* createOptionsMenu();
@@ -194,7 +194,7 @@ private:
         size_t peers_sending = 0;
         size_t peers_receiving = 0;
     };
-    TransferStats getTransferStats() const;
+    [[nodiscard]] TransferStats getTransferStats() const;
 
     enum
     {

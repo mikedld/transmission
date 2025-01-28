@@ -27,7 +27,7 @@ public:
 
 protected:
     // QSortFilterProxyModel
-    bool filterAcceptsRow(int source_row, QModelIndex const& source_parent) const override;
+    [[nodiscard]] bool filterAcceptsRow(int source_row, QModelIndex const& source_parent) const override;
 
 private:
     bool show_backups_ = {};
