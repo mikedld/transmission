@@ -330,7 +330,7 @@ typedef NS_ENUM(NSUInteger, TabTag) {
     NSWindow* window = self.window;
 
     window.title = [NSString
-        stringWithFormat:@"%@ - %@", self.fViewController.title, NSLocalizedString(@"Torrent Inspector", "Inspector -> title")];
+        stringWithFormat:@"%@ — %@", self.fViewController.title, NSLocalizedString(@"Torrent Inspector", "Inspector -> title")];
 
     NSView* view = self.fViewController.view;
 
