@@ -131,7 +131,6 @@ std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
     using preferred_key_t = std::underlying_type_t<tr_preferred_transport>;
     auto const preferred = session->preferred_transport();
 
-    TR_ASSERT(!tr_peer_socket::limit_reached(session));
     TR_ASSERT(session != nullptr);
     TR_ASSERT(socket_address.is_valid());
     TR_ASSERT(utp || session->allowsTCP());
