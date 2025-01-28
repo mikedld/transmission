@@ -283,10 +283,11 @@ auto constexpr PreferredTransportKeys = Lookup<tr_preferred_transport, TR_NUM_PR
     { "tcp", TR_PREFER_TCP },
 } };
 
-bool load_preferred_transport(tr_variant const& src, tr_preferred_transport* tgt)
+bool load_preferred_transport(tr_variant const& src, std::array<tr_preferred_transport, TR_NUM_PREFERRED_TRANSPORT>* tgt)
 {
     static constexpr auto& Keys = PreferredTransportKeys;
 
+    auto preferred = TR_NUM_PREFERRED_TRANSPORT;
     if (auto const val = src.value_if<std::string_view>())
     {
         auto const needle = tr_strlower(tr_strv_strip(*val));
@@ -295,8 +296,8 @@ bool load_preferred_transport(tr_variant const& src, tr_preferred_transport* tgt
         {
             if (name == needle)
             {
-                *tgt = value;
-                return true;
+                preferred = value;
+                break;
             }
         }
     }
@@ -307,26 +308,41 @@ bool load_preferred_transport(tr_variant const& src, tr_preferred_transport* tgt
         {
             if (value == *val)
             {
-                *tgt = value;
-                return true;
+                preferred = value;
+                break;
             }
         }
     }
 
-    return false;
+    if (preferred >= TR_NUM_PREFERRED_TRANSPORT)
+    {
+        return false;
+    }
+
+    tgt->front() = preferred;
+    for (size_t i = 0U; i < TR_NUM_PREFERRED_TRANSPORT; ++i)
+    {
+        if (i != preferred)
+        {
+            (*tgt)[i + (i < preferred ? 1U : 0U)] = static_cast<tr_preferred_transport>(i);
+        }
+    }
+
+    return true;
 }
 
-tr_variant save_preferred_transport(tr_preferred_transport const& val)
+tr_variant save_preferred_transport(std::array<tr_preferred_transport, TR_NUM_PREFERRED_TRANSPORT> const& val)
 {
+    auto const& preferred = val.front();
     for (auto const& [key, value] : PreferredTransportKeys)
     {
-        if (value == val)
+        if (value == preferred)
         {
             return key;
         }
     }
 
-    return static_cast<int64_t>(val);
+    return static_cast<int64_t>(preferred);
 }
 
 // ---

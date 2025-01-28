@@ -228,7 +228,7 @@ tr_socket_t createSocket(int domain, int type)
 }
 } // namespace
 
-tr_peer_socket tr_netOpenPeerSocket(tr_session* session, tr_socket_address const& socket_address, bool client_is_seed)
+tr_socket_t tr_net_open_peer_socket(tr_session* session, tr_socket_address const& socket_address, bool client_is_seed)
 {
     auto const& [addr, port] = socket_address;
 
@@ -237,13 +237,13 @@ tr_peer_socket tr_netOpenPeerSocket(tr_session* session, tr_socket_address const
 
     if (tr_peer_socket::limit_reached(session) || !session->allowsTCP() || !socket_address.is_valid())
     {
-        return {};
+        return TR_BAD_SOCKET;
     }
 
     auto const s = createSocket(tr_ip_protocol_to_af(addr.type), SOCK_STREAM);
     if (s == TR_BAD_SOCKET)
     {
-        return {};
+        return TR_BAD_SOCKET;
     }
 
     // seeds don't need a big read buffer, so make it smaller
@@ -272,7 +272,7 @@ tr_peer_socket tr_netOpenPeerSocket(tr_session* session, tr_socket_address const
             fmt::arg("error", tr_net_strerror(sockerrno)),
             fmt::arg("error_code", sockerrno)));
         tr_net_close_socket(s);
-        return {};
+        return TR_BAD_SOCKET;
     }
 
     if (connect(s, reinterpret_cast<sockaddr const*>(&sock), addrlen) == -1 &&
@@ -294,12 +294,12 @@ tr_peer_socket tr_netOpenPeerSocket(tr_session* session, tr_socket_address const
         }
 
         tr_net_close_socket(s);
-        return {};
+        return TR_BAD_SOCKET;
     }
 
     tr_logAddTrace(fmt::format("New OUTGOING connection {} ({})", s, socket_address.display_name()));
 
-    return { session, socket_address, s };
+    return s;
 }
 
 namespace

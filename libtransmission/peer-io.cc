@@ -20,8 +20,6 @@
 
 #include <fmt/core.h>
 
-#include <small/map.hpp>
-
 #include "libtransmission/transmission.h"
 
 #include "libtransmission/bandwidth.h"
@@ -70,33 +68,29 @@ size_t get_desired_output_buffer_size(tr_peerIo const* io, uint64_t now)
     auto const current_speed = io->get_piece_speed(now, TR_UP);
     return std::max(Floor, current_speed.base_quantity() * PeriodSecs);
 }
-
-void log_peer_io_bandwidth(tr_peerIo const& peer_io, tr_bandwidth* const parent)
-{
-    tr_logAddTraceIo(
-        &peer_io,
-        fmt::format("bandwidth is {}; its parent is {}", fmt::ptr(&peer_io.bandwidth()), fmt::ptr(parent)));
-}
 } // namespace
 
 // ---
 
 tr_peerIo::tr_peerIo(
     tr_session* session,
+    tr_peer_socket&& socket,
+    tr_bandwidth* parent_bandwidth,
     tr_sha1_digest_t const* info_hash,
     bool is_incoming,
-    bool client_is_seed,
-    tr_bandwidth* parent_bandwidth)
+    bool client_is_seed)
     : bandwidth_{ parent_bandwidth }
     , info_hash_{ info_hash != nullptr ? *info_hash : tr_sha1_digest_t{} }
     , session_{ session }
     , client_is_seed_{ client_is_seed }
     , is_incoming_{ is_incoming }
 {
+    set_socket(std::move(socket));
 }
 
 std::shared_ptr<tr_peerIo> tr_peerIo::create(
     tr_session* session,
+    tr_peer_socket&& socket,
     tr_bandwidth* parent,
     tr_sha1_digest_t const* info_hash,
     bool is_incoming,
@@ -105,19 +99,16 @@ std::shared_ptr<tr_peerIo> tr_peerIo::create(
     TR_ASSERT(session != nullptr);
     auto lock = session->unique_lock();
 
-    auto io = std::make_shared<tr_peerIo>(session, info_hash, is_incoming, is_seed, parent);
+    auto io = std::make_shared<tr_peerIo>(session, std::move(socket), parent, info_hash, is_incoming, is_seed);
     io->bandwidth().set_peer(io);
+    tr_logAddTraceIo(io, fmt::format("bandwidth is {}; its parent is {}", fmt::ptr(&io->bandwidth()), fmt::ptr(parent)));
     return io;
 }
 
 std::shared_ptr<tr_peerIo> tr_peerIo::new_incoming(tr_session* session, tr_bandwidth* parent, tr_peer_socket socket)
 {
     TR_ASSERT(session != nullptr);
-
-    auto peer_io = tr_peerIo::create(session, parent, nullptr, true, false);
-    peer_io->set_socket(std::move(socket));
-    log_peer_io_bandwidth(*peer_io, parent);
-    return peer_io;
+    return tr_peerIo::create(session, std::move(socket), parent, nullptr, true, false);
 }
 
 std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
@@ -128,61 +119,44 @@ std::shared_ptr<tr_peerIo> tr_peerIo::new_outgoing(
     bool client_is_seed,
     bool utp)
 {
-    using preferred_key_t = std::underlying_type_t<tr_preferred_transport>;
-    auto const preferred = session->preferred_transport();
-
     TR_ASSERT(!tr_peer_socket::limit_reached(session));
     TR_ASSERT(session != nullptr);
     TR_ASSERT(socket_address.is_valid());
     TR_ASSERT(utp || session->allowsTCP());
 
-    auto peer_io = tr_peerIo::create(session, parent, &info_hash, false, client_is_seed);
-    auto const func = small::max_size_map<preferred_key_t, std::function<bool()>, TR_NUM_PREFERRED_TRANSPORT>{
-        { TR_PREFER_UTP,
-          [&]()
-          {
+    // N.B. This array needs to be kept in the same order as
+    // the tr_preferred_transport enum.
+    auto const get_socket = std::array<std::function<tr_peer_socket()>, TR_NUM_PREFERRED_TRANSPORT>{
+        [&]() -> tr_peer_socket
+        {
 #ifdef WITH_UTP
-              if (utp)
-              {
-                  auto* const sock = utp_create_socket(session->utp_context);
-                  utp_set_userdata(sock, peer_io.get());
-                  peer_io->set_socket(tr_peer_socket{ socket_address, sock });
-
-                  auto const [ss, sslen] = socket_address.to_sockaddr();
-                  if (utp_connect(sock, reinterpret_cast<sockaddr const*>(&ss), sslen) == 0)
-                  {
-                      return true;
-                  }
-              }
+            if (utp)
+            {
+                auto* const sock = utp_create_socket(session->utp_context);
+                auto const [ss, sslen] = socket_address.to_sockaddr();
+                if (utp_connect(sock, reinterpret_cast<sockaddr const*>(&ss), sslen) == 0)
+                {
+                    return { socket_address, sock };
+                }
+            }
 #endif
-              return false;
-          } },
-        { TR_PREFER_TCP,
-          [&]()
-          {
-              if (!peer_io->socket_.is_valid())
-              {
-                  if (auto sock = tr_netOpenPeerSocket(session, socket_address, client_is_seed); sock.is_valid())
-                  {
-                      peer_io->set_socket(std::move(sock));
-                      return true;
-                  }
-              }
-              return false;
-          } }
+            return {};
+        },
+        [&]() -> tr_peer_socket
+        {
+            if (auto sock = tr_net_open_peer_socket(session, socket_address, client_is_seed); sock != TR_BAD_SOCKET)
+            {
+                return { session, socket_address, sock };
+            }
+            return {};
+        }
     };
 
-    if (func.at(preferred)())
+    for (auto const& transport : session->preferred_transport())
     {
-        log_peer_io_bandwidth(*peer_io, parent);
-        return peer_io;
-    }
-    for (preferred_key_t i = 0U; i < TR_NUM_PREFERRED_TRANSPORT; ++i)
-    {
-        if (i != preferred && func.at(i)())
+        if (auto sock = get_socket[transport](); sock.is_valid())
         {
-            log_peer_io_bandwidth(*peer_io, parent);
-            return peer_io;
+            return tr_peerIo::create(session, std::move(sock), parent, &info_hash, false, client_is_seed);
         }
     }
 
@@ -254,12 +228,12 @@ bool tr_peerIo::reconnect()
 
     close();
 
-    auto sock = tr_netOpenPeerSocket(session_, socket_address(), client_is_seed());
-    if (!sock.is_tcp())
+    auto const s = tr_net_open_peer_socket(session_, socket_address(), client_is_seed());
+    if (s == TR_BAD_SOCKET)
     {
         return false;
     }
-    set_socket(std::move(sock));
+    set_socket({ session_, socket_address(), s });
 
     event_enable(pending_events);
 

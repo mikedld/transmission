@@ -402,6 +402,7 @@ public:
         size_t speed_limit_down = 100U;
         size_t speed_limit_up = 100U;
         size_t upload_slots_per_torrent = 8U;
+        std::array<tr_preferred_transport, TR_NUM_PREFERRED_TRANSPORT> preferred_transport = { TR_PREFER_UTP, TR_PREFER_TCP };
         std::chrono::milliseconds sleep_per_seconds_during_verify = std::chrono::milliseconds{ 100 };
         std::string announce_ip;
         std::string bind_address_ipv4;
@@ -421,7 +422,6 @@ public:
         tr_port peer_port_random_high = tr_port::from_host(65535);
         tr_port peer_port_random_low = tr_port::from_host(49152);
         tr_port peer_port = tr_port::from_host(TR_DEFAULT_PEER_PORT);
-        tr_preferred_transport preferred_transport = TR_PREFER_UTP;
         tr_tos_t peer_socket_tos{ 0x04 };
         tr_verify_added_mode torrent_added_verify_mode = TR_VERIFY_ADDED_FAST;
 
@@ -939,7 +939,7 @@ public:
 
     [[nodiscard]] bool allowsUTP() const noexcept;
 
-    [[nodiscard]] constexpr auto preferred_transport() const noexcept
+    [[nodiscard]] constexpr auto const& preferred_transport() const noexcept
     {
         return settings().preferred_transport;
     }
