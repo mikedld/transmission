@@ -170,7 +170,6 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "isStalled"sv,
     "isUTP"sv,
     "isUploadingTo"sv,
-    "is_queued"sv,
     "labels"sv,
     "lastAnnouncePeerCount"sv,
     "lastAnnounceResult"sv,

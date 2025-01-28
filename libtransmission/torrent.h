@@ -76,7 +76,6 @@ struct tr_torrent
         void load_date_done(time_t when) noexcept;
         void load_download_dir(std::string_view dir) noexcept;
         void load_incomplete_dir(std::string_view dir) noexcept;
-        void load_queue_position(size_t pos) noexcept;
         void load_seconds_downloading_before_current_start(time_t when) noexcept;
         void load_seconds_seeding_before_current_start(time_t when) noexcept;
         void load_start_when_stable(bool val) noexcept;
@@ -560,6 +559,21 @@ struct tr_torrent
         return metainfo_.date_created();
     }
 
+    [[nodiscard]] auto torrent_filename() const
+    {
+        return metainfo_.torrent_file();
+    }
+
+    [[nodiscard]] auto magnet_filename() const
+    {
+        return metainfo_.magnet_file();
+    }
+
+    [[nodiscard]] auto store_filename() const
+    {
+        return has_metainfo() ? torrent_filename() : magnet_filename();
+    }
+
     [[nodiscard]] auto torrent_file() const
     {
         return metainfo_.torrent_file(session->torrentDir());
@@ -568,6 +582,11 @@ struct tr_torrent
     [[nodiscard]] auto magnet_file() const
     {
         return metainfo_.magnet_file(session->torrentDir());
+    }
+
+    [[nodiscard]] auto store_file() const
+    {
+        return has_metainfo() ? torrent_file() : magnet_file();
     }
 
     [[nodiscard]] auto resume_file() const
@@ -941,18 +960,21 @@ struct tr_torrent
 
     // --- queue position
 
-    [[nodiscard]] constexpr auto queue_position() const noexcept
+    [[nodiscard]] auto queue_position() const noexcept
     {
-        return queue_position_;
+        return session->torrent_queue().get_pos(*this);
     }
 
-    void set_unique_queue_position(size_t new_pos);
+    void set_queue_position(size_t new_pos)
+    {
+        session->torrent_queue().set_pos(*this, new_pos);
+    }
 
     static constexpr struct
     {
-        constexpr bool operator()(tr_torrent const* a, tr_torrent const* b) const noexcept
+        bool operator()(tr_torrent const* a, tr_torrent const* b) const noexcept
         {
-            return a->queue_position_ < b->queue_position_;
+            return a->queue_position() < b->queue_position();
         }
     } CompareQueuePosition{};
 
@@ -1343,8 +1365,6 @@ private:
      * and in the handshake are expected to match.
      */
     tr_peer_id_t peer_id_ = tr_peerIdInit();
-
-    size_t queue_position_ = 0;
 
     time_t date_active_ = 0;
     time_t date_added_ = 0;
