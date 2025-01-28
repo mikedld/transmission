@@ -102,6 +102,7 @@ auto constexpr MyStatic = std::array<std::string_view, TR_N_KEYS>{
     "downloaded-bytes"sv,
     "downloadedBytes"sv,
     "downloadedEver"sv,
+    "downloader_count"sv,
     "downloaders"sv,
     "downloading-time-seconds"sv,
     "dropped"sv,
