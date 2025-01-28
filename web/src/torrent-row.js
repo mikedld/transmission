@@ -234,7 +234,6 @@ export class TorrentRendererFull {
 
     // progressbar
     TorrentRendererHelper.renderProgressbar(controller, torrent, progressbar);
-    progressbar.classList.add('full');
 
     // peer details
     TorrentRendererFull.renderPeerDetails(torrent, peer_details);
@@ -250,7 +249,7 @@ export class TorrentRendererFull {
       ['name', 'torrent-name'],
       ['labels', 'torrent-labels'],
       ['progress_details', 'torrent-progress-details'],
-      ['progressbar', 'torrent-progress-bar full'],
+      ['progressbar', 'torrent-progress-bar'],
       ['peer_details', 'torrent-peer-details'],
     ];
 
