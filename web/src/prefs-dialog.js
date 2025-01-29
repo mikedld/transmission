@@ -239,7 +239,7 @@ export class PrefsDialog extends EventTarget {
   }
 
   static _toggleProtocolHandler(button) {
-    const handlerUrl = new URL(window.location.href);
+    const handlerUrl = new URL(globalThis.location.href);
     handlerUrl.search = 'addtorrent=%s';
     if (this._getProtocolHandlerRegistered()) {
       navigator.unregisterProtocolHandler?.('magnet', handlerUrl.toString());

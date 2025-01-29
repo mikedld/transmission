@@ -347,11 +347,6 @@ a {
     height: 25px;
     margin: 0 6px 0 0;
   }
-
-  :nth-last-child(2) {
-    border: 0;
-    flex-grow: 1;
-  }
 }
 
 .toolbar-icon {
@@ -1055,6 +1050,16 @@ a {
 
     &.skip {
       opacity: 0.5;
+
+      > .inspector-torrent-file-list-entry-name {
+        color: var(--color-fg-disabled);
+      }
+    }
+
+    &.complete {
+      > .file-wanted-control {
+        cursor: default;
+      }
     }
   }
 
@@ -1070,22 +1075,10 @@ a {
     overflow-wrap: anywhere;
   }
 
-  .inspector-torrent-file-list-entry.skip
-    > .inspector-torrent-file-list-entry-name {
-    color: var(--color-fg-disabled);
-  }
-
   .inspector-torrent-file-list-entry-progress {
     color: var(--color-fg-secondary);
     font-size: 12px;
     grid-area: info;
-  }
-
-  .single-file .inspector-torrent-file-list-entry,
-  .inspector-torrent-file-list-entry.complete {
-    > .file-wanted-control {
-      cursor: default;
-    }
   }
 }
 

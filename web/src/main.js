@@ -20,8 +20,8 @@ function main() {
   const scroll_soon = debounce(() =>
     transmission.elements.torrent_list.scrollTo(0, 1),
   );
-  window.addEventListener('load', scroll_soon);
-  window.addEventListener('orientationchange', scroll_soon);
+  globalThis.addEventListener('load', scroll_soon);
+  globalThis.addEventListener('orientationchange', scroll_soon);
 }
 
 document.addEventListener('DOMContentLoaded', main);

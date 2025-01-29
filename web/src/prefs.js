@@ -128,7 +128,8 @@ Prefs.SortMode = 'sort-mode';
 Prefs._Defaults = {
   [Prefs.AltSpeedEnabled]: false,
   [Prefs.DisplayMode]: Prefs.DisplayFull,
-  [Prefs.ContrastMode]: window.matchMedia('(prefers-contrast: more)').matches
+  [Prefs.ContrastMode]: globalThis.matchMedia('(prefers-contrast: more)')
+    .matches
     ? Prefs.ContrastMore
     : Prefs.ContrastLess,
   [Prefs.FilterMode]: Prefs.FilterAll,

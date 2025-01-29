@@ -59,11 +59,10 @@ jobs:
     steps:
       - name: Get source
         uses: actions/checkout@v4
-      - name: Get dependencies
-        run: |
-          set -e # abort if any command fails
-          sudo apt-get update
-          sudo apt-get install -y npm
+      - name: Get NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
       - name: Check for style diffs
         id: check-for-diffs
         run: |
@@ -127,10 +126,10 @@ jobs:
       - name: Show env
         run: |
           env | sort
-      - name: Get dependencies
-        run: |
-          set -e # abort if any command fails
-          sudo apt-get install -y npm
+      - name: Get NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
       - name: Get source
         uses: actions/checkout@v4
         with:

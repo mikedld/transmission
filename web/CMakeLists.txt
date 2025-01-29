@@ -61,8 +61,6 @@ add_custom_command(
         "${CMAKE_CURRENT_SOURCE_DIR}/esbuild.mjs"
         "${CMAKE_CURRENT_SOURCE_DIR}/package-lock.json"
         "${CMAKE_CURRENT_SOURCE_DIR}/package.json"
-        "${CMAKE_CURRENT_SOURCE_DIR}/prettier.config.cjs"
-        "${CMAKE_CURRENT_SOURCE_DIR}/stylelint.config.cjs"
         "${CMAKE_CURRENT_BINARY_DIR}"
     COMMAND "${CMAKE_COMMAND}" -E copy_directory
         "${CMAKE_CURRENT_SOURCE_DIR}/assets" "assets"
