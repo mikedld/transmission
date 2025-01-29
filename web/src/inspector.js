@@ -91,6 +91,7 @@ export class Inspector extends EventTarget {
       ['availability', 'Availability:'],
       ['uploaded', 'Uploaded:'],
       ['downloaded', 'Downloaded:'],
+      ['sequential_download', 'Sequential download:'],
       ['state', 'State:'],
       ['running_time', 'Running time:'],
       ['remaining_time', 'Remaining:'],
@@ -572,6 +573,14 @@ export class Inspector extends EventTarget {
       const link = torrents[0].getMagnetLink();
       e.info.magnetLink.innerHTML = `<a class="inspector-info-magnet" href="${link}"><button></button></a>`;
     }
+
+    // Sequential Download
+    const isSequential = torrents.reduce((acc, cur) => {
+      cur = cur.isSequentialDownload() ? 'Yes' : 'No';
+      return acc !== none && acc !== cur ? mixed : cur;
+    }, none);
+
+    setTextContent(e.info.sequential_download, isSequential);
   }
 
   ///  PEERS PAGE

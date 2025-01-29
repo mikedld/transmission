@@ -12,6 +12,14 @@ export class ActionManager extends EventTarget {
         shortcut: 'D',
         text: 'Deselect all',
       },
+      'disable-sequential-downloading': {
+        enabled: true,
+        text: 'Disable sequential downloading',
+      },
+      'enable-sequential-downloading': {
+        enabled: true,
+        text: 'Enable sequential downloading',
+      },
       'move-bottom': { enabled: false, text: 'Move to the back of the queue' },
       'move-down': { enabled: false, text: 'Move down in the queue' },
       'move-top': { enabled: false, text: 'Move to the front of the queue' },

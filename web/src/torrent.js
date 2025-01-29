@@ -255,6 +255,9 @@ export class Torrent extends EventTarget {
   isSeeding() {
     return this.getStatus() === Torrent._StatusSeed;
   }
+  isSequentialDownload() {
+    return this.fields.sequentialDownload;
+  }
   isStopped() {
     return this.getStatus() === Torrent._StatusStopped;
   }
@@ -607,6 +610,7 @@ Torrent.Fields.Stats = [
   'rateUpload',
   'recheckProgress',
   'seedRatioMode',
+  'sequentialDownload',
   'seedRatioLimit',
   'sizeWhenDone',
   'status',
