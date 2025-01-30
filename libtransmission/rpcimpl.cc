@@ -454,6 +454,8 @@ namespace make_torrent_field_helpers
         peer_map.try_emplace(TR_KEY_progress, peer.progress);
         peer_map.try_emplace(TR_KEY_rateToClient, Speed{ peer.rateToClient_KBps, Speed::Units::KByps }.base_quantity());
         peer_map.try_emplace(TR_KEY_rateToPeer, Speed{ peer.rateToPeer_KBps, Speed::Units::KByps }.base_quantity());
+        peer_map.try_emplace(TR_KEY_bytesToPeer, peer.blocksToPeer * tor.block_size(0));
+        peer_map.try_emplace(TR_KEY_bytesToClient, peer.blocksToClient * tor.block_size(0));
         peers_vec.emplace_back(std::move(peer_map));
     }
     tr_torrentPeersFree(peers, n_peers);
