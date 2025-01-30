@@ -17,10 +17,6 @@ license: MIT
 - chevron-down.svg
 - chevron-up.svg
 
-## Inspector 'i' icon
-
-- Created in OmniGraffle by [https://github.com/dareiff]
-
 ## Bootstrap Icons
 
 [https://github.com/twbs/icons]
