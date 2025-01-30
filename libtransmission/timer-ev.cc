@@ -130,6 +130,7 @@ private:
         {
             [[maybe_unused]] auto const val = event_assign(evtimer_.get(), base_, -1, new_events, &EvTimer::onTimer, this);
             TR_ASSERT(val == 0);
+            event_priority_set(evtimer_.get(), 2);
         }
 
         if (was_running)
@@ -162,7 +163,9 @@ private:
     std::function<void()> callback_;
 
     struct event_base* const base_;
-    evhelpers::event_unique_ptr const evtimer_{ event_new(base_, -1, events(is_repeating_), &EvTimer::onTimer, this) };
+    evhelpers::event_unique_ptr const evtimer_{
+        libtransmission::evhelpers::event_new_pri2(base_, -1, events(is_repeating_), &EvTimer::onTimer, this)
+    };
 };
 
 std::unique_ptr<Timer> EvTimerMaker::create()
