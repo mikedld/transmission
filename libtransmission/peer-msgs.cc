@@ -565,6 +565,8 @@ private:
         if (can_add_request_from_peer(req))
         {
             peer_requested_.emplace_back(req);
+
+            fill_output_buffer(tr_time(), tr_time_msec());
         }
         else if (io_->supports_fext())
         {
@@ -608,7 +610,14 @@ private:
     void maybe_send_metadata_requests(time_t now) const;
     [[nodiscard]] size_t add_next_metadata_piece();
     [[nodiscard]] size_t add_next_block(time_t now_sec, uint64_t now_msec);
-    [[nodiscard]] size_t fill_output_buffer(time_t now_sec, uint64_t now_msec);
+
+    [[nodiscard]] size_t fill_output_buffer_impl(time_t now_sec, uint64_t now_msec);
+    void fill_output_buffer(time_t now_sec, uint64_t now_msec)
+    {
+        while (fill_output_buffer_impl(now_sec, now_msec) != 0U)
+        {
+        }
+    }
 
     // ---
 
@@ -1833,14 +1842,7 @@ void tr_peerMsgsImpl::pulse()
     update_desired_request_count();
     maybe_send_block_requests();
     maybe_send_metadata_requests(now_sec);
-
-    for (;;)
-    {
-        if (fill_output_buffer(now_sec, now_msec) == 0U)
-        {
-            break;
-        }
-    }
+    fill_output_buffer(now_sec, now_msec);
 }
 
 void tr_peerMsgsImpl::maybe_send_metadata_requests(time_t now) const
@@ -1900,7 +1902,7 @@ void tr_peerMsgsImpl::check_request_timeout(time_t now)
     }
 }
 
-[[nodiscard]] size_t tr_peerMsgsImpl::fill_output_buffer(time_t now_sec, uint64_t now_msec)
+[[nodiscard]] size_t tr_peerMsgsImpl::fill_output_buffer_impl(time_t now_sec, uint64_t now_msec)
 {
     auto n_bytes_written = size_t{};
 
