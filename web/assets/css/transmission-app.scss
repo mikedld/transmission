@@ -23,10 +23,7 @@
   --z-index-popup: 2;
 
   /* various dimensions */
-  --dialog-logo-padding: calc(var(--dialog-padding) * 0.66);
-  --dialog-padding: 20px;
   --logo-size: 64px;
-  --popup-top: 82px; // TODO: ugly that this is hardcoded
   --toolbar-height: 50px;
 
   /* colors related to torrent status */
@@ -769,13 +766,6 @@ a {
 
 /// PREFERENCES DIALOG
 
-@include viewport-small {
-  input[type='checkbox'] {
-    height: 20px;
-    width: 20px;
-  }
-}
-
 #inspector {
   @include viewport-large {
     box-shadow: initial;
@@ -784,12 +774,6 @@ a {
 }
 
 #prefs-dialog {
-  $background-color: var(--color-bg-primary);
-  background: $background-color;
-  bottom: 0;
-  right: 0;
-  z-index: var(--z-index-popup);
-
   .tabs-page {
     grid-column-gap: 8px;
     grid-row-gap: 5px;
@@ -803,7 +787,6 @@ a {
     .section-label {
       font-weight: bold;
       grid-column: span 2;
-      // margin-left: -20px;
       padding-bottom: 5px;
 
       &:not(:first-of-type) {
@@ -899,7 +882,7 @@ a {
   flex-direction: column;
   position: absolute;
   right: 0;
-  top: var(--popup-top);
+  top: 82px;
   z-index: var(--z-index-popup);
 
   @include viewport-small {
@@ -1199,10 +1182,6 @@ a {
 
   .percent-done {
     width: 10%;
-
-    @include viewport-small {
-      width: 12%;
-    }
   }
 
   .speed-down,
@@ -1217,7 +1196,6 @@ a {
 
     @include viewport-small {
       text-align: left;
-      width: 20%;
     }
   }
 
@@ -1225,9 +1203,7 @@ a {
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    @include viewport-medium {
-      width: 20%;
-    }
+    width: 20%;
   }
 
   .status {
@@ -1331,10 +1307,6 @@ a {
   margin: 6px;
   top: 50px;
   z-index: var(--z-index-popup);
-
-  @include viewport-small {
-    height: 80vh;
-  }
 
   fieldset {
     border: 0;
@@ -1461,60 +1433,6 @@ a {
 
 /// DIALOGS
 
-@include viewport-small {
-  .dialog-buttons {
-    padding-top: var(--dialog-logo-padding);
-  }
-
-  .dialog-container {
-    opacity: 96%;
-    position: absolute;
-    top: var(--popup-top);
-    width: 100%;
-  }
-
-  .dialog-logo {
-    padding-bottom: var(--dialog-logo-padding);
-  }
-
-  .dialog-window {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-@include viewport-medium {
-  .dialog-container {
-    min-width: 500px;
-    position: absolute;
-    top: calc(var(--popup-top) * 2);
-  }
-
-  .dialog-heading {
-    grid-area: heading;
-  }
-
-  .dialog-logo {
-    grid-area: icon;
-    padding-right: var(--dialog-logo-padding);
-  }
-
-  .dialog-window {
-    background-color: var(--color-bg-popup);
-    color: var(--color-fg-on-popup);
-    display: grid;
-    grid-column-gap: 12px;
-    grid-template-areas:
-      'icon heading'
-      'icon message'
-      'icon workarea'
-      'icon buttons';
-    grid-template-columns: var(--logo-size) 1fr;
-    padding: 2px 12px;
-  }
-}
-
 .dialog-buttons {
   display: flex;
   float: right;
@@ -1547,44 +1465,66 @@ dialog {
 }
 
 .dialog-container {
+  max-width: 500px;
+  top: 102px;
+  width: calc(100vw - 20px);
+
   color: var(--color-fg-primary);
   display: block;
   padding: 0;
   z-index: var(--z-index-popup);
 
-  @include viewport-medium {
-    border: 0;
-    border-radius: 8px;
-    max-width: 50%;
-  }
+  border: 0;
+  border-radius: 8px;
 }
 
 .dialog-heading {
-  align-items: center;
   display: flex;
   font-size: 1.2em;
   font-weight: bold;
+  grid-area: heading;
   overflow-wrap: anywhere;
 }
 
 .dialog-logo {
   background: transparent url('../img/logo.png') top left no-repeat;
+  grid-area: icon;
   height: var(--logo-size);
   width: var(--logo-size);
 }
 
 .dialog-message {
   grid-area: message;
+  width: 100%;
   margin: 10px 0 0;
 }
 
 .dialog-window {
-  background: var(--color-bg-primary);
+  background-color: var(--color-bg-popup);
+  color: var(--color-fg-on-popup);
   border-radius: 8px;
-  padding: var(--dialog-padding);
+  padding: 20px;
+
+  @include viewport-small {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @include viewport-medium {
+    display: grid;
+    grid-column-gap: 12px;
+    grid-template-areas:
+      'icon heading'
+      'icon message'
+      'icon workarea'
+      'icon buttons';
+    grid-template-columns: var(--logo-size) 1fr;
+  }
 }
 
 .dialog-workarea {
+  width: 100%;
   display: flex;
   flex-direction: column;
   grid-area: workarea;
@@ -1597,12 +1537,8 @@ dialog {
 
 /// ABOUT DIALOG
 
-.about-dialog {
-  max-width: initial;
-
-  .dialog-workarea > * {
-    margin-bottom: 10px;
-  }
+.about-dialog .dialog-workarea > * {
+  margin-bottom: 10px;
 }
 
 .about-dialog-version-number {
@@ -1648,12 +1584,6 @@ dialog {
   }
 }
 
-/// RENAME DIALOG
-
-#torrent-rename-name {
-  min-width: 400px;
-}
-
 /// SET-LOCATION DIALOG
 
 #move-container #torrent-path {
@@ -1670,14 +1600,7 @@ dialog {
     display: grid;
     grid-row-gap: 6px;
     grid-template-columns: auto 1fr;
-    margin-top: 4px;
-
-    @include viewport-small {
-      margin: 4px 0 16px;
-    }
-    @include viewport-medium {
-      margin: 4px 16px 16px;
-    }
+    margin: 4px 16px 16px;
 
     div {
       word-break: break-word;
