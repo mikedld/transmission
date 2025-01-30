@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <cstring> /* for strcspn() */
 #include <ctime>
+#include <fstream>
 #include <memory>
 #include <string>
 #include <string_view>
@@ -683,6 +684,52 @@ void rpc_server_start_retry_cancel(tr_rpc_server* server)
     server->start_retry_counter = 0;
 }
 
+#ifdef WITH_LIBEVENT_OPENSSL
+bufferevent* SSL_bufferevent_cb(event_base* base, void* arg)
+{
+    bufferevent* ret = nullptr;
+    SSL_CTX* ctx = static_cast<SSL_CTX*>(arg);
+    SSL* ssl = SSL_new(ctx);
+    if (ssl != nullptr)
+    {
+        ret = bufferevent_openssl_socket_new(base, -1, ssl, BUFFEREVENT_SSL_ACCEPTING, BEV_OPT_CLOSE_ON_FREE);
+    }
+    if (ret == nullptr)
+    {
+        tr_logAddWarn(fmt::format("Couldn't create SSL buffer"));
+    }
+    return ret;
+}
+
+SSL_CTX* create_ctx_with_cert(char const* cert, char const* key)
+{
+    SSL_CTX* ctx = SSL_CTX_new(TLS_server_method());
+    if (ctx == nullptr)
+    {
+        return nullptr;
+    }
+    if (SSL_CTX_use_certificate_chain_file(ctx, cert) != 1)
+    {
+        tr_logAddWarn(fmt::format("Couldn't set RPC SSL with cert file {}", cert));
+        SSL_CTX_free(ctx);
+        return nullptr;
+    }
+    if (SSL_CTX_use_PrivateKey_file(ctx, key, SSL_FILETYPE_PEM) != 1)
+    {
+        tr_logAddWarn(fmt::format("Couldn't set RPC SSL with key file {}", key));
+        SSL_CTX_free(ctx);
+        return nullptr;
+    }
+    if (SSL_CTX_check_private_key(ctx) == 1)
+    {
+        tr_logAddInfo(fmt::format("Set RPC SSL certs success"));
+        return ctx;
+    }
+    SSL_CTX_free(ctx);
+    return nullptr;
+}
+#endif
+
 void start_server(tr_rpc_server* server)
 {
     if (server->httpd)
@@ -726,6 +773,22 @@ void start_server(tr_rpc_server* server)
     }
     else
     {
+#ifdef WITH_LIBEVENT_OPENSSL
+        SSL_CTX* ctx = nullptr;
+        if (server->is_ssl_enabled())
+        {
+            ctx = create_ctx_with_cert(server->ssl_cert().c_str(), server->ssl_key().c_str());
+            if (ctx == nullptr)
+            {
+                tr_logAddWarn(fmt::format("Couldn't set RPC SSL certs"));
+            }
+        }
+        if (ctx != nullptr)
+        {
+            evhttp_set_bevcb(httpd, SSL_bufferevent_cb, ctx);
+        }
+        server->ctx = ctx;
+#endif
         evhttp_set_gencb(httpd, handle_request, server);
         server->httpd.reset(httpd);
 
@@ -740,6 +803,14 @@ void stop_server(tr_rpc_server* server)
     auto const lock = server->session->unique_lock();
 
     rpc_server_start_retry_cancel(server);
+
+#ifdef WITH_LIBEVENT_OPENSSL
+    if (server->ctx != nullptr)
+    {
+        SSL_CTX_free(server->ctx);
+        server->ctx = nullptr;
+    }
+#endif
 
     auto& httpd = server->httpd;
     if (!httpd)
@@ -831,6 +902,21 @@ void tr_rpc_server::set_whitelist(std::string_view whitelist)
 {
     settings_.whitelist_str = whitelist;
     whitelist_ = parse_whitelist(whitelist);
+}
+
+void tr_rpc_server::set_ssl_enabled(bool ssl_enabled)
+{
+    settings_.ssl_enabled = ssl_enabled;
+}
+
+void tr_rpc_server::set_ssl_cert(std::string_view ssl_cert)
+{
+    settings_.ssl_cert = ssl_cert;
+}
+
+void tr_rpc_server::set_ssl_key(std::string_view ssl_key)
+{
+    settings_.ssl_key = ssl_key;
 }
 
 // --- PASSWORD

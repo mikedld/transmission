@@ -547,6 +547,9 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
         tr_variantDictAddStr(&settings, TR_KEY_rpc_username, [_fDefaults stringForKey:@"RPCUsername"].UTF8String);
         tr_variantDictAddBool(&settings, TR_KEY_rpc_whitelist_enabled, [_fDefaults boolForKey:@"RPCUseWhitelist"]);
         tr_variantDictAddBool(&settings, TR_KEY_rpc_host_whitelist_enabled, [_fDefaults boolForKey:@"RPCUseHostWhitelist"]);
+        tr_variantDictAddBool(&settings, TR_KEY_rpc_ssl_enabled, [_fDefaults boolForKey:@"RPCUseSSL"]);
+        tr_variantDictAddStr(&settings, TR_KEY_rpc_ssl_cert, [_fDefaults stringForKey:@"RPCSSLCert"].UTF8String);
+        tr_variantDictAddStr(&settings, TR_KEY_rpc_ssl_key, [_fDefaults stringForKey:@"RPCSSLKey"].UTF8String);
         tr_variantDictAddBool(&settings, TR_KEY_seed_queue_enabled, [_fDefaults boolForKey:@"QueueSeed"]);
         tr_variantDictAddInt(&settings, TR_KEY_seed_queue_size, [_fDefaults integerForKey:@"QueueSeedNumber"]);
         tr_variantDictAddBool(&settings, TR_KEY_start_added_torrents, [_fDefaults boolForKey:@"AutoStartDownload"]);

@@ -129,7 +129,7 @@ function(tr_process_list_conditions VAR_PREFIX)
 endfunction()
 
 macro(tr_add_external_auto_library ID DIRNAME LIBNAME)
-    cmake_parse_arguments(_TAEAL_ARG "SUBPROJECT" "TARGET" "CMAKE_ARGS" ${ARGN})
+    cmake_parse_arguments(_TAEAL_ARG "SUBPROJECT" "TARGET" "CMAKE_ARGS;EXTRA_LIBS" ${ARGN})
 
     if(USE_SYSTEM_${ID})
         tr_get_required_flag(USE_SYSTEM_${ID} SYSTEM_${ID}_IS_REQUIRED)
@@ -155,6 +155,12 @@ macro(tr_add_external_auto_library ID DIRNAME LIBNAME)
         set(${ID}_LIBRARY "${${ID}_PREFIX}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}${LIBNAME}${CMAKE_STATIC_LIBRARY_SUFFIX}"
             CACHE INTERNAL "")
 
+        if(_TAEAL_ARG_EXTRA_LIBS)
+            foreach(LIB IN LISTS _TAEAL_ARG_EXTRA_LIBS)
+                list(APPEND ${ID}_LIBRARY "${${ID}_PREFIX}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}${LIB}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+            endforeach()
+        endif()
+ 
         set(${ID}_INCLUDE_DIRS ${${ID}_INCLUDE_DIR})
         set(${ID}_LIBRARIES ${${ID}_LIBRARY})
 
