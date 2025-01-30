@@ -683,6 +683,58 @@ void rpc_server_start_retry_cancel(tr_rpc_server* server)
     server->start_retry_counter = 0;
 }
 
+int tr_evhttp_bind_socket(struct evhttp* httpd, char const* address, ev_uint16_t port)
+{
+#ifdef _WIN32
+    struct addrinfo* result = nullptr;
+    struct addrinfo hints = {};
+    ZeroMemory(&hints, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = IPPROTO_TCP;
+    hints.ai_flags = AI_PASSIVE;
+
+    if (getaddrinfo(address, std::to_string(port).c_str(), &hints, &result) != 0)
+    {
+        return evhttp_bind_socket(httpd, address, port);
+    }
+
+    int const fd = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+    if (fd == INVALID_SOCKET)
+    {
+        freeaddrinfo(result);
+        return evhttp_bind_socket(httpd, address, port);
+    }
+    evutil_make_socket_nonblocking(fd);
+    evutil_make_listen_socket_reuseable(fd);
+
+    // Making dual stack
+    if (result->ai_family == AF_INET6)
+    {
+        int off = 0;
+        setsockopt(fd, IPPROTO_IPV6, IPV6_V6ONLY, reinterpret_cast<char*>(&off), sizeof(off));
+    }
+    // Set keep alive
+    int on = 1;
+    setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<char*>(&on), sizeof(on));
+    if (bind(fd, result->ai_addr, result->ai_addrlen) != 0 || listen(fd, 128) == -1)
+    {
+        closesocket(fd);
+        freeaddrinfo(result);
+        return evhttp_bind_socket(httpd, address, port);
+    }
+    if (evhttp_accept_socket(httpd, fd) == 0)
+    {
+        freeaddrinfo(result);
+        return 0;
+    }
+    // Fallback
+    closesocket(fd);
+    freeaddrinfo(result);
+#endif
+    return evhttp_bind_socket(httpd, address, port);
+}
+
 void start_server(tr_rpc_server* server)
 {
     if (server->httpd)
@@ -700,7 +752,7 @@ void start_server(tr_rpc_server* server)
 
     bool const success = server->bind_address_->is_unix_addr() ?
         bindUnixSocket(base, httpd, address.c_str(), server->settings().socket_mode) :
-        (evhttp_bind_socket(httpd, address.c_str(), port.host()) != -1);
+        (tr_evhttp_bind_socket(httpd, address.c_str(), port.host()) != -1);
 
     auto const addr_port_str = server->bind_address_->to_string(port);
 
