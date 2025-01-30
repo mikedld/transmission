@@ -23,7 +23,13 @@ import {
   TorrentRendererCompact,
   TorrentRendererFull,
 } from './torrent-row.js';
-import { debounce, deepEqual, setEnabled, setTextContent } from './utils.js';
+import {
+  icon,
+  debounce,
+  deepEqual,
+  setEnabled,
+  setTextContent,
+} from './utils.js';
 
 export class Transmission extends EventTarget {
   constructor(action_manager, notifications, prefs) {
@@ -34,6 +40,30 @@ export class Transmission extends EventTarget {
     this.notifications = notifications;
     this.prefs = prefs;
     this.remote = new Remote(this);
+    this.speed = {
+      down: document.querySelector('#speed-down'),
+      up: document.querySelector('#speed-up'),
+    };
+
+    for (const [selector, name] of [
+      ['#toolbar-open', 'open'],
+      ['#toolbar-delete', 'delete'],
+      ['#toolbar-start', 'start'],
+      ['#toolbar-pause', 'pause'],
+      ['#toolbar-inspector', 'inspector'],
+      ['#toolbar-overflow', 'overflow'],
+    ]) {
+      const e = document.querySelector(selector);
+      while (e.firstChild) {
+        e.lastChild.remove();
+      }
+      e.append(icon[name]());
+    }
+
+    document.querySelector('.speed-container').append(icon.speedDown());
+    document
+      .querySelector('.speed-container + .speed-container')
+      .append(icon.speedUp());
 
     this.addEventListener('torrent-selection-changed', (event_) =>
       this.action_manager.update(event_),
@@ -965,8 +995,8 @@ TODO: fix this when notifications get fixed
     );
     const string = fmt.countString('Transfer', 'Transfers', this._rows.length);
 
-    setTextContent(document.querySelector('#speed-up-label'), fmt.speedBps(u));
-    setTextContent(document.querySelector('#speed-dn-label'), fmt.speedBps(d));
+    setTextContent(this.speed.down, fmt.speedBps(d));
+    setTextContent(this.speed.up, fmt.speedBps(u));
     setTextContent(document.querySelector('#filter-count'), string);
   }
 
