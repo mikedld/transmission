@@ -172,6 +172,7 @@ export class OverflowMenu extends EventTarget {
     const sort_modes = [
       [Prefs.SortByActivity, 'Activity'],
       [Prefs.SortByAge, 'Age'],
+      [Prefs.SortByLastActivity, 'Last activity'],
       [Prefs.SortByName, 'Name'],
       [Prefs.SortByProgress, 'Progress'],
       [Prefs.SortByQueue, 'Queue order'],

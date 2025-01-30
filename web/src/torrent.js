@@ -438,6 +438,12 @@ export class Torrent extends EventTarget {
 
     return b - a || Torrent.compareByState(ta, tb);
   }
+  static compareByLastActivity(ta, tb) {
+    const a = ta.getLastActivity();
+    const b = tb.getLastActivity();
+
+    return b - a || Torrent.compareByState(ta, tb);
+  }
   static compareByRatio(ta, tb) {
     const a = ta.getUploadRatio();
     const b = tb.getUploadRatio();
@@ -469,6 +475,9 @@ export class Torrent extends EventTarget {
     switch (sortMode) {
       case Prefs.SortByActivity:
         index = Torrent.compareByActivity(a, b);
+        break;
+      case Prefs.SortByLastActivity:
+        index = Torrent.compareByLastActivity(a, b);
         break;
       case Prefs.SortByAge:
         index = Torrent.compareByAge(a, b);
@@ -516,6 +525,9 @@ export class Torrent extends EventTarget {
         break;
       case Prefs.SortByAge:
         torrents.sort(this.compareByAge);
+        break;
+      case Prefs.SortByLastActivity:
+        torrents.sort(this.compareByLastActivity);
         break;
       case Prefs.SortByName:
         torrents.sort(this.compareByName);
@@ -590,6 +602,7 @@ Torrent.Fields.Metadata = [
 
 // commonly used fields which need to be periodically refreshed
 Torrent.Fields.Stats = [
+  'activityDate',
   'error',
   'errorString',
   'eta',
