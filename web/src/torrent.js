@@ -349,9 +349,7 @@ export class Torrent extends EventTarget {
    *****
    ****/
 
-  testState(state) {
-    const s = this.getStatus();
-
+  testState(s, state) {
     switch (state) {
       case Prefs.FilterActive:
         return (
@@ -375,37 +373,37 @@ export class Torrent extends EventTarget {
     }
   }
 
-  /**
-   * @param state one of Prefs.Filter*
-   * @param tracker tracker name
-   * @param search substring to look for, or null
-   * @param labels array of labels. Empty array matches all.
-   * @return true if it passes the test, false if it fails
-   */
-  test(state, tracker, search, labels) {
-    // filter by state...
-    let pass = this.testState(state);
-
-    // maybe filter by text...
-    if (pass && search) {
-      pass = this.getCollatedName().includes(search.toLowerCase());
-    }
-
-    // maybe filter by labels...
-    if (pass) {
-      // pass if this torrent has any of these labels
-      const torrent_labels = this.getLabels();
-      if (labels.length > 0) {
-        pass = labels.some((label) => torrent_labels.includes(label));
+  test(_filter) {
+    const pass = (a, vf, callback) => {
+      if (a.length === 0) {
+        return true;
       }
-    }
+      const v = vf();
+      return a.some((t) => t.every((x) => callback(x, v)));
+    };
 
-    // maybe filter by tracker...
-    if (pass && tracker && tracker.length > 0) {
-      pass = this.getCollatedTrackers().includes(tracker);
-    }
-
-    return pass;
+    return (
+      pass(
+        _filter.search,
+        () => this.getCollatedName(),
+        (x, v) => v.includes(x),
+      ) &&
+      pass(
+        _filter.labels,
+        () => this.getLabels(),
+        (x, v) => v.some((z) => z.includes(x)),
+      ) &&
+      pass(
+        _filter.states,
+        () => this.getStatus(),
+        (x, v) => this.testState(v, x),
+      ) &&
+      pass(
+        _filter.trackers,
+        () => this.getCollatedTrackers(),
+        (x, v) => v.includes(x),
+      )
+    );
   }
 
   static compareById(ta, tb) {
