@@ -50,6 +50,13 @@ std::optional<double> Torrent::getSeedRatioLimit() const
     return {};
 }
 
+double Torrent::seedRatioPercentDone() const
+{
+    auto const r = ratio();
+    auto const g = getSeedRatioLimit().value_or(r);
+    return r > 0.0 && g > 0.0 ? r / g : 0.0;
+}
+
 bool Torrent::includesTracker(QString const& sitename) const
 {
     return std::binary_search(std::begin(sitenames_), std::end(sitenames_), sitename);
