@@ -127,6 +127,15 @@ export class Transmission extends EventTarget {
         case 'show-about-dialog':
           this.setCurrentPopup(new AboutDialog(this.version_info));
           break;
+        case 'show-context-menu':
+          if (this.popup[Transmission.default_popup_level] instanceof ContextMenu) {
+            this.popup[Transmission.default_popup_level].close();
+          } else {
+            if (this._getSelectedRows().length > 0) {
+              context_menu();
+            }
+          }
+          break;
         case 'show-inspector':
           if (this.popup[0] instanceof Inspector) {
             this.popup[0].close();
