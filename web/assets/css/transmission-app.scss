@@ -586,13 +586,14 @@ a {
       grid-template-columns: calc(var(--icon-size) + 10px) auto 1fr auto auto;
 
       .icon {
-        -webkit-mask-size: var(--icon-size), calc(var(--icon-size) / 2);
+        -webkit-mask-size: var(--icon-size);
         height: var(--icon-size);
-        mask-size: var(--icon-size), calc(var(--icon-size) / 2);
+        mask-size: var(--icon-size);
         width: var(--icon-size);
 
         &[data-icon-multifile='true'] {
-          --mime-icon-url: var(--folder-image-url);
+          -webkit-mask-image: var(--folder-image-url);
+          mask-image: var(--folder-image-url);
         }
       }
 
