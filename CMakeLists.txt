@@ -248,6 +248,10 @@ find_package(PkgConfig QUIET)
 
 find_package(CURL ${CURL_MINIMUM} REQUIRED)
 
+if(CURL_VERSION VERSION_EQUAL "8.9.1")
+    message(FATAL_ERROR "Please do not use libcurl 8.9.1. https://github.com/transmission/transmission/issues/7035")
+endif()
+
 if(ENABLE_DEPRECATED STREQUAL "AUTO")
     if(DEFINED ENV{CI})
         set(ENABLE_DEPRECATED OFF)
