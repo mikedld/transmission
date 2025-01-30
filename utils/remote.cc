@@ -30,7 +30,6 @@
 
 #include <libtransmission/crypto-utils.h>
 #include <libtransmission/file.h>
-#include <libtransmission/log.h>
 #include <libtransmission/quark.h>
 #include <libtransmission/rpcimpl.h>
 #include <libtransmission/tr-assert.h>
@@ -2207,12 +2206,12 @@ int process_response(char const* rpcurl, std::string_view response, RemoteConfig
 
     if (auto top = tr_variant_serde::json().inplace().parse(response); !top)
     {
-        tr_logAddWarn(fmt::format("Unable to parse response '{}'", response));
+        fmt::print(stderr, "Unable to parse response '{}'\n", response);
         status |= EXIT_FAILURE;
     }
     else if (auto* map_ptr = top->get_if<tr_variant::Map>(); map_ptr == nullptr)
     {
-        tr_logAddWarn("Response was not a JSON object");
+        fmt::print(stderr, "Response was not a JSON object\n");
         status |= EXIT_FAILURE;
     }
     else if (auto osv = map_ptr->value_if<std::string_view>(TR_KEY_result); osv)
@@ -2387,7 +2386,7 @@ int flush(char const* rpcurl, tr_variant* benc, RemoteConfig& config)
     auto status = EXIT_SUCCESS;
     if (auto const res = curl_easy_perform(curl); res != CURLE_OK)
     {
-        tr_logAddWarn(fmt::format(" ({}) {}", rpcurl_http, curl_easy_strerror(res)));
+        fmt::print(stderr, "Unable to send request to '{}': {}\n", rpcurl_http, curl_easy_strerror(res));
         status |= EXIT_FAILURE;
     }
     else
