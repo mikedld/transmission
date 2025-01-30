@@ -21,7 +21,7 @@ extern NSString* const kTorrentDidChangeGroupNotification;
                          lib:(tr_session*)lib;
 - (instancetype)initWithTorrentStruct:(tr_torrent*)torrentStruct location:(NSString*)location lib:(tr_session*)lib;
 - (instancetype)initWithMagnetAddress:(NSString*)address location:(NSString*)location lib:(tr_session*)lib;
-- (void)setResumeStatusForTorrent:(Torrent*)torrent withHistory:(NSDictionary*)history forcePause:(BOOL)pause;
+- (void)setResumeStatusWithHistory:(NSDictionary*)history forcePause:(BOOL)pause;
 
 @property(nonatomic, readonly) NSDictionary* history;
 
@@ -37,6 +37,7 @@ extern NSString* const kTorrentDidChangeGroupNotification;
 
 - (void)update;
 
+- (void)stabilize;
 - (void)startTransferIgnoringQueue:(BOOL)ignoreQueue;
 - (void)startTransferNoQueue;
 - (void)startTransfer;
@@ -126,6 +127,8 @@ extern NSString* const kTorrentDidChangeGroupNotification;
 
 @property(nonatomic, readonly) CGFloat availableDesired;
 
+/// True if non-paused.
+@property(nonatomic, readonly) BOOL startWhenStable;
 /// True if non-paused. Running.
 @property(nonatomic, getter=isActive, readonly) BOOL active;
 /// True if downloading or uploading.

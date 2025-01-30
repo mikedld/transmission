@@ -588,6 +588,9 @@ void tr_sessionSetAntiBruteForceEnabled(tr_session* session, bool enabled);
 /** @brief Like `tr_torrentStart()`, but resumes right away regardless of the queues. */
 void tr_torrentStartNow(tr_torrent* tor);
 
+/** @brief Like `tr_torrentStart()`, but doesn't modify `start_when_stable`. */
+void tr_torrentStabilize(tr_torrent* tor);
+
 /** @brief Return the queued torrent's position in the queue it's in. [0...n) */
 size_t tr_torrentGetQueuePosition(tr_torrent const* tor);
 
@@ -1550,6 +1553,9 @@ struct tr_stat
 
     /** If seeding, number of seconds left until the idle time limit is reached. */
     time_t etaIdle;
+
+    /** Non-paused */
+    bool startWhenStable;
 
     /** What is this torrent doing right now? */
     tr_torrent_activity activity;

@@ -756,25 +756,36 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
         // theoretical max without doing a lot of work
         NSMutableArray* waitToStartTorrents = [NSMutableArray
             arrayWithCapacity:((history.count > 0 && !self.fPauseOnLaunch) ? history.count - 1 : 0)];
+        NSMutableArray* waitToStabilizeTorrents = [NSMutableArray
+            arrayWithCapacity:((history.count > 0 && !self.fPauseOnLaunch) ? history.count - 1 : 0)];
 
-        Torrent* t = [[Torrent alloc] init];
         for (NSDictionary* historyItem in history)
         {
             NSString* hash = historyItem[@"TorrentHash"];
             if ([self.fTorrentHashes.allKeys containsObject:hash])
             {
                 Torrent* torrent = self.fTorrentHashes[hash];
-                [t setResumeStatusForTorrent:torrent withHistory:historyItem forcePause:self.fPauseOnLaunch];
+                [torrent setResumeStatusWithHistory:historyItem forcePause:self.fPauseOnLaunch];
 
-                NSNumber* waitToStart;
-                if (!self.fPauseOnLaunch && (waitToStart = historyItem[@"WaitToStart"]) && waitToStart.boolValue)
+                if (!self.fPauseOnLaunch && [historyItem[@"WaitToStart"] boolValue])
                 {
-                    [waitToStartTorrents addObject:torrent];
+                    if ([historyItem[@"StartWhenStable"] boolValue])
+                    {
+                        [waitToStartTorrents addObject:torrent];
+                    }
+                    else
+                    {
+                        [waitToStabilizeTorrents addObject:torrent];
+                    }
                 }
             }
         }
 
-        //now that all are loaded, let's set those in the queue to waiting
+        // now that all are loaded, let's set those in the queue to waiting
+        for (Torrent* torrent in waitToStabilizeTorrents)
+        {
+            [torrent stabilize];
+        }
         for (Torrent* torrent in waitToStartTorrents)
         {
             [torrent startTransfer];
