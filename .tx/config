@@ -85,8 +85,8 @@ type        = STRINGS
 lang_map    = pt_BR: pt-BR, pt_PT: pt-PT, zh_CN: zh-CN, zh_TW: zh-TW
 
 [o:transmissionbt:p:transmissionbt:r:mac-ql]
-file_filter = macosx/QuickLookPlugin/<lang>.lproj/Localizable.strings
-source_file = macosx/QuickLookPlugin/en.lproj/Localizable.strings
+file_filter = macosx/QuickLookExtension/<lang>.lproj/Localizable.strings
+source_file = macosx/QuickLookExtension/en.lproj/Localizable.strings
 source_lang = en
 type        = STRINGS
 lang_map    = pt_BR: pt-BR, pt_PT: pt-PT, zh_CN: zh-CN, zh_TW: zh-TW
