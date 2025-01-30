@@ -30,6 +30,8 @@
 #include <libtransmission/values.h>
 #include <libtransmission/version.h>
 
+#include <utils/tools.h>
+
 using namespace std::literals;
 
 using namespace libtransmission::Values;
@@ -37,8 +39,8 @@ using namespace libtransmission::Values;
 namespace
 {
 
-char constexpr MyName[] = "transmission-create";
-char constexpr Usage[] = "Usage: transmission-create [options] <file|directory>";
+char constexpr MyName[] = "transmission create";
+char constexpr Usage[] = "Usage: transmission create [options] <file|directory>";
 
 uint32_t constexpr KiB = 1024;
 
@@ -135,7 +137,8 @@ int parseCommandLine(app_options& options, int argc, char const* const* argv)
 }
 } // namespace
 
-int tr_main(int argc, char* argv[])
+static
+int do_tr_create(int argc, char* argv[])
 {
     tr_locale_set_global("");
 
@@ -295,3 +298,8 @@ int tr_main(int argc, char* argv[])
     fmt::print("done!\n");
     return EXIT_SUCCESS;
 }
+
+struct tr_cmd tr_create = {
+	.name = "create",
+	.cmd = do_tr_create,
+};

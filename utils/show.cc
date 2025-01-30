@@ -36,6 +36,8 @@
 #include <libtransmission/web.h>
 #include <libtransmission/web-utils.h>
 
+#include <utils/tools.h>
+
 using namespace std::literals;
 using namespace libtransmission::Values;
 
@@ -401,7 +403,8 @@ void doScrape(tr_torrent_metainfo const& metainfo)
 
 } // namespace
 
-int tr_main(int argc, char* argv[])
+static
+int do_tr_show(int argc, char* argv[])
 {
     tr_lib_init();
 
@@ -472,3 +475,8 @@ int tr_main(int argc, char* argv[])
     putc('\n', stdout);
     return EXIT_SUCCESS;
 }
+
+struct tr_cmd tr_show = {
+	.name = "show",
+	.cmd = do_tr_show,
+};

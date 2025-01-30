@@ -20,6 +20,8 @@
 #include <libtransmission/variant.h>
 #include <libtransmission/version.h>
 
+#include <utils/tools.h>
+
 namespace
 {
 char constexpr MyName[] = "transmission-edit";
@@ -323,7 +325,8 @@ bool setSource(tr_variant* metainfo, char const* source_value)
 }
 } // namespace
 
-int tr_main(int argc, char* argv[])
+static
+int do_tr_edit(int argc, char* argv[])
 {
     tr_locale_set_global("");
 
@@ -405,3 +408,8 @@ int tr_main(int argc, char* argv[])
 
     return EXIT_SUCCESS;
 }
+
+struct tr_cmd tr_edit = {
+	.name = "edit",
+	.cmd = do_tr_edit,
+};

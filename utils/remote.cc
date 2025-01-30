@@ -40,6 +40,8 @@
 #include <libtransmission/variant.h>
 #include <libtransmission/version.h>
 
+#include <utils/tools.h>
+
 using namespace std::literals;
 
 using namespace libtransmission::Values;
@@ -3416,7 +3418,8 @@ void get_host_and_port_and_rpc_url(
 }
 } // namespace
 
-int tr_main(int argc, char* argv[])
+static
+int do_tr_remote(int argc, char* argv[])
 {
     tr_lib_init();
 
@@ -3447,3 +3450,8 @@ int tr_main(int argc, char* argv[])
 
     return process_args(rpcurl.c_str(), argc, (char const* const*)argv, config);
 }
+
+struct tr_cmd tr_remote = {
+	.name = "remote",
+	.cmd = do_tr_remote,
+};
