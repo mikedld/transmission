@@ -1,8 +1,18 @@
-## Getting the Source ##
+## Get sources ##
 The source code for both official and nightly releases can be found on our [download page](https://transmissionbt.com/download/).
 
+### Configure CMake
+To configure which components are built use the flags below.
+Each option can be set to `ON` or `OFF`, values shown below are the defaults.
+* `-DENABLE_DAEMON=ON` - build transmission daemon
+* `-DENABLE_QT=AUTO` - build the Qt client
+* `-DENABLE_UTILS=ON` - build transmission-remote, transmission-create, transmission-edit and transmission-show cli tools
+* `-DENABLE_CLI=OFF` - build the cli client
+* `-DENABLE_TESTS=ON` - build tests
+* `-DREBUILD_WEB=OFF` - rebuild Web assets
+
 ## On macOS ##
-Software prerequisites:
+### Prerequisites ###
  * macOS 11.0 or newer
  * Xcode 12.5.1 or newer
 
@@ -13,6 +23,9 @@ git clone --recurse-submodules https://github.com/transmission/transmission Tran
 
 If building from source is too daunting for you, check out the [nightly builds](https://build.transmissionbt.com/job/trunk-mac/).
 (Note: These are untested snapshots. Use them with care.)
+
+#### Web assets ####
+If Web assets rebuild is wished, NodeJS (`npm`) needs to be installed.
 
 ### Building the native app with Xcode ###
 Transmission has an Xcode project file for building in Xcode.
@@ -78,6 +91,11 @@ Qt6 client:
 $ sudo apt install qt6-svg-dev qt6-tools-dev
 ```
 
+If Web assets rebuild is wished, NodeJS (`npm`) needs to be installed:
+```bash
+$ sudo apt install nodejs
+```
+
 Then you can begin [building.](#building-transmission-from-git-first-time)
 
 #### Debian 11 / Bullseye ####
@@ -99,6 +117,11 @@ For Qt client, one additional package is needed on top of basic dependencies
 $ sudo apt install qttools5-dev
 ```
 
+If Web assets rebuild is wished, NodeJS (`npm`) needs to be installed:
+```bash
+$ sudo apt install nodejs
+```
+
 Then you can begin [building.](#building-transmission-from-git-first-time)
 
 #### Ubuntu ####
@@ -106,6 +129,11 @@ On Ubuntu, you can install the required development tools for GTK with this comm
 
 ```bash
 $ sudo apt-get install build-essential automake autoconf libtool pkg-config intltool libcurl4-openssl-dev libglib2.0-dev libevent-dev libminiupnpc-dev libgtk-3-dev libappindicator3-dev libssl-dev
+```
+
+If Web assets rebuild is wished, NodeJS (`npm`) needs to be installed:
+```bash
+$ sudo apt-get install nodejs
 ```
 
 Then you can begin [building.](#building-transmission-from-git-first-time)
@@ -136,6 +164,8 @@ Before building Transmission, you need to set the pkgconfig environment setting:
 $ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 ```
 
+If Web assets rebuild is wished, NodeJS (`npm`) needs to be installed.
+
 ### Building Transmission from Git (first time) ###
 ```bash
 $ git clone --recurse-submodules https://github.com/transmission/transmission Transmission
@@ -143,20 +173,31 @@ $ cd Transmission
 # Use -DCMAKE_BUILD_TYPE=RelWithDebInfo to build optimized binary with debug information. (preferred)
 # Use -DCMAKE_BUILD_TYPE=Release to build full optimized binary.
 $ cmake -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo
-$ cd build
-$ cmake --build .
-$ sudo cmake --install .
+$ cmake --build build
+$ sudo cmake --install build
 ```
 
 ### Building Transmission from Git (updating) ###
 ```bash
-$ cd Transmission/build
-$ cmake --build . -t clean
+$ cd Transmission
 $ git submodule foreach --recursive git clean -xfd
 $ git pull --rebase --prune
 $ git submodule update --init --recursive
-$ cmake --build .
-$ sudo cmake --install .
+$ cmake --build build -t clean
+$ cmake --build build
+$ sudo cmake --install build
+```
+
+### Building Transmission from Git (first time, with tests) ###
+```bash
+$ git clone --recurse-submodules https://github.com/transmission/transmission Transmission
+$ cd Transmission
+# Use -DCMAKE_BUILD_TYPE=RelWithDebInfo to build optimized binary with debug information. (preferred)
+# Use -DCMAKE_BUILD_TYPE=Release to build full optimized binary.
+$ cmake -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo
+$ cmake --build build
+$ ctest --test-dir build
+$ sudo cmake --install build
 ```
 
 ## On Windows ##
@@ -187,6 +228,9 @@ Additional dependencies for the Qt client:
 vcpkg install qt5-tools qt5-winextras
 ```
 
+#### Web assets ####
+If Web assets rebuild is wished, NodeJS (`npm`) needs to be installed.
+
 ### Get Transmission source
 ```bat
 git clone https://github.com/transmission/transmission
@@ -194,15 +238,7 @@ cd transmission
 git submodule update --init --recursive
 ```
 
-### Configure CMake and build the project
-
-To configure which components are built use the flags below.
-Each option can be set to `ON` or `OFF`, values shown below are the defaults.
-* `-DENABLE_DAEMON=ON` - build transmission daemon
-* `-DENABLE_QT=AUTO` - build the Qt client
-* `-DENABLE_UTILS=ON` - build transmission-remote, transmission-create, transmission-edit and transmission-show cli tools
-* `-DENABLE_CLI=OFF` - build the cli client
-
+### Build the project
 ```bat
 cmake -B build -DCMAKE_TOOLCHAIN_FILE="<path-to-vcpkg>\scripts\buildsystems\vcpkg.cmake" <flags-from-above> <other-cmake-configurations>
 ```
