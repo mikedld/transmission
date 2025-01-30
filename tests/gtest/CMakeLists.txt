@@ -1,4 +1,14 @@
-set(GTEST_ROOT_DIR ${TR_THIRD_PARTY_SOURCE_DIR}/googletest/googletest)
+find_path(GTEST_ROOT_DIR
+    NAMES
+        src/gtest-all.cc
+    HINTS
+        /usr/src/googletest/googletest
+        ${TR_THIRD_PARTY_SOURCE_DIR}/googletest/googletest)
+
+message(STATUS "TR_THIRD_PARTY_SOURCE_DIR => ${TR_THIRD_PARTY_SOURCE_DIR}/googletest/googletest")
+execute_process(COMMAND /bin/ls "${TR_THIRD_PARTY_SOURCE_DIR}/googletest/googletest/src" OUTPUT_VARIABLE FOO)
+message(STATUS "contents in src => ${FOO}")
+message(STATUS "src/gtest-all.cc in ${GTEST_ROOT_DIR}")
 
 add_library(gtestall STATIC)
 
