@@ -248,7 +248,7 @@ void tr_logAddMessage(char const* file, long line, tr_log_level level, std::stri
     bool last_one = false;
     if (level == TR_LOG_CRITICAL || level == TR_LOG_ERROR || level == TR_LOG_WARN)
     {
-        static auto constexpr MaxRepeat = size_t{ 30 };
+        static auto MaxRepeat = size_t{ 30 };
         static auto* const counts = new small::map<std::pair<std::string_view, long>, size_t>{};
 
         auto& count = (*counts)[std::make_pair(filename, line)];
@@ -257,6 +257,8 @@ void tr_logAddMessage(char const* file, long line, tr_log_level level, std::stri
         if (count > MaxRepeat)
         {
             errno = err;
+            // exponentially increse MaxRepeat to prevent duplication of lines
+            MaxRepeat = std::exp(MaxRepeat);
             return;
         }
     }
