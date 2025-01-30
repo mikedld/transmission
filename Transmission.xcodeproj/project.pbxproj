@@ -453,6 +453,20 @@
 		ED86936F2ADAE34D00342B1A /* DefaultAppHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED86936E2ADAE34D00342B1A /* DefaultAppHelper.mm */; };
 		ED8A16412735A8AA000D61F9 /* peer-mgr-wishlist.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8A163D2735A8AA000D61F9 /* peer-mgr-wishlist.h */; };
 		ED8A16422735A8AA000D61F9 /* peer-mgr-wishlist.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED8A163E2735A8AA000D61F9 /* peer-mgr-wishlist.cc */; };
+		ED91F28B2CBDA72C008388AA /* crc32c.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED91F01E2CBDA72C008388AA /* crc32c.cc */; };
+		ED91F2B52CBDA72C008388AA /* crc32c_sse42.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED91F0312CBDA72C008388AA /* crc32c_sse42.cc */; };
+		ED91F2F52CBDA72C008388AA /* crc32c_arm64.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED91F0202CBDA72C008388AA /* crc32c_arm64.cc */; };
+		ED91F3152CBDA72C008388AA /* crc32c_portable.cc in Sources */ = {isa = PBXBuildFile; fileRef = ED91F0282CBDA72C008388AA /* crc32c_portable.cc */; };
+		ED91F33A2CBDA72C008388AA /* crc32c_arm64.h in Headers */ = {isa = PBXBuildFile; fileRef = ED91F01F2CBDA72C008388AA /* crc32c_arm64.h */; };
+		ED91F3432CBDA72C008388AA /* crc32c_prefetch.h in Headers */ = {isa = PBXBuildFile; fileRef = ED91F02A2CBDA72C008388AA /* crc32c_prefetch.h */; };
+		ED91F34B2CBDA72C008388AA /* crc32c_sse42_check.h in Headers */ = {isa = PBXBuildFile; fileRef = ED91F0322CBDA72C008388AA /* crc32c_sse42_check.h */; };
+		ED91F3502CBDA72C008388AA /* crc32c_round_up.h in Headers */ = {isa = PBXBuildFile; fileRef = ED91F02E2CBDA72C008388AA /* crc32c_round_up.h */; };
+		ED91F3542CBDA72C008388AA /* crc32c_sse42.h in Headers */ = {isa = PBXBuildFile; fileRef = ED91F0302CBDA72C008388AA /* crc32c_sse42.h */; };
+		ED91F35A2CBDA72C008388AA /* crc32c.h in Headers */ = {isa = PBXBuildFile; fileRef = ED91F01B2CBDA72C008388AA /* crc32c.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED91F35D2CBDA72C008388AA /* crc32c_read_le.h in Headers */ = {isa = PBXBuildFile; fileRef = ED91F02C2CBDA72C008388AA /* crc32c_read_le.h */; };
+		ED91F3602CBDA72C008388AA /* crc32c_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = ED91F0272CBDA72C008388AA /* crc32c_internal.h */; };
+		ED91F3612CBDA72C008388AA /* crc32c_arm64_check.h in Headers */ = {isa = PBXBuildFile; fileRef = ED91F0212CBDA72C008388AA /* crc32c_arm64_check.h */; };
+		ED91F3962CBDAAED008388AA /* libcrc32c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED91F00C2CBDA5D3008388AA /* libcrc32c.a */; };
 		ED9862972B979AA2002F3035 /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED9862962B979AA2002F3035 /* Utils.mm */; };
 		EDBAAC8C29E486BC00D9495F /* ip-cache.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAAC8B29E486BC00D9495F /* ip-cache.h */; };
 		EDBAAC8E29E486C200D9495F /* ip-cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = EDBAAC8D29E486C200D9495F /* ip-cache.cc */; };
@@ -587,6 +601,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4D18389609DEC0030047D688;
 			remoteInfo = libtransmission;
+		};
+		ED91F3942CBDA9BD008388AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ED91F00B2CBDA5D3008388AA;
+			remoteInfo = crc32c;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1370,6 +1391,20 @@
 		ED86936E2ADAE34D00342B1A /* DefaultAppHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DefaultAppHelper.mm; sourceTree = "<group>"; };
 		ED8A163D2735A8AA000D61F9 /* peer-mgr-wishlist.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = "peer-mgr-wishlist.h"; sourceTree = "<group>"; };
 		ED8A163E2735A8AA000D61F9 /* peer-mgr-wishlist.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "peer-mgr-wishlist.cc"; sourceTree = "<group>"; };
+		ED91F00C2CBDA5D3008388AA /* libcrc32c.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcrc32c.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED91F01B2CBDA72C008388AA /* crc32c.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32c.h; sourceTree = "<group>"; };
+		ED91F01E2CBDA72C008388AA /* crc32c.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = crc32c.cc; sourceTree = "<group>"; };
+		ED91F01F2CBDA72C008388AA /* crc32c_arm64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32c_arm64.h; sourceTree = "<group>"; };
+		ED91F0202CBDA72C008388AA /* crc32c_arm64.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = crc32c_arm64.cc; sourceTree = "<group>"; };
+		ED91F0212CBDA72C008388AA /* crc32c_arm64_check.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32c_arm64_check.h; sourceTree = "<group>"; };
+		ED91F0272CBDA72C008388AA /* crc32c_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32c_internal.h; sourceTree = "<group>"; };
+		ED91F0282CBDA72C008388AA /* crc32c_portable.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = crc32c_portable.cc; sourceTree = "<group>"; };
+		ED91F02A2CBDA72C008388AA /* crc32c_prefetch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32c_prefetch.h; sourceTree = "<group>"; };
+		ED91F02C2CBDA72C008388AA /* crc32c_read_le.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32c_read_le.h; sourceTree = "<group>"; };
+		ED91F02E2CBDA72C008388AA /* crc32c_round_up.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32c_round_up.h; sourceTree = "<group>"; };
+		ED91F0302CBDA72C008388AA /* crc32c_sse42.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32c_sse42.h; sourceTree = "<group>"; };
+		ED91F0312CBDA72C008388AA /* crc32c_sse42.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = crc32c_sse42.cc; sourceTree = "<group>"; };
+		ED91F0322CBDA72C008388AA /* crc32c_sse42_check.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32c_sse42_check.h; sourceTree = "<group>"; };
 		ED9862952B979AA2002F3035 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		ED9862962B979AA2002F3035 /* Utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Utils.mm; sourceTree = "<group>"; };
 		EDBAAC8B29E486BC00D9495F /* ip-cache.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = "ip-cache.h"; sourceTree = "<group>"; };
@@ -1462,6 +1497,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED91F3962CBDAAED008388AA /* libcrc32c.a in Frameworks */,
 				C1846BA9294F7B5A00A98F30 /* libwildmat.a in Frameworks */,
 				C3D9062F27B7F7E200EF2386 /* libpsl.a in Frameworks */,
 				C3CEBBFC2794A12200683BE0 /* libdeflate.a in Frameworks */,
@@ -1559,6 +1595,13 @@
 				C8B27B9A28153F3400A22B5D /* libcurl.tbd in Frameworks */,
 				C8B27B9B28153F3400A22B5D /* libiconv.tbd in Frameworks */,
 				C8B27B9C28153F3400A22B5D /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED91F00A2CBDA5D3008388AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1700,6 +1743,7 @@
 				C3CEBBA927949CA000683BE0 /* libdeflate.a */,
 				C3D9062127B7E3C900EF2386 /* libpsl.a */,
 				C1846B9E294F7A3400A98F30 /* libwildmat.a */,
+				ED91F00C2CBDA5D3008388AA /* libcrc32c.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1723,6 +1767,7 @@
 				C3D9061627B7E12F00EF2386 /* libpsl */,
 				C1639A751A55F52800E42033 /* b64 */,
 				C1846B82294F777000A98F30 /* wildmat */,
+				ED91F2682CBDA72C008388AA /* crc32c */,
 				4DDBB71509E16B3F00284745 /* Libraries */,
 				A2F35BBA15C5A0A100EBF632 /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -2362,6 +2407,51 @@
 			name = "Overlay Window";
 			sourceTree = "<group>";
 		};
+		ED91F01C2CBDA72C008388AA /* crc32c */ = {
+			isa = PBXGroup;
+			children = (
+				ED91F01B2CBDA72C008388AA /* crc32c.h */,
+			);
+			path = crc32c;
+			sourceTree = "<group>";
+		};
+		ED91F01D2CBDA72C008388AA /* include */ = {
+			isa = PBXGroup;
+			children = (
+				ED91F01C2CBDA72C008388AA /* crc32c */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		ED91F0362CBDA72C008388AA /* src */ = {
+			isa = PBXGroup;
+			children = (
+				ED91F01E2CBDA72C008388AA /* crc32c.cc */,
+				ED91F01F2CBDA72C008388AA /* crc32c_arm64.h */,
+				ED91F0202CBDA72C008388AA /* crc32c_arm64.cc */,
+				ED91F0212CBDA72C008388AA /* crc32c_arm64_check.h */,
+				ED91F0272CBDA72C008388AA /* crc32c_internal.h */,
+				ED91F0282CBDA72C008388AA /* crc32c_portable.cc */,
+				ED91F02A2CBDA72C008388AA /* crc32c_prefetch.h */,
+				ED91F02C2CBDA72C008388AA /* crc32c_read_le.h */,
+				ED91F02E2CBDA72C008388AA /* crc32c_round_up.h */,
+				ED91F0302CBDA72C008388AA /* crc32c_sse42.h */,
+				ED91F0312CBDA72C008388AA /* crc32c_sse42.cc */,
+				ED91F0322CBDA72C008388AA /* crc32c_sse42_check.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		ED91F2682CBDA72C008388AA /* crc32c */ = {
+			isa = PBXGroup;
+			children = (
+				ED91F01D2CBDA72C008388AA /* include */,
+				ED91F0362CBDA72C008388AA /* src */,
+			);
+			name = crc32c;
+			path = "third-party/crc32c";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2566,6 +2656,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ED91F0082CBDA5D3008388AA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED91F35A2CBDA72C008388AA /* crc32c.h in Headers */,
+				ED91F33A2CBDA72C008388AA /* crc32c_arm64.h in Headers */,
+				ED91F3612CBDA72C008388AA /* crc32c_arm64_check.h in Headers */,
+				ED91F34B2CBDA72C008388AA /* crc32c_sse42_check.h in Headers */,
+				ED91F3542CBDA72C008388AA /* crc32c_sse42.h in Headers */,
+				ED91F3432CBDA72C008388AA /* crc32c_prefetch.h in Headers */,
+				ED91F3502CBDA72C008388AA /* crc32c_round_up.h in Headers */,
+				ED91F35D2CBDA72C008388AA /* crc32c_read_le.h in Headers */,
+				ED91F3602CBDA72C008388AA /* crc32c_internal.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -2598,6 +2704,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				ED91F3952CBDA9BD008388AA /* PBXTargetDependency */,
 				C1846BA7294F7B1400A98F30 /* PBXTargetDependency */,
 				C33E46A22794B3CC0090F2AA /* PBXTargetDependency */,
 				A226FDB10D0CDF6E005A7F71 /* PBXTargetDependency */,
@@ -2896,6 +3003,26 @@
 			productReference = C8B27BA128153F3400A22B5D /* transmission-show */;
 			productType = "com.apple.product-type.tool";
 		};
+		ED91F00B2CBDA5D3008388AA /* crc32c */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED91F0172CBDA5D3008388AA /* Build configuration list for PBXNativeTarget "crc32c" */;
+			buildPhases = (
+				ED91F3982CBDAB95008388AA /* Copy libcrc32c headers */,
+				ED91F0082CBDA5D3008388AA /* Headers */,
+				ED91F0092CBDA5D3008388AA /* Sources */,
+				ED91F00A2CBDA5D3008388AA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = crc32c;
+			packageProductDependencies = (
+			);
+			productName = crc32c;
+			productReference = ED91F00C2CBDA5D3008388AA /* libcrc32c.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2918,6 +3045,9 @@
 					};
 					C3D9062027B7E3C900EF2386 = {
 						CreatedOnToolsVersion = 13.0;
+					};
+					ED91F00B2CBDA5D3008388AA = {
+						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
@@ -2970,6 +3100,7 @@
 				C3CEBB9F27949CA000683BE0 /* deflate */,
 				C3D9062027B7E3C900EF2386 /* psl */,
 				C1846B96294F7A3400A98F30 /* wildmat */,
+				ED91F00B2CBDA5D3008388AA /* crc32c */,
 			);
 		};
 /* End PBXProject section */
@@ -3132,6 +3263,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "sed 's|@LIBPSL_[A-Z_]*@|0|' < third-party/libpsl/include/libpsl.h.in > third-party/libpsl/include/libpsl.h\n\n# Generate files to be included\nPYTHON=$( command -v python3 ) || PYTHON=$( command -v python3.7 ) || PYTHON=$( command -v python2 )\n\"${PYTHON}\" \"third-party/libpsl/src/psl-make-dafsa\" --output-format=cxx+ \"third-party/libpsl/list/public_suffix_list.dat\" \"third-party/suffixes_dafsa.h\"\n";
+		};
+		ED91F3982CBDAB95008388AA /* Copy libcrc32c headers */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/third_party/macosx-crc32c-config.h",
+			);
+			name = "Copy libcrc32c headers";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "cd third-party/crc32c/include/crc32c\n\nif [ ! -e crc32c_config.h -a ! ../../../macosx-crc32c-config.h -ef crc32c_config.h ]; then\n    ln -s ../../../macosx-crc32c-config.h crc32c_config.h;\nfi\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3489,6 +3639,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ED91F0092CBDA5D3008388AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED91F28B2CBDA72C008388AA /* crc32c.cc in Sources */,
+				ED91F2B52CBDA72C008388AA /* crc32c_sse42.cc in Sources */,
+				ED91F2F52CBDA72C008388AA /* crc32c_arm64.cc in Sources */,
+				ED91F3152CBDA72C008388AA /* crc32c_portable.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3581,6 +3742,11 @@
 			isa = PBXTargetDependency;
 			target = 4D18389609DEC0030047D688 /* libtransmission */;
 			targetProxy = C8B27B9428153F3400A22B5D /* PBXContainerItemProxy */;
+		};
+		ED91F3952CBDA9BD008388AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ED91F00B2CBDA5D3008388AA /* crc32c */;
+			targetProxy = ED91F3942CBDA9BD008388AA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -5125,6 +5291,36 @@
 			};
 			name = Release;
 		};
+		ED91F0142CBDA5D3008388AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				HEADER_SEARCH_PATHS = "third-party/crc32c/include";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ED91F0152CBDA5D3008388AA /* Release - Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				HEADER_SEARCH_PATHS = "third-party/crc32c/include";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Release - Debug";
+		};
+		ED91F0162CBDA5D3008388AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				HEADER_SEARCH_PATHS = "third-party/crc32c/include";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -5314,6 +5510,16 @@
 				C8B27B9E28153F3400A22B5D /* Debug */,
 				C8B27B9F28153F3400A22B5D /* Release - Debug */,
 				C8B27BA028153F3400A22B5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		ED91F0172CBDA5D3008388AA /* Build configuration list for PBXNativeTarget "crc32c" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED91F0142CBDA5D3008388AA /* Debug */,
+				ED91F0152CBDA5D3008388AA /* Release - Debug */,
+				ED91F0162CBDA5D3008388AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
