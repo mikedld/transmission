@@ -41,11 +41,11 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
 
  * **alt-speed-enabled:** Boolean (default = false, aka 'Turtle Mode')
    _Note: Clicking the "Turtle" in the GUI when the [scheduler](#Scheduling) is enabled, will only temporarily remove the scheduled limit until the next cycle._
- * **alt-speed-up:** Number (KB/s, default = 50)
- * **alt-speed-down:** Number (KB/s, default = 50)
- * **speed-limit-down:** Number (KB/s, default = 100)
+ * **alt-speed-up:** Number (kB/s, default = 50)
+ * **alt-speed-down:** Number (kB/s, default = 50)
+ * **speed-limit-down:** Number (kB/s, default = 100)
  * **speed-limit-down-enabled:** Boolean (default = false)
- * **speed-limit-up:** Number (KB/s, default = 100)
+ * **speed-limit-up:** Number (kB/s, default = 100)
  * **speed-limit-up-enabled:** Boolean (default = false)
  * **upload-slots-per-torrent:** Number (default = 14)
 
@@ -73,7 +73,7 @@ Here is a sample of the three basic types: respectively Boolean, Number and Stri
    _Note: transmission-daemon only._
 
 #### Misc
- * **cache-size-mb:** Number (default = 4), in megabytes, to allocate for Transmission's memory cache. The cache is used to help batch disk IO together, so increasing the cache size can be used to reduce the number of disk reads and writes. The value is the total available to the Transmission instance. Setting this to 0 bypasses the cache, which may be useful if your filesystem already has a cache layer that aggregates transactions.
+ * **cache-size-mb:** Number (default = 4), in MiB, to allocate for Transmission's memory cache. The cache is used to help batch disk IO together, so increasing the cache size can be used to reduce the number of disk reads and writes. The value is the total available to the Transmission instance. Setting this to 0 bypasses the cache, which may be useful if your filesystem already has a cache layer that aggregates transactions.
  * **default-trackers:** String (default = "") A list of double-newline separated tracker announce URLs. These are used for all torrents in addition to the per torrent trackers specified in the torrent file. If a tracker is only meant to be a backup, it should be separated from its main tracker by a single newline character. If a tracker should be used additionally to another tracker it should be separated by two newlines. (e.g. "udp://tracker.example.invalid:1337/announce\n\nudp://tracker.another-example.invalid:6969/announce\nhttps://backup-tracker.another-example.invalid:443/announce\n\nudp://tracker.yet-another-example.invalid:1337/announce", in this case tracker.example.invalid, tracker.another-example.invalid and tracker.yet-another-example.invalid would be used as trackers and backup-tracker.another-example.invalid as backup in case tracker.another-example.invalid is unreachable.
  * **dht-enabled:** Boolean (default = true) Enable [Distributed Hash Table (DHT)](https://wiki.theory.org/BitTorrentSpecification#Distributed_Hash_Table).
  * **encryption:** Number (0 = Prefer unencrypted connections, 1 = Prefer encrypted connections, 2 = Require encrypted connections; default = 1) [Encryption](https://wiki.vuze.com/w/Message_Stream_Encryption) preference. Encryption may help get around some ISP filtering, but at the cost of slightly higher CPU use.
@@ -166,9 +166,9 @@ Only keys that differ from above are listed here. These options have been replac
 
 #### 1.5x (and older)
 ##### Bandwidth
- * **download-limit:** Number (KB/s, default = 100)
+ * **download-limit:** Number (kB/s, default = 100)
  * **download-limit-enabled:** Boolean (default = false)
- * **upload-limit:** Number (KB/s, default = 100)
+ * **upload-limit:** Number (kB/s, default = 100)
  * **upload-limit-enabled:** Boolean (default = false)
 
 ##### Peer Port
