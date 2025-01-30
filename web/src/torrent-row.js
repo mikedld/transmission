@@ -46,13 +46,11 @@ const TorrentRendererHelper = {
       percent = t.getPercentDone() * 100;
     } else {
       classList.push('seed');
-      if (status !== Torrent._StatusStopped) {
-        const seed_ratio_limit = t.seedRatioLimit(controller);
-        ratio =
-          seed_ratio_limit > 0
-            ? (t.getUploadRatio() * 100) / seed_ratio_limit
-            : 100;
-      }
+      const seed_ratio_limit = t.seedRatioLimit(controller);
+      ratio =
+        seed_ratio_limit > 0
+          ? (t.getUploadRatio() * 100) / seed_ratio_limit
+          : 100;
     }
     if (t.isQueued()) {
       classList.push('queued');

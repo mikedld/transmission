@@ -31,8 +31,8 @@
 
   /* colors related to torrent status */
   --black: #000;
-  --blue-100: #51b3f7;
-  --blue-200: #357aaa;
+  --blue-100: #40b0ff;
+  --blue-200: #3080b7;
   --blue-300: #2c7fea;
   --blue-400: #1847d4;
   --dark-mode-black: #121212;
@@ -41,19 +41,24 @@
   --default-border-dark: #575757;
   --default-border-light: #aeaeae;
   --default-tinted: rgba(128, 128, 144, 0.125);
-  --green-100: #26aa55;
+  --green-100: #17a740;
+  --green-200: #1db74b;
   --green-300: #7cef99;
   --green-400: #67c87f;
-  --green-500: #34dc70;
+  --green-500: #1dc74b;
   --grey: rgba(128, 128, 130, 0.66);
   --grey-200: #e1e4e8;
-  --grey-40: #666;
-  --grey-500: #828282;
+  --grey-20: #d2d5d9;
+  --grey-300: #929599;
+  --grey-30: #a2a5a9;
+  --grey-400: #424549;
+  --grey-40: #727579;
+  --grey-500: #828589;
   --grey-900: #191919;
   --nice-grey: #f8f8f8;
   --red-500: #d73a49;
   --white: #fff;
-  --yellow-300: #ffea7f;
+  --yellow-300: #ffd757;
 
   /* ICONS -- see assets/img/README.md for sources and license details */
   /* Are you a designer? New icon PRs welcomed! */
@@ -108,16 +113,14 @@
     --color-fg-selected: var(--dark-mode-white);
     --color-fg-tertiary: var(--grey-500);
     --color-fg-warn: var(--dark-mode-black);
-    --color-progressbar-fg-1: #edefff;
-    --color-progressbar-fg-2: #edefff;
-    --color-progressbar-fg-3: #edefff;
-    --color-progressbar-paused: var(--grey-500);
+    --color-progressbar-fg-primary: #edefff;
+    --color-progressbar-fg-inverse: #edefff;
+    --color-progressbar-paused: var(--grey-30);
     --color-progressbar-seed-1: var(--green-100);
-    --color-progressbar-seed-2: var(--green-400);
-    --color-progressbar-seed-paused: var(--grey-500);
-    --progress-bar-shadow-1: 1px 1px #000;
-    --progress-bar-shadow-2: 1px 1px #000;
-    --progress-bar-shadow-3: 1px 1px #000;
+    --color-progressbar-seed-2: var(--grey-400);
+    --color-progressbar-seed-paused: var(--grey-40);
+    --progress-bar-shadow-primary: 1px 1px #000;
+    --progress-bar-shadow-inverse: 1px 1px #000;
 
     .contrast-more {
       --color-bg-even: var(--black);
@@ -139,19 +142,14 @@
       --color-fg-tabs: var(--white);
       --color-fg-tertiary: var(--white);
       --color-fg-warn: var(--black);
-      --color-progressbar-fg-1: #fff;
-      --color-progressbar-fg-2: #fff;
-      --color-progressbar-fg-3: #000;
+      --color-progressbar-fg-primary: #000;
+      --color-progressbar-fg-inverse: #fff;
       --color-progressbar-background-2: var(--white);
-      --color-progressbar-magnet: var(--yellow-300);
-      --color-progressbar-paused: var(--grey-500);
+      --color-progressbar-paused: var(--grey-200);
       --color-progressbar-queued: var(--blue-400);
-      --color-progressbar-seed-1: var(--black);
-      --color-progressbar-seed-2: var(--white);
-      --color-progressbar-seed-paused: var(--grey-500);
-      --color-progressbar-verify: var(--yellow-300);
+      --color-progressbar-seed-2: var(--grey-40);
       --color-toolbar-background: var(--black);
-      --progress-bar-shadow-3: 0;
+      --progress-bar-shadow-primary: 0;
     }
   }
   @media (prefers-color-scheme: light) {
@@ -175,20 +173,16 @@
     --color-fg-selected: var(--nice-grey);
     --color-fg-tertiary: var(--grey-500);
     --color-fg-warn: #cf212e;
-    --color-progressbar-fg-1: #303030;
-    --color-progressbar-fg-2: #edefff;
-    --color-progressbar-fg-3: #edefff;
+    --color-progressbar-fg-primary: #303030;
+    --color-progressbar-fg-inverse: #edefff;
     --color-progressbar-leech: var(--blue-100);
-    --color-progressbar-magnet: var(--yellow-300);
-    --color-progressbar-paused: var(--grey-200);
+    --color-progressbar-paused: var(--grey-20);
     --color-progressbar-queued: var(--blue-400);
     --color-progressbar-seed-1: var(--green-500);
-    --color-progressbar-seed-2: var(--green-300);
-    --color-progressbar-seed-paused: var(--grey-200);
-    --color-progressbar-verify: var(--yellow-300);
-    --progress-bar-shadow-1: 0;
-    --progress-bar-shadow-2: 1px 1px #000;
-    --progress-bar-shadow-3: 1px 1px #000;
+    --color-progressbar-seed-2: var(--black);
+    --color-progressbar-seed-paused: var(--grey-500);
+    --progress-bar-shadow-primary: 0;
+    --progress-bar-shadow-inverse: 1px 1px #000;
 
     .contrast-more {
       --color-bg-even: var(--white);
@@ -211,20 +205,15 @@
       --color-fg-tertiary: var(--black);
       --color-fg-warn: var(--white);
       --color-progressbar-background-2: var(--white);
-      --color-progressbar-fg-1: #fff;
-      --color-progressbar-fg-2: #fff;
-      --color-progressbar-fg-3: #000;
+      --color-progressbar-fg-primary: #fff;
+      --color-progressbar-fg-inverse: #fff;
       --color-progressbar-leech: var(--blue-200);
-      --color-progressbar-magnet: var(--yellow-300);
-      --color-progressbar-paused: var(--grey-500);
+      --color-progressbar-paused: var(--grey-300);
       --color-progressbar-queued: var(--blue-400);
-      --color-progressbar-seed-1: var(--black);
-      --color-progressbar-seed-2: var(--white);
-      --color-progressbar-seed-paused: var(--grey-500);
-      --color-progressbar-verify: var(--yellow-300);
+      --color-progressbar-seed-1: var(--green-200);
+      --color-progressbar-seed-paused: var(--black);
       --color-toolbar-background: var(--white);
-      --progress-bar-shadow-1: 1px 1px #000;
-      --progress-bar-shadow-3: 0;
+      --progress-bar-shadow-primary: 1px 1px #000;
     }
   }
 }
@@ -664,7 +653,7 @@ a {
   .torrent-progress-bar {
     font-size: 14px;
     position: relative;
-    border: 1px solid var(--color-border-starkest);
+    border: 1px solid var(--color-border-default);
     border-radius: 3px;
     height: 18px;
 
@@ -684,8 +673,8 @@ a {
 
       &::before {
         background: var(--color-progressbar-leech);
-        color: var(--color-progressbar-fg-2);
-        text-shadow: var(--progress-bar-shadow-2);
+        color: var(--color-progressbar-fg-inverse);
+        text-shadow: var(--progress-bar-shadow-inverse);
       }
     }
 
@@ -695,23 +684,23 @@ a {
     }
 
     &.seed {
-      &.paused::before {
+      &.paused::after {
         background: var(--color-progressbar-seed-paused);
-        color: var(--color-progressbar-fg-1);
-        text-shadow: var(--progress-bar-shadow-1);
+        color: var(--color-progressbar-fg-inverse);
+        text-shadow: var(--progress-bar-shadow-inverse);
       }
 
       &:not(.paused) {
         &::before {
           background: var(--color-progressbar-seed-1);
-          color: var(--color-progressbar-fg-2);
-          text-shadow: var(--progress-bar-shadow-2);
+          color: var(--color-progressbar-fg-inverse);
+          text-shadow: var(--progress-bar-shadow-inverse);
         }
 
         &::after {
           background: var(--color-progressbar-seed-2);
-          color: var(--color-progressbar-fg-3);
-          text-shadow: var(--progress-bar-shadow-3);
+          color: var(--color-progressbar-fg-inverse);
+          text-shadow: var(--progress-bar-shadow-inverse);
         }
       }
 
@@ -721,8 +710,8 @@ a {
 
       &::before {
         background-color: var(--color-progressbar-seed-1);
-        color: var(--color-progressbar-fg-2);
-        text-shadow: var(--progress-bar-shadow-2);
+        color: var(--color-progressbar-fg-inverse);
+        text-shadow: var(--progress-bar-shadow-inverse);
       }
     }
 
@@ -733,8 +722,8 @@ a {
 
     &.paused::before {
       background: var(--color-progressbar-paused);
-      color: var(--color-progressbar-fg-1);
-      text-shadow: var(--progress-bar-shadow-1);
+      color: var(--color-progressbar-fg-primary);
+      text-shadow: var(--progress-bar-shadow-primary);
     }
 
     &::before,
