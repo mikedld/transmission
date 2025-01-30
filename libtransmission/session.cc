@@ -1608,6 +1608,15 @@ size_t tr_sessionGetCacheLimit_MB(tr_session const* session)
 
 // ---
 
+void tr_sessionSetCompleteVerifyEnabled(tr_session* session, bool enabled)
+{
+    TR_ASSERT(session != nullptr);
+
+    session->settings_.torrent_complete_verify_enabled = enabled;
+}
+
+// ---
+
 void tr_session::setDefaultTrackers(std::string_view trackers)
 {
     auto const oldval = default_trackers_;

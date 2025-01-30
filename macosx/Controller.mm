@@ -505,6 +505,7 @@ void onTorrentCompletenessChanged(tr_torrent* tor, tr_completeness status, bool 
             TR_KEY_incomplete_dir,
             [_fDefaults stringForKey:@"IncompleteDownloadFolder"].stringByExpandingTildeInPath.UTF8String);
         tr_variantDictAddBool(&settings, TR_KEY_incomplete_dir_enabled, [_fDefaults boolForKey:@"UseIncompleteDownloadFolder"]);
+        tr_variantDictAddBool(&settings, TR_KEY_torrent_complete_verify_enabled, [_fDefaults boolForKey:@"VerifyDataOnCompletion"]);
         tr_variantDictAddBool(&settings, TR_KEY_lpd_enabled, [_fDefaults boolForKey:@"LocalPeerDiscoveryGlobal"]);
         tr_variantDictAddInt(&settings, TR_KEY_message_level, TR_LOG_DEBUG);
         tr_variantDictAddInt(&settings, TR_KEY_peer_limit_global, [_fDefaults integerForKey:@"PeersTotal"]);

@@ -1076,6 +1076,17 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
+                                            <button verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Evu-rf-BPM">
+                                                <rect key="frame" x="76" y="99" width="257" height="18"/>
+                                                <buttonCell key="cell" type="check" title="Verify data when download completes" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="wM8-cD-WAB">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="setVerifyDataOnCompletion:" target="-2" id="bST-Mi-KsG"/>
+                                                    <binding destination="365" name="value" keyPath="values.VerifyDataOnCompletion" id="zRv-3f-byJ"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="265" firstAttribute="centerY" secondItem="267" secondAttribute="centerY" id="1ye-ZZ-IHj"/>
@@ -1084,9 +1095,9 @@
                                             <constraint firstItem="264" firstAttribute="leading" secondItem="267" secondAttribute="trailing" constant="8" symbolic="YES" id="4kz-Pg-Gs1"/>
                                             <constraint firstItem="607" firstAttribute="leading" secondItem="264" secondAttribute="leading" id="5Ok-rt-vHk"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="606" secondAttribute="trailing" constant="20" symbolic="YES" id="5eC-JW-9sl"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Evu-rf-BPM" secondAttribute="trailing" constant="20" symbolic="YES" id="5fw-Hm-Ccy"/>
                                             <constraint firstItem="1959" firstAttribute="centerY" secondItem="1958" secondAttribute="centerY" id="68T-YZ-SBC"/>
                                             <constraint firstItem="263" firstAttribute="leading" secondItem="257" secondAttribute="trailing" constant="4" id="6mh-gV-D2p"/>
-                                            <constraint firstItem="1298" firstAttribute="top" secondItem="639" secondAttribute="bottom" constant="20" symbolic="YES" id="9My-zU-rE4"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1298" secondAttribute="trailing" constant="20" symbolic="YES" id="Ac7-Sc-pnt"/>
                                             <constraint firstItem="606" firstAttribute="centerY" secondItem="607" secondAttribute="centerY" id="Ao0-Ui-5T8"/>
                                             <constraint firstItem="638" firstAttribute="leading" secondItem="636" secondAttribute="trailing" constant="4" id="Ap1-e8-iyn"/>
@@ -1099,6 +1110,7 @@
                                             <constraint firstItem="1959" firstAttribute="leading" secondItem="1958" secondAttribute="trailing" constant="4" id="GBM-Dv-fBO"/>
                                             <constraint firstItem="604" firstAttribute="centerY" secondItem="607" secondAttribute="centerY" id="GhR-LK-fsr"/>
                                             <constraint firstItem="1299" firstAttribute="leading" secondItem="264" secondAttribute="leading" id="H9J-7l-cRN"/>
+                                            <constraint firstItem="1301" firstAttribute="top" secondItem="Evu-rf-BPM" secondAttribute="bottom" constant="20" id="HFz-O8-K60"/>
                                             <constraint firstItem="337" firstAttribute="leading" secondItem="264" secondAttribute="leading" id="I19-F3-F5L"/>
                                             <constraint firstItem="1969" firstAttribute="leading" secondItem="1959" secondAttribute="trailing" constant="4" id="K65-ud-KmG"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="268" secondAttribute="trailing" constant="20" symbolic="YES" id="Kd0-RO-CDI"/>
@@ -1117,6 +1129,7 @@
                                             <constraint firstItem="2043" firstAttribute="leading" secondItem="264" secondAttribute="leading" id="WV1-Zh-WyT"/>
                                             <constraint firstItem="264" firstAttribute="centerY" secondItem="267" secondAttribute="centerY" id="XGp-eS-3xI"/>
                                             <constraint firstItem="257" firstAttribute="leading" secondItem="337" secondAttribute="trailing" constant="4" id="XHe-qE-pza"/>
+                                            <constraint firstItem="Evu-rf-BPM" firstAttribute="top" secondItem="639" secondAttribute="bottom" constant="4" id="ZMf-g5-ItF"/>
                                             <constraint firstItem="267" firstAttribute="leading" secondItem="4cS-54-dlc" secondAttribute="leading" id="ZXE-R2-LbH"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="265" secondAttribute="trailing" constant="20" symbolic="YES" id="a3K-zJ-Yl9"/>
                                             <constraint firstItem="268" firstAttribute="leading" secondItem="264" secondAttribute="leading" constant="20" id="aMi-iz-dj7"/>
@@ -1135,6 +1148,7 @@
                                             <constraint firstItem="638" firstAttribute="centerY" secondItem="639" secondAttribute="centerY" id="lZM-1c-Rel"/>
                                             <constraint firstItem="1300" firstAttribute="top" secondItem="1299" secondAttribute="bottom" constant="-18" id="muf-Lk-n7G"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="638" secondAttribute="trailing" constant="20" symbolic="YES" id="nga-Zx-3XL"/>
+                                            <constraint firstItem="Evu-rf-BPM" firstAttribute="leading" secondItem="264" secondAttribute="leading" id="ocE-4C-4Pc"/>
                                             <constraint firstItem="1300" firstAttribute="centerY" secondItem="1299" secondAttribute="centerY" id="pg2-8t-utk"/>
                                             <constraint firstItem="263" firstAttribute="centerY" secondItem="337" secondAttribute="centerY" id="pnn-34-PEE"/>
                                             <constraint firstAttribute="bottom" secondItem="2048" secondAttribute="bottom" constant="4" id="qBS-oe-tyG"/>
