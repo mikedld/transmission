@@ -97,7 +97,6 @@ export class ContextMenu extends EventTarget {
     add_item('move-bottom');
     add_separator();
     add_item('remove-selected-torrents', true);
-    add_item('trash-selected-torrents', true);
     add_separator();
     add_item('verify-selected-torrents');
     add_item('show-move-dialog');
