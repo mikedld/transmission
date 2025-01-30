@@ -376,11 +376,21 @@ export class Transmission extends EventTarget {
   _onPrefChanged(key, value) {
     switch (key) {
       case Prefs.DisplayMode: {
-        this.torrentRenderer =
-          value === 'compact'
-            ? new TorrentRendererCompact()
-            : new TorrentRendererFull();
-        this.refilterAllSoon();
+        this.elements.torrent_list.classList.remove('compact');
+        if (value === 'compact') {
+          this.elements.torrent_list.classList.add(value);
+          this.torrentRenderer = new TorrentRendererCompact();
+        } else {
+          this.torrentRenderer = new TorrentRendererFull();
+        }
+        for (const row of this._rows) {
+          // rewrite upon repaint
+          const { progress_details } = row._element;
+          while (progress_details.firstChild) {
+            progress_details.lastChild.remove();
+          }
+          row._torrent.dispatchEvent(new Event('dataChanged'));
+        }
         break;
       }
       case Prefs.ContrastMode: {
@@ -1022,7 +1032,6 @@ TODO: fix this when notifications get fixed
   _refilter(rebuildEverything) {
     const { sort_mode, sort_direction, filter_mode } = this.prefs;
     const filter_tracker = this.filterTracker;
-    const renderer = this.torrentRenderer;
     const list = this.elements.torrent_list;
 
     let filter_text = null;
@@ -1089,7 +1098,7 @@ TODO: fix this when notifications get fixed
     for (const id of this.dirtyTorrents.values()) {
       const t = this._torrents[id];
       if (t && t.test(filter_mode, filter_tracker, filter_text, labels)) {
-        const row = new TorrentRow(renderer, this, t);
+        const row = new TorrentRow(this, t);
         const e = row.getElement();
         e.row = row;
         dirty_rows.push(row);

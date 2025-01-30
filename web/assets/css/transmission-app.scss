@@ -470,6 +470,7 @@ a {
       background-position:
         center,
         top left;
+      grid-area: icon;
       -webkit-mask-image: var(--mime-icon-url);
       -webkit-mask-repeat: no-repeat;
       mask-image: var(--mime-icon-url);
@@ -520,18 +521,12 @@ a {
     }
 
     .torrent-name {
-      font-weight: bold;
       grid-area: name;
       margin-bottom: 2px;
       margin-top: 2px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-
-      &.compact {
-        font-size: 1em;
-        font-weight: normal;
-      }
     }
 
     .torrent-labels {
@@ -544,11 +539,6 @@ a {
       text-overflow: ellipsis;
       white-space: nowrap;
       padding: 1px 0;
-
-      &.compact {
-        flex: 1;
-        font-size: small;
-      }
     }
 
     .torrent-label {
@@ -579,61 +569,6 @@ a {
       }
     }
 
-    &.compact {
-      --icon-size: 16px;
-
-      grid-template-areas: 'icon name labels peers progressbar';
-      grid-template-columns: calc(var(--icon-size) + 10px) auto 1fr auto auto;
-
-      .icon {
-        -webkit-mask-size: var(--icon-size), calc(var(--icon-size) / 2);
-        height: var(--icon-size);
-        mask-size: var(--icon-size), calc(var(--icon-size) / 2);
-        width: var(--icon-size);
-
-        &[data-icon-multifile='true'] {
-          --mime-icon-url: var(--folder-image-url);
-        }
-      }
-
-      .torrent-peer-details {
-        white-space: nowrap;
-      }
-
-      > * {
-        margin: 5px;
-      }
-    }
-
-    &:not(.compact) {
-      --icon-size: 32px;
-
-      grid-column-gap: 12px;
-      grid-template-areas:
-        'icon name labels'
-        'icon progress-text progress-text'
-        'icon progressbar progressbar'
-        'icon peers peers';
-      grid-template-columns: var(--icon-size) auto 1fr;
-      padding: 6px 12px;
-
-      .icon {
-        background-size: var(--icon-size), calc(var(--icon-size) / 2);
-        grid-area: icon;
-        height: var(--icon-size);
-        width: var(--icon-size);
-      }
-
-      .torrent-progress-bar {
-        display: flex;
-        flex-direction: row;
-      }
-
-      > * {
-        margin: 1px 0;
-      }
-    }
-
     &.paused {
       color: var(--color-fg-disabled);
 
@@ -661,21 +596,81 @@ a {
     background-repeat: no-repeat;
   }
 
+  &.compact .torrent {
+    --icon-size: 16px;
+
+    grid-template-areas: 'icon name labels peers progressbar';
+    grid-template-columns: calc(var(--icon-size) + 10px) auto 1fr auto auto;
+
+    .icon {
+      -webkit-mask-size: var(--icon-size), calc(var(--icon-size) / 2);
+      height: var(--icon-size);
+      mask-size: var(--icon-size), calc(var(--icon-size) / 2);
+      width: var(--icon-size);
+
+      &[data-icon-multifile='true'] {
+        --mime-icon-url: var(--folder-image-url);
+      }
+    }
+
+    .torrent-peer-details {
+      white-space: nowrap;
+    }
+
+    .torrent-progress-bar {
+      min-width: 100px;
+    }
+
+    .torrent-progress-details {
+      display: none;
+    }
+
+    > * {
+      margin: 5px;
+    }
+  }
+
+  &:not(.compact) .torrent {
+    --icon-size: 32px;
+
+    grid-column-gap: 12px;
+    grid-template-areas:
+      'icon name labels'
+      'icon progress-text progress-text'
+      'icon progressbar progressbar'
+      'icon peers peers';
+    grid-template-columns: var(--icon-size) auto 1fr;
+    padding: 6px 12px;
+
+    .icon {
+      background-size: var(--icon-size), calc(var(--icon-size) / 2);
+      height: var(--icon-size);
+      width: var(--icon-size);
+    }
+
+    .torrent-name {
+      font-weight: bold;
+    }
+
+    .torrent-progress-bar {
+      margin: 2px 0;
+    }
+
+    .torrent-progress-details:empty::before {
+      content: '\00a0';
+    }
+
+    > * {
+      margin: 1px 0;
+    }
+  }
+
   .torrent-progress-bar {
     font-size: 14px;
     position: relative;
     border: 1px solid var(--color-border-starkest);
     border-radius: 3px;
     height: 18px;
-
-    &.full {
-      flex-grow: 1;
-      margin: 2px 0;
-    }
-
-    &.compact {
-      min-width: 100px;
-    }
 
     &.leech {
       &.queued::before {

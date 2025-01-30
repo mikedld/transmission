@@ -8,6 +8,30 @@ import { Torrent } from './torrent.js';
 import { setTextContent } from './utils.js';
 
 const TorrentRendererHelper = {
+  createRow: (torrent) => {
+    const root = document.createElement('li');
+    root.className = 'torrent';
+
+    const elements = [
+      ['icon', 'icon'],
+      ['name', 'torrent-name'],
+      ['labels', 'torrent-labels'],
+      ['progress_details', 'torrent-progress-details'],
+      ['progressbar', 'torrent-progress-bar'],
+      ['peer_details', 'torrent-peer-details'],
+    ];
+
+    for (const [name, className] of elements) {
+      const e = document.createElement('div');
+      e.className = className;
+      root.append(e);
+      root[name] = e;
+    }
+
+    TorrentRendererHelper.updateIcon(root.icon, torrent);
+
+    return root;
+  },
   formatETA: (t) => {
     const eta = t.getETA();
     if (eta < 0 || eta >= 999 * 60 * 60) {
@@ -215,8 +239,7 @@ export class TorrentRendererFull {
 
   // eslint-disable-next-line class-methods-use-this
   render(controller, torrent, root) {
-    const is_stopped = torrent.isStopped();
-    root.classList.toggle('paused', is_stopped);
+    root.classList.toggle('paused', torrent.isStopped());
     const { labels, name, peer_details, progressbar, progress_details } = root;
 
     // name
@@ -234,36 +257,9 @@ export class TorrentRendererFull {
 
     // progressbar
     TorrentRendererHelper.renderProgressbar(controller, torrent, progressbar);
-    progressbar.classList.add('full');
 
     // peer details
     TorrentRendererFull.renderPeerDetails(torrent, peer_details);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  createRow(torrent) {
-    const root = document.createElement('li');
-    root.className = 'torrent';
-
-    const elements = [
-      ['icon', 'icon'],
-      ['name', 'torrent-name'],
-      ['labels', 'torrent-labels'],
-      ['progress_details', 'torrent-progress-details'],
-      ['progressbar', 'torrent-progress-bar full'],
-      ['peer_details', 'torrent-peer-details'],
-    ];
-
-    for (const [name, className] of elements) {
-      const e = document.createElement('div');
-      e.className = className;
-      root.append(e);
-      root[name] = e;
-    }
-
-    TorrentRendererHelper.updateIcon(root.icon, torrent);
-
-    return root;
   }
 }
 
@@ -331,44 +327,17 @@ export class TorrentRendererCompact {
 
     // progressbar
     TorrentRendererHelper.renderProgressbar(controller, torrent, progressbar);
-    progressbar.classList.add('compact');
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  createRow(torrent) {
-    const root = document.createElement('li');
-    root.className = 'torrent compact';
-
-    const elements = [
-      ['icon', 'icon'],
-      ['name', 'torrent-name compact'],
-      ['labels', 'torrent-labels compact'],
-      ['peer_details', 'torrent-peer-details compact'],
-      ['progressbar', 'torrent-progress-bar compact'],
-    ];
-
-    for (const [name, className] of elements) {
-      const e = document.createElement('div');
-      e.className = className;
-      root.append(e);
-      root[name] = e;
-    }
-
-    TorrentRendererHelper.updateIcon(root.icon, torrent);
-
-    return root;
   }
 }
 
 ///
 
 export class TorrentRow {
-  constructor(view, controller, torrent) {
-    this._view = view;
+  constructor(controller, torrent) {
     this._torrent = torrent;
-    this._element = view.createRow(torrent);
+    this._element = TorrentRendererHelper.createRow(torrent);
 
-    const update = () => this.render(controller);
+    const update = () => this.updateRow(controller);
     this._torrent.addEventListener('dataChanged', update);
     update();
   }
@@ -377,10 +346,10 @@ export class TorrentRow {
     return this._element;
   }
 
-  render(controller) {
+  updateRow(controller) {
     const tor = this.getTorrent();
     if (tor) {
-      this._view.render(controller, tor, this.getElement());
+      controller.torrentRenderer.render(controller, tor, this.getElement());
     }
   }
 
