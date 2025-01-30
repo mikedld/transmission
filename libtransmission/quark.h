@@ -355,6 +355,7 @@ enum
     TR_KEY_size_units,
     TR_KEY_sizeWhenDone,
     TR_KEY_sleep_per_seconds_during_verify,
+    TR_KEY_socket_address,
     TR_KEY_sort_mode,
     TR_KEY_sort_reversed,
     TR_KEY_source,
