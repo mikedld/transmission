@@ -214,6 +214,7 @@ The 'source' column here corresponds to the data structure there.
 | `addedDate` | number | tr_stat
 | `availability` | array (see below)| tr_torrentAvailability()
 | `bandwidthPriority` | number | tr_priority_t
+| `bytesCompleted` | array (see below)| n/a
 | `comment` | string | tr_torrent_view
 | `corruptEver`| number | tr_stat
 | `creator`| string | tr_torrent_view
@@ -289,6 +290,8 @@ The 'source' column here corresponds to the data structure there.
 | `webseedsSendingToUs`| number| tr_stat
 
 `availability`: An array of `pieceCount` numbers representing the number of connected peers that have each piece, or -1 if we already have the piece ourselves.
+
+`bytesCompleted`: An array of `tr_info.filecount` numbers. Each is the completed bytes for the corresponding file.
 
 `files`: array of objects, each containing:
 

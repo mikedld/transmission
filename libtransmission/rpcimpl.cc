@@ -338,6 +338,19 @@ namespace make_torrent_field_helpers
     return tr_variant{ std::move(vec) };
 }
 
+[[nodiscard]] auto make_bytes_completed_vec(tr_torrent const& tor)
+{
+    auto const n_files = tor.file_count();
+    auto vec = tr_variant::Vector{};
+    vec.reserve(n_files);
+    tr_logAddDebug("Running bytes completed");
+    for (tr_file_index_t idx = 0U; idx != n_files; ++idx)
+    {
+        vec.emplace_back(tr_torrentFile(&tor, idx).have);
+    }
+    return tr_variant{ std::move(vec) };
+}
+
 [[nodiscard]] auto make_file_vec(tr_torrent const& tor)
 {
     auto const n_files = tor.file_count();
@@ -506,6 +519,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_addedDate:
     case TR_KEY_availability:
     case TR_KEY_bandwidthPriority:
+    case TR_KEY_bytesCompleted:
     case TR_KEY_comment:
     case TR_KEY_corruptEver:
     case TR_KEY_creator:
@@ -600,6 +614,7 @@ namespace make_torrent_field_helpers
     case TR_KEY_addedDate: return st.addedDate;
     case TR_KEY_availability: return make_piece_availability_vec(tor);
     case TR_KEY_bandwidthPriority: return tor.get_priority();
+    case TR_KEY_bytesCompleted: return make_bytes_completed_vec(tor);
     case TR_KEY_comment: return tor.comment();
     case TR_KEY_corruptEver: return st.corruptEver;
     case TR_KEY_creator: return tor.creator();
