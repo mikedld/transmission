@@ -63,7 +63,7 @@ public:
     }
 
     // generate the metainfo
-    [[nodiscard]] std::string benc(tr_error* error = nullptr) const;
+    [[nodiscard]] std::string benc() const;
 
     // generate the metainfo and save it to a torrent file
     bool save(std::string_view filename, tr_error* error = nullptr) const;

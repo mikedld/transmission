@@ -100,7 +100,9 @@ bool write_entire_buf(tr_sys_file_t const fd, uint64_t file_offset, uint8_t cons
     if (writable)
     {
         auto const base = tor.current_dir();
-        auto const suffix = session.isIncompleteFileNamingEnabled() ? tr_torrent_files::PartialFileSuffix : ""sv;
+        auto const suffix = session.isIncompleteFileNamingEnabled() && tor.file_size(file_index) > 0 ?
+            tr_torrent_files::PartialFileSuffix :
+            ""sv;
         auto const filename = tr_pathbuf{ base, '/', tor.file_subpath(file_index), suffix };
         if (auto const fd = open_files.get(tor_id, file_index, writable, filename, prealloc, file_size); fd)
         {
@@ -137,10 +139,6 @@ void read_or_write_bytes(
     auto const file_size = tor.file_size(file_index);
     TR_ASSERT(file_size == 0U || file_offset < file_size);
     TR_ASSERT(file_offset + buflen <= file_size);
-    if (file_size == 0U)
-    {
-        return;
-    }
 
     auto const fd = get_fd(session, open_files, tor, writable, file_index, error);
     if (!fd || error)
