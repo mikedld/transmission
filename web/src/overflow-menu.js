@@ -6,7 +6,7 @@
 import { Formatter } from './formatter.js';
 import { Prefs } from './prefs.js';
 import { RPC } from './remote.js';
-import { OutsideClickListener, setEnabled } from './utils.js';
+import { makeUUID, OutsideClickListener, setEnabled } from './utils.js';
 
 function make_section(classname, title) {
   const section = document.createElement('fieldset');
@@ -146,6 +146,23 @@ export class OverflowMenu extends EventTarget {
     const root = document.createElement('div');
     root.classList.add('overflow-menu', 'popup');
 
+    let div = document.createElement('div');
+
+    const add_checkbox = (text, listener) => {
+      const check = document.createElement('input');
+      check.id = makeUUID();
+      check.type = 'checkbox';
+
+      const label = document.createElement('label');
+      label.htmlFor = check.id;
+      label.textContent = text;
+
+      div.append(check, label);
+      listener(check);
+    };
+
+    // DISPLAY
+
     let section = make_section('display', 'Display');
     root.append(section);
 
@@ -155,7 +172,6 @@ export class OverflowMenu extends EventTarget {
 
     // sort mode
 
-    let div = document.createElement('div');
     div.classList.add('table-row');
     options.append(div);
 
@@ -186,7 +202,7 @@ export class OverflowMenu extends EventTarget {
       select.append(option);
     }
 
-    label.setAttribute('for', select.id);
+    label.htmlFor = select.id;
     select.value = this.prefs.sort_mode;
     select.addEventListener('change', (event_) => {
       this.prefs.sort_mode = event_.target.value;
@@ -198,24 +214,17 @@ export class OverflowMenu extends EventTarget {
     div.classList.add('table-row');
     options.append(div);
 
-    let check = document.createElement('input');
-    check.id = 'display-sort-reverse-check';
-    check.dataset.pref = Prefs.SortDirection;
-    check.type = 'checkbox';
-    div.append(check);
+    let listener = (e) => {
+      e.dataset.pref = Prefs.SortDirection;
+      e.checked = this.prefs.sort_direction !== Prefs.SortAscending;
+      e.addEventListener('input', (event_) => {
+        this.prefs.sort_direction = event_.target.checked
+          ? Prefs.SortDescending
+          : Prefs.SortAscending;
+      });
+    };
 
-    label = document.createElement('label');
-    label.id = 'display-sort-reverse-label';
-    label.setAttribute('for', check.id);
-    label.textContent = 'Reverse sort';
-    div.append(label);
-
-    check.checked = this.prefs.sort_direction !== Prefs.SortAscending;
-    check.addEventListener('input', (event_) => {
-      this.prefs.sort_direction = event_.target.checked
-        ? Prefs.SortDescending
-        : Prefs.SortAscending;
-    });
+    add_checkbox('Reverse sort', listener);
 
     // compact
 
@@ -223,29 +232,17 @@ export class OverflowMenu extends EventTarget {
     div.classList.add('table-row');
     options.append(div);
 
-    let action = 'toggle-compact-rows';
-    check = document.createElement('input');
-    check.id = 'display-compact-check';
-    check.dataset.action = action;
-    check.type = 'checkbox';
-    div.append(check);
+    listener = (e) => {
+      e.checked = this.prefs.display_mode === Prefs.DisplayCompact;
+      e.addEventListener('change', (event_) => {
+        const { checked } = event_.target;
+        this.prefs.display_mode = checked
+          ? Prefs.DisplayCompact
+          : Prefs.DisplayFull;
+      });
+    };
 
-    label = document.createElement('label');
-    label.id = 'display-compact-label';
-    label.for = check.id;
-    label.setAttribute('for', check.id);
-    label.textContent = this.action_manager.text(action);
-
-    check.checked = this.prefs.display_mode === Prefs.DisplayCompact;
-
-    div.append(label);
-
-    check.addEventListener('input', (event_) => {
-      const { checked } = event_.target;
-      this.prefs.display_mode = checked
-        ? Prefs.DisplayCompact
-        : Prefs.DisplayFull;
-    });
+    add_checkbox(this.action_manager.text('toggle-compact-rows'), listener);
 
     // contrast
 
@@ -253,61 +250,43 @@ export class OverflowMenu extends EventTarget {
     div.classList.add('table-row');
     options.append(div);
 
-    action = 'toggle-contrast';
-    check = document.createElement('input');
-    check.id = 'contrast-more-check';
-    check.dataset.action = action;
-    check.type = 'checkbox';
-    check.classList.add('switch');
+    listener = (e) => {
+      e.checked = this.prefs.contrast_mode === Prefs.ContrastMore;
+      e.addEventListener('change', (event_) => {
+        const { checked } = event_.target;
+        this.prefs.contrast_mode = checked
+          ? Prefs.ContrastMore
+          : Prefs.ContrastLess;
+      });
+    };
 
-    label = document.createElement('label');
-    label.id = 'contrast-more-label';
-    label.for = check.id;
-    label.setAttribute('for', check.id);
-    label.textContent = this.action_manager.text(action);
-
-    check.checked = this.prefs.contrast_mode === Prefs.ContrastMore;
-
-    div.append(check);
-    div.append(label);
-
-    check.addEventListener('input', (event_) => {
-      const { checked } = event_.target;
-      this.prefs.contrast_mode = checked
-        ? Prefs.ContrastMore
-        : Prefs.ContrastLess;
-    });
+    add_checkbox(this.action_manager.text('toggle-contrast'), listener);
 
     // fullscreen
 
     div = document.createElement('div');
     div.classList.add('table-row', 'display-fullscreen-row');
-
     options.append(div);
 
-    check = document.createElement('input');
-    check.id = 'display-fullscreen-check';
-    check.type = 'checkbox';
-    const is_fullscreen = () => document.fullscreenElement !== null;
-    check.checked = is_fullscreen();
-    check.addEventListener('input', () => {
-      if (is_fullscreen()) {
-        document.exitFullscreen();
-      } else {
-        document.body.requestFullscreen();
-      }
-    });
-    document.addEventListener('fullscreenchange', () => {
-      check.checked = is_fullscreen();
-    });
-    div.append(check);
+    listener = (e) => {
+      const is_fullscreen = () => document.fullscreenElement !== null;
+      e.checked = is_fullscreen();
+      document.addEventListener('fullscreenchange', () => {
+        e.checked = is_fullscreen();
+      });
 
-    label = document.createElement('label');
-    label.id = 'display-fullscreen-label';
-    label.for = check.id;
-    label.setAttribute('for', check.id);
-    label.textContent = 'Fullscreen';
-    div.append(label);
+      e.addEventListener('change', () => {
+        if (is_fullscreen()) {
+          document.exitFullscreen();
+        } else {
+          document.body.requestFullscreen();
+        }
+      });
+    };
+
+    add_checkbox('Fullscreen', listener);
+
+    // SPEED LIMIT
 
     section = make_section('speed', 'Speed Limit');
     root.append(section);
@@ -355,7 +334,7 @@ export class OverflowMenu extends EventTarget {
       select.append(option);
     }
 
-    label.setAttribute('for', select.id);
+    label.htmlFor = select.id;
     select.value = session_properties[RPC._UpSpeedLimited]
       ? `${session_properties[RPC._UpSpeedLimit]}`
       : unlimited;
@@ -399,7 +378,7 @@ export class OverflowMenu extends EventTarget {
       select.append(option);
     }
 
-    label.setAttribute('for', select.id);
+    label.htmlFor = select.id;
     select.value = session_properties[RPC._DownSpeedLimited]
       ? `${session_properties[RPC._DownSpeedLimit]}`
       : unlimited;
@@ -422,37 +401,32 @@ export class OverflowMenu extends EventTarget {
     div.classList.add('alt-speed');
     options.append(div);
 
-    check = document.createElement('input');
-    check.id = 'alt-speed-check';
-    check.type = 'checkbox';
-    check.checked = session_properties[RPC._TurtleState];
-    check.addEventListener('change', (event_) => {
-      this.remote.savePrefs({
-        [RPC._TurtleState]: event_.target.checked,
+    listener = (e) => {
+      e.checked = session_properties[RPC._TurtleState];
+      elements.alt_speed_check = e;
+      e.addEventListener('change', (event_) => {
+        this.remote.savePrefs({
+          [RPC._TurtleState]: event_.target.checked,
+        });
       });
-    });
-    div.append(check);
-    elements.alt_speed_check = check;
 
-    label = document.createElement('label');
-    label.id = 'alt-speed-image';
-    label.setAttribute('for', check.id);
-    div.append(label);
+      const turtle = document.createElement('label');
+      turtle.htmlFor = e.id;
+      turtle.id = 'alt-speed-image';
 
-    label = document.createElement('label');
-    label.id = 'alt-speed-label';
-    label.setAttribute('for', check.id);
-    label.textContent = 'Use Temp limits';
-    div.append(label);
+      const parentheses = document.createElement('label');
+      parentheses.htmlFor = e.id;
 
-    label = document.createElement('label');
-    label.id = 'alt-speed-values-label';
-    label.setAttribute('for', check.id);
+      const up = Formatter.speed(session_properties[RPC._TurtleUpSpeedLimit]);
+      const dn = Formatter.speed(session_properties[RPC._TurtleDownSpeedLimit]);
+      parentheses.textContent = `(${up} up, ${dn} down)`;
 
-    const up = Formatter.speed(session_properties[RPC._TurtleUpSpeedLimit]);
-    const dn = Formatter.speed(session_properties[RPC._TurtleDownSpeedLimit]);
-    label.textContent = `(${up} up, ${dn} down)`;
-    div.append(label);
+      div.append(turtle, parentheses);
+    };
+
+    add_checkbox('Use Temp limits', listener);
+
+    // ACTIONS
 
     section = make_section('actions', 'Actions');
     root.append(section);
@@ -466,6 +440,8 @@ export class OverflowMenu extends EventTarget {
       const text = this.action_manager.text(action_name);
       actions[action_name] = make_button(section, text, action_name, on_click);
     }
+
+    // HELP
 
     section = make_section('help', 'Help');
     root.append(section);
