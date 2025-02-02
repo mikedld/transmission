@@ -75,8 +75,8 @@
 		A20162C913DE48BF00E15488 /* receivedata.c in Sources */ = {isa = PBXBuildFile; fileRef = A20162C713DE48BF00E15488 /* receivedata.c */; };
 		A20162CA13DE48BF00E15488 /* receivedata.h in Headers */ = {isa = PBXBuildFile; fileRef = A20162C813DE48BF00E15488 /* receivedata.h */; };
 		A20162CD13DE497000E15488 /* portlistingparse.c in Sources */ = {isa = PBXBuildFile; fileRef = A20162CB13DE497000E15488 /* portlistingparse.c */; };
-		A20162CE13DE497000E15488 /* portlistingparse.h in Headers */ = {isa = PBXBuildFile; fileRef = A20162CC13DE497000E15488 /* portlistingparse.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		A20162D013DE49E500E15488 /* miniupnpctypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A20162CF13DE49E500E15488 /* miniupnpctypes.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		A20162CE13DE497000E15488 /* portlistingparse.h in Headers */ = {isa = PBXBuildFile; fileRef = A20162CC13DE497000E15488 /* portlistingparse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A20162D013DE49E500E15488 /* miniupnpctypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A20162CF13DE49E500E15488 /* miniupnpctypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A2074F4C12BEA8CE00F70985 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = A2074F4B12BEA8CE00F70985 /* buffer.c */; };
 		A2074F5912BEA8E000F70985 /* bufferevent_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = A2074F5012BEA8E000F70985 /* bufferevent_filter.c */; };
 		A2074F5B12BEA8E000F70985 /* bufferevent_pair.c in Sources */ = {isa = PBXBuildFile; fileRef = A2074F5212BEA8E000F70985 /* bufferevent_pair.c */; };
@@ -135,7 +135,7 @@
 		A22CFB820FB66EF30009BD3E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22CFB810FB66EF30009BD3E /* Carbon.framework */; };
 		A22CFCA80FC24ED80009BD3E /* tr-dht.cc in Sources */ = {isa = PBXBuildFile; fileRef = A22CFCA60FC24ED80009BD3E /* tr-dht.cc */; };
 		A22CFCA90FC24ED80009BD3E /* tr-dht.h in Headers */ = {isa = PBXBuildFile; fileRef = A22CFCA70FC24ED80009BD3E /* tr-dht.h */; };
-		A22CFCC20FC24F890009BD3E /* dht.h in Headers */ = {isa = PBXBuildFile; fileRef = A22CFCC00FC24F890009BD3E /* dht.h */; };
+		A22CFCC20FC24F890009BD3E /* dht.h in Headers */ = {isa = PBXBuildFile; fileRef = A22CFCC00FC24F890009BD3E /* dht.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A22CFCC30FC24F890009BD3E /* dht.c in Sources */ = {isa = PBXBuildFile; fileRef = A22CFCC10FC24F890009BD3E /* dht.c */; };
 		A22CFCCB0FC24FDA0009BD3E /* libdht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A22CFCBA0FC24F710009BD3E /* libdht.a */; };
 		A22CFCCD0FC250480009BD3E /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE75C3490C729E9500DBEFE0 /* libevent.a */; };
@@ -264,14 +264,14 @@
 		A2FB701C0D95CAEA0001F331 /* GroupsController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A2FB701B0D95CAEA0001F331 /* GroupsController.mm */; };
 		A47A7C87B8B57BE50DF0D410 /* torrent-files.cc in Sources */ = {isa = PBXBuildFile; fileRef = A47A7C87B8B57BE50DF0D411 /* torrent-files.cc */; };
 		A47A7C87B8B57BE50DF0D412 /* torrent-files.h in Headers */ = {isa = PBXBuildFile; fileRef = A47A7C87B8B57BE50DF0D413 /* torrent-files.h */; };
-		BE1183580CE160C50002D0F3 /* miniupnpc_declspec.h in Headers */ = {isa = PBXBuildFile; fileRef = BE11834E0CE160C50002D0F3 /* miniupnpc_declspec.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		BE1183590CE160C50002D0F3 /* igd_desc_parse.h in Headers */ = {isa = PBXBuildFile; fileRef = BE11834F0CE160C50002D0F3 /* igd_desc_parse.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		BE1183580CE160C50002D0F3 /* miniupnpc_declspec.h in Headers */ = {isa = PBXBuildFile; fileRef = BE11834E0CE160C50002D0F3 /* miniupnpc_declspec.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE1183590CE160C50002D0F3 /* igd_desc_parse.h in Headers */ = {isa = PBXBuildFile; fileRef = BE11834F0CE160C50002D0F3 /* igd_desc_parse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE11835A0CE160C50002D0F3 /* minixml.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183500CE160C50002D0F3 /* minixml.h */; };
-		BE11835B0CE160C50002D0F3 /* miniwget.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183510CE160C50002D0F3 /* miniwget.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		BE11835B0CE160C50002D0F3 /* miniwget.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183510CE160C50002D0F3 /* miniwget.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE11835C0CE160C50002D0F3 /* minisoap.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183520CE160C50002D0F3 /* minisoap.h */; };
-		BE11835D0CE160C50002D0F3 /* upnpreplyparse.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183530CE160C50002D0F3 /* upnpreplyparse.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		BE11835E0CE160C50002D0F3 /* upnpcommands.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183540CE160C50002D0F3 /* upnpcommands.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		BE11835F0CE160C50002D0F3 /* miniupnpc.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183550CE160C50002D0F3 /* miniupnpc.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		BE11835D0CE160C50002D0F3 /* upnpreplyparse.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183530CE160C50002D0F3 /* upnpreplyparse.h */; };
+		BE11835E0CE160C50002D0F3 /* upnpcommands.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183540CE160C50002D0F3 /* upnpcommands.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE11835F0CE160C50002D0F3 /* miniupnpc.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183550CE160C50002D0F3 /* miniupnpc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE1183600CE160C50002D0F3 /* minissdpc.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1183560CE160C50002D0F3 /* minissdpc.h */; };
 		BE1183690CE160D50002D0F3 /* igd_desc_parse.c in Sources */ = {isa = PBXBuildFile; fileRef = BE1183610CE160D50002D0F3 /* igd_desc_parse.c */; };
 		BE11836A0CE160D50002D0F3 /* minixml.c in Sources */ = {isa = PBXBuildFile; fileRef = BE1183620CE160D50002D0F3 /* minixml.c */; };
@@ -281,7 +281,7 @@
 		BE11836E0CE160D50002D0F3 /* upnpreplyparse.c in Sources */ = {isa = PBXBuildFile; fileRef = BE1183660CE160D50002D0F3 /* upnpreplyparse.c */; };
 		BE11836F0CE160D50002D0F3 /* upnpcommands.c in Sources */ = {isa = PBXBuildFile; fileRef = BE1183670CE160D50002D0F3 /* upnpcommands.c */; };
 		BE1183700CE160D50002D0F3 /* miniupnpc.c in Sources */ = {isa = PBXBuildFile; fileRef = BE1183680CE160D50002D0F3 /* miniupnpc.c */; };
-		BE1183780CE161390002D0F3 /* libminiupnp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE1183480CE160960002D0F3 /* libminiupnp.a */; };
+		BE1183780CE161390002D0F3 /* libminiupnpc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE1183480CE160960002D0F3 /* libminiupnpc.a */; };
 		BE75C38A0C72A1ED00DBEFE0 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE75C3490C729E9500DBEFE0 /* libevent.a */; };
 		BE7AA337F6752914B0C416B0 /* utils-ev.h in Headers */ = {isa = PBXBuildFile; fileRef = BE7AA337F6752914B0C416B1 /* utils-ev.h */; };
 		BE7AA337F6752914B0C416B2 /* utils-ev.cc in Sources */ = {isa = PBXBuildFile; fileRef = BE7AA337F6752914B0C416B3 /* utils-ev.cc */; };
@@ -325,7 +325,7 @@
 		C11DEA161FCD31C0009E22B9 /* subprocess-posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = C11DEA141FCD31C0009E22B9 /* subprocess-posix.cc */; };
 		C11DEA171FCD31C0009E22B9 /* subprocess.h in Headers */ = {isa = PBXBuildFile; fileRef = C11DEA151FCD31C0009E22B9 /* subprocess.h */; };
 		C12F19791E1AE3C30005E93F /* upnperrors.c in Sources */ = {isa = PBXBuildFile; fileRef = C12F19771E1AE3C30005E93F /* upnperrors.c */; };
-		C12F197B1E1AE4460005E93F /* upnperrors.h in Headers */ = {isa = PBXBuildFile; fileRef = C12F197A1E1AE4460005E93F /* upnperrors.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C12F197B1E1AE4460005E93F /* upnperrors.h in Headers */ = {isa = PBXBuildFile; fileRef = C12F197A1E1AE4460005E93F /* upnperrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1305EBE186A13B100F03351 /* file.cc in Sources */ = {isa = PBXBuildFile; fileRef = C1305EB8186A134000F03351 /* file.cc */; };
 		C1425B361EE9C605001DB85F /* tr-assert.h in Headers */ = {isa = PBXBuildFile; fileRef = C1425B331EE9C5EA001DB85F /* tr-assert.h */; };
 		C1425B371EE9C705001DB85F /* tr-macros.h in Headers */ = {isa = PBXBuildFile; fileRef = C1425B341EE9C5EA001DB85F /* tr-macros.h */; };
@@ -353,7 +353,7 @@
 		C1846BA3294F7A6800A98F30 /* wildmat.h in Headers */ = {isa = PBXBuildFile; fileRef = C1846B87294F781800A98F30 /* wildmat.h */; };
 		C1846BA9294F7B5A00A98F30 /* libwildmat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1846B9E294F7A3400A98F30 /* libwildmat.a */; };
 		C1BF7BA81F2A3CB7008E88A7 /* upnpdev.c in Sources */ = {isa = PBXBuildFile; fileRef = C1BF7BA71F2A3CB7008E88A7 /* upnpdev.c */; };
-		C1BF7BAA1F2A3CCE008E88A7 /* upnpdev.h in Headers */ = {isa = PBXBuildFile; fileRef = C1BF7BA91F2A3CCE008E88A7 /* upnpdev.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C1BF7BAA1F2A3CCE008E88A7 /* upnpdev.h in Headers */ = {isa = PBXBuildFile; fileRef = C1BF7BA91F2A3CCE008E88A7 /* upnpdev.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1F690FD1AD0627500D95CF0 /* daemon-posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = C1F690FC1AD0627500D95CF0 /* daemon-posix.cc */; };
 		C1FEE5781C3223CC00D62832 /* watchdir-generic.cc in Sources */ = {isa = PBXBuildFile; fileRef = C1FEE5731C3223CC00D62832 /* watchdir-generic.cc */; };
 		C1FEE5791C3223CC00D62832 /* watchdir-kqueue.cc in Sources */ = {isa = PBXBuildFile; fileRef = C1FEE5741C3223CC00D62832 /* watchdir-kqueue.cc */; };
@@ -1064,7 +1064,7 @@
 		A47A7C87B8B57BE50DF0D411 /* torrent-files.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "torrent-files.cc"; sourceTree = "<group>"; };
 		A47A7C87B8B57BE50DF0D413 /* torrent-files.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = "torrent-files.h"; sourceTree = "<group>"; };
 		A54D44C6A7AAF131D9AE29F5 /* block-info.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "block-info.cc"; sourceTree = "<group>"; };
-		BE1183480CE160960002D0F3 /* libminiupnp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libminiupnp.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE1183480CE160960002D0F3 /* libminiupnpc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libminiupnpc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE11834E0CE160C50002D0F3 /* miniupnpc_declspec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = miniupnpc_declspec.h; sourceTree = "<group>"; };
 		BE11834F0CE160C50002D0F3 /* igd_desc_parse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = igd_desc_parse.h; sourceTree = "<group>"; };
 		BE1183500CE160C50002D0F3 /* minixml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = minixml.h; sourceTree = "<group>"; };
@@ -1469,7 +1469,7 @@
 				A22CFCCB0FC24FDA0009BD3E /* libdht.a in Frameworks */,
 				A267927C130DFF2700CB7464 /* libutp.a in Frameworks */,
 				BE75C38A0C72A1ED00DBEFE0 /* libevent.a in Frameworks */,
-				BE1183780CE161390002D0F3 /* libminiupnp.a in Frameworks */,
+				BE1183780CE161390002D0F3 /* libminiupnpc.a in Frameworks */,
 				A226FDAC0D0CDF20005A7F71 /* libnatpmp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1692,7 +1692,7 @@
 				C8B27BA128153F3400A22B5D /* transmission-show */,
 				A2F35BB915C5A0A100EBF632 /* QuickLookPlugin.qlgenerator */,
 				BE75C3490C729E9500DBEFE0 /* libevent.a */,
-				BE1183480CE160960002D0F3 /* libminiupnp.a */,
+				BE1183480CE160960002D0F3 /* libminiupnpc.a */,
 				3C7A118D0D0B2EB800B5701F /* libnatpmp.a */,
 				A22CFCBA0FC24F710009BD3E /* libdht.a */,
 				A2E38544130DFEE3001F501B /* libutp.a */,
@@ -2481,22 +2481,22 @@
 			files = (
 				BE11835F0CE160C50002D0F3 /* miniupnpc.h in Headers */,
 				BE11835E0CE160C50002D0F3 /* upnpcommands.h in Headers */,
-				BE1183580CE160C50002D0F3 /* miniupnpc_declspec.h in Headers */,
-				BE1183590CE160C50002D0F3 /* igd_desc_parse.h in Headers */,
-				BE11835A0CE160C50002D0F3 /* minixml.h in Headers */,
-				BE11835B0CE160C50002D0F3 /* miniwget.h in Headers */,
-				BE11835C0CE160C50002D0F3 /* minisoap.h in Headers */,
-				C12F197B1E1AE4460005E93F /* upnperrors.h in Headers */,
-				BE11835D0CE160C50002D0F3 /* upnpreplyparse.h in Headers */,
 				C1BF7BAA1F2A3CCE008E88A7 /* upnpdev.h in Headers */,
+				C12F197B1E1AE4460005E93F /* upnperrors.h in Headers */,
+				BE1183590CE160C50002D0F3 /* igd_desc_parse.h in Headers */,
+				BE1183580CE160C50002D0F3 /* miniupnpc_declspec.h in Headers */,
+				BE11835B0CE160C50002D0F3 /* miniwget.h in Headers */,
+				A20162CE13DE497000E15488 /* portlistingparse.h in Headers */,
+				A20162D013DE49E500E15488 /* miniupnpctypes.h in Headers */,
+				BE11835A0CE160C50002D0F3 /* minixml.h in Headers */,
+				BE11835C0CE160C50002D0F3 /* minisoap.h in Headers */,
+				BE11835D0CE160C50002D0F3 /* upnpreplyparse.h in Headers */,
 				BE1183600CE160C50002D0F3 /* minissdpc.h in Headers */,
 				C8ED0FB2281C10F100B44472 /* addr_is_reserved.h in Headers */,
 				A254853C0EB66CD4004539DA /* codelength.h in Headers */,
 				A2F8CD430F3D0F4A00DB356A /* miniupnpcstrings.h in Headers */,
 				A22B00B2116A9E9F003315FC /* connecthostport.h in Headers */,
 				A20162CA13DE48BF00E15488 /* receivedata.h in Headers */,
-				A20162CE13DE497000E15488 /* portlistingparse.h in Headers */,
-				A20162D013DE49E500E15488 /* miniupnpctypes.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2656,7 +2656,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A22CFCC40FC24F8A0009BD3E /* Build configuration list for PBXNativeTarget "dht" */;
 			buildPhases = (
-				C12F197E1E1AE6D50005E93F /* ShellScript */,
 				A22CFCB60FC24F710009BD3E /* Headers */,
 				A22CFCB70FC24F710009BD3E /* Sources */,
 				A22CFCB80FC24F710009BD3E /* Frameworks */,
@@ -2710,7 +2709,6 @@
 			buildConfigurationList = BE11834C0CE160A80002D0F3 /* Build configuration list for PBXNativeTarget "miniupnp" */;
 			buildPhases = (
 				A2305097100C0293003FDB0C /* updateminiupnpcstrings */,
-				C12F197C1E1AE55A0005E93F /* symlinks */,
 				BE1183440CE160960002D0F3 /* Headers */,
 				BE1183450CE160960002D0F3 /* Sources */,
 				BE1183460CE160960002D0F3 /* Frameworks */,
@@ -2721,7 +2719,7 @@
 			);
 			name = miniupnp;
 			productName = miniupnp;
-			productReference = BE1183480CE160960002D0F3 /* libminiupnp.a */;
+			productReference = BE1183480CE160960002D0F3 /* libminiupnpc.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		BE75C3480C729E9500DBEFE0 /* event */ = {
@@ -3081,35 +3079,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "cd third-party/libevent/include/event2\n\nif [ ! -e event-config.h -a ! ../../../macosx-libevent-event-config.h -ef event-config.h ]; then\n    ln -s ../../../macosx-libevent-event-config.h event-config.h;\nfi\n\nif [ ! -e ../evconfig-private.h -a ! ../../macosx-libevent-evconfig-private.h -ef ../evconfig-private.h ]; then\n    ln -s ../../macosx-libevent-evconfig-private.h ../evconfig-private.h;\nfi\n";
-		};
-		C12F197C1E1AE55A0005E93F /* symlinks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = symlinks;
-			outputPaths = (
-				"third-party/miniupnp/miniupnpc/include/miniupnpc",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd third-party/miniupnp/miniupnpc\nln -snf . include/miniupnpc\n";
-		};
-		C12F197E1E1AE6D50005E93F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-				"third-party/dht/dht",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd third-party/dht && rm -f dht && ln -s . dht\n";
 		};
 		C3D9062C27B7F4FE00EF2386 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3957,6 +3926,7 @@
 				HEADER_SEARCH_PATHS = "third-party/libevent/include";
 				OTHER_CFLAGS = "-DHAVE_CONFIG_H";
 				PRODUCT_NAME = event;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -3990,6 +3960,7 @@
 					"-DWITH_CCRYPTO",
 				);
 				PRODUCT_NAME = transmission;
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/dht",
@@ -4182,6 +4153,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				OTHER_CFLAGS = "-DENABLE_STRNATPMPERR";
 				PRODUCT_NAME = natpmp;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4192,6 +4164,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				OTHER_CFLAGS = "-DENABLE_STRNATPMPERR";
 				PRODUCT_NAME = natpmp;
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4202,6 +4175,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				OTHER_CFLAGS = "-DENABLE_STRNATPMPERR";
 				PRODUCT_NAME = natpmp;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4235,6 +4209,7 @@
 					"-DWITH_CCRYPTO",
 				);
 				PRODUCT_NAME = transmission;
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/dht",
@@ -4386,6 +4361,8 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = dht;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4396,6 +4373,8 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = dht;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4406,6 +4385,8 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = dht;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4559,6 +4540,7 @@
 					"-DWITH_CCRYPTO",
 				);
 				PRODUCT_NAME = transmission;
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/dht",
@@ -4634,6 +4616,7 @@
 				HEADER_SEARCH_PATHS = "third-party/libevent/include";
 				OTHER_CFLAGS = "-DHAVE_CONFIG_H";
 				PRODUCT_NAME = event;
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4644,6 +4627,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = utp;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4654,6 +4638,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = utp;
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4667,6 +4652,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = utp;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4688,6 +4674,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.m0k.transmission.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4715,6 +4702,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.m0k.transmission.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4742,6 +4730,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.m0k.transmission.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"third-party/fmt/include",
@@ -4756,7 +4745,9 @@
 			buildSettings = {
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
-				PRODUCT_NAME = miniupnp;
+				PRODUCT_NAME = miniupnpc;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4765,7 +4756,9 @@
 			buildSettings = {
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
-				PRODUCT_NAME = miniupnp;
+				PRODUCT_NAME = miniupnpc;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4774,7 +4767,9 @@
 			buildSettings = {
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
-				PRODUCT_NAME = miniupnp;
+				PRODUCT_NAME = miniupnpc;
+				PUBLIC_HEADERS_FOLDER_PATH = "includes/local/$(PRODUCT_MODULE_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4788,6 +4783,7 @@
 				HEADER_SEARCH_PATHS = "third-party/libevent/include";
 				OTHER_CFLAGS = "-DHAVE_CONFIG_H";
 				PRODUCT_NAME = event;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4837,6 +4833,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4846,6 +4843,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4855,6 +4853,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4864,6 +4863,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = wildmat;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4873,6 +4873,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = wildmat;
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4882,6 +4883,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				PRODUCT_NAME = wildmat;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4893,6 +4895,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				HEADER_SEARCH_PATHS = "third-party/libdeflate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4904,6 +4907,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				HEADER_SEARCH_PATHS = "third-party/libdeflate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4915,6 +4919,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				HEADER_SEARCH_PATHS = "third-party/libdeflate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -4930,6 +4935,7 @@
 					"-DFORCE_BUILTIN_LIST=1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -4945,6 +4951,7 @@
 					"-DFORCE_BUILTIN_LIST=1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = "Release - Debug";
 		};
@@ -4960,6 +4967,7 @@
 					"-DFORCE_BUILTIN_LIST=1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
